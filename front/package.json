@@ -6,7 +6,7 @@
         "dev": "nuxt",
         "build": "nuxt build",
         "start": "nuxt start",
-        "clean": "rm -rf node_modules && rm -rf .nuxt && yarn",
+        "clean": "rm -rf node_modules && rm -rf .nuxt",
         "generate": "nuxt generate",
         "lint:prettier": "prettier --check .",
         "lint": "yarn lint:prettier",
