@@ -31,7 +31,7 @@ jobs:
 
             - name: Get yarn cache directory path 🛠
               id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn cache dir)"
+              run: cd front && echo "::set-output name=dir::$(yarn cache dir)"
 
             - name: Cache node_modules 📦
               uses: actions/cache@v2.1.4
@@ -43,7 +43,7 @@ jobs:
                       ${{ runner.os }}-yarn-
 
             - name: Install dependencies 👨🏻‍💻
-              run: yarn
+              run: cd front && yarn
 
             - name: Run linter 👀
-              run: yarn lint
+              run: cd front && yarn lint
