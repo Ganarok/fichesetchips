@@ -1,9 +1,9 @@
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: 'fichesetchips',
+        title: 'Fiches&Chips',
         htmlAttrs: {
-            lang: 'en',
+            lang: 'fr',
         },
         meta: [
             { charset: 'utf-8' },
@@ -11,14 +11,24 @@ export default {
                 name: 'viewport',
                 content: 'width=device-width, initial-scale=1',
             },
-            { hid: 'description', name: 'description', content: '' },
+            { hid: 'description', name: 'description', content: 'Fiches&Chips Project' },
             { name: 'format-detection', content: 'telephone=no' },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
 
+    loading: {
+        color: '#FFDB57',
+        height: '4px'
+    },
+
+    // Define the development or production mode of Nuxt
+    dev: process.env.NODE_ENV !== 'production' || 'development',
+
     // Global CSS: https://go.nuxtjs.dev/config-css
-    css: [],
+    css: [
+        '@/assets/main.css',
+    ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [],
@@ -32,11 +42,19 @@ export default {
         '@nuxt/typescript-build',
         // https://go.nuxtjs.dev/tailwindcss
         '@nuxtjs/tailwindcss',
+        '@nuxt/postcss8'
     ],
 
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [],
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {},
+    build: {
+        postcss: {
+            plugins: {
+                tailwindcss: {},
+                autoprefixer: {},
+            },
+        },
+    },
 }
