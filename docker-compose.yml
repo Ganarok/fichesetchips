@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  front:
+    build: front/
+    ports:
+      - "8000:8000"
+  back:
+    build: back/
+    ports:
+      - "3000:3000"
