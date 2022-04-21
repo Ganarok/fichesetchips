@@ -72,7 +72,7 @@
                     and start coding in
                     <code class="bg-gray-100 text-sm p-1 rounded border"
                         >pages/index.vue</code
-                    >. Have fun!
+                    >. Have saucisse!
                 </p>
             </div>
             <div class="flex justify-center pt-4 space-x-2">

@@ -1,15 +1,29 @@
-FROM node:16.14.2
+FROM node:lts as builder
 
 WORKDIR /app
 
-COPY ["package.json", "yarn.lock", "./"]
-
-RUN yarn
-
 COPY . .
+
+RUN yarn \
+  --prefer-offline \
+  --frozen-lockfile \
+  --non-interactive
 
 RUN yarn build
 
-EXPOSE 8000
+RUN rm -rf node_modules && \
+  yarn \
+  --prefer-offline \
+  --pure-lockfile \
+  --non-interactive
 
-CMD yarn start
+FROM node:lts
+
+WORKDIR /app
+
+COPY --from=builder /app  .
+
+ENV HOST 0.0.0.0
+EXPOSE 80
+
+CMD [ "yarn", "dev" ]

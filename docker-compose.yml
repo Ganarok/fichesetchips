@@ -4,7 +4,11 @@ services:
     build: front/
     ports:
       - "8000:8000"
+    volumes:
+      - front:/home/node/app
   back:
     build: back/
     ports:
       - "3000:3000"
+volumes:
+  front:
