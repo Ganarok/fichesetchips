@@ -1,29 +1,18 @@
-FROM node:lts as builder
+# Dockerfile
+FROM node:14-alpine
 
+# create destination directory
 WORKDIR /app
 
-COPY . .
+# update and install dependency
+RUN apk update && apk upgrade
+RUN apk add git
 
-RUN yarn \
-  --prefer-offline \
-  --frozen-lockfile \
-  --non-interactive
+# copy the app, note .dockerignore
+COPY . /app
+RUN npm install
+RUN npm run build
 
-RUN yarn build
-
-RUN rm -rf node_modules && \
-  yarn \
-  --prefer-offline \
-  --pure-lockfile \
-  --non-interactive
-
-FROM node:lts
-
-WORKDIR /app
-
-COPY --from=builder /app  .
-
-ENV HOST 0.0.0.0
-EXPOSE 80
+EXPOSE 8000
 
 CMD [ "yarn", "dev" ]

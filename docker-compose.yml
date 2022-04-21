@@ -4,8 +4,13 @@ services:
     build: front/
     ports:
       - "8000:8000"
+    environment:
+      - NUXT_HOST=0.0.0.0
+      - NUXT_PORT=8000
     volumes:
-      - front:/home/node/app
+      - ./front:/app
+    depends_on:
+      - back
   back:
     build: back/
     ports:
