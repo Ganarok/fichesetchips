@@ -69,9 +69,8 @@ export default {
     },
 
     watchers: {
-      webpack: {
-        poll: true
-      }
-    }
-
+        webpack: {
+            poll: true,
+        },
+    },
 }
