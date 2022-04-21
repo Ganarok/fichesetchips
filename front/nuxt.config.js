@@ -26,7 +26,7 @@ export default {
     },
 
     router: {
-        middleware: 'index'
+        middleware: 'index',
     },
 
     loading: {
