@@ -25,6 +25,10 @@ export default {
         port: 8000,
     },
 
+    router: {
+        middleware: 'index'
+    },
+
     loading: {
         color: '#FFDB57',
         height: '4px',
