@@ -1,1 +1,1 @@
-web: cd front && npm start
+web: npm start
