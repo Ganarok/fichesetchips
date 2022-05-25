@@ -14,6 +14,7 @@
         "playwright": "npx playwright test"
     },
     "dependencies": {
+        "@nuxtjs/i18n": "^7.2.2",
         "core-js": "^3.19.3",
         "nuxt": "^2.15.8",
         "vue": "^2.6.14",
