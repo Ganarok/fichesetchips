@@ -74,8 +74,6 @@
                         >pages/index.vue</code
                     >. Have saucisse!
                 </p>
-
-                <p>{{ $t("Nom d'utilisateur")}}</p>
             </div>
             <div class="flex justify-center pt-4 space-x-2">
                 <a href="https://github.com/nuxt/nuxt.js" target="_blank"

@@ -59,9 +59,7 @@ export default {
     ],
 
     // Modules: https://go.nuxtjs.dev/config-modules
-    modules: [
-        '@nuxtjs/i18n'
-    ],
+    modules: ['@nuxtjs/i18n'],
 
     i18n: {
         locales: ['fr', 'en'],
@@ -70,9 +68,9 @@ export default {
             fallbackLocale: 'fr',
             messages: {
                 en,
-                fr
-            }
-        }
+                fr,
+            },
+        },
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -86,7 +84,7 @@ export default {
     },
 
     tailwindcss: {
-        viewer: false
+        viewer: false,
     },
 
     watchers: {
