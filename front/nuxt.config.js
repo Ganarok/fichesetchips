@@ -1,3 +1,6 @@
+import en from './locales/en.json'
+import fr from './locales/fr.json'
+
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
@@ -56,7 +59,21 @@ export default {
     ],
 
     // Modules: https://go.nuxtjs.dev/config-modules
-    modules: [],
+    modules: [
+        '@nuxtjs/i18n'
+    ],
+
+    i18n: {
+        locales: ['fr', 'en'],
+        defaultLocale: 'fr',
+        vueI18n: {
+            fallbackLocale: 'fr',
+            messages: {
+                en,
+                fr
+            }
+        }
+    },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
@@ -66,6 +83,10 @@ export default {
                 autoprefixer: {},
             },
         },
+    },
+
+    tailwindcss: {
+        viewer: false
     },
 
     watchers: {
