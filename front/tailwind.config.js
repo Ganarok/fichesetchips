@@ -10,10 +10,10 @@ module.exports = {
     ],
     theme: {
         extend: {
-          colors: {
-            "fiche-green": "#4FEA74",
-            "chips-yellow": "#FFDB57"
-          }
+            colors: {
+                'fiche-green': '#4FEA74',
+                'chips-yellow': '#FFDB57',
+            },
         },
     },
     plugins: [],
