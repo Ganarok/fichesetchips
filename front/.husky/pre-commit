@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn lintfix && git add -A
+cd front
+yarn lintfix
+git add -A

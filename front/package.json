@@ -11,7 +11,8 @@
         "lint:prettier": "prettier --check .",
         "lint": "yarn lint:prettier",
         "lintfix": "prettier --write --list-different .",
-        "playwright": "npx playwright test"
+        "playwright": "npx playwright test",
+        "prepare": "cd .. && husky install front/.husky"
     },
     "dependencies": {
         "@nuxtjs/i18n": "^7.2.2",
