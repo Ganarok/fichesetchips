@@ -1,9 +1,13 @@
 <template>
     <div class="w-screen h-screen flex relative">
         <div class="absolute right-0 bottom-0">
-          <img src="../assets/greenpixels.svg" alt="">
+            <img src="../assets/greenpixels.svg" alt="" />
         </div>
-        <img class="mt-12 ml-12 max-h-52" src="../static/logo.png" alt="Fiche&Chips" />
+        <img
+            class="mt-12 ml-12 max-h-52"
+            src="../static/logo.png"
+            alt="Fiche&Chips"
+        />
         <form
             action=""
             class="flex flex-col lg:absolute lg:right-32 lg:bottom-32 lg:w-96"
