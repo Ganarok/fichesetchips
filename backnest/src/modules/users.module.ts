@@ -3,7 +3,7 @@ import { UsersService } from '../services/users.service';
 import { UsersController } from '../controllers/users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schemas/user.schema';
-import { UserSeeder } from 'src/seeders/users.seeder';
+import { UserSeeder } from 'src/utils/seeders/users.seeder';
 import { CommandModule } from 'nestjs-command';
 
 @Module({

@@ -1,6 +1,6 @@
 import { Controller, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { JwtAuthGuard } from 'src/utils/guards/auth.guard';
 import { UsersService } from '../services/users.service'
 
 @UseGuards(JwtAuthGuard)

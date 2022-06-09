@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, ObjectId } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Preference } from './preference.schema';
-import { ROLE } from 'src/utils/types';
 import * as bcrypt from 'bcrypt';
+import { ROLE } from 'src/utils/dto/types';
 
 export type UserDocument = User & Document;
 

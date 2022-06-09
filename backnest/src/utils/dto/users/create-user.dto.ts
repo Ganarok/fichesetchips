@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Preference } from 'src/schemas/preference.schema';
-import { ROLE } from 'src/utils/types';
 
 export class CreateUserDto  {
 
