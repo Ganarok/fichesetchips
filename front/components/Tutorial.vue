@@ -54,7 +54,7 @@
                 <h2 class="text-2xl leading-7 font-semibold">
                     Welcome to your Nuxt Application
                 </h2>
-                <p class="mt-3 text-gray-600">
+                <p class="mt-3 text-red-600">
                     We recommend you take a look at the
                     <a
                         href="https://nuxtjs.org"
@@ -78,7 +78,7 @@
             <div class="flex justify-center pt-4 space-x-2">
                 <a href="https://github.com/nuxt/nuxt.js" target="_blank"
                     ><svg
-                        class="w-6 h-6 text-gray-600 hover:text-gray-800 button--github"
+                        class="w-6 h-6 text-red-600 hover:text-gray-800 button--github"
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                         aria-hidden="true"

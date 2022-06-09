@@ -1,4 +1,6 @@
 module.exports = {
+    mode: 'jit',
+    purge: ['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx,vue}'],
     content: [
         './components/*.{js,vue,ts}',
         './layouts/*.vue',
@@ -7,7 +9,12 @@ module.exports = {
         './nuxt.config.{js,ts}',
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                'fiche-green': '#4FEA74',
+                'chips-yellow': '#FFDB57',
+            },
+        },
     },
     plugins: [],
 }
