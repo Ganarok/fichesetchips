@@ -1,21 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Preference } from 'src/schemas/preference.schema';
-import { ROLE } from 'src/utils/types';
+import mongoose from 'mongoose';
+import { fixtures } from 'src/utils/seeders/fixtures';
+import { ROLE } from '../types';
 
 export class UpdateUserDto  {
 
-    @ApiProperty({ default: "user0" })
+    @ApiProperty({ default: fixtures.users[0].username })
     username?: string;
 
-    @ApiProperty({ default: "password" })
+    @ApiProperty({ default: fixtures.users[0].password })
     password?: string;
 
-    @ApiProperty({ default: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png" })
+    @ApiProperty({ default: fixtures.users[0].avatar })
     avatar?: string;
 
-    @ApiProperty({ default: "USER"})
+    @ApiProperty({ default: fixtures.users[0].role})
     role?: ROLE;
 
-    @ApiProperty()
-    preference?: Preference;
+    @ApiProperty({ default: fixtures.users[0].preference_id })
+    preference_id?: mongoose.Types.ObjectId;
 }

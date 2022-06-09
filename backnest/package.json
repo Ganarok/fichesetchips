@@ -7,7 +7,7 @@
     "license": "UNLICENSED",
     "scripts": {
         "seed": "nest build && npx nestjs-command seed:preferences",
-        "seed:refresh": "nest build && npx nestjs-command drop:preferences && npx nestjs-command seed:preferences",
+        "seed:refresh": "nest build && npx nestjs-command drop:preferences && npx nestjs-command drop:users && npx nestjs-command seed:preferences && npx nestjs-command seed:users",
         "prebuild": "rimraf dist",
         "build": "nest build",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

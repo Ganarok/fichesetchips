@@ -10,7 +10,7 @@ export type UserDocument = User & Document;
 @Schema()
 export class User {
     @Prop({ _id: true, type: mongoose.Schema.Types.ObjectId, auto: true })
-    _id?: ObjectId;
+    _id?: mongoose.Types.ObjectId;
 
     @Prop({ required: true, unique: true })
     username: string;
@@ -18,15 +18,14 @@ export class User {
     @Prop({ required: true })
     password: string;
 
-    @Prop({ required: false, default: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png" })
-    avatar?: string;
+    @Prop({ required: true, default: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png" })
+    avatar: string;
 
     @Prop({ required: true, default: "USER" })
-    role?: ROLE;
+    role: ROLE;
 
-    @Prop({ required: false, type: mongoose.Schema.Types.ObjectId, ref: 'Preference' })
-    preference?: Preference;
-
+    @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Preference', default: new mongoose.Types.ObjectId("62a1bc57f1343ffe0c12ef09") })
+    preference_id?: mongoose.Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

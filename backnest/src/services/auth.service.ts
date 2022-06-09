@@ -49,7 +49,7 @@ export class AuthService {
         return {
             user: {
                 avatar: new_user.avatar,
-                preference: new_user.preference,
+                preference_id: new_user.preference_id,
                 ...payload
             },
             access_token: this.jwtService.sign(payload),

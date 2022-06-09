@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ObjectId } from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 
 export class PayloadAuthDto  {
-    _id: ObjectId;
+    _id: mongoose.Types.ObjectId;
     username: string;
 }

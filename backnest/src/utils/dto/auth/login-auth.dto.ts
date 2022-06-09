@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { fixtures } from 'src/utils/seeders/fixtures';
 
 export class LoginAuthDto  {
 
-    @ApiProperty({ default: "user0" })
+    @ApiProperty({ default: fixtures.users[0].username })
     username: string;
 
-    @ApiProperty({ default: "password" })
+    @ApiProperty({ default: fixtures.users[0].password })
     password: string;
 }
