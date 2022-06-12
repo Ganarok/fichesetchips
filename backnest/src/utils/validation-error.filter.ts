@@ -1,6 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { Error } from 'mongoose';
-import ValidationError = Error.ValidationError;
+import { ValidationError } from 'sequelize/types/errors';
 
 @Catch(ValidationError)
 export class ValidationErrorFilter implements ExceptionFilter {

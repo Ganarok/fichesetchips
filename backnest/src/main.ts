@@ -35,7 +35,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   // End Swagger config
 
-  app.useGlobalFilters(new ValidationErrorFilter());
+  // app.useGlobalFilters(new ValidationErrorFilter());
   app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(parseInt(process.env.PORT) || 3000);
 }

@@ -1,42 +1,38 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, ObjectId } from 'mongoose';
-import * as mongoose from 'mongoose';
-import { Preference } from './preference.schema';
+import { Table, Column, Model, BeforeCreate, } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
+import { Factory } from "nestjs-seeder";
 import { ROLE } from 'src/utils/dto/types';
+import { fixtures } from 'src/utils/seeders/fixtures';
 
-export type UserDocument = User & Document;
+@Table
+export class User extends Model {
 
-@Schema()
-export class User {
-    @Prop({ _id: true, type: mongoose.Schema.Types.ObjectId, auto: true })
-    _id?: mongoose.Types.ObjectId;
-
-    @Prop({ required: true, unique: true })
+    @Factory((faker) => faker.internet.userName())
+    @Column({ allowNull: false, unique: true })
     username: string;
 
-    @Prop({ required: true })
+    @Factory('password')
+    @Column({ allowNull: false })
     password: string;
 
-    @Prop({ required: true, default: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png" })
+    @Factory(fixtures.users[0].avatar)
+    @Column({ allowNull: false, defaultValue: fixtures.users[0].avatar })
     avatar: string;
 
-    @Prop({ required: true, default: "USER" })
+    @Factory('USER')
+    @Column({ allowNull: false, defaultValue: 'USER' })
     role: ROLE;
 
-    @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Preference', default: new mongoose.Types.ObjectId("62a1bc57f1343ffe0c12ef09") })
-    preference_id?: mongoose.Types.ObjectId;
-}
+    @Factory(1)
+    @Column({ allowNull: false })
+    preference_id: number;
 
-export const UserSchema = SchemaFactory.createForClass(User);
-UserSchema.pre('save', async function (next) {
-    const user = this
-    if (user.isModified('password')) {
-        const salt = await bcrypt.genSalt()
-        const hash = await bcrypt.hash(user.password, salt)
-        user.password = hash
-        next()
-    } else {
-        next()
+    @BeforeCreate
+    static async hashPassword(user: User) {
+        if (user.password) {
+            const salt = await bcrypt.genSalt();
+            const hash = await bcrypt.hash(user.password, salt);
+            user.password = hash
+        }
     }
-})
+}

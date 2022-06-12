@@ -1,37 +1,39 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
+import { User } from '../schemas/user.schema';
 import { CreateUserDto } from '../utils/dto/users/create-user.dto';
 import { UpdateUserDto } from '../utils/dto/users/update-user.dto';
-import { User, UserDocument } from '../schemas/user.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
   async create(userToCreate: CreateUserDto): Promise<void> {
-    console.log(userToCreate)
-    const user =  new this.userModel(userToCreate);
-    await user.save()
+    await User.create({ ...userToCreate });
   }
 
   async findOne(username: string): Promise<User> {
-    const user = await this.userModel.findOne<User>({
-      username: username
+    const user = await User.findOne({
+      where: { username: username }
     })
     return user;
   }
 
-  async update(user: User, user_id?: string): Promise<User> {
-    // const user = await this.userModel.findOne<User>({
-    //   username: username
-    // })
+  async update(user: User): Promise<User> {
+    // TODO
+    return user;
+  }
+
+  async updateAsAnAdmin(userUpdate: UpdateUserDto, user_id: number): Promise<User> {
+    // TODO
+    const user = await User.findOne({
+      where: { id: user_id }
+    })
     return user;
   }
 
   async remove(user_id?: string): Promise<User> {
-    const user = await this.userModel.findOne<User>({
-      _id: user_id
+    // TODO
+    const user = await User.findOne({
+      where: { id: user_id }
     })
     return user;
   }
