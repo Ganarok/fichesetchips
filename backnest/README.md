@@ -43,8 +43,31 @@ cp .env.example .env
 
 Set your environnment variable as you want.
 
+- Database
+
+```bash
+psql -h localhost -p 5432 -U postgres
+Password for user postgres: 
+psql (14.2 (Ubuntu 14.2-1.pgdg20.04+1))
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+postgres=> CREATE DATABASE fichesetchips;
+CREATE DATABASE
+postgres=> \c fichesetchips
+```
+
 ### Running the app
 
+- Run the seeder
+```bash
+# base
+npm run seed
+# refresh
+npm run seed:refresh
+```
+
+- Run the app
 ```bash
 # development
 npm run start

@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { configuration } from 'src/utils/configuration/default.configuration';
-
+import { DatabaseModule } from 'src/database/database.module';
 import { AppController } from '../controllers/app.controller';
 import { AppService } from '../services/app.service';
 import { AuthModule } from './auth.module';
@@ -10,7 +8,7 @@ import { UsersModule } from './users.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(configuration.database.mongooseConnectionUrl),
+    DatabaseModule,
     PreferencesModule,
     UsersModule,
     AuthModule],

@@ -6,6 +6,6 @@ export class LoginAuthDto  {
     @ApiProperty({ default: fixtures.users[0].username })
     username: string;
 
-    @ApiProperty({ default: fixtures.users[0].password })
+    @ApiProperty({ default: "password" })
     password: string;
 }
