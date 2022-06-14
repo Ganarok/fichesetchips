@@ -6,7 +6,6 @@ import { fixtures } from 'src/utils/seeders/fixtures';
 
 @Table
 export class User extends Model {
-
     @Factory((faker) => faker.internet.userName())
     @Column({ allowNull: false, unique: true })
     username: string;

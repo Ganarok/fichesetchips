@@ -13,13 +13,13 @@ export class PreferencesController {
   constructor(private readonly preferencesService: PreferencesService) {}
 
   @Post()
-  create(@Body() createPreferenceDto: CreatePreferenceDto) {
-    return this.preferencesService.create(createPreferenceDto);
+  async create(@Body() createPreferenceDto: CreatePreferenceDto) {
+    return await this.preferencesService.create(createPreferenceDto);
   }
 
   @Get()
-  findAll() {
-    return this.preferencesService.findAll();
+  async findAll() {
+    return await this.preferencesService.findAll();
   }
 
   @Get(':id')

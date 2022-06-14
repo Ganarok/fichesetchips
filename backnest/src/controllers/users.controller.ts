@@ -4,27 +4,37 @@ import { UpdateUserDto } from 'src/utils/dto/users/update-user.dto';
 import { JwtAuthGuard } from 'src/utils/guards/auth.guard';
 import { UsersService } from '../services/users.service'
 
-@UseGuards(JwtAuthGuard)
-@ApiBearerAuth('JWT-auth')
+
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
   @Patch()
-  async update_me(@Request() req: any) {
-    return await this.usersService.update(req.user);
+  async update_me(@Request() req: any, @Body() updateUser: UpdateUserDto) {
+    return await this.usersService.update(req.user, updateUser);
   }
 
-  // admin only
+  // @UseGuards(IsAdmin)
+  // @ApiBearerAuth('JWT-auth')
   @Patch(':id')
   async update_another(@Param('id') id: string, @Body() updateUser: UpdateUserDto) {
     return await this.usersService.updateAsAnAdmin(updateUser, +id);
   }
 
-  // admin only
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
+  @Delete()
+  async remove_me(@Request() req) {
+    return await this.usersService.remove(req.user);
+  }
+
+  // @UseGuards(IsAdmin)
+  // @ApiBearerAuth('JWT-auth')
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return await this.usersService.remove(id);
+  async remove_another(@Param('id') id: string) {
+    return await this.usersService.removeAsAnAdmin(+id);
   }
 }

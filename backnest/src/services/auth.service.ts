@@ -43,15 +43,10 @@ export class AuthService {
     }
 
     async register(user: RegisterAuthDto): Promise<ResponseAuthDto> {
-        await this.usersService.create(user)
-        const new_user = await this.usersService.findOne(user.username)
+        const new_user = await this.usersService.create(user)
         const payload: PayloadAuthDto = { username: new_user.username, id: new_user.id };
         return {
-            user: {
-                avatar: new_user.avatar,
-                preference_id: new_user.preference_id,
-                ...payload
-            },
+            user: new_user,
             access_token: this.jwtService.sign(payload),
             expires_in: (process.env.expiresIn || '3600s')
         }

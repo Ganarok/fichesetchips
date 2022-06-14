@@ -6,8 +6,8 @@ import { UpdateUserDto } from '../utils/dto/users/update-user.dto';
 @Injectable()
 export class UsersService {
 
-  async create(userToCreate: CreateUserDto): Promise<void> {
-    await User.create({ ...userToCreate });
+  async create(userToCreate: CreateUserDto): Promise<User> {
+    return await User.create({ ...userToCreate });
   }
 
   async findOne(username: string): Promise<User> {
@@ -17,7 +17,7 @@ export class UsersService {
     return user;
   }
 
-  async update(user: User): Promise<User> {
+  async update(user: User, updateUser: UpdateUserDto): Promise<User> {
     // TODO
     return user;
   }
@@ -30,7 +30,12 @@ export class UsersService {
     return user;
   }
 
-  async remove(user_id?: string): Promise<User> {
+  async remove(user: User): Promise<User> {
+    // TODO
+    return user;
+  }
+
+  async removeAsAnAdmin(user_id: number): Promise<User> {
     // TODO
     const user = await User.findOne({
       where: { id: user_id }

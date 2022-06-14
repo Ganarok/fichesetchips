@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { Preference } from 'src/schemas/preference.schema';
 import { CreatePreferenceDto } from 'src/utils/dto/preferences/create-preference.dto';
 @Injectable()
 export class PreferencesService {
-  create(createPreferenceDto: CreatePreferenceDto) {
-    return 'This action adds a new preference';
+  async create(createPreferenceDto: CreatePreferenceDto) {
+    const preference = await Preference.create({ ...createPreferenceDto });
+    return preference;
   }
 
-  findAll() {
-    return `This action returns all preferences`;
+  async findAll() {
+    const preferences = await Preference.findAll()
+    return preferences;
   }
 
   findOne(id: number) {
