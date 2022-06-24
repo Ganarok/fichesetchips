@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Preference } from 'src/schemas/preference.schema';
-import { CreatePreferenceDto } from 'src/utils/dto/preferences/create-preference.dto';
+import { CreatePreferenceDto } from 'src/utils/dto/preferences/request-preference.dto';
 @Injectable()
 export class PreferencesService {
   async create(createPreferenceDto: CreatePreferenceDto) {

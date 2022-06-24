@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PreferencesService } from 'src/services/preferences.service';
-import { CreatePreferenceDto } from 'src/utils/dto/preferences/create-preference.dto';
+import { CreatePreferenceDto } from 'src/utils/dto/preferences/request-preference.dto';
 import { JwtAuthGuard } from 'src/utils/guards/auth.guard';
 
 // TODO IsAdmin guard

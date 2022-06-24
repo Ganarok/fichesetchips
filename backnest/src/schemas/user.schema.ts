@@ -1,29 +1,22 @@
 import { Table, Column, Model, BeforeCreate, } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
-import { Factory } from "nestjs-seeder";
-import { ROLE } from 'src/utils/dto/types';
-import { fixtures } from 'src/utils/seeders/fixtures';
+import { defaultUser, ROLE } from 'src/utils/seeders/users/users.fixtures';
 
 @Table
 export class User extends Model {
-    @Factory((faker) => faker.internet.userName())
     @Column({ allowNull: false, unique: true })
     username: string;
 
-    @Factory('password')
     @Column({ allowNull: false })
     password: string;
 
-    @Factory(fixtures.users[0].avatar)
-    @Column({ allowNull: false, defaultValue: fixtures.users[0].avatar })
+    @Column({ allowNull: false, defaultValue: defaultUser.avatar })
     avatar: string;
 
-    @Factory('USER')
-    @Column({ allowNull: false, defaultValue: 'USER' })
+    @Column({ allowNull: false, defaultValue: defaultUser.role })
     role: ROLE;
 
-    @Factory(1)
-    @Column({ allowNull: false })
+    @Column({ allowNull: false, defaultValue: defaultUser.preference_id })
     preference_id: number;
 
     @BeforeCreate

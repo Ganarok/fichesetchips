@@ -1,12 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
-import { LoginAuthDto } from 'src/utils/dto/auth/login-auth.dto';
-import { PayloadAuthDto } from 'src/utils/dto/auth/payload-auth.dto';
+import { LoginAuthDto, PayloadAuthDto, RegisterAuthDto } from 'src/utils/dto/auth/request-auth.dto';
 import { ResponseAuthDto } from 'src/utils/dto/auth/response-auth.dto';
-import { RegisterAuthDto } from 'src/utils/dto/auth/register-auth.dto';
-import { User } from 'src/schemas/user.schema';
+import { unauthorizedException } from 'src/utils/exceptions/auth/exceptions-auth';
 
 @Injectable()
 export class AuthService {
@@ -30,15 +28,12 @@ export class AuthService {
             const real_user = await this.usersService.findOne(user.username)
             const payload: PayloadAuthDto = { username: real_user.username, id: real_user.id }
             return {
-                user: {
-                    avatar: real_user.avatar,
-                    ...payload
-                },
+                user: real_user,
                 access_token: this.jwtService.sign(payload),
                 expires_in: (process.env.expiresIn || '3600s')
             };
         } else {
-            throw new HttpException('Wrong login or password', HttpStatus.NOT_FOUND);
+            throw new UnauthorizedException(unauthorizedException.message);
         }
     }
 

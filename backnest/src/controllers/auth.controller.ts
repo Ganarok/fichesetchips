@@ -1,30 +1,38 @@
-import { Controller, Get, Post, Body, Request, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { LoginAuthDto } from 'src/utils/dto/auth/login-auth.dto';
-import { RegisterAuthDto } from 'src/utils/dto/auth/register-auth.dto';
+import { Controller, Get, Post, Body, Request, UseGuards, HttpCode, UnauthorizedException } from '@nestjs/common';
+import { ApiBody, ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/utils/guards/auth.guard';
 import { AuthService } from 'src/services/auth.service';
+import { LoginAuthDto, RegisterAuthDto } from 'src/utils/dto/auth/request-auth.dto';
+import { ResponseAuthDto } from 'src/utils/dto/auth/response-auth.dto';
+import { AuthSequelizeUniqueConstraintError, AuthTokenUnauthorizedException, AuthUnauthorizedException } from 'src/utils/exceptions/auth/exceptions-auth';
 
 @ApiTags('Authentification')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
 
-  @ApiBody({ type: LoginAuthDto })
   @Post('login')
+  @HttpCode(302)
+  @ApiBody({ type: LoginAuthDto })
+  @ApiResponse({ status: 302, description: 'The record has been successfully found.', type: ResponseAuthDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized', type: AuthUnauthorizedException })
   async login(@Body() body: LoginAuthDto) {
-    return await this.authService.login(body);
+    return await this.authService.login(body)
   }
 
-  @ApiBody({ type: RegisterAuthDto })
   @Post('signup')
+  @ApiBody({ type: RegisterAuthDto })
+  @ApiResponse({ status: 201, description: 'The record has been successfully created.', type: ResponseAuthDto })
+  @ApiResponse({ status: 409, description: 'Conflict while inserting into the database.', type: AuthSequelizeUniqueConstraintError })
   async signup(@Body() body: RegisterAuthDto) {
-    return await this.authService.register(body);
+    return await this.authService.register(body)
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('JWT-auth')
   @Get('profile')
+  @ApiResponse({ status: 200, description: 'OK', type: ResponseAuthDto })
+  @ApiResponse({ status: 401, description: 'Wrong token.', type: AuthTokenUnauthorizedException })
   getProfile(@Request() req: any) {
     return req.user;
   }
