@@ -1,7 +1,7 @@
 <template>
     <div class="w-screen h-screen flex relative">
         <div class="absolute right-0 bottom-0">
-            <img src="../assets/greenpixels.svg" alt="" />
+            <img class="object-scale-down max-h-screen" src="../assets/greenpixels.svg" alt="" />
         </div>
         <img
             class="mt-12 ml-12 max-h-52"
@@ -32,10 +32,11 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+export default Vue.extend({
     name: 'Login',
     data() {
         return {}
     },
-}
+})
 </script>
