@@ -19,15 +19,15 @@ _____________________________________________________
 
 Swagger est un outil open source de documentation d'API. Directement intégré à Nest et utilisable grâce à des décorateurs, Swagger permet la génération d'une interface lisible et simplifiée de l'API.
 
-![Interface](./assets/screen1.png)
+![Interface](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/screen1.png)
 
 Cet outil nous permet de visualiser faciliment les types et valeurs par défault des objets utilisés (body, params, query, ...).
 
-![Schemas](./assets/schemas.png)
+![Schemas](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/schemas.png)
 
 Il nous permet également de visualiser des examples de réponses en fonction du status http.
 
-![Responses](./assets/responses.png)
+![Responses](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/responses.png)
 
 ### Intégration
 
@@ -80,11 +80,11 @@ export class AuthController {
 }
 ```
 
-![Controller](./assets/authcontroller.png)
+![Controller](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/authcontroller.png)
 
-![body](./assets/body.png)
+![body](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/body.png)
 
-![Responses](./assets/responses2.png)
+![Responses](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/responses2.png)
 
  - Typage - Dto & Exceptions
 
@@ -175,9 +175,9 @@ export const unauthorizedException = {
   }
 ```
 
-![bearer1](./assets/bearer1.png)
+![bearer1](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/bearer1.png)
 
-![bearer2](./assets/bearer2.png)
+![bearer2](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/bearer2.png)
 
 
 ____________________________________________________________________________________________
