@@ -19,7 +19,6 @@ export const databaseProviders = [
             });
             sequelize.addModels([User, Preference]);
             Preference.hasOne(User, {foreignKey: "preference_id", onDelete: "SET DEFAULT"})
-            User.belongsTo(Preference)
             await sequelize.sync();
             return sequelize;
         },

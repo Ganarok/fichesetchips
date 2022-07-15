@@ -1,15 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './modules/app.module';
-import { AllExceptionsFilter } from './utils/all-exceptions.filter';
-import { ValidationErrorFilter } from './utils/validation-error.filter';
+import { AllExceptionsFilter } from './utils/exceptions/all-exceptions.filter';
+
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 if (!process.env.PORT) {
   console.log("Failed to get .env variables")
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule)
 
   // Swagger config
   const config = new DocumentBuilder()
@@ -31,12 +33,11 @@ async function bootstrap() {
       'JWT-auth'
     )
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('api', app, document)
   // End Swagger config
 
-  // app.useGlobalFilters(new ValidationErrorFilter());
-  app.useGlobalFilters(new AllExceptionsFilter());
-  await app.listen(parseInt(process.env.PORT) || 3000);
+  app.useGlobalFilters(new AllExceptionsFilter())
+  await app.listen(parseInt(process.env.PORT) || 3000)
 }
 bootstrap();

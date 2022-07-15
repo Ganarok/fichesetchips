@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Seeder, DataFactory } from "nestjs-seeder";
+import { Seeder } from "nestjs-seeder";
 import { Preference } from "src/schemas/preference.schema";
+import { preferences } from "./preferences.fixtures";
 
 @Injectable()
 export class PreferencesSeeder implements Seeder {
@@ -8,8 +9,7 @@ export class PreferencesSeeder implements Seeder {
 
   async seed(): Promise<any> {
     try {
-      const preference = DataFactory.createForClass(Preference).generate(1);
-      return await Preference.create({...preference});
+      return await Preference.bulkCreate(preferences);
     } catch (e) {
       console.log(e)
     }

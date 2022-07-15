@@ -7,7 +7,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
         const response = ctx.getResponse();
         const request = ctx.getRequest();
 
-        const status =
+        let status =
             exception instanceof HttpException
                 ? exception.getStatus()
                 : HttpStatus.INTERNAL_SERVER_ERROR;
@@ -17,10 +17,17 @@ export class AllExceptionsFilter implements ExceptionFilter {
          * @param message
          */
         const responseMessage = (type, message) => {
+
+            if (type == "SequelizeUniqueConstraintError") {
+                status = 409 //Conflict
+            } else if (type == "SequelizeValidationError") {
+                status = 409
+            }
+
             response.status(status).json({
-                statusCode: status,
-                createdBy: type,
-                errorMessages: [message]
+                status: status,
+                type: type,
+                message: message
             });
         };
 
