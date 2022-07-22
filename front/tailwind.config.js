@@ -13,6 +13,7 @@ module.exports = {
             colors: {
                 'fiche-green': '#4FEA74',
                 'chips-yellow': '#FFDB57',
+                "chip-yellow-trans": "#FFDB57b3"
             },
         },
     },

@@ -14,7 +14,7 @@
         >
             <div class="ml-5 mb-4">
                 <h1 class="text-5xl">Connexion</h1>
-                <p class="underline text-xs opacity-70">
+                <p class="underline text-xs opacity-70" @click="showModal = true">
                     Pas encore inscrit ? Cliquez ici
                 </p>
             </div>
@@ -28,15 +28,23 @@
 
             <button class="mr-5 self-end text-5xl">Go</button>
         </form>
+        <Modal v-show="showModal" @close-modal="showModal = false">
+            <subModalSignup  v-show="showModal" @close-modal="showModal = false" />
+        </Modal> 
     </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import Modal from '~/components/Modal.vue'
+import subModalSignup from '~/components/subModals/signup.vue'
 export default Vue.extend({
     name: 'Login',
+    components: { Modal, subModalSignup }, 
     data() {
-        return {}
-    },
+        return {
+            showModal: false
+        }
+    }
 })
 </script>
