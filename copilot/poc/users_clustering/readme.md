@@ -1,0 +1,1 @@
+notebook available on kaggle: https://www.kaggle.com/code/gabrielbuetas/fish-clustering-user-poc/notebook
