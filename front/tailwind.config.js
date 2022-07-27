@@ -15,7 +15,6 @@ module.exports = {
                 'chips-yellow': '#FFDB57',
                 'chip-yellow-trans': '#FFDB57b3',
                 'fc-black': '#1E1E1E'
-
             },
             fontFamily: {
                 'barlow': ['Barlow', 'sans-serif']
