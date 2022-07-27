@@ -3,7 +3,7 @@
         <Sidebar />
 
         <div v-if="topRightPixels" class="absolute top-0 right-0">
-            <img src="../../assets/topRightPixels.svg" alt="pixels" />
+            <img src="../assets/topRightPixels.svg" alt="pixels" />
         </div>
 
         <div
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Sidebar from '../subComponent/Sidebar.vue'
+import Sidebar from '../components/subComponent/Sidebar.vue'
 
 export default {
     name: 'SidebarLayout',
