@@ -53,7 +53,7 @@
                             </div>
                             <div class="h-3/5 w-full">
                                 <img
-                                    src="..\assets\CharPlaceholder.jpg"
+                                    src="../assets/CharPlaceholder.jpg"
                                     alt=""
                                 />
                             </div>

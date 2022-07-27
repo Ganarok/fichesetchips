@@ -46,7 +46,7 @@
         <div
             class="flex flex-col w-full justify-center items-center relative top-[32%]"
         >
-            <img src="..\..\assets\icon.png" class="w-2/4" alt="F&C logo" />
+            <img src="../../assets/icon.png" class="w-2/4" alt="F&C logo" />
             <p class="text-white text-[10px]">made with love by fiche&chips</p>
         </div>
     </div>
