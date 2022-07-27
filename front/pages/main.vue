@@ -1,9 +1,9 @@
 <template>
     <div class="flex">
-      <SubComponentSidebar />
-      <div class="h-screen max-w-full p-5">
-        <SubComponentCustomTable />
-      </div>
+        <SubComponentSidebar />
+        <div class="h-screen max-w-full p-5">
+            <SubComponentCustomTable />
+        </div>
     </div>
 </template>
 
