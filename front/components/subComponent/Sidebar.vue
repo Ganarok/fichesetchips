@@ -1,6 +1,6 @@
 <template>
     <div
-        class="h-screen w-80 bg-[#1E1E1E] flex flex-col relative justify-center"
+        class="h-screen w-[220px] bg-[#1E1E1E] flex flex-col relative justify-center"
     >
         <div class="w-full absolute top-0 flex justify-center p-12">
             <NuxtLink to="/">
