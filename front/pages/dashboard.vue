@@ -93,7 +93,7 @@
                 </div>
                 <div class="w-5/12 mx-2 border-2 border-fiche-green">
                     <div
-                        class="h-1/5 pl-10 flex font-bold text-[24px] text-fiche-green items-center w-full"
+                        class="h-1/5 pl-10 flex font-bold text-xl text-fiche-green items-center w-full"
                     >
                         <h1>Univers</h1>
                     </div>
