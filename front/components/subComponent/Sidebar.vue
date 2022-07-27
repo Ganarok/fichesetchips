@@ -1,26 +1,36 @@
 <template>
     <div
-        class="h-screen w-80 bg-[#1E1E1E] flex flex-col relative justify-center"
+        class="h-screen w-[220px] bg-[#1E1E1E] flex flex-col relative justify-center"
     >
-        <div class="w-full absolute top-0 flex justify-center p-12">
+        <div class="w-full absolute top-0 flex justify-center p-6">
             <NuxtLink to="/">
-                <img
-                    class="max-h-52"
-                    src="../../static/logo.png"
-                    alt="Fiche&Chips"
-                />
+                <img src="../../assets/fetc.png" alt="Fiche&Chips" />
             </NuxtLink>
         </div>
 
-        <div class="flex flex-col items-center justify-center text-white">
-            <h1 class="text-2xl">Dashboard</h1>
-            <div class="w-20 h-[2px] rounded-md bg-white mt-[2px] mb-8"></div>
-            <NuxtLink to="/" active-class="text-chips-yellow">Home</NuxtLink>
-            <NuxtLink to="/Logout" active-class="text-chips-yellow"
+        <div
+            class="flex flex-col items-center justify-center text-white space-y-8"
+        >
+            <NuxtLink
+                to="/dashboard"
+                class="font-bold text-xl"
+                active-class="underline"
+                >Dashboard</NuxtLink
+            >
+            <NuxtLink
+                to="/profile"
+                class="font-bold text-xl"
+                active-class="underline"
+                >Profile</NuxtLink
+            >
+            <NuxtLink
+                to="/Logout"
+                class="font-bold text-xl"
+                active-class="text-chips-yellow"
                 >Logout</NuxtLink
             >
         </div>
-        <div
+        <!-- <div
             class="h-full w-1 absolute right-5 flex flex-col place-content-evenly"
         >
             <div
@@ -32,6 +42,12 @@
                     'bg-fiche-green': i % 2 == 0,
                 }"
             ></div>
+        </div> -->
+        <div
+            class="flex flex-col w-full justify-center items-center relative top-[32%]"
+        >
+            <img src="..\..\assets\icon.png" class="w-2/4" alt="F&C logo" />
+            <p class="text-white text-[10px]">made with love by fiche&chips</p>
         </div>
     </div>
 </template>

@@ -1,21 +1,29 @@
 <template>
-    <div class="flex flex-col">
-        <div
-            name="title"
-            class="flex border-t-2 border-b-2 border-chips-yellow items-center h-10 px-3"
-        >
-            <h1>Title</h1>
-            <div class="h-5 w-[2px] bg-chips-yellow mx-4"></div>
-            <h1>Title</h1>
-            <div class="h-5 w-[2px] bg-chips-yellow mx-4"></div>
-            <h1>Title</h1>
-            <div class="h-5 w-[2px] bg-chips-yellow mx-4"></div>
-            <h1>Title</h1>
-            <div class="h-5 w-[2px] bg-chips-yellow mx-4"></div>
-            <h1>Title</h1>
-            <div class="h-5 w-[2px] bg-chips-yellow mx-4"></div>
-            <h1>Title</h1>
-        </div>
+    <div
+        class="w-full h-full border-2 p-4 text-xl overflow-y-auto"
+        :class="borderColor"
+    >
+        <table class="min-w-full">
+            <thead class="sticky top-0 bg-white" :class="textColor">
+                <tr>
+                    <th v-for="(rowItem, index) in labels" :key="index">
+                        {{ rowItem }}
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="font-extralight space-y-10">
+                <tr class="" v-for="(row, index) in rows" :key="index">
+                    <th
+                        class="font-light p-5"
+                        v-for="(rowItem, index) in row"
+                        :key="index"
+                    >
+                        {{ rowItem }}
+                    </th>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -23,8 +31,20 @@
 export default {
     name: 'CustomTable',
     props: {
-        labels: { type: Array },
-        Rows: { type: Array },
+        labels: {
+            type: Array,
+            default: () => ['Campagne en cours', 'Mj', 'Prochaine séance'],
+        },
+        rows: {
+            type: Array,
+            default: () => [
+                ['Kaamlot: La quête du graal', 'Puigs', '10/06/2022 à 19h00'],
+            ],
+        },
+        borderColor: { type: String, default: 'border-black' },
+        textColor: { type: String, default: 'text-black' },
+        width: { type: Number },
+        height: { type: Number },
     },
 }
 </script>
