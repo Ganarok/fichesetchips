@@ -89,9 +89,6 @@ sw.*
 # Vim swap files
 *.swp
 
-# package-lock
-package-lock.json
-
 # report playwright
 front/playwright-report/
 front/test-results/
