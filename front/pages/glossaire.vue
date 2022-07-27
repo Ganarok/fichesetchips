@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import SidebarLayout from '../components/layouts/Sidebar.vue'
+import SidebarLayout from '../layouts/Sidebar.vue'
 
 export default {
     name: 'GlossairePage',
