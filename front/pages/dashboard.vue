@@ -52,7 +52,10 @@
                                 <h1>Classe {{ personnage }}</h1>
                             </div>
                             <div class="h-3/5 w-full">
-                            <img src="..\assets\CharPlaceholder.jpg" alt="">
+                                <img
+                                    src="../assets/CharPlaceholder.jpg"
+                                    alt=""
+                                />
                             </div>
                             <div
                                 class="h-1/5 flex w-full justify-center items-center"

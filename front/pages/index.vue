@@ -97,4 +97,8 @@ export default Vue.extend({
     background-image: url('../assets/index/pixelsBackgrounds.svg');
     background-size: cover;
 }
+
+html {
+    scroll-behavior: smooth;
+}
 </style>

@@ -4,14 +4,13 @@
     >
         <div class="w-full absolute top-0 flex justify-center p-6">
             <NuxtLink to="/">
-                <img
-                    src="../../assets/fetc.png"
-                    alt="Fiche&Chips"
-                />
+                <img src="../../assets/fetc.png" alt="Fiche&Chips" />
             </NuxtLink>
         </div>
 
-        <div class="flex flex-col items-center justify-center text-white space-y-8">
+        <div
+            class="flex flex-col items-center justify-center text-white space-y-8"
+        >
             <NuxtLink
                 to="/dashboard"
                 class="font-bold text-xl"
@@ -47,7 +46,7 @@
         <div
             class="flex flex-col w-full justify-center items-center relative top-[32%]"
         >
-            <img src="..\..\assets\icon.png" class="w-2/4" alt="F&C logo" />
+            <img src="../../assets/icon.png" class="w-2/4" alt="F&C logo" />
             <p class="text-white text-[10px]">made with love by fiche&chips</p>
         </div>
     </div>
