@@ -6,10 +6,10 @@
             <img src="../assets/logo.svg" class="m-[15%]" alt="logo" />
             <div class="text-center text-xl font-barlow text-white font-bold">
                 <h1 class="m-[15%] underline">
-                    <NuxtLink to="/"> Home </NuxtLink>
+                    <NuxtLink to="/"> Accueil </NuxtLink>
                 </h1>
                 <h1 class="m-[15%]">
-                    <NuxtLink to="/about"> About </NuxtLink>
+                    <NuxtLink to="/about"> A propos </NuxtLink>
                 </h1>
             </div>
             <div class="flex flex-col m-[10%] font-barlow text-center">
