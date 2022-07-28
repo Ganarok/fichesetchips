@@ -17,7 +17,8 @@
                 <h1 class="text-5xl">Connexion</h1>
                 <p
                     class="underline text-xs opacity-70 cursor-pointer"
-                    @click="showModal = true">
+                    @click="showModal = true"
+                >
                     Pas encore inscrit ? Cliquez ici
                 </p>
             </div>

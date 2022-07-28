@@ -1,15 +1,15 @@
 <template>
     <div class="flex flex-col">
         <div
-            class="flex flex-row w-full items-center bg-fc-black justify-between z-10 p-4 h-[10%] sm:p-auto sm:flex-col sm:fixed sm:h-screen sm:w-[13%]">
-            <img
-                src="../assets/logo.svg"
-                class="w-[10%] sm:w-auto sm:m-[15%]"
-                alt="logo" />
-            <div
-                class="text-center font-barlow text-white font-bold text-lg sm:text-xl">
-                <h1 class="hover:underline">
-                    <NuxtLink to="/"> {{ $t('Accueil') }} </NuxtLink>
+            class="w-[13%] h-screen bg-fc-black flex flex-col justify-between fixed tablet:w-[20%]"
+        >
+            <img src="../assets/logo.svg" class="m-[15%]" alt="logo" />
+            <div class="text-center text-xl font-barlow text-white font-bold">
+                <h1 class="m-[15%] underline">
+                    <NuxtLink to="/"> Accueil </NuxtLink>
+                </h1>
+                <h1 class="m-[15%]">
+                    <NuxtLink to="/about"> A propos </NuxtLink>
                 </h1>
             </div>
             <div

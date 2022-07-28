@@ -1,7 +1,8 @@
 <template>
     <div
         class="w-full h-full border-2 p-4 text-xl overflow-y-auto"
-        :class="borderColor">
+        :class="borderColor"
+    >
         <table class="min-w-full">
             <thead class="sticky top-0 bg-white" :class="textColor">
                 <tr>
@@ -16,7 +17,8 @@
                     <th
                         class="font-light p-5"
                         v-for="(rowItem, index) in row"
-                        :key="index">
+                        :key="index"
+                    >
                         {{ rowItem }}
                     </th>
                 </tr>
