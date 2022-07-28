@@ -19,7 +19,7 @@
             <div class="ml-5 mb-4">
                 <h1 class="text-5xl">Connexion</h1>
                 <p
-                    class="underline text-xs opacity-70"
+                    class="underline text-xs opacity-70 cursor-pointer"
                     @click="showModal = true"
                 >
                     Pas encore inscrit ? Cliquez ici
@@ -29,7 +29,7 @@
                 <subComponent-CustomInput placeHolder="Identifiant" />
                 <subComponent-CustomInput placeHolder="Mot de passe" />
             </div>
-            <p class="ml-5 mt-0 underline text-xs opacity-70">
+            <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
                 Mot de passe oublié
             </p>
 
