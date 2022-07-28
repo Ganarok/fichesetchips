@@ -4,8 +4,7 @@
         <input
             class="w-full h-12 p-3 border placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
             :placeholder="placeHolder"
-            type="text"
-        />
+            type="text" />
     </div>
 </template>
 
