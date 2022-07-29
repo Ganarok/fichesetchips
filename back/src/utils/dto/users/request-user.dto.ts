@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { defaultUser, ROLE } from 'src/utils/seeders/users/users.fixtures';
+import { defaultUser } from 'src/utils/constants/users/users.constants';
+import { ROLE } from 'src/utils/types/users/users.types';
 
 export class CreateUserDto {
 
