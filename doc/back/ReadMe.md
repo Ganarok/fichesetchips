@@ -336,15 +336,28 @@ _____________________________________________________________
 
 ### Process d'implémentation d'une nouvelle route
 
-1- Typage
+Les routes à implémenter peuvent être retrouvée sur le document technique [Spécification Back](https://docs.google.com/document/d/1M4xSmhlM6TDsh3xuz_-ARrAxN-OhbqEOgfmDYradQuo/edit#).
 
-2- Valeur par défault
+Une fois le document pris en considération, le procédé est le suivant :
 
-3- Tests
+1- Définition de la route - Controller
+- Guard si besoin à rédiger dans `utils>guards>...guards.ts`
+- Méthode (GET, POST, PATCH, PUT, DELETE)
+- route (url)
+- query params 
+- body 
+- response
 
-4- Mise en place de la route
+2- Valeurs par défaut
+à renseigner dans les fixtures `utils>constants>...constants.ts`
 
-5- Guards
+3- Types
+- type défaut à reprendre des fixtures
+- dto à rédiger pour request et response
+- exception à renseigner dans `utils>exceptions>...>...exceptions.ts`
+
+4- Tests
+Tester c'est douter
 
 ### Process de création d'une nouvelle table
 
