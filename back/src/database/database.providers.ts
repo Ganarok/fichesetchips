@@ -3,6 +3,9 @@ import { Preference } from 'src/schemas/preference.schema';
 import { User } from 'src/schemas/user.schema';
 
 import * as dotenv from 'dotenv'
+import { Friend } from 'src/schemas/friend.schema';
+import { Badge } from 'src/schemas/badge.schema';
+import { BadgeUser } from 'src/schemas/badgeUser.schema';
 dotenv.config()
 
 export const databaseProviders = [
@@ -17,8 +20,12 @@ export const databaseProviders = [
                 password: process.env.DB_PASSWORD || 'postgres',
                 database: process.env.DB_NAME || 'fichesetchips',
             });
-            sequelize.addModels([User, Preference]);
+            sequelize.addModels([User, Preference, Friend, Badge, BadgeUser]);
             Preference.hasOne(User, {foreignKey: "preference_id", onDelete: "SET DEFAULT"})
+            User.hasMany(Friend, {foreignKey: "user_ask_id", onDelete: "CASCADE"})
+            User.hasMany(Friend, {foreignKey: "user_answer_id", onDelete: "CASCADE"})
+            Badge.belongsToMany(User, { through: BadgeUser, foreignKey: 'user_id' })
+            User.belongsToMany(Badge, { through: BadgeUser, foreignKey: 'badge_id' })
             await sequelize.sync();
             return sequelize;
         },
