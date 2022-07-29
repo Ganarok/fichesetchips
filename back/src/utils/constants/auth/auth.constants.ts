@@ -1,4 +1,4 @@
-import { defaultUser } from "../users/users.fixtures";
+import { defaultUser } from "../users/users.constants";
 
 export const defaultAuthResponse = {
     user: defaultUser,

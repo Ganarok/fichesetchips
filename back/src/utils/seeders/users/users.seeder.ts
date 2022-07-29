@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Seeder, DataFactory } from "nestjs-seeder";
 import { User } from "src/schemas/user.schema";
-import { users } from "./users.fixtures";
+import { defaultUser, defaultUsers } from "src/utils/constants/users/users.constants";
 
 @Injectable()
 export class UsersSeeder implements Seeder {
@@ -9,7 +9,7 @@ export class UsersSeeder implements Seeder {
 
   async seed(): Promise<any> {
     try {
-      return await User.bulkCreate(users, { individualHooks: true });
+      return await User.bulkCreate(defaultUsers, { individualHooks: true });
     } catch (e) {
       console.log(e)
     }
