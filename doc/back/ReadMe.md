@@ -338,18 +338,62 @@ _____________________________________________________________
 
 Les routes à implémenter peuvent être retrouvée sur le document technique [Spécification Back](https://docs.google.com/document/d/1M4xSmhlM6TDsh3xuz_-ARrAxN-OhbqEOgfmDYradQuo/edit#).
 
-Une fois le document pris en considération, le procédé est le suivant :
+Une fois le document pris en considération, le procédé suivant peut être un guide. Nous nous baseront sur l'implémentation de la route `GET auth/profile` :
+
+```typescript
+import { Controller, Get, Post, Body, Request, UseGuards, HttpCode, UnauthorizedException } from '@nestjs/common';
+import { ApiBody, ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/utils/guards/auth.guard';
+import { AuthService } from 'src/services/auth.service';
+import { LoginAuthDto, RegisterAuthDto } from 'src/utils/dto/auth/request-auth.dto';
+import { ResponseAuthDto } from 'src/utils/dto/auth/response-auth.dto';
+import { AuthSequelizeUniqueConstraintError, AuthTokenUnauthorizedException, AuthUnauthorizedException } from 'src/utils/exceptions/auth/exceptions-auth';
+
+@ApiTags('Authentification')
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) { }
+
+// ...
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
+  @Get('profile')
+  @ApiResponse({ status: 200, description: 'OK', type: ResponseAuthDto })
+  @ApiResponse({ status: 401, description: 'Wrong token.', type: AuthTokenUnauthorizedException })
+  getProfile(@Request() req: any) {
+    return req.user;
+  }
+}
+```
 
 1- Définition de la route - Controller
-- Guard si besoin à rédiger dans `utils>guards>...guards.ts`
+- Guard. 
+Exemple : JWT Auth Guard qui permet de s'assurer qu'un Bearer token valide a été renseigné : `@UseGuards(JwtAuthGuard)`
+Si le Guard n'est pas encore implémenté, le mettre en commentaire.
+Pour récupérer les données de token c'est avec `@Request() req: any` puis `req.user`.
+
 - Méthode (GET, POST, PATCH, PUT, DELETE)
+Ici c'est un GET. 
+
 - route (url)
+Définie dans un premier à la définition du controller `@Controller('auth')` et la suite à la définition de la méthode `@Get('profile')`
+
 - query params 
+Si l'on souhaite récupérer des données de l'url c'est `@Param('id') id: string`.
+
 - body 
+Si l'ont souhaite récupérer des données du body c'est grâce à `@Body() body: RegisterAuthDto` par exemple. 
+
 - response
+Il est important de typer également la réponse de l'appel de la route en fonction de son statut :
+```typescript
+  @ApiResponse({ status: 200, description: 'OK', type: ResponseAuthDto })
+  @ApiResponse({ status: 401, description: 'Wrong token.', type: AuthTokenUnauthorizedException })
+```
 
 2- Valeurs par défaut
-à renseigner dans les fixtures `utils>constants>...constants.ts`
+à renseigner dans les constantes associées `utils>constants>...constants.ts`
 
 3- Types
 - type défaut à reprendre des fixtures
@@ -358,6 +402,62 @@ Une fois le document pris en considération, le procédé est le suivant :
 
 4- Tests
 Tester c'est douter
+
+### Process d'implémentation d'un guard
+
+A rédiger dans `utils>guards>...guards.ts`.
+Exemple :
+```typescript
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { Observable } from "rxjs/internal/Observable";
+import { PicturesService } from "src/pictures/pictures.service";
+import { AlbumsService } from "./albums.service";
+
+// Check that a user is owner
+@Injectable()
+export class AlbumIsOwner implements CanActivate {
+    constructor(private albumsService: AlbumsService, private pictureService: PicturesService) {
+    }
+
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+        return this.validateRequest(context)
+    }
+
+    async validateRequest(execContext: ExecutionContext): Promise<boolean> {
+        const request = execContext.switchToHttp().getRequest();
+        const album_id = request.params.id
+        const user = request.user
+        if (!await this.albumsService.checkOwnership(user.id, album_id)) {
+            return false
+        }
+        if (request.body.picture_id) {
+            const picture_id = request.body.picture_id
+            if (!await this.pictureService.checkOwnership(user.id, picture_id)) {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+// Check that a user has access
+@Injectable()
+export class AlbumHasAccess implements CanActivate {
+    constructor(private albumsService: AlbumsService) {
+    }
+
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+        return this.validateRequest(context)
+    }
+
+    async validateRequest(execContext: ExecutionContext): Promise<boolean> {
+        const request = execContext.switchToHttp().getRequest();
+        const id = request.params.id
+        const user = request.user
+        return await this.albumsService.checkAccess(user.id, id)
+    }
+}
+```
 
 ### Process de création d'une nouvelle table
 
