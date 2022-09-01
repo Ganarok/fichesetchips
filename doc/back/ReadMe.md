@@ -332,7 +332,6 @@ app.useGlobalFilters(new AllExceptionsFilter())
 _____________________________________________________________
 
 ## Onboarding
-<!-- TODO -->
 
 ### Process d'implémentation d'une nouvelle route
 
@@ -474,10 +473,16 @@ A rédiger dans `back/src/schemas/...`.
 - Définition des champs
 
 ```typescript
-<!-- ... imports ... -->
+import { Table, Column, Model, BeforeCreate} from 'sequelize-typescript';
+import { defaultUser } from 'src/utils/constants/users/users.constants';
+import { ROLE } from 'src/utils/types/users/users.types';
+import { UUID, UUIDV4 } from 'sequelize';
 
 @Table
 export class User extends Model {
+    @Column({ type: UUID, defaultValue: UUIDV4, primaryKey: true })
+    id: string;
+
     @Column({ allowNull: false, unique: true })
     username: string;
 
@@ -490,8 +495,8 @@ export class User extends Model {
     @Column({ allowNull: false, defaultValue: defaultUser.role })
     role: ROLE;
 
-    @Column({ allowNull: false, defaultValue: defaultUser.preference_id })
-    preference_id: number;
+    @Column({ allowNull: false, type: UUID, defaultValue: UUIDV4 })
+    preference_id: string;
 }
 ```
 
@@ -501,14 +506,16 @@ Dans le cas de la création d'un user, il est nécessaire de hasher le mot de pa
 
 `users.schema.ts`
 ```typescript
+import * as bcrypt from 'bcrypt';
+
+...
     @BeforeCreate
     static async hashPassword(user: User) {
         if (user.password) {
             const salt = await bcrypt.genSalt();
             const hash = await bcrypt.hash(user.password, salt);
             user.password = hash
-        }
-    }
+...
 ```
 
 2- Création de la table
@@ -516,7 +523,7 @@ Dans le cas de la création d'un user, il est nécessaire de hasher le mot de pa
 Les création de table, gestion des jointures etc ... sont géré par le module database et défini dans le provider database: `back/src/database/...`
 
 `database.providers.ts`
-```typescipt
+```typescript
 export const databaseProviders = [
     {
         provide: 'SEQUELIZE',
@@ -539,8 +546,46 @@ export const databaseProviders = [
 
 3- Seeder
 
-```typescipt
+Après téléchargement de la librairie et ajour du script `"seed": "node dist/seeder",` dans `package.json`. Le fichier `seeder.ts` à la racine du projet s'occupe de lancer les différents Seeder :
+
+```typescript
+import { seeder } from "nestjs-seeder";
+import { DatabaseModule } from "./database/database.module";
+import { PreferencesSeeder } from "./utils/seeders/preferences/preferences.seeder";
+import { UsersSeeder } from "./utils/seeders/users/users.seeder";
+ 
+seeder({
+  imports: [DatabaseModule],
+}).run([PreferencesSeeder, UsersSeeder]);
 ```
+
+Exemple du UsersSeeder (utilisant les constantes du dossier `back/src/utils/constants/...`):
+
+```typescript
+import { Injectable } from "@nestjs/common";
+import { Seeder, DataFactory } from "nestjs-seeder";
+import { User } from "src/schemas/user.schema";
+import { defaultUser } from "src/utils/constants/users/users.constants";
+
+@Injectable()
+export class UsersSeeder implements Seeder {
+  constructor() { }
+
+  async seed(): Promise<any> {
+    try {
+      return await User.create(defaultUser);
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async drop(): Promise<any> {
+    return await User.destroy({ where: {} });
+  }
+}
+```
+
+
 
 4- Liasons entre tables
 
@@ -548,7 +593,9 @@ export const databaseProviders = [
 Exemple : liaison entre les tables `users` et `preferences`.
 Un user ne peut être lié qu'à une unique préférence. Une préférence peut être utilisée par plusieurs users.
 
-```typescipt
+Si la préférence en question est supprimée, il faut que tous les users impactés se retrouvent avec la préférence par défault.
+
+```typescript
             sequelize.addModels([User, Preference]);
             Preference.hasOne(User, {foreignKey: "preference_id", onDelete: "SET DEFAULT"})
             await sequelize.sync();
