@@ -19,15 +19,15 @@ _____________________________________________________
 
 Swagger est un outil open source de documentation d'API. Directement intégré à Nest et utilisable grâce à des décorateurs, Swagger permet la génération d'une interface lisible et simplifiée de l'API.
 
-![Interface](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/screen1.png)
+![Interface](./assets/screen1.png)
 
 Cet outil nous permet de visualiser faciliment les types et valeurs par défault des objets utilisés (body, params, query, ...).
 
-![Schemas](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/schemas.png)
+![Schemas](./assets/schemas.png)
 
 Il nous permet également de visualiser des examples de réponses en fonction du status http.
 
-![Responses](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/responses.png)
+![Responses](./assets/responses.png)
 
 ### Intégration
 
@@ -80,11 +80,11 @@ export class AuthController {
 }
 ```
 
-![Controller](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/authcontroller.png)
+![Controller](./assets/authcontroller.png)
 
-![body](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/body.png)
+![body](./assets/body.png)
 
-![Responses](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/responses2.png)
+![Responses](./assets/responses2.png)
 
  - Typage - Dto & Exceptions
 
@@ -175,9 +175,9 @@ export const unauthorizedException = {
   }
 ```
 
-![bearer1](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/bearer1.png)
+![bearer1](./assets/bearer1.png)
 
-![bearer2](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/bearer2.png)
+![bearer2](./assets/bearer2.png)
 
 
 ____________________________________________________________________________________________
@@ -332,29 +332,275 @@ app.useGlobalFilters(new AllExceptionsFilter())
 _____________________________________________________________
 
 ## Onboarding
-<!-- TODO -->
 
 ### Process d'implémentation d'une nouvelle route
 
-1- Typage
+Les routes à implémenter peuvent être retrouvée sur le document technique [Spécification Back](https://docs.google.com/document/d/1M4xSmhlM6TDsh3xuz_-ARrAxN-OhbqEOgfmDYradQuo/edit#).
 
-2- Valeur par défault
+Une fois le document pris en considération, le procédé suivant peut être un guide. Nous nous baseront sur l'implémentation de la route `GET auth/profile` :
 
-3- Tests
+```typescript
+import { Controller, Get, Post, Body, Request, UseGuards, HttpCode, UnauthorizedException } from '@nestjs/common';
+import { ApiBody, ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/utils/guards/auth.guard';
+import { AuthService } from 'src/services/auth.service';
+import { LoginAuthDto, RegisterAuthDto } from 'src/utils/dto/auth/request-auth.dto';
+import { ResponseAuthDto } from 'src/utils/dto/auth/response-auth.dto';
+import { AuthSequelizeUniqueConstraintError, AuthTokenUnauthorizedException, AuthUnauthorizedException } from 'src/utils/exceptions/auth/exceptions-auth';
 
-4- Mise en place de la route
+@ApiTags('Authentification')
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) { }
 
-5- Guards
+// ...
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
+  @Get('profile')
+  @ApiResponse({ status: 200, description: 'OK', type: ResponseAuthDto })
+  @ApiResponse({ status: 401, description: 'Wrong token.', type: AuthTokenUnauthorizedException })
+  getProfile(@Request() req: any) {
+    return req.user;
+  }
+}
+```
+
+1- Définition de la route - Controller
+- Guard. 
+Exemple : JWT Auth Guard qui permet de s'assurer qu'un Bearer token valide a été renseigné : `@UseGuards(JwtAuthGuard)`
+Si le Guard n'est pas encore implémenté, le mettre en commentaire.
+Pour récupérer les données de token c'est avec `@Request() req: any` puis `req.user`.
+
+- Méthode (GET, POST, PATCH, PUT, DELETE)
+Ici c'est un GET. 
+
+- route (url)
+Définie dans un premier à la définition du controller `@Controller('auth')` et la suite à la définition de la méthode `@Get('profile')`
+
+- query params 
+Si l'on souhaite récupérer des données de l'url c'est `@Param('id') id: string`.
+
+- body 
+Si l'ont souhaite récupérer des données du body c'est grâce à `@Body() body: RegisterAuthDto` par exemple. 
+
+- response
+Il est important de typer également la réponse de l'appel de la route en fonction de son statut :
+```typescript
+  @ApiResponse({ status: 200, description: 'OK', type: ResponseAuthDto })
+  @ApiResponse({ status: 401, description: 'Wrong token.', type: AuthTokenUnauthorizedException })
+```
+
+2- Valeurs par défaut
+à renseigner dans les constantes associées `utils>constants>...constants.ts`
+
+3- Types
+- type défaut à reprendre des fixtures
+- dto à rédiger pour request et response
+- exception à renseigner dans `utils>exceptions>...>...exceptions.ts`
+
+4- Tests
+
+Tester c'est douter
+
+### Process d'implémentation d'un guard
+
+A rédiger dans `utils>guards>...guards.ts`.
+Exemple :
+```typescript
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { Observable } from "rxjs/internal/Observable";
+import { PicturesService } from "src/pictures/pictures.service";
+import { AlbumsService } from "./albums.service";
+
+// Check that a user is owner
+@Injectable()
+export class AlbumIsOwner implements CanActivate {
+    constructor(private albumsService: AlbumsService, private pictureService: PicturesService) {
+    }
+
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+        return this.validateRequest(context)
+    }
+
+    async validateRequest(execContext: ExecutionContext): Promise<boolean> {
+        const request = execContext.switchToHttp().getRequest();
+        const album_id = request.params.id
+        const user = request.user
+        if (!await this.albumsService.checkOwnership(user.id, album_id)) {
+            return false
+        }
+        if (request.body.picture_id) {
+            const picture_id = request.body.picture_id
+            if (!await this.pictureService.checkOwnership(user.id, picture_id)) {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+// Check that a user has access
+@Injectable()
+export class AlbumHasAccess implements CanActivate {
+    constructor(private albumsService: AlbumsService) {
+    }
+
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+        return this.validateRequest(context)
+    }
+
+    async validateRequest(execContext: ExecutionContext): Promise<boolean> {
+        const request = execContext.switchToHttp().getRequest();
+        const id = request.params.id
+        const user = request.user
+        return await this.albumsService.checkAccess(user.id, id)
+    }
+}
+```
 
 ### Process de création d'une nouvelle table
 
+Les tables à implémenter au sien de notre bdd postgres peuvent être retrouvée sur le document technique [Spécification Back](https://docs.google.com/document/d/1M4xSmhlM6TDsh3xuz_-ARrAxN-OhbqEOgfmDYradQuo/edit#).
+
+Une fois le document pris en considération, le procédé suivant peut être un guide. Nous nous baseront sur l'implémentation de la table `users` :
+
 1- Schéma
+
+A rédiger dans `back/src/schemas/...`.
+
+- Définition des champs
+
+`users.schema.ts`
+```typescript
+import { Table, Column, Model, BeforeCreate} from 'sequelize-typescript';
+import { defaultUser } from 'src/utils/constants/users/users.constants';
+import { ROLE } from 'src/utils/types/users/users.types';
+import { UUID, UUIDV4 } from 'sequelize';
+
+@Table
+export class User extends Model {
+    @Column({ type: UUID, defaultValue: UUIDV4, primaryKey: true })
+    id: string;
+
+    @Column({ allowNull: false, unique: true })
+    username: string;
+
+    @Column({ allowNull: false })
+    password: string;
+
+    @Column({ allowNull: false, defaultValue: defaultUser.avatar })
+    avatar: string;
+
+    @Column({ allowNull: false, defaultValue: defaultUser.role })
+    role: ROLE;
+
+    @Column({ allowNull: false, type: UUID, defaultValue: UUIDV4 })
+    preference_id: string;
+}
+```
+
+- Hooks
+
+Dans le cas de la création d'un user, il est nécessaire de hasher le mot de passe avant création. Celà peut être fait automatiquement via l'utilisation du décorateur nest `@BeforeCreate` :
+
+`users.schema.ts`
+```typescript
+import * as bcrypt from 'bcrypt';
+
+...
+    @BeforeCreate
+    static async hashPassword(user: User) {
+        if (user.password) {
+            const salt = await bcrypt.genSalt();
+            const hash = await bcrypt.hash(user.password, salt);
+            user.password = hash
+...
+```
 
 2- Création de la table
 
+Les création de table, gestion des jointures etc ... sont géré par le module database et défini dans le provider database: `back/src/database/...`
+
+`database.providers.ts`
+```typescript
+export const databaseProviders = [
+    {
+        provide: 'SEQUELIZE',
+        useFactory: async () => {
+            const sequelize = new Sequelize({
+                dialect: 'postgres',
+                host: process.env.DB_HOST || 'localhost',
+                port: parseInt(process.env.DB_PORT) || 5432,
+                username: process.env.DB_USER || 'postgres',
+                password: process.env.DB_PASSWORD || 'postgres',
+                database: process.env.DB_NAME || 'fichesetchips',
+            });
+            sequelize.addModels([User]);
+            await sequelize.sync();
+            return sequelize;
+        },
+    },
+];
+```
+
 3- Seeder
 
+Après téléchargement de la librairie et ajour du script `"seed": "node dist/seeder",` dans `package.json`. Le fichier `seeder.ts` à la racine du projet s'occupe de lancer les différents Seeder :
+
+```typescript
+import { seeder } from "nestjs-seeder";
+import { DatabaseModule } from "./database/database.module";
+import { PreferencesSeeder } from "./utils/seeders/preferences/preferences.seeder";
+import { UsersSeeder } from "./utils/seeders/users/users.seeder";
+ 
+seeder({
+  imports: [DatabaseModule],
+}).run([PreferencesSeeder, UsersSeeder]);
+```
+
+Exemple du UsersSeeder (utilisant les constantes du dossier `back/src/utils/constants/...`):
+
+```typescript
+import { Injectable } from "@nestjs/common";
+import { Seeder, DataFactory } from "nestjs-seeder";
+import { User } from "src/schemas/user.schema";
+import { defaultUser } from "src/utils/constants/users/users.constants";
+
+@Injectable()
+export class UsersSeeder implements Seeder {
+  constructor() { }
+
+  async seed(): Promise<any> {
+    try {
+      return await User.create(defaultUser);
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async drop(): Promise<any> {
+    return await User.destroy({ where: {} });
+  }
+}
+```
+
+
+
 4- Liasons entre tables
+
+- Cas d'une liaison 1:N
+Exemple : liaison entre les tables `users` et `preferences`.
+Un user ne peut être lié qu'à une unique préférence. Une préférence peut être utilisée par plusieurs users.
+
+Si la préférence en question est supprimée, il faut que tous les users impactés se retrouvent avec la préférence par défault.
+
+```typescript
+            sequelize.addModels([User, Preference]);
+            Preference.hasOne(User, {foreignKey: "preference_id", onDelete: "SET DEFAULT"})
+            await sequelize.sync();
+            return sequelize;
+```
 
 
 

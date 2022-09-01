@@ -1,5 +1,5 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { defaultUser } from 'src/utils/seeders/users/users.fixtures';
+import { defaultUser } from 'src/utils/constants/users/users.constants';
 
 export class LoginAuthDto  {
     @ApiProperty({ default: defaultUser.username })
@@ -12,7 +12,7 @@ export class LoginAuthDto  {
 export class PayloadAuthDto  {
 
     @ApiProperty({ default: defaultUser.id })
-    id: number;
+    id: string;
 
     @ApiProperty({ default: defaultUser.username })
     username: string;

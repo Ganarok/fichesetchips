@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { defaultAuthResponse } from 'src/utils/seeders/auth/auth.fixtures';
-import { defaultUser, UserType } from 'src/utils/seeders/users/users.fixtures';
+import { defaultAuthResponse } from 'src/utils/constants/auth/auth.constants';
+import { defaultUser } from 'src/utils/constants/users/users.constants';
+import { UserType } from 'src/utils/types/users/users.types';
 
 export class ResponseAuthDto  {
 
