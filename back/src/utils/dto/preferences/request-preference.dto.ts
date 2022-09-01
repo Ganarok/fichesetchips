@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { defaultPreference, LANGUAGES, THEMES } from 'src/utils/seeders/preferences/preferences.fixtures';
+import { defaultPreference } from 'src/utils/constants/preferences/preferences.constants';
+import { LANGUAGES, THEMES } from 'src/utils/types/preferences/preferences.types';
 
 export class CreatePreferenceDto {
 
