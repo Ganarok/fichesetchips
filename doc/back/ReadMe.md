@@ -19,15 +19,15 @@ _____________________________________________________
 
 Swagger est un outil open source de documentation d'API. Directement intégré à Nest et utilisable grâce à des décorateurs, Swagger permet la génération d'une interface lisible et simplifiée de l'API.
 
-![Interface](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/screen1.png)
+![Interface](./assets/screen1.png)
 
 Cet outil nous permet de visualiser faciliment les types et valeurs par défault des objets utilisés (body, params, query, ...).
 
-![Schemas](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/schemas.png)
+![Schemas](./assets/schemas.png)
 
 Il nous permet également de visualiser des examples de réponses en fonction du status http.
 
-![Responses](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/responses.png)
+![Responses](./assets/responses.png)
 
 ### Intégration
 
@@ -80,11 +80,11 @@ export class AuthController {
 }
 ```
 
-![Controller](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/authcontroller.png)
+![Controller](./assets/authcontroller.png)
 
-![body](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/body.png)
+![body](./assets/body.png)
 
-![Responses](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/responses2.png)
+![Responses](./assets/responses2.png)
 
  - Typage - Dto & Exceptions
 
@@ -175,9 +175,9 @@ export const unauthorizedException = {
   }
 ```
 
-![bearer1](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/bearer1.png)
+![bearer1](./assets/bearer1.png)
 
-![bearer2](https://github.com/Ganarok/fichesetchips/blob/back/doc/back/assets/bearer2.png)
+![bearer2](./assets/bearer2.png)
 
 
 ____________________________________________________________________________________________
@@ -401,6 +401,7 @@ Il est important de typer également la réponse de l'appel de la route en fonct
 - exception à renseigner dans `utils>exceptions>...>...exceptions.ts`
 
 4- Tests
+
 Tester c'est douter
 
 ### Process d'implémentation d'un guard
@@ -461,13 +462,98 @@ export class AlbumHasAccess implements CanActivate {
 
 ### Process de création d'une nouvelle table
 
+Les tables à implémenter au sien de notre bdd postgres peuvent être retrouvée sur le document technique [Spécification Back](https://docs.google.com/document/d/1M4xSmhlM6TDsh3xuz_-ARrAxN-OhbqEOgfmDYradQuo/edit#).
+
+Une fois le document pris en considération, le procédé suivant peut être un guide. Nous nous baseront sur l'implémentation de la table `users` :
+
 1- Schéma
+
+A rédiger dans `back/src/schemas/...`.
+`users.schema.ts`
+
+- Définition des champs
+
+```typescript
+<!-- ... imports ... -->
+
+@Table
+export class User extends Model {
+    @Column({ allowNull: false, unique: true })
+    username: string;
+
+    @Column({ allowNull: false })
+    password: string;
+
+    @Column({ allowNull: false, defaultValue: defaultUser.avatar })
+    avatar: string;
+
+    @Column({ allowNull: false, defaultValue: defaultUser.role })
+    role: ROLE;
+
+    @Column({ allowNull: false, defaultValue: defaultUser.preference_id })
+    preference_id: number;
+}
+```
+
+- Hooks
+
+Dans le cas de la création d'un user, il est nécessaire de hasher le mot de passe avant création. Celà peut être fait automatiquement via l'utilisation du décorateur nest `@BeforeCreate` :
+
+`users.schema.ts`
+```typescript
+    @BeforeCreate
+    static async hashPassword(user: User) {
+        if (user.password) {
+            const salt = await bcrypt.genSalt();
+            const hash = await bcrypt.hash(user.password, salt);
+            user.password = hash
+        }
+    }
+```
 
 2- Création de la table
 
+Les création de table, gestion des jointures etc ... sont géré par le module database et défini dans le provider database: `back/src/database/...`
+
+`database.providers.ts`
+```typescipt
+export const databaseProviders = [
+    {
+        provide: 'SEQUELIZE',
+        useFactory: async () => {
+            const sequelize = new Sequelize({
+                dialect: 'postgres',
+                host: process.env.DB_HOST || 'localhost',
+                port: parseInt(process.env.DB_PORT) || 5432,
+                username: process.env.DB_USER || 'postgres',
+                password: process.env.DB_PASSWORD || 'postgres',
+                database: process.env.DB_NAME || 'fichesetchips',
+            });
+            sequelize.addModels([User]);
+            await sequelize.sync();
+            return sequelize;
+        },
+    },
+];
+```
+
 3- Seeder
 
+```typescipt
+```
+
 4- Liasons entre tables
+
+- Cas d'une liaison 1:N
+Exemple : liaison entre les tables `users` et `preferences`.
+Un user ne peut être lié qu'à une unique préférence. Une préférence peut être utilisée par plusieurs users.
+
+```typescipt
+            sequelize.addModels([User, Preference]);
+            Preference.hasOne(User, {foreignKey: "preference_id", onDelete: "SET DEFAULT"})
+            await sequelize.sync();
+            return sequelize;
+```
 
 
 
