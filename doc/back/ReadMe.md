@@ -468,10 +468,10 @@ Une fois le document pris en considération, le procédé suivant peut être un 
 1- Schéma
 
 A rédiger dans `back/src/schemas/...`.
-`users.schema.ts`
 
 - Définition des champs
 
+`users.schema.ts`
 ```typescript
 import { Table, Column, Model, BeforeCreate} from 'sequelize-typescript';
 import { defaultUser } from 'src/utils/constants/users/users.constants';
