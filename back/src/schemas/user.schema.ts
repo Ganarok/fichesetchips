@@ -6,7 +6,7 @@ import { UUID, UUIDV4 } from 'sequelize';
 
 @Table
 export class User extends Model {
-    @Column({ type: UUID, defaultValue: "edf1dc34-3534-4cd7-85cf-a9488f1279f9", primaryKey: true })
+    @Column({ type: UUID, defaultValue: UUIDV4, primaryKey: true })
     id: string;
 
     @Column({ allowNull: false, unique: true })
