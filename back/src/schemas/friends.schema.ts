@@ -18,7 +18,4 @@ export class Friends extends Model {
 
   @Column({ type: INTEGER, allowNull: false })
   nbGames: string;
-
-  @Column({ type: DATE, allowNull: false })
-  created_at: string;
 }

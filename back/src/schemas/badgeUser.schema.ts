@@ -15,7 +15,4 @@ export class BadgeUser extends Model {
 
   @Column({ type: UUID, allowNull: false })
   badge_id: string;
-
-  @Column({ type: DATE, allowNull: false })
-  created_at: string;
 }
