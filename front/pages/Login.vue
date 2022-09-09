@@ -4,24 +4,20 @@
             <img
                 class="object-scale-down max-h-screen"
                 src="../assets/greenpixels.svg"
-                alt=""
-            />
+                alt="" />
         </div>
         <img
             class="mt-12 ml-12 max-h-52"
             src="../static/logo.png"
-            alt="Fiche&Chips"
-        />
+            alt="Fiche&Chips" />
         <form
             action=""
-            class="flex flex-col lg:absolute lg:right-32 lg:bottom-32 lg:w-96"
-        >
+            class="flex flex-col lg:absolute lg:right-32 lg:bottom-32 lg:w-96">
             <div class="ml-5 mb-4">
                 <h1 class="text-5xl">Connexion</h1>
                 <p
                     class="underline text-xs opacity-70 cursor-pointer"
-                    @click="showModal = true"
-                >
+                    @click="showModal = true">
                     Pas encore inscrit ? Cliquez ici
                 </p>
             </div>
@@ -38,8 +34,7 @@
         <Modal v-show="showModal" @close-modal="showModal = false">
             <subModalSignup
                 v-show="showModal"
-                @close-modal="showModal = false"
-            />
+                @close-modal="showModal = false" />
         </Modal>
     </div>
 </template>
