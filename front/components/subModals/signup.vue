@@ -1,12 +1,10 @@
 <template>
     <div
         class="fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-chip-yellow-trans"
-        @click="$emit('close-modal')"
-    >
+        @click="$emit('close-modal')">
         <div
             class="bg-white h-[617px] w-[617px] mt-auto mb-auto justify-end my-[5%]"
-            @click.stop
-        >
+            @click.stop>
             <div class="header p-5 h-[15%]">
                 <h2 class="text-5xl">Inscription</h2>
                 <button class="" @click="$emit('close-modal')">

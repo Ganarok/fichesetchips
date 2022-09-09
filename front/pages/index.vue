@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-col">
         <div
+
             class="flex flex-row w-full items-center bg-fc-black justify-between z-10 p-4 h-[10%] sm:p-auto sm:flex-col sm:fixed sm:h-screen sm:w-[13%]"
         >
             <img
@@ -13,6 +14,7 @@
             >
                 <h1 class="hover:underline">
                     <NuxtLink to="/"> {{ $t('Accueil') }} </NuxtLink>
+
                 </h1>
             </div>
             <div
@@ -60,11 +62,9 @@
                         <NuxtLink to="/login"> GO -> </NuxtLink>
                     </button>
                     <div
-                        class="w-[45px] h-[45px] bg-fiche-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"
-                    ></div>
+                        class="w-[45px] h-[45px] bg-fiche-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
                 </div>
             </div>
-
             <div class="flex flex-col overflow-x-hidden background">
                 <div
                     class="w-full pl-0 translate-x-[-10px] sm:translate-x-[-25px]"
@@ -92,7 +92,6 @@
         </a>
     </div>
 </template>
-
 <script lang="js">
 import Vue from 'vue'
 import MapVue from '~/components/svg/Map.vue'
