@@ -45,22 +45,22 @@
                     <div
                         class="w-[45px] h-[45px] bg-fiche-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
                 </div>
-                <div class="flex flex-col background">
-                    <img
-                        class="h-screen translate-x-[-25px] p-[3%] pl-0"
-                        src="../assets/index/map.svg" />
-                    <img
-                        class="h-screen self-center p-[3%]"
-                        src="../assets/index/amis.svg" />
-                    <div
-                        class="h-screen pl-[10%] self-end p-[3%] pr-0 relative flex">
-                        <img src="../assets/index/perso.svg" />
-                        <a
-                            href="#top"
-                            class="absolute bottom-0 right-0 w-[50px] h-[50px] m-[2%] opacity-80 hover:opacity-100">
-                            <img src="../assets/vector.svg" alt="vector" />
-                        </a>
-                    </div>
+            </div>
+            <div class="flex flex-col background">
+                <img
+                    class="h-screen translate-x-[-25px] p-[3%] pl-0"
+                    src="../assets/index/map.svg" />
+                <img
+                    class="h-screen self-center p-[3%]"
+                    src="../assets/index/amis.svg" />
+                <div
+                    class="h-screen pl-[10%] self-end p-[3%] pr-0 relative flex">
+                    <img src="../assets/index/perso.svg" />
+                    <a
+                        href="#top"
+                        class="absolute bottom-0 right-0 w-[50px] h-[50px] m-[2%] opacity-80 hover:opacity-100">
+                        <img src="../assets/vector.svg" alt="vector" />
+                    </a>
                 </div>
             </div>
         </div>
