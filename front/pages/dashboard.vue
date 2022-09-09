@@ -51,8 +51,7 @@
                             <div class="h-3/5 w-full">
                                 <img
                                     src="../assets/CharPlaceholder.jpg"
-                                    alt=""
-                                />
+                                    alt="" />
                             </div>
                             <div
                                 class="h-1/5 flex w-full justify-center items-center">
