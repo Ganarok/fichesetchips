@@ -12,8 +12,8 @@ if (!process.env.PORT) {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  app.enableCors()
-
+  app.enableCors();
+  
   // Swagger config
   const config = new DocumentBuilder()
     .setTitle('Fiches&Chips')

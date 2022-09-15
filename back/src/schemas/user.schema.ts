@@ -2,8 +2,8 @@ import { Table, Column, Model, BeforeCreate} from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 import { defaultUser } from 'src/utils/constants/users/users.constants';
 import { ROLE } from 'src/utils/types/users/users.types';
+import { UUID, UUIDV4 } from 'sequelize';
 import { defaultPreference } from 'src/utils/constants/preferences/preferences.constants';
-import { UUID, UUIDV4, DATE, STRING } from 'sequelize';
 
 @Table
 export class User extends Model {
