@@ -65,7 +65,7 @@
                     font-size="40"
                     font-weight="900"
                     letter-spacing="0em">
-                    <tspan x="584.328" y="527">
+                    <tspan x="374" y="530">
                         {{ $t('à vos campagnes') }}
                     </tspan>
                     <tspan x="539.074" y="719">{{ $t('Ajoutez-les') }}</tspan>
