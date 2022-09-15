@@ -9,9 +9,17 @@
     export default {
         props: {
             buttonText: String,
-            color: String,
+            color: {
+                type: String,
+                default: 'fiche-green'
+            },
             filled: String,
             image: String,
+        },
+        data() {
+            return {
+                bgColor: 'bg-'+this.filled,
+            }
         },
         methods: {
             callback: function (e) {
