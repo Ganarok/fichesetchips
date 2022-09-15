@@ -7,11 +7,12 @@ export const state = () => ({
         role: '',
         createdAt: '',
         updatedAt: '',
+        access_token: '',
     },
 })
 
-export const mutations = () => ({
+export const mutations = {
     setUser(state, user) {
         state.user = user
     },
-})
+}

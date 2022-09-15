@@ -66,17 +66,11 @@ export default {
                     }),
                 })
                     .then((res) => {
-                        console.log('res', res)
-                        // this.$emit('close-modal')
+                        this.$emit('close-modal')
                     })
                     .catch((err) => {
                         console.log('err', err)
                     })
-                // this.$store.dispatch('user/signup', {
-                //     identifiant: this.identifiant,
-                //     mail: this.mail,
-                //     password: this.password,
-                // })
             }
         },
         handleId(value) {
