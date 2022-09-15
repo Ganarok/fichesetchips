@@ -1,5 +1,5 @@
 <template>
-    <button class="border-[3px] rounded-full p-[2%] w-full font-barlow flex justify-center opacity-80 hover:opacity-100" :class="'text-'+color+' '+'border-'+color+' '+'bg-'+filled" @click="callback($event)">
+    <button class="border-[3px] rounded-full p-[2%] w-full font-barlow flex justify-center opacity-80 hover:opacity-100" :class="'text-' + color + ' '+ 'border-' + color+backgroundColor()" @click="callback($event)">
         {{ buttonText }}
         <img v-if="image != undefined" :src="image" class="w-[30px] h-[30px] ml-[5px]">
     </button>
@@ -16,15 +16,18 @@
             filled: String,
             image: String,
         },
-        data() {
-            return {
-                bgColor: 'bg-'+this.filled,
-            }
-        },
         methods: {
             callback: function (e) {
             this.$emit("click", e);
             },
+            backgroundColor: function() {
+                if(this.filled == undefined) {
+                    return ''
+                }
+                else {
+                    return ' bg-'+this.color
+                }
+            }
         },
     };
 </script>
