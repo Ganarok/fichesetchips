@@ -84,7 +84,12 @@ export default Vue.extend({
                     }),
                 })
                     .then((res) => {
-                        console.log('res', res)
+                        this.$store.commit('setUser', {
+                            ...res.user,
+                            access_token: res.access_token,
+                        })
+
+                        this.$router.push('/dashboard')
                     })
                     .catch((err) => {
                         console.log('err', err)

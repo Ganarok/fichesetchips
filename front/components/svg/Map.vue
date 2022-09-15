@@ -31,7 +31,7 @@
                     font-weight="900"
                     letter-spacing="0em">
                     <tspan x="185.008" y="228">{{ $t('vos propres') }}</tspan>
-                    <tspan x="74" y="276">
+                    <tspan x="-135" y="276">
                         {{ $t('cartes et campagnes') }}
                     </tspan>
                 </text>

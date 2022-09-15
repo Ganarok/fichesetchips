@@ -39,7 +39,7 @@
                     font-weight="900"
                     letter-spacing="0em">
                     <tspan x="1486.99" y="285.5"></tspan>
-                    <tspan x="1220.9" y="333.5">
+                    <tspan x="1015" y="333.5">
                         {{ $t('un personnage') }}
                     </tspan>
                     <tspan x="1250.14" y="381.5">{{ $t('avec un') }}</tspan>
@@ -57,7 +57,7 @@
                     <tspan x="1270.99" y="285.5">{{ $t('Construisez') }}</tspan>
                     <tspan x="1390.61" y="381.5">{{ $t('outil') }}</tspan>
                     <tspan x="1319.22" y="477.5">template</tspan>
-                    <tspan x="1180" y="525.5">
+                    <tspan x="965" y="525.5">
                         {{ $t('de Fiches&Chips') }}
                     </tspan>
                 </text>
