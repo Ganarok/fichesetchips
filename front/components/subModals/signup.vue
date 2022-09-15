@@ -63,7 +63,6 @@ export default {
                         username,
                         password,
                         avatar: '',
-                        preference_id: '',
                     }),
                 })
                     .then((res) => {
