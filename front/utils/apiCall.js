@@ -7,23 +7,26 @@ export async function apiCall({
     },
     body,
 }) {
-    try {
-        const res = body
-            ? await fetch(`${process.env.HOST || 'localhost:3000/'}${route}`, {
+    const res = body
+        ? await fetch(
+              `${process.env.HOST || 'http://localhost:3000'}${route}`,
+              {
                   method,
                   headers,
                   body,
-              })
-            : await fetch(`${process.env.HOST || 'localhost:3000/'}${route}`, {
+              }
+          )
+        : await fetch(
+              `${process.env.HOST || 'http://localhost:3000'}${route}`,
+              {
                   method,
                   headers,
-              })
+              }
+          )
 
-        if (!res.ok) throw new Error({ message: res.status })
+    console.log(res)
 
-        return res
-    } catch (error) {
-        console.log(error)
-        return { message: error }
-    }
+    if (!res.ok) throw new Error(res.statusText)
+
+    return res
 }
