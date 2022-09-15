@@ -10,7 +10,7 @@
             class="mt-12 ml-12 max-h-52"
             src="../static/logo.png"
             alt="Fiche&Chips" />
-        <form
+        <div
             action=""
             class="flex flex-col lg:absolute lg:right-32 lg:bottom-32 lg:w-96">
             <div class="ml-5 mb-4">
@@ -84,12 +84,7 @@ export default Vue.extend({
                     }),
                 })
                     .then((res) => {
-                        this.$store.commit('setUser', {
-                            ...res.user,
-                            access_token: res.access_token,
-                        })
-
-                        this.$router.push('/dashboard')
+                        console.log('res', res)
                     })
                     .catch((err) => {
                         console.log('err', err)
