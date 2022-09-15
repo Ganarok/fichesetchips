@@ -16,6 +16,6 @@ export class Friends extends Model {
   @Column({ type: UUID, allowNull: false })
   user_answer_id: string;
 
-  @Column({ type: INTEGER, allowNull: false })
-  nbGames: string;
+  @Column({ type: INTEGER, allowNull: false, defaultValue: 0 })
+  nb_games: number;
 }
