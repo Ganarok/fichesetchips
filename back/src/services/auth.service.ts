@@ -26,7 +26,7 @@ export class AuthService {
         const isValid = await this.validateUser(user.username, user.password)
         if (isValid) {
             const real_user = await this.usersService.findOne(user.username)
-            const payload: PayloadAuthDto = { username: real_user.username, id: real_user.id }
+            const payload: PayloadAuthDto = { username: real_user.username, id: real_user.id, email: real_user.email }
             return {
                 user: real_user,
                 access_token: this.jwtService.sign(payload),
@@ -39,7 +39,7 @@ export class AuthService {
 
     async register(user: RegisterAuthDto): Promise<ResponseAuthDto> {
         const new_user = await this.usersService.create(user)
-        const payload: PayloadAuthDto = { username: new_user.username, id: new_user.id };
+        const payload: PayloadAuthDto = { username: new_user.username, id: new_user.id, email: new_user.email };
         return {
             user: new_user,
             access_token: this.jwtService.sign(payload),

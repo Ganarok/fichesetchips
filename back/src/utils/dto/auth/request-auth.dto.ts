@@ -16,12 +16,18 @@ export class PayloadAuthDto  {
 
     @ApiProperty({ default: defaultUser.username })
     username: string;
+
+    @ApiProperty({ default: defaultUser.email })
+    email: string;
 }
 
 export class RegisterAuthDto {
 
     @ApiProperty({ default: defaultUser.username })
     username: string;
+
+    @ApiProperty({ default: defaultUser.email })
+    email: string;
 
     @ApiProperty({ default: defaultUser.password })
     password: string;

@@ -7,6 +7,9 @@ export class UserType {
     @ApiProperty({ default: defaultUser.id })
     id?: string
 
+    @ApiProperty({ default: defaultUser.email })
+    email: string
+
     @ApiProperty({ default: defaultUser.username })
     username: string
 
