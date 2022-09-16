@@ -6,7 +6,7 @@ import { LANGUAGES, THEMES } from 'src/utils/types/preferences/preferences.types
 
 @Table
 export class Preference extends Model {
-    @Column({ type: UUID, defaultValue: "3a9975f8-f34c-4a07-bbff-ab8a9b2e6309", primaryKey: true })
+    @Column({ type: UUID, defaultValue: UUIDV4, primaryKey: true })
     id: string;
 
     @Column({ allowNull: false, defaultValue: defaultPreference.theme })
