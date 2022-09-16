@@ -91,7 +91,7 @@ async def getPlayers():
         data = json.load(f)
         return (data)
 
-@app.put("/player/pos")
+@app.put("/player/position")
 async def updatePlayerPos(player_name: str, position: Position):
     with open('data.json', 'r+') as f:
         data = json.load(f)
