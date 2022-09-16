@@ -29,7 +29,16 @@ module.exports = {
     safelist: parseColors(),
     theme: {
         extend: {
-            colors: customColors,
+            colors: {
+                'fiche-green': '#4FEA74',
+                'chips-yellow': '#FFDB57',
+                'chip-yellow-trans': '#FFDB57b3',
+                'fc-black': '#1E1E1E',
+            },
+            backgroundImage: {
+                tashasCauldronOfEverythingDnd:
+                    'url("../assets/index/tashasCauldronOfEverythingDnd.svg")',
+            },
             fontFamily: {
                 barlow: ['Barlow', 'sans-serif'],
             },
