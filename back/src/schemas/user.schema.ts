@@ -1,10 +1,9 @@
-import { Table, Column, Model, BeforeCreate} from 'sequelize-typescript';
+import { Table, Column, Model, BeforeCreate } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
-import { defaultUser } from 'src/utils/constants/users/users.constants';
-import { ROLE } from 'src/utils/types/users/users.types';
-import { UUID, UUIDV4 } from 'sequelize';
-import { defaultPreference } from 'src/utils/constants/preferences/preferences.constants';
-import { UUID, UUIDV4, DATE, STRING, NOW } from 'sequelize';
+import { defaultUser } from 'src/utils/constants/users.constants';
+import { ROLE } from 'src/utils/types/users.types';
+import { defaultPreference } from 'src/utils/constants/preferences.constants';
+import { UUID, UUIDV4, DATE, STRING, NOW, ENUM } from 'sequelize';
 
 @Table
 export class User extends Model {
@@ -23,7 +22,11 @@ export class User extends Model {
     @Column({ allowNull: false, defaultValue: defaultUser.avatar })
     avatar: string;
 
-    @Column({ allowNull: false, defaultValue: defaultUser.role })
+    @Column({
+        allowNull: false, defaultValue: defaultUser.role,
+        type: ENUM,
+        values: ["USER", "ADMIN", "SUPERADMIN"],
+    })
     role: ROLE;
 
     @Column({ allowNull: false, type: UUID, defaultValue: defaultPreference.id })
