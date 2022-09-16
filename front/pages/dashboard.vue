@@ -36,40 +36,33 @@
                                 'Galadows',
                                 'A définir',
                             ],
-                        ]"
-                    />
+                        ]" />
                 </div>
                 <div class="w-7/12 border-2 border-black mx-2">
                     <div class="flex h-4/5 w-full">
                         <div
                             class="flex flex-col justify-center items-center w-1/6"
                             v-for="personnage in 6"
-                            :key="personnage"
-                        >
+                            :key="personnage">
                             <div
-                                class="h-1/5 w-full flex justify-center items-center"
-                            >
+                                class="h-1/5 w-full flex justify-center items-center">
                                 <h1>Classe {{ personnage }}</h1>
                             </div>
                             <div class="h-3/5 w-full">
                                 <img
                                     src="../assets/CharPlaceholder.jpg"
-                                    alt=""
-                                />
+                                    alt="" />
                             </div>
                             <div
-                                class="h-1/5 flex w-full justify-center items-center"
-                            >
+                                class="h-1/5 flex w-full justify-center items-center">
                                 <h1>Personnage {{ personnage }}</h1>
                             </div>
                         </div>
                     </div>
                     <div
-                        class="h-1/5 flex text-[24px] justify-center items-center w-full"
-                    >
+                        class="h-1/5 flex text-[24px] justify-center items-center w-full">
                         <button
-                            class="border-2 border-black rounded-full px-28"
-                        >
+                            class="border-2 border-black rounded-full px-28">
                             Voir plus
                         </button>
                     </div>
@@ -91,21 +84,18 @@
                             ['La tombe des rois serpents', 1, 4, '3h-4h'],
                             ['La tombe des rois serpents', 1, 4, '3h-4h'],
                             ['La secte du Crâne', 1, 4, '3h-4h'],
-                        ]"
-                    />
+                        ]" />
                 </div>
                 <div class="w-5/12 mx-2 border-2 border-fiche-green">
                     <div
-                        class="h-1/5 pl-10 flex font-bold text-xl text-fiche-green items-center w-full"
-                    >
+                        class="h-1/5 pl-10 flex font-bold text-xl text-fiche-green items-center w-full">
                         <h1>Univers</h1>
                     </div>
                     <div class="flex h-4/5 w-full">
                         <div
                             class="flex justify-center items-center w-1/3"
                             v-for="univer in 3"
-                            :key="univer"
-                        >
+                            :key="univer">
                             <h1>Univer {{ univer }}</h1>
                         </div>
                     </div>
