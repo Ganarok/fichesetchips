@@ -2,7 +2,7 @@ import { Table, Column, Model } from 'sequelize-typescript';
 import { UUID, INTEGER, DATE, UUIDV4 } from 'sequelize';
 
 @Table
-export class Friends extends Model {
+export class Friend extends Model {
   @Column({
     type: UUID,
     defaultValue: UUIDV4,
