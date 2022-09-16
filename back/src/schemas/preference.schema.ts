@@ -1,8 +1,8 @@
 import { Factory } from 'nestjs-seeder';
 import { UUID, UUIDV4 } from 'sequelize';
 import { Table, Column, Model } from 'sequelize-typescript';
-import { defaultPreference } from 'src/utils/constants/preferences/preferences.constants';
-import { LANGUAGES, THEMES } from 'src/utils/types/preferences/preferences.types';
+import { defaultPreference } from 'src/utils/constants/preferences.constants';
+import { LANGUAGES, THEMES } from 'src/utils/types/preferences.types';
 
 @Table
 export class Preference extends Model {

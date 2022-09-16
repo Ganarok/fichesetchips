@@ -2,9 +2,9 @@ import { ForbiddenException, HttpException, HttpStatus, Injectable, Unauthorized
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
-import { LoginAuthDto, PayloadAuthDto, RegisterAuthDto } from 'src/utils/dto/auth/request-auth.dto';
-import { ResponseAuthDto } from 'src/utils/dto/auth/response-auth.dto';
-import { unauthorizedException } from 'src/utils/exceptions/auth/exceptions-auth';
+import { LoginAuthDto, PayloadAuthDto, RegisterAuthDto } from 'src/utils/dto/auth.dto';
+import { ResponseAuthDto } from 'src/utils/dto/auth.dto';
+import { unauthorizedException } from 'src/utils/exceptions/exceptions-auth';
 
 @Injectable()
 export class AuthService {
