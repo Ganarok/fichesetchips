@@ -12,12 +12,12 @@ module.exports = {
                 'fc-black-light': '#353535',
                 'fc-red': '#F04E4E',
             },
-            fontFamily: {
-                barlow: ['Barlow', 'sans-serif'],
-            },
             backgroundImage: {
                 tashasCauldronOfEverythingDnd:
                     'url("../assets/index/tashasCauldronOfEverythingDnd.svg")',
+            },
+            fontFamily: {
+                barlow: ['Barlow', 'sans-serif'],
             },
             screens: {
                 tablet: { max: '1414px' },
