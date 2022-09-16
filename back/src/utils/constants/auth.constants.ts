@@ -1,4 +1,4 @@
-import { defaultUser } from "../users/users.constants";
+import { defaultUser } from "./users.constants";
 
 export const defaultAuthResponse = {
     user: defaultUser,

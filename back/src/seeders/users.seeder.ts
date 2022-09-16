@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Seeder, DataFactory } from "nestjs-seeder";
 import { User } from "src/schemas/user.schema";
-import { defaultUser, defaultUsers } from "src/utils/constants/users/users.constants";
+import { defaultUser, defaultUsers } from "src/utils/constants/users.constants";
 
 @Injectable()
 export class UsersSeeder implements Seeder {

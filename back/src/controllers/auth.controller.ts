@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Request, UseGuards, HttpCode, Unauthorized
 import { ApiBody, ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/utils/guards/auth.guard';
 import { AuthService } from 'src/services/auth.service';
-import { LoginAuthDto, RegisterAuthDto } from 'src/utils/dto/auth/request-auth.dto';
-import { ResponseAuthDto } from 'src/utils/dto/auth/response-auth.dto';
-import { AuthSequelizeUniqueConstraintError, AuthTokenUnauthorizedException, AuthUnauthorizedException } from 'src/utils/exceptions/auth/exceptions-auth';
+import { LoginAuthDto, RegisterAuthDto } from 'src/utils/dto/auth.dto';
+import { ResponseAuthDto } from 'src/utils/dto/auth.dto';
+import { AuthSequelizeUniqueConstraintError, AuthTokenUnauthorizedException, AuthUnauthorizedException } from 'src/utils/exceptions/exceptions-auth';
 
 @ApiTags('Authentification')
 @Controller('auth')

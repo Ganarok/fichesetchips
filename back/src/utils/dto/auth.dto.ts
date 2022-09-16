@@ -1,5 +1,7 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { defaultUser } from 'src/utils/constants/users/users.constants';
+import { defaultUser } from 'src/utils/constants/users.constants';
+import { defaultAuthResponse } from '../constants/auth.constants';
+import { UserType } from '../types/users.types';
 
 export class LoginAuthDto  {
     @ApiProperty({ default: defaultUser.username })
@@ -37,4 +39,17 @@ export class RegisterAuthDto {
 
     @ApiProperty({ default: defaultUser.preference_id })
     preference_id?: number;
+}
+
+export class ResponseAuthDto  {
+
+    @ApiProperty({ default: defaultUser })
+    user: UserType;
+
+    @ApiProperty({ default: defaultAuthResponse.access_token })
+    access_token: string;
+
+    @ApiProperty({ default: defaultAuthResponse.expires_in })
+    expires_in: string;
+
 }
