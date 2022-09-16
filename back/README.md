@@ -28,7 +28,7 @@
 
 ### Installation
 
-- Dependancies
+- Dependencies
 
 ```bash
 cd server/
@@ -63,8 +63,6 @@ postgres=> \c fichesetchips
 ```bash
 # base
 npm run seed
-# refresh
-npm run seed:refresh
 ```
 
 - Run the app

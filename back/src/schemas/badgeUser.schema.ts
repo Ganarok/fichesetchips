@@ -3,7 +3,7 @@ import { UUID, UUIDV4, DATE } from 'sequelize';
 
 @Table
 export class BadgeUser extends Model {
-  @Column({ type: UUID, allowNull: false, unique: true })
+  @Column({ type: UUID, allowNull: false })
   user_id: string;
 
   @Column({ type: UUID, allowNull: false })

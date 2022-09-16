@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { defaultUser } from "src/utils/constants/users/users.constants"
+import { defaultUser } from "src/utils/constants/users.constants"
 
 export type ROLE = "USER" | "ADMIN" | "SUPERADMIN"
 
