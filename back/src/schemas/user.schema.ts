@@ -3,12 +3,15 @@ import * as bcrypt from 'bcrypt';
 import { defaultUser } from 'src/utils/constants/users/users.constants';
 import { ROLE } from 'src/utils/types/users/users.types';
 import { defaultPreference } from 'src/utils/constants/preferences/preferences.constants';
-import { UUID, UUIDV4, DATE, STRING } from 'sequelize';
+import { UUID, UUIDV4, DATE, STRING, NOW } from 'sequelize';
 
 @Table
 export class User extends Model {
     @Column({ type: UUID, defaultValue: UUIDV4, primaryKey: true })
     id: string;
+
+    @Column({ allowNull: false, unique: true })
+    email: string;
 
     @Column({ allowNull: false, unique: true })
     username: string;
@@ -25,7 +28,7 @@ export class User extends Model {
     @Column({ allowNull: false, type: UUID, defaultValue: defaultPreference.id })
     preference_id: string;
 
-    @Column({ type: DATE, allowNull: true })
+    @Column({ type: DATE, allowNull: false, defaultValue: NOW })
     last_connection: string
 
     @BeforeCreate
