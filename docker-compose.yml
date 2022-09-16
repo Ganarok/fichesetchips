@@ -29,5 +29,10 @@ services:
       - .env
     depends_on:
       - back
+  copilote_notes:
+    build: copilot/note_system
+    ports:
+      - "9990:9990"
+
 volumes:
   front:
