@@ -49,7 +49,7 @@
                         <NuxtLink to="/login"> GO -> </NuxtLink>
                     </button>
                     <div
-                        class="w-[45px] h-[45px] bg-fiche-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
+                        class="w-[45px] h-[45px] bg-fiche-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]" />
                 </div>
             </div>
             <div class="flex flex-col overflow-x-hidden background">
@@ -77,6 +77,7 @@
         </a>
     </div>
 </template>
+
 <script lang="js">
 import Vue from 'vue'
 import MapVue from '~/components/svg/Map.vue'

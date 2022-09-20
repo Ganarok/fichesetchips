@@ -18,13 +18,13 @@
                     :src="require(`../assets/${member}.svg`)"
                     :alt="member" />
 
-                {{ names[index] }}
+                <b>{{ names[index] }}</b>
             </div>
         </div>
 
         <p
             class="text-right sm:w-[80%] sm:items-end sm:self-end sm:ml-[10%] sm:mr-[10%] lg:w-[70%]">
-            Vous pouvez nous contacter à fichesetchips@gmail.com
+            Vous pouvez nous contacter à <b>fichesetchips@gmail.com</b>
         </p>
     </SidebarLayout>
 </template>
@@ -68,5 +68,3 @@ export default {
     },
 }
 </script>
-
-<style></style>
