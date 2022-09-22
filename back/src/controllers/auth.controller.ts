@@ -12,9 +12,9 @@ export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('login')
-  @HttpCode(302)
+  @HttpCode(200)
   @ApiBody({ type: LoginAuthDto })
-  @ApiResponse({ status: 302, description: 'The record has been successfully found.', type: ResponseAuthDto })
+  @ApiResponse({ status: 200, description: 'The record has been successfully found.', type: ResponseAuthDto })
   @ApiResponse({ status: 401, description: 'Unauthorized', type: AuthUnauthorizedException })
   async login(@Body() body: LoginAuthDto) {
     return await this.authService.login(body)

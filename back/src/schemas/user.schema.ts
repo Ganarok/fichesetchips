@@ -2,11 +2,12 @@ import { Table, Column, Model, BeforeCreate} from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 import { defaultUser } from 'src/utils/constants/users/users.constants';
 import { ROLE } from 'src/utils/types/users/users.types';
-import { UUID, UUIDV4 } from 'sequelize';
+import { defaultPreference } from 'src/utils/constants/preferences/preferences.constants';
+import { UUID, UUIDV4, DATE, STRING } from 'sequelize';
 
 @Table
 export class User extends Model {
-    @Column({ type: UUID, defaultValue: "edf1dc34-3534-4cd7-85cf-a9488f1279f9", primaryKey: true })
+    @Column({ type: UUID, defaultValue: UUIDV4, primaryKey: true })
     id: string;
 
     @Column({ allowNull: false, unique: true })
@@ -21,8 +22,11 @@ export class User extends Model {
     @Column({ allowNull: false, defaultValue: defaultUser.role })
     role: ROLE;
 
-    @Column({ allowNull: false, type: UUID, defaultValue: "3a9975f8-f34c-4a07-bbff-ab8a9b2e6309" })
+    @Column({ allowNull: false, type: UUID, defaultValue: defaultPreference.id })
     preference_id: string;
+
+    @Column({ type: DATE, allowNull: true })
+    last_connection: string
 
     @BeforeCreate
     static async hashPassword(user: User) {
