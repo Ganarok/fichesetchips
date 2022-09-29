@@ -29,6 +29,7 @@
                 <CustomInput
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v)"
+                    typeInput='password'
                     placeHolder="Mot de passe" />
             </div>
             <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
@@ -53,6 +54,7 @@ import Modal from '~/components/Modal.vue'
 import CustomInput from '~/components/subComponent/CustomInput.vue'
 import subModalSignup from '~/components/subModals/signup.vue'
 import { apiCall } from '~/utils/apiCall'
+import bcrypt from 'bcryptjs'
 
 export default Vue.extend({
     name: 'Login',
@@ -69,7 +71,10 @@ export default Vue.extend({
             this.username = v
         },
         handlePassword(v) {
-            this.password = v
+            let saltRounds = parseInt(process.env.SALTROUNDS)
+            bcrypt.hash(v, saltRounds).then(result => {
+                this.password = result
+            })
         },
         handleLogin() {
             const { username, password } = this
