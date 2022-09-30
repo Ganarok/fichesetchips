@@ -15,11 +15,11 @@
             <div
                 class="flex font-barlow text-center space-x-4 px-2 items-center sm:px-0 sm:space-x-0 sm:w-full sm:space-y-8 sm:flex-col">
                 <button
-                    class="rounded-full text-chips-yellow border-chips-yellow border-2 p-1 px-2 sm:p-2 sm:border-[3px] min-w-[50%]">
+                    class="rounded-full text-fc-yellow border-fc-yellow border-2 p-1 px-2 sm:p-2 sm:border-[3px] min-w-[50%]">
                     <NuxtLink to="/login"> {{ $t("S'inscrire") }} </NuxtLink>
                 </button>
                 <button
-                    class="rounded-full text-fiche-green border-fiche-green border-2 p-1 px-2 sm:p-2 min-w-[50%] sm:border-[3px]">
+                    class="rounded-full text-fc-green border-fc-green border-2 p-1 px-2 sm:p-2 min-w-[50%] sm:border-[3px]">
                     <NuxtLink to="/login"> {{ $t('Se connecter') }} </NuxtLink>
                 </button>
                 <img
@@ -38,7 +38,7 @@
             id="top">
             <div class="h-screen tashas font-barlow relative">
                 <div
-                    class="flex flex-col w-[41%] bg-fiche-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%]">
+                    class="flex flex-col w-[41%] bg-fc-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%]">
                     <p
                         class="text-xl sm:text-2xl lg:text-3xl text-white font-bold w-[75%] pr-[5%] tablet:text-2xl">
                         Notre site il est trop bien alors tu t’inscris et tu
@@ -49,7 +49,7 @@
                         <NuxtLink to="/login"> GO -> </NuxtLink>
                     </button>
                     <div
-                        class="w-[45px] h-[45px] bg-fiche-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
+                        class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
                 </div>
             </div>
             <div class="flex flex-col background">
@@ -111,12 +111,12 @@ export default Vue.extend({
 
 <style>
 .tashas {
-    background-image: url('../assets/index/tashasCauldronOfEverythingDnd.svg');
+    background-image: url('~/assets/index/tashasCauldronOfEverythingDnd.svg');
     background-size: cover;
 }
 
 .background {
-    background-image: url('../assets/index/pixelsBackgrounds.svg');
+    background-image: url('~/assets/index/pixelsBackgrounds.svg');
     background-size: cover;
 }
 

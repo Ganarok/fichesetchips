@@ -10,10 +10,8 @@
         </div>
         <div
             class="flex text-xl text-black font-extrabold place-content-evenly p-4 w-80">
-            <NuxtLink class="hover:text-fiche-green" to="/login"
-                >Login</NuxtLink
-            >
-            <NuxtLink class="hover:text-chips-yellow" to="/main">Main</NuxtLink>
+            <NuxtLink class="hover:text-fc-green" to="/login">Login</NuxtLink>
+            <NuxtLink class="hover:text-fc-yellow" to="/main">Main</NuxtLink>
         </div>
     </div>
 </template>
