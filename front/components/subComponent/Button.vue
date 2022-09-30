@@ -17,7 +17,7 @@ export default {
         buttonText: String,
         color: {
             type: String,
-            default: 'fiche-green',
+            default: 'fc-green',
         },
         filled: String,
         image: String,
@@ -36,5 +36,3 @@ export default {
     },
 }
 </script>
-
-<!-- <Button buttonText="Exemple" color="fiche-green" v-on:click="test()" filled="chips-yellow" :image="require('../assets/icon.png')"/> -->

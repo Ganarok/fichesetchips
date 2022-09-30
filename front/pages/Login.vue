@@ -29,7 +29,7 @@
                 <CustomInput
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v)"
-                    typeInput='password'
+                    typeInput="password"
                     placeHolder="Mot de passe" />
             </div>
             <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
@@ -72,7 +72,7 @@ export default Vue.extend({
         },
         handlePassword(v) {
             let saltRounds = parseInt(process.env.SALTROUNDS)
-            bcrypt.hash(v, saltRounds).then(result => {
+            bcrypt.hash(v, saltRounds).then((result) => {
                 this.password = result
             })
         },
@@ -94,7 +94,7 @@ export default Vue.extend({
                             access_token: res.access_token,
                         })
 
-                        this.$router.push('/dashboard')
+                        this.$router.push('/user/dashboard')
                     })
                     .catch((err) => {
                         console.log('err', err)

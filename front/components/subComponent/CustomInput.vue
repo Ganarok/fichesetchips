@@ -6,7 +6,7 @@
             :placeholder="placeHolder"
             @input="$emit('input', $event.target.value)"
             :maxlength="maxLength"
-            :type=typeInput />
+            :type="typeInput" />
     </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
         placeHolder: { type: String },
         typeInput: {
             type: String,
-            default: 'text'
+            default: 'text',
         },
         inputClass: {},
         placeHolderClass: {},

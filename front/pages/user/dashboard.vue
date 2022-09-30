@@ -8,8 +8,8 @@
             <div class="flex flex-1 m-2 overflow-hidden">
                 <div class="w-5/12 mx-2">
                     <custom-table
-                        borderColor="border-chips-yellow"
-                        textColor="text-chips-yellow"
+                        borderColor="border-fc-yellow"
+                        textColor="text-fc-yellow"
                         :rows="[
                             [
                                 'Kaamlott: La quête du graal',
@@ -50,7 +50,7 @@
                             </div>
                             <div class="h-3/5 w-full">
                                 <img
-                                    src="../assets/CharPlaceholder.jpg"
+                                    src="~/assets/CharPlaceholder.jpg"
                                     alt="" />
                             </div>
                             <div
@@ -86,9 +86,9 @@
                             ['La secte du Crâne', 1, 4, '3h-4h'],
                         ]" />
                 </div>
-                <div class="w-5/12 mx-2 border-2 border-fiche-green">
+                <div class="w-5/12 mx-2 border-2 border-fc-green">
                     <div
-                        class="h-1/5 pl-10 flex font-bold text-xl text-fiche-green items-center w-full">
+                        class="h-1/5 pl-10 flex font-bold text-xl text-fc-green items-center w-full">
                         <h1>Univers</h1>
                     </div>
                     <div class="flex h-4/5 w-full">

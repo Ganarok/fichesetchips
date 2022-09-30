@@ -7,7 +7,8 @@
         </div>
 
         <div
-            class="flex flex-col w-full p-4 z-10 space-y-4 h-screen overflow-auto">
+            class="flex flex-col w-full p-4 z-10 space-y-4 h-screen overflow-auto"
+            v-if="title">
             <h1
                 class="font-bold text-xl p-6 self-center sm:self-start sm:text-2xl md:px-8 lg:px-10 lg:text-3xl xl:text-5xl">
                 {{ title }}
@@ -26,7 +27,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Title',
+            default: '',
         },
         topRightPixels: {
             type: Boolean,
