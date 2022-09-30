@@ -1,7 +1,6 @@
 <template>
     <div
-        class="h-screen w-[220px] bg-[#1E1E1E] flex flex-col relative justify-center"
-    >
+        class="h-screen w-[220px] bg-[#1E1E1E] flex flex-col relative justify-center">
         <div class="w-full absolute top-0 flex justify-center p-6">
             <NuxtLink to="/">
                 <img src="../../assets/fetc.png" alt="Fiche&Chips" />
@@ -9,8 +8,7 @@
         </div>
 
         <div
-            class="flex flex-col items-center justify-center text-white space-y-8"
-        >
+            class="flex flex-col items-center justify-center text-white space-y-8">
             <NuxtLink
                 to="/dashboard"
                 class="font-bold text-xl"
@@ -44,8 +42,7 @@
             ></div>
         </div> -->
         <div
-            class="flex flex-col w-full justify-center items-center relative top-[32%]"
-        >
+            class="flex flex-col w-full justify-center items-center relative top-[32%]">
             <img src="../../assets/icon.png" class="w-2/4" alt="F&C logo" />
             <p class="text-white text-[10px]">made with love by fiche&chips</p>
         </div>
