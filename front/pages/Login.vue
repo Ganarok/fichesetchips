@@ -38,20 +38,7 @@
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v)"
                     typeInput="password"
-                    :placeHolder="$t('Mot de passe')"
-                    :hasError="credentialsError"
-                    :onFocusOut="() => this.handleFocusOut()" />
-
-                <p
-                    class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">
-                    <NuxtLink to="/forgot-password">
-                        {{ $t('Mot de passe oublié') }}
-                    </NuxtLink>
-                </p>
-            </div>
-
-            <div class="self-center my-16" v-else>
-                <Loader cubeColor="fc-yellow" />
+                    placeHolder="Mot de passe" />
             </div>
 
             <div v-if="!loading" class="flex justify-between items-end">
@@ -99,11 +86,10 @@ export default Vue.extend({
             this.username = v
         },
         handlePassword(v) {
-            this.password = v
-        },
-        handleFocusOut() {
-            this.errorText = ''
-            this.credentialsError = false
+            let saltRounds = parseInt(process.env.SALTROUNDS)
+            bcrypt.hash(v, saltRounds).then((result) => {
+                this.password = result
+            })
         },
         handleLogin() {
             const { username } = this
