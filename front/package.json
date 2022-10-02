@@ -15,7 +15,10 @@
         "prepare": "cd .. && husky install front/.husky"
     },
     "dependencies": {
+        "@nuxtjs/dotenv": "^1.4.1",
         "@nuxtjs/i18n": "^7.2.2",
+        "@nuxtjs/toast": "^3.3.1",
+        "bcryptjs": "^2.4.3",
         "core-js": "^3.19.3",
         "nuxt": "^2.15.8",
         "vue": "^2.6.14",

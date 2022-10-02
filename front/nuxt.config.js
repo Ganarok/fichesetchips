@@ -33,8 +33,9 @@ export default {
     },
 
     loading: {
-        color: '#FFDB57',
-        height: '4px',
+        color: '#4FEA74',
+        height: '3px',
+        throttle: 0,
     },
 
     // Define the development or production mode of Nuxt
@@ -56,10 +57,11 @@ export default {
         // https://go.nuxtjs.dev/tailwindcss
         '@nuxtjs/tailwindcss',
         '@nuxt/postcss8',
+        '@nuxtjs/dotenv'
     ],
 
     // Modules: https://go.nuxtjs.dev/config-modules
-    modules: ['@nuxtjs/i18n'],
+    modules: ['@nuxtjs/i18n', '@nuxtjs/toast'],
 
     i18n: {
         locales: ['fr', 'en'],

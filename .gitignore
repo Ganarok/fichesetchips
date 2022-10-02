@@ -1,0 +1,4 @@
+copilot/poc/image_moderation/images/*
+copilot/poc/image_moderation/flagged
+copilot/poc/image_moderation/nudeenv/*
+copilot/poc/image_moderation/test.jpg
