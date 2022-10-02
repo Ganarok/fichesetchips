@@ -11,10 +11,11 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'fiche-green': '#4FEA74',
-                'chips-yellow': '#FFDB57',
-                'chip-yellow-trans': '#FFDB57b3',
+                'fc-green': '#4FEA74',
+                'fc-yellow': '#FFDB57',
+                'fc-yellow-trans': '#FFDB57b3',
                 'fc-black': '#1E1E1E',
+                'fc-black-light': '#353535',
             },
             fontFamily: {
                 barlow: ['Barlow', 'sans-serif'],

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-chip-yellow-trans"
+        class="fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-fc-yellow-trans"
         @click="$emit('close-modal')">
         <div
             class="bg-white h-[617px] w-[617px] mt-auto mb-auto justify-end my-[5%]"

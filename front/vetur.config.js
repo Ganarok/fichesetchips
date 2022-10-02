@@ -25,6 +25,7 @@ module.exports = {
             // **optional**
             // Where is TypeScript config file in the project?
             // It is relative to root property.
+            jsconfig: './jsconfig.json',
             tsconfig: './tsconfig.json',
             // **optional** default: `'./.vscode/vetur/snippets'`
             // Where is vetur custom snippets folders?
