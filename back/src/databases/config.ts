@@ -1,28 +1,20 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, Options } from "sequelize";
 
-async function connectToDatabase()
-{
-    if(!process.env.DB_URI)
-    {
-        throw new Error("DB_URI is not defined");
-    }
-    
-    const sequelize = new Sequelize(process.env.DB_URI);
-    
-    try
-    {
-        await sequelize.authenticate();
-        console.log("Connection to database has been established successfully.");
+function connectToDatabase(): Sequelize {
+
+    if (process.env.DB_HOST && process.env.DB_PORT && process.env.DB_USER && process.env.DB_PASSWORD && process.env.DB_NAME) {
+
+        const options: Options = { host: process.env.DB_HOST, port: parseInt(process.env.DB_PORT), username: process.env.DB_USER, password: process.env.DB_PASSWORD, database: process.env.DB_NAME }
+
+        const sequelize = new Sequelize(options);
+
+        sequelize.authenticate()
+
         return sequelize
-    }
-    catch(err)
-    {
-        console.error("Unable to connect to the database:", err);
-    }
-    finally
-    {
-        sequelize.close();
+
+    } else {
+        throw new Error("DB_HOST or DB_PORT or DB_USER or DB_PASSWORD or DB_NAME is not defined")
     }
 }
 
-export default connectToDatabase;
+export const sequelize = connectToDatabase()
