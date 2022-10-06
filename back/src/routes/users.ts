@@ -1,10 +1,9 @@
-// import express from "express";
-// // import users from "../services/users"
-// const router = express.Router();
+import express from "express";
+import * as UserService from "../services/users"
+const router = express.Router();
 
-// router.post("/createUser", (req, res) => 
-// {
-//     res.send(users.createUser())
-// })
+router.get("/user", async (req, res) => {
+    res.send(await UserService.createUser())
+})
 
-// export default router;
+export default router;

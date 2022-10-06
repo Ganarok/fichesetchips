@@ -11,6 +11,6 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "config/config.js"],
   "exclude": ["node_modules", "**/*.spec.ts"],
 }

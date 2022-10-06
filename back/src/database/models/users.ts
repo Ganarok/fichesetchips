@@ -1,9 +1,9 @@
-import { DATE, ENUM, Model, NOW, STRING, UUID, UUIDV4 } from "sequelize";
-import { sequelize } from '../config'
+import { DATE, ENUM, Model, NOW, STRING, UUID, UUIDV4, Sequelize } from "sequelize";
 import { ROLE } from "../../utils/types/users";
+import { sequelize } from "../connection";
 const bcrypt = require('bcrypt');
 
-class User extends Model {
+export default class User extends Model {
     declare id: string;
     declare email: string;
     declare username: string;

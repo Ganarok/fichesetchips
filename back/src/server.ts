@@ -1,22 +1,13 @@
 import express from "express";
-// const cors = require('cors');
 import { routing } from "./routes/routes";
+const cors = require('cors');
 
 const app = express();
 
-function getPort() {
-    if (process.env.PORT) return parseInt(process.env.PORT)
-    else return 3000
-}
-function getHost() {
-    if (process.env.HOST) return process.env.HOST
-    else return "localhost"
-}
+const port = parseInt(process.env.PORT || "5432")
+const host = process.env.HOST || "localhost"
 
-const port = getPort()
-const host = getHost()
-
-// app.use(cors())
+app.use(cors())
 
 routing(app);
 
