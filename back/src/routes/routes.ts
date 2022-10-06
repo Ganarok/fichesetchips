@@ -1,8 +1,6 @@
-// import users from "./users";
 import { Express } from "express";
-import hello from "./hello";
+import users from "./users";
 
 export const routing = (app: Express) => {
-    // app.use("/users", users)
-    app.use("/hello", hello);
+    app.use("/users", users)
 }
