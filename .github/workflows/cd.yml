@@ -29,16 +29,16 @@ jobs:
       run: docker build back/. -t server:new_image
 
     - name: tags
-      run: docker tag client:new_image puigs/client:latest
+      run: docker tag client:new_image fichesetchips/client:latest
 
     - name: tags
-      run: docker tag server:new_image puigs/server:latest
+      run: docker tag server:new_image fichesetchips/server:latest
 
     - name: push client 1
-      run: docker push puigs/client:latest
+      run: docker push fichesetchips/client:latest
 
     - name: push server 1
-      run: docker push puigs/server:latest
+      run: docker push fichesetchips/server:latest
       
     - name: Deploy client
       uses: appleboy/ssh-action@master
