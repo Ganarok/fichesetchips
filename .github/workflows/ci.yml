@@ -46,4 +46,4 @@ jobs:
               run: cd front && yarn
 
             - name: Run linter 👀
-              run: cd front && yarn lint
+              run: cd front && npm run lint

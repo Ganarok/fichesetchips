@@ -11,28 +11,28 @@ services:
     volumes:
       - ./.init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./tmp/postgres-data:/var/lib/postgresql/data
-  back:
-    build: back/
-    restart: unless-stopped
-    command: sh -c "/wait && npm run start"
-    env_file:
-      - .env
-    depends_on:
-      - db
-    ports:
-      - "3000:3000"
-  front:
-    build: front/
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    depends_on:
-      - back
-  copilote_notes:
-    build: copilot/note_system
-    ports:
-      - "9990:9990"
+  # back:
+  #   build: back/
+  #   restart: unless-stopped
+  #   command: sh -c "/wait && npm run start"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - "3000:3000"
+  # front:
+  #   build: front/
+  #   ports:
+  #     - "8000:8000"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - back
+  # copilote_notes:
+  #   build: copilot/note_system
+  #   ports:
+  #     - "9990:9990"
 
 volumes:
   front:
