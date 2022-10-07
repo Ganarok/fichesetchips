@@ -1,6 +1,6 @@
-# #!/bin/sh
-# . "$(dirname "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-# cd front
-# yarn lintfix
-# git add -A
+cd front
+npm run lintfix
+git add -A
