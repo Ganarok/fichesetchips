@@ -1,5 +1,7 @@
 import express from "express";
 import { routing } from "./routes/routes";
+import bodyParser from "body-parser"
+
 const cors = require('cors');
 
 const app = express();
@@ -8,6 +10,7 @@ const port = parseInt(process.env.PORT || "5432")
 const host = process.env.HOST || "localhost"
 
 app.use(cors())
+app.use(bodyParser.json());
 
 // BEGIN swaggerUi
 const swaggerUi = require('swagger-ui-express');
