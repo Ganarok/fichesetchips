@@ -19,8 +19,8 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
-        username: puigs
-        password: 789a737c-3591-4c1f-bc59-1828b0e1795b
+        username: fichesetchips@gmail.com
+        password: xxxxxxxxx
         
     - name: Build image client
       run: docker build --build-arg PORT=8080 client/. -t client:new_image
