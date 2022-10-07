@@ -11,12 +11,26 @@
     "http"
   ],
   "paths": {
-    "/users/user": {
-      "get": {
+    "/auth/login": {
+      "post": {
         "tags": [
-          "Users"
+          "Authentification"
         ],
-        "description": "Get a user",
+        "description": "Login as a user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Authentification"
+        ],
+        "description": "Register a user",
         "parameters": [],
         "responses": {
           "200": {
