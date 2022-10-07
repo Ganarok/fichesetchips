@@ -9,7 +9,7 @@ export async function apiCall({
 }) {
     const res = body
         ? await fetch(
-              `${process.env.HOST || 'http://localhost:3000'}${route}`,
+              `${process.env.BACK_HOST || 'http://localhost:3000'}${route}`,
               {
                   method,
                   headers,
@@ -17,7 +17,7 @@ export async function apiCall({
               }
           )
         : await fetch(
-              `${process.env.HOST || 'http://localhost:3000'}${route}`,
+              `${process.env.BACK_HOST || 'http://localhost:3000'}${route}`,
               {
                   method,
                   headers,
