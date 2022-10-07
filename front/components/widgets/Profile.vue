@@ -1,30 +1,66 @@
 <template>
-    <div class="flex border-4 border-fc-green p-4 sm:max-w-[50%]">
-        <div class="flex flex-col items-center w-[50%] h-[50%]">
-            <!-- Avatar et succes -->
-            <img :src="avatar" alt="Avatar" class="max-w-[70%]" />
+    <div
+        class="flex relative p-4 border-4 space-x-4 border-fc-green w-full sm:max-w-[50%]">
+        <div class="flex flex-col items-center w-[40%] h-[50%]">
+            <img :src="avatar" alt="Avatar" class="max-w-[80%]" />
         </div>
 
-        <div class="flex flex-col w-[50%] h-[50%]">
-            <!-- Pseudo, description parties jouées -->
+        <div class="flex flex-col w-[60%] h-[50%]">
+            <div class="flex flex-col space-y-4 w-full h-full">
+                <div class="flex">
+                    <div
+                        class="flex bg-fc-green w-[10%] h-[20%] sm:min-h-[5rem]" />
 
-            <div class="flex w-full h-full">
-                <div class="flex bg-fc-green w-[10%] h-[20%] sm:min-h-[50px]" />
-
-                <div
-                    class="flex items-center justify-center bg-fc-black w-[90%] h-[20%] sm:min-h-[50px]">
-                    <h2 class="text-fc-yellow text-4xl font-bold">
-                        {{ username }}
-                    </h2>
+                    <div
+                        class="flex items-center justify-center bg-fc-black w-[90%] h-[35%] sm:min-h-[5rem]">
+                        <h2 class="text-fc-yellow text-4xl font-bold">
+                            {{ username }}
+                        </h2>
+                    </div>
                 </div>
 
-                <div style="z-index: -10" class="absolute bottom-0 right-0">
-                    <img
-                        src="@/assets/cornerPixels.svg"
-                        alt="Pixels"
-                        class="relative h-12 rotate-90" />
+                <h3 class="self-center text-lg italic">"{{ description }}"</h3>
+
+                <div class="flex pt-4 items-center justify-around font-bold">
+                    <div
+                        class="flex items-center justify-center p-4 bg-fc-black w-[80%] h-full">
+                        <div class="flex flex-col items-center">
+                            <p class="text-xl text-white">
+                                {{ $t('Parties jouées') }} :
+                            </p>
+
+                            <p class="text-white opacity-70 italic">
+                                ({{ $t('Joueur') }})
+                            </p>
+                        </div>
+                    </div>
+
+                    <p>
+                        {{ gameAsPlayer }}
+                    </p>
+                </div>
+
+                <div class="flex pb-4 items-center justify-around font-bold">
+                    <div
+                        class="flex flex-col items-center justify-center p-4 bg-fc-black w-[80%] h-full">
+                        <p class="text-xl text-white font-bold">
+                            {{ $t('Parties jouées') }} :
+                        </p>
+
+                        <p class="text-white opacity-70 font-bold italic">
+                            ({{ $t('MJ') }})
+                        </p>
+                    </div>
+
+                    <p>
+                        {{ gameAsMJ }}
+                    </p>
                 </div>
             </div>
+        </div>
+
+        <div style="z-index: -10" class="absolute right-0 -bottom-0 rotate-90">
+            <img src="@/assets/cornerPixels.svg" alt="Pixels" />
         </div>
     </div>
 </template>
@@ -52,10 +88,12 @@ export default {
             type: String,
             default: require('@/assets/avatar/avatar_default.svg'),
         },
-        // achievements: {
-        //     type: Array,
-        //     default: []
-        // }
+        achievements: {
+            type: Array,
+            default() {
+                return []
+            },
+        },
     },
 }
 </script>
