@@ -26,7 +26,7 @@ jobs:
       run: docker build front/. -t client:new_image
 
     - name: Build image server
-      run: docker build server/. -t server:new_image
+      run: docker build back/. -t server:new_image
 
     - name: tags
       run: docker tag client:new_image puigs/client:latest
