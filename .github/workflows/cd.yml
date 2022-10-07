@@ -2,7 +2,7 @@ name: CD with dockerhub to virtual private server
 
 on:
   push:
-    branches: [features_continue_deploiement]
+    branches: [features_continue_deploiement, main]
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
         password: saucissegalactique34
         
     - name: Build image client
-      run: docker build front/. -t client:new_image
+      run: docker build front/. --no-cache --build-arg BACK_HOST_ARG=54.38.185.154 --build-arg BACK_PORT_ARG=3000 -t client:new_image
 
     - name: Build image server
       run: docker build back/. -t server:new_image
@@ -47,10 +47,10 @@ jobs:
         username: epitech
         password: onepiececestlameilleureserie
         script:
-          # docker rm $(docker ps -a -q) --force &&
           # docker rmi $(docker images -a -q) --force &&
-          docker pull puigs/client:latest &&
-          docker pull puigs/server:latest &&
+          docker rm $(docker ps -a -q) --force &&
+          docker pull fichesetchips/client:latest &&
+          docker pull fichesetchips/server:latest &&
           docker run -d -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES=54.38.185.154 -e POSTGRES_DB=fichesetchips -p 5432:5432 postgres:latest &&
           docker run -d -p 3000:3000 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=fichesetchips -e DB_HOST=54.38.185.154 fichesetchips/server:latest &&
-          docker run -d -p 8000:8000 -e NUXT_HOST=0.0.0.0 -e HOST=54.38.185.154 -e NUXT_PORT=8000 fichesetchips/client:latest 
+          docker run -d -p 80:8000 -e NUXT_HOST=0.0.0.0 -e NUXT_PORT=8000 -e BACK_HOST=54.38.185.154 -e BACK_PORT=3000 fichesetchips/client:latest 
