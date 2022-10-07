@@ -1,4 +1,4 @@
-name: Ci to dockerhub
+name: CD with dockerhub to virtual private server
 
 on:
   push:
