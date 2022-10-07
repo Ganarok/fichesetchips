@@ -45,5 +45,5 @@ jobs:
             - name: Install dependencies 👨🏻‍💻
               run: cd front && yarn
 
-            - name: Run linter 👀
-              run: cd front && yarn lint
+            # - name: Run linter 👀
+            #   run: cd front && yarn lint
