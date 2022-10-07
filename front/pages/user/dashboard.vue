@@ -1,6 +1,7 @@
 <template>
-    <div class="flex">
-        <SubComponentSidebar />
+    <SidebarLayout>
+        <ProfileWidget />
+        <!-- <SubComponentSidebar />
         <div class="h-screen w-full p-8 overflow-hidden flex flex-col">
             <h1 class="text-[40px] font-bold ml-6 mt-4 mb-4">
                 Bonjour [Pseudo]
@@ -101,15 +102,17 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> -->
+    </SidebarLayout>
 </template>
 
 <script>
 import CustomTable from '~/components/subComponent/CustomTable.vue'
+import SidebarLayout from '~/layouts/Sidebar.vue'
+import ProfileWidget from '~/components/widgets/Profile.vue'
 
 export default {
-    components: { CustomTable },
+    components: { CustomTable, SidebarLayout, ProfileWidget },
 }
 </script>
 
