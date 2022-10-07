@@ -23,7 +23,7 @@ jobs:
         password: saucissegalactique34
         
     - name: Build image client
-      run: docker build --build-arg PORT=8080 client/. -t client:new_image
+      run: docker build front/. -t client:new_image
 
     - name: Build image server
       run: docker build server/. -t server:new_image
