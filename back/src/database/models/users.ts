@@ -1,6 +1,7 @@
-import { DATE, ENUM, Model, NOW, STRING, UUID, UUIDV4, Sequelize } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { ROLE } from "../../utils/types/users";
 import { sequelize } from "../connection";
+import Preference from "./preference";
 const bcrypt = require('bcrypt');
 
 export default class User extends Model {
@@ -15,18 +16,18 @@ export default class User extends Model {
 }
 
 User.init({
-    id: { type: UUID, defaultValue: UUIDV4, primaryKey: true },
-    email: { type: STRING, allowNull: false, unique: true },
-    username: { type: STRING, allowNull: false, unique: true },
-    password: { type: STRING, allowNull: false },
-    avatar: { type: STRING, allowNull: false, defaultValue: "" },
+    id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true },
+    username: { type: DataTypes.STRING, allowNull: false, unique: true },
+    password: { type: DataTypes.STRING, allowNull: false },
+    avatar: { type: DataTypes.STRING, allowNull: false, defaultValue: "" },
     role: {
         allowNull: false, defaultValue: "USER",
-        type: ENUM,
+        type: DataTypes.ENUM,
         values: ["USER", "ADMIN", "SUPERADMIN"],
     },
-    preference_id: { type: UUID, allowNull: false, defaultValue: 1 },
-    last_connection: { type: DATE, allowNull: false, defaultValue: NOW }
+    preference_id: { type: DataTypes.UUID, allowNull: false, defaultValue: 1 },
+    last_connection: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW }
 }, {
     sequelize,
     modelName: 'User'
