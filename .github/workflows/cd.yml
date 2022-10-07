@@ -53,4 +53,4 @@ jobs:
           docker pull puigs/server:latest &&
           docker run -d -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES=54.38.185.154 -e POSTGRES_DB=fichesetchips -p 5432:5432 postgres:latest &&
           docker run -d -p 3000:3000 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=fichesetchips -e DB_HOST=54.38.185.154 fichesetchips/server:latest &&
-          docker run -d -p 8000:8080 -e NUXT_HOST=localhost -e NUXT_PORT=8000 fichesetchips/client:latest 
+          docker run -d -p 8000:8080 -e NUXT_HOST=0.0.0.0 -e NUXT_PORT=8000 fichesetchips/client:latest 
