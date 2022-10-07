@@ -71,10 +71,11 @@ export default Vue.extend({
             this.username = v
         },
         handlePassword(v) {
-            let saltRounds = parseInt(process.env.SALTROUNDS)
-            bcrypt.hash(v, saltRounds).then((result) => {
-                this.password = result
-            })
+            this.password = v
+            // let saltRounds = parseInt(process.env.SALTROUNDS)
+            // bcrypt.hash(v, saltRounds).then((result) => {
+            //     this.password = result
+            // })
         },
         handleLogin() {
             const { username, password } = this
@@ -88,15 +89,35 @@ export default Vue.extend({
                         password,
                     }),
                 })
-                    .then((res) => {
+                    .then(async (res) => {
                         this.$store.commit('setUser', {
                             ...res.user,
                             access_token: res.access_token,
                         })
 
-                        this.$router.push('/user/dashboard')
+                        await this.$router.push('/user/dashboard')
+
+                        setTimeout(
+                            () =>
+                                this.$toast.show(
+                                    `${this.$t('Bienvenue')} ${
+                                        res.user.username
+                                    } !`,
+                                    {
+                                        theme: 'toasted-primary',
+                                        position: 'top-right',
+                                        duration: 4000,
+                                    }
+                                ),
+                            400
+                        )
                     })
                     .catch((err) => {
+                        this.$toast.show(err, {
+                            theme: 'toasted-primary',
+                            position: 'top-right',
+                            duration: 4000,
+                        })
                         console.log('err', err)
                     })
             }

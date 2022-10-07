@@ -52,14 +52,17 @@
                         class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
                 </div>
                 <Transition name="fade">
-                    <div class="absolute bottom-0 left-[50%] animate-bounce" v-show="isVisibleBounce">
-                        <a
-                            @scroll="scrollHandler"
-                            href="#MapVue">
-                            <img class="w-[50px] h-[50px] rotate-180" src="../assets/vector.svg" alt="vector" />
+                    <div
+                        class="absolute bottom-0 left-[50%] animate-bounce"
+                        v-show="isVisibleBounce">
+                        <a @scroll="scrollHandler" href="#MapVue">
+                            <img
+                                class="w-[50px] h-[50px] rotate-180"
+                                src="../assets/vector.svg"
+                                alt="vector" />
                         </a>
                     </div>
-                </transition>
+                </Transition>
             </div>
             <div class="flex flex-col overflow-x-hidden background" id="MapVue">
                 <div
@@ -109,7 +112,7 @@ export default Vue.extend({
             this.isVisible = e.target.scrollingElement.scrollTop > window.screen.height * 0.5 ? true : false;
             this.isVisibleBounce = e.target.scrollingElement.scrollTop > window.screen.height * 0.001 ? false : true;
         },
-        
+
     },
     components: { MapVue, AmisVue, PersoVue }
 })
@@ -130,10 +133,12 @@ html {
     scroll-behavior: smooth;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
