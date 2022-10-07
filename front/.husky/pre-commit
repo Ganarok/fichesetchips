@@ -2,5 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 cd front
-yarn lintfix
+npm run lintfix
 git add -A
