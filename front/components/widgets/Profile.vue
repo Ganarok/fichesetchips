@@ -19,7 +19,9 @@
                     </div>
                 </div>
 
-                <h3 class="self-center text-lg italic">"{{ description }}"</h3>
+                <h3 class="self-center text-lg italic">
+                    "{{ description ? description : $t('Pas de description') }}"
+                </h3>
 
                 <div class="flex pt-4 items-center justify-around font-bold">
                     <div
@@ -59,7 +61,9 @@
             </div>
         </div>
 
-        <div style="z-index: -10" class="absolute right-0 -bottom-0 rotate-90">
+        <div
+            style="z-index: -10"
+            class="absolute w-[6%] right-0 -bottom-0 rotate-90">
             <img src="@/assets/cornerPixels.svg" alt="Pixels" />
         </div>
     </div>
@@ -74,7 +78,6 @@ export default {
         },
         description: {
             type: String,
-            default: 'Pas de description',
         },
         gameAsPlayer: {
             type: Number,

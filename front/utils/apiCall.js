@@ -26,7 +26,12 @@ export async function apiCall({
 
     console.log(res)
 
-    // if (!res.ok) throw new Error(res.statusText)
+    if (!res.ok) throw new Error(res.statusText)
+    this.$toast.show('Error when requesting the data.', {
+        theme: 'toasted-primary',
+        position: 'top-right',
+        duration: 4000,
+    })
 
     return await res.json()
 }
