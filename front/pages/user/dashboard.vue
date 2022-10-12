@@ -1,7 +1,10 @@
 <template>
     <SidebarLayout>
-        <ProfileWidget />
-        <RecruitsWidget />
+        <div class="flex flex-wrap">
+            <ProfileWidget />
+            <RecruitsWidget />
+            <CampaignsWidget />
+        </div>
     </SidebarLayout>
 </template>
 

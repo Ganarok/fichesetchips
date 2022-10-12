@@ -9,10 +9,10 @@
             <div class="flex flex-col space-y-4 w-full h-full">
                 <div class="flex">
                     <div
-                        class="flex bg-fc-green w-[10%] h-[20%] sm:min-h-[5rem]" />
+                        class="flex bg-fc-green w-[10%] h-[20%] min-h-[5rem]" />
 
                     <div
-                        class="flex items-center justify-center bg-fc-black w-[90%] h-[35%] sm:min-h-[5rem]">
+                        class="flex items-center justify-center bg-fc-black w-[90%] h-[35%] min-h-[5rem]">
                         <h2 class="text-fc-yellow text-4xl font-bold">
                             {{ username }}
                         </h2>
@@ -74,7 +74,11 @@ export default {
     props: {
         username: {
             type: String,
-            default: 'Profil',
+            default() {
+                return this.$store.state.user.username
+                    ? this.$store.state.user.username
+                    : 'Profil'
+            },
         },
         description: {
             type: String,

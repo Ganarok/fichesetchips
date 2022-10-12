@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col relative space-x-4 w-full h-full sm:max-w-[50%] sm:max-h-[50%]">
+        class="flex flex-col relative p-2 space-x-4 w-full h-full sm:max-w-[50%] sm:max-h-[50%]">
         <div
             class="flex relative items-center justify-between text-white font-bold px-6 w-full bg-fc-black h-[15%] min-h-[3rem]">
             <div class="absolute left-0 w-4 h-full bg-fc-green" />
@@ -11,7 +11,8 @@
         </div>
 
         <div class="flex items-center justify-center w-full h-full">
-            <Loader />
+            <Loader v-if="loading" />
+            <p v-else class="font-bold">No data</p>
         </div>
 
         <div class="flex space-x-4">
@@ -30,6 +31,17 @@ export default {
     components: {
         Loader,
         Button,
+    },
+    data() {
+        return {
+            loading: {
+                type: Boolean,
+                default: true,
+            },
+        }
+    },
+    created() {
+        setTimeout(() => (this.loading = false), 1000)
     },
 }
 </script>
