@@ -24,8 +24,6 @@ export async function apiCall({
               }
           )
 
-    console.log(res)
-
     // if (!res.ok) throw new Error(res.statusText)
 
     return await res.json()

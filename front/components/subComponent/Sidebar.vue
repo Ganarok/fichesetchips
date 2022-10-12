@@ -56,7 +56,10 @@
                 active-class="text-fc-yellow"
                 @click.native="logout()"
                 v-if="connected()"
-                ><Button buttonText="Logout" color="fc-yellow"
+                ><Button
+                    buttonText="Logout"
+                    class="text-fc-yellow"
+                    color="fc-yellow"
             /></NuxtLink>
             <img src="../../assets/icon.png" class="w-2/4" alt="F&C logo" />
             <p class="text-white text-[10px]">Made with love by fiches&chips</p>

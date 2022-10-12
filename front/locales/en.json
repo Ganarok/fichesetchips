@@ -12,7 +12,7 @@
     "adapté": "engine",
     "Jouez": "Play",
     "à vos campagnes": "to your campains",
-    "avec des joueurs": "with all players",
+    "avec des MJs": "with all players",
     "en ligne !": "online !",
     "Ajoutez-les": "Add them",
     "en amis": "to friends",
@@ -23,5 +23,15 @@
     "outil": "tool",
     "ou utilisez": "or just use",
     "un": "a",
-    "de Fiches&Chips": "of Fiches&Chips"
+    "de Fiches&Chips": "of Fiches&Chips",
+    "Parties jouées": "Games Played",
+    "Joueur": "Player",
+    "Joueurs": "Players",
+    "MJ": "GM",
+    "Titre": "Title",
+    "Univers": "Universe",
+    "Pas de description": "No description",
+    "Bienvenue": "Welcome",
+    "Lancée le": "Launched on",
+    "Campagne en cours": "Running campaign"
 }

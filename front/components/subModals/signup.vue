@@ -69,6 +69,11 @@ export default {
                         this.$emit('close-modal')
                     })
                     .catch((err) => {
+                        this.$toast.show(err, {
+                            theme: 'toasted-primary',
+                            position: 'top-right',
+                            duration: 4000,
+                        })
                         console.log('err', err)
                     })
             }
