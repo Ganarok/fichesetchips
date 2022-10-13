@@ -9,7 +9,8 @@
     "rootDir": "./src",
     "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*", "config/config.js"],
   "exclude": ["node_modules", "**/*.spec.ts"],

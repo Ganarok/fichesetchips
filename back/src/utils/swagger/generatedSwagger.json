@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Fiches&Chips",
-    "description": "API REST du projet Fiches&Chips",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -11,13 +11,36 @@
     "http"
   ],
   "paths": {
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Get a user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "tags": [
           "Authentification"
         ],
         "description": "Login as a user",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Login Body",
+            "in": "body",
+            "description": "The user that want to login",
+            "schema": {
+              "$ref": "#/definitions/loginRequest"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

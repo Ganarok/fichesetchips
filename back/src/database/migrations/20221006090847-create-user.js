@@ -1,5 +1,5 @@
-const { defaultPreference } = require("../seeders/fixtures/preferences")
-const { defaultUser } = require("../seeders/fixtures/users")
+const { defaultPreference } = require("../fixtures/preferences")
+const { defaultUser } = require("../fixtures/users")
 
 module.exports = {
     up: async(queryInterface, DataTypes) => {
@@ -28,8 +28,19 @@ module.exports = {
                 defaultValue: DataTypes.NOW
             }
         });
+        await queryInterface.addConstraint('Users', {
+            name: "Users_preference_id_Preferences_fk",
+            fields: ["preference_id"],
+            type: 'foreign key',
+            references: {
+                table: "Preferences",
+                field: "id",
+            },
+            onDelete: "SET DEFAULT"
+        })
     },
     down: async(queryInterface, Sequelize) => {
         await queryInterface.dropTable('Users');
+        await queryInterface.removeConstraint("Users", "Users_preference_id_Preferences_fk")
     }
 };

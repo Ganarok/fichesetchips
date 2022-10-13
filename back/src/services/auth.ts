@@ -3,6 +3,8 @@ import * as usersService from "../services/users"
 import { AuthResponse, LoginRequest, Payload, RegisterRequest } from "../utils/types/auth";
 
 import * as dotenv from 'dotenv'
+import { ErrorException } from "../error-handler/error-exception";
+import { ErrorCode } from "../error-handler/error-code";
 dotenv.config()
 
 const jwtSecret = process.env.JWTSECRET
@@ -35,6 +37,8 @@ async function validate(user: LoginRequest): Promise<User> {
     if (found_user && await bcrypt.compare(user.password, found_user.password)) {
         return found_user
     } else {
-        throw new Error("wrong username or password")
+        throw new ErrorException(ErrorCode.NotFound)
+        // res.send()
+        // res.status(404).json({ success: false, message: "Wrong username or password" })
     }
 }

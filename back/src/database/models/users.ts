@@ -2,6 +2,9 @@ import { DataTypes, Model } from "sequelize";
 import { ROLE } from "../../utils/types/users";
 import { sequelize } from "../connection";
 import Preference from "./preference";
+const defaultUsers: { [key: string]: User } = require("../seeders/fixtures/users.js")
+const defaultPreferences: { [key: string]: Preference } = require("../seeders/fixtures/preferences.js")
+const avatar: string = require("../seeders/fixtures/avatar.js")
 const bcrypt = require('bcrypt');
 
 export default class User extends Model {
@@ -20,13 +23,13 @@ User.init({
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
     username: { type: DataTypes.STRING, allowNull: false, unique: true },
     password: { type: DataTypes.STRING, allowNull: false },
-    avatar: { type: DataTypes.STRING, allowNull: false, defaultValue: "" },
+    avatar: { type: DataTypes.STRING, allowNull: false, defaultValue: avatar },
     role: {
         allowNull: false, defaultValue: "USER",
         type: DataTypes.ENUM,
         values: ["USER", "ADMIN", "SUPERADMIN"],
     },
-    preference_id: { type: DataTypes.UUID, allowNull: false, defaultValue: 1 },
+    preference_id: { type: DataTypes.UUID, allowNull: false, defaultValue: defaultPreferences.defaultPreference.id },
     last_connection: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW }
 }, {
     sequelize,
