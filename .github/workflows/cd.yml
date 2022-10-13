@@ -48,7 +48,7 @@ jobs:
         password: onepiececestlameilleureserie
         script:
           docker rm $(docker ps -a -q) --force &&
-          docker rmi $(docker images -a -q) --force &&
+          # docker rmi $(docker images -a -q) --force &&
           docker pull puigs/client:latest &&
           docker pull puigs/server:latest &&
           docker run -d -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES=54.38.185.154 -e POSTGRES_DB=fichesetchips -p 5432:5432 postgres:latest &&
