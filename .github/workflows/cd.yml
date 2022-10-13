@@ -2,7 +2,7 @@ name: CD with dockerhub to virtual private server
 
 on:
   push:
-    branches: [features_continue_deploiement]
+    branches: [features_continue_deploiement, main]
 
 jobs:
   build:
