@@ -1,21 +1,18 @@
 import express from "express";
 import { routing } from "./routes/routes";
 import bodyParser from "body-parser"
-import { errorHandler } from "./error-handler/error-handler";
-const cors = require('cors');
-
+import cors from "cors"
+import * as swaggerUi from "swagger-ui-express"
+import * as swaggerDocument from "./utils/swagger/swagger.json"
 const app = express();
 
 const port = parseInt(process.env.PORT || "5432")
 const host = process.env.HOST || "localhost"
 
-app.use(errorHandler);
 app.use(cors())
 app.use(bodyParser.json());
 
 // BEGIN swaggerUi
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./utils/swagger/swagger.json');
 app.use('/docs', swaggerUi.serve);
 app.get('/docs', swaggerUi.setup(swaggerDocument));
 // END swaggerUi

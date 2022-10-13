@@ -2,8 +2,8 @@ import { DataTypes, Model } from "sequelize";
 import { LANGUAGES, THEMES } from "../../utils/types/preferences";
 import { sequelize } from "../connection";
 import User from "./users";
+
 const { defaultPreference } = require("../seeders/fixtures/preferences")
-const bcrypt = require('bcrypt');
 
 export default class Preference extends Model {
   declare id: string;
