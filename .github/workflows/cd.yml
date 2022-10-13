@@ -23,7 +23,7 @@ jobs:
         password: saucissegalactique34
         
     - name: Build image client
-      run: docker build front/. -t client:new_image
+      run: docker build front/. --build-arg BACK_HOST=54.38.185.154 --build-arg BACK_PORT=3000 -t client:new_image
 
     - name: Build image server
       run: docker build back/. -t server:new_image
