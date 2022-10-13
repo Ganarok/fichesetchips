@@ -8,7 +8,7 @@ export async function apiCall({
     body,
 }) {
     const baseUrl =
-        process.env.NODE_ENV === 'dev'
+        process.env.NODE_ENV === 'development'
             ? 'http://localhost:3000'
             : `${process.env.BACK_HOST}:${process.env.BACK_PORT}`
 
@@ -22,8 +22,6 @@ export async function apiCall({
               method,
               headers,
           })
-
-    console.log(res)
 
     // if (!res.ok) throw new Error(res.statusText)
 
