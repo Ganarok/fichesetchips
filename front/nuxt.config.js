@@ -38,8 +38,13 @@ export default {
         throttle: 0,
     },
 
+    env: {
+        BACK_HOST: process.env.BACK_HOST,
+        BACK_PORT: process.env.BACK_PORT,
+    },
+
     // Define the development or production mode of Nuxt
-    dev: process.env.NODE_ENV === 'dev',
+    dev: process.env.NODE_ENV === 'development',
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: ['@/assets/main.css'],
