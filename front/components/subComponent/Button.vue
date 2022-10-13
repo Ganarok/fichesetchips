@@ -1,7 +1,7 @@
 <template>
     <button
-        class="border-[3px] rounded-full p-[2%] w-full font-barlow flex justify-center opacity-80 hover:opacity-100"
-        :class="'text-' + color + ' ' + 'border-' + color + backgroundColor()"
+        class="border-[3px] rounded-full p-[2%] w-full font-barlow font-bold flex justify-center opacity-100 text-white hover:opacity-80"
+        :class="'border-' + color + backgroundColor()"
         @click="callback($event)">
         {{ buttonText }}
         <img
@@ -17,7 +17,7 @@ export default {
         buttonText: String,
         color: {
             type: String,
-            default: 'fiche-green',
+            default: 'fc-green',
         },
         filled: String,
         image: String,
@@ -36,5 +36,3 @@ export default {
     },
 }
 </script>
-
-<!-- <Button buttonText="Exemple" color="fiche-green" v-on:click="test()" filled="chips-yellow" :image="require('../assets/icon.png')"/> -->

@@ -29,6 +29,7 @@
                 <CustomInput
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v)"
+                    typeInput="password"
                     placeHolder="Mot de passe" />
             </div>
             <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
@@ -53,6 +54,7 @@ import Modal from '~/components/Modal.vue'
 import CustomInput from '~/components/subComponent/CustomInput.vue'
 import subModalSignup from '~/components/subModals/signup.vue'
 import { apiCall } from '~/utils/apiCall'
+import bcrypt from 'bcryptjs'
 
 export default Vue.extend({
     name: 'Login',
@@ -70,6 +72,10 @@ export default Vue.extend({
         },
         handlePassword(v) {
             this.password = v
+            // let saltRounds = parseInt(process.env.SALTROUNDS)
+            // bcrypt.hash(v, saltRounds).then((result) => {
+            //     this.password = result
+            // })
         },
         handleLogin() {
             const { username, password } = this
@@ -83,15 +89,35 @@ export default Vue.extend({
                         password,
                     }),
                 })
-                    .then((res) => {
+                    .then(async (res) => {
                         this.$store.commit('setUser', {
                             ...res.user,
                             access_token: res.access_token,
                         })
 
-                        this.$router.push('/dashboard')
+                        await this.$router.push('/user/dashboard')
+
+                        setTimeout(
+                            () =>
+                                this.$toast.show(
+                                    `${this.$t('Bienvenue')} ${
+                                        res.user.username
+                                    } !`,
+                                    {
+                                        theme: 'toasted-primary',
+                                        position: 'top-right',
+                                        duration: 4000,
+                                    }
+                                ),
+                            400
+                        )
                     })
                     .catch((err) => {
+                        this.$toast.show(err, {
+                            theme: 'toasted-primary',
+                            position: 'top-right',
+                            duration: 4000,
+                        })
                         console.log('err', err)
                     })
             }

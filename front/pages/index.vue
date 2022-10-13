@@ -15,11 +15,11 @@
             <div
                 class="flex font-barlow text-center space-x-4 px-2 items-center sm:px-0 sm:space-x-0 sm:w-full sm:space-y-8 sm:flex-col">
                 <button
-                    class="rounded-full text-chips-yellow border-chips-yellow border-2 p-1 px-2 sm:p-2 sm:border-[3px] min-w-[50%]">
+                    class="rounded-full text-fc-yellow border-fc-yellow border-2 p-1 px-2 sm:p-2 sm:border-[3px] min-w-[50%]">
                     <NuxtLink to="/login"> {{ $t("S'inscrire") }} </NuxtLink>
                 </button>
                 <button
-                    class="rounded-full text-fiche-green border-fiche-green border-2 p-1 px-2 sm:p-2 min-w-[50%] sm:border-[3px]">
+                    class="rounded-full text-fc-green border-fc-green border-2 p-1 px-2 sm:p-2 min-w-[50%] sm:border-[3px]">
                     <NuxtLink to="/login"> {{ $t('Se connecter') }} </NuxtLink>
                 </button>
                 <img
@@ -38,7 +38,7 @@
             id="top">
             <div class="h-screen tashas font-barlow relative">
                 <div
-                    class="flex flex-col w-[41%] bg-fiche-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%]">
+                    class="flex flex-col w-[41%] bg-fc-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%]">
                     <p
                         class="text-xl sm:text-2xl lg:text-3xl text-white font-bold w-[75%] pr-[5%] tablet:text-2xl">
                         Notre site il est trop bien alors tu t’inscris et tu
@@ -49,11 +49,22 @@
                         <NuxtLink to="/login"> GO -> </NuxtLink>
                     </button>
                     <div
-                        class="w-[45px] h-[45px] bg-fiche-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
+                        class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
                 </div>
+                <Transition name="fade">
+                    <div
+                        class="absolute bottom-0 left-[50%] animate-bounce"
+                        v-show="isVisibleBounce">
+                        <a @scroll="scrollHandler" href="#MapVue">
+                            <img
+                                class="w-[50px] h-[50px] rotate-180"
+                                src="../assets/vector.svg"
+                                alt="vector" />
+                        </a>
+                    </div>
+                </Transition>
             </div>
-
-            <div class="flex flex-col overflow-x-hidden background">
+            <div class="flex flex-col overflow-x-hidden background" id="MapVue">
                 <div
                     class="w-full pl-0 translate-x-[-10px] sm:translate-x-[-25px]">
                     <MapVue />
@@ -68,14 +79,15 @@
                 </div>
             </div>
         </div>
-
-        <a
-            @scroll="scrollHandler"
-            href="#top"
-            class="fixed transition-opacity bottom-0 right-0 w-[50px] h-[50px] m-[2%] z-50"
-            v-show="isVisible">
-            <img src="../assets/vector.svg" alt="vector" />
-        </a>
+        <Transition name="fade">
+            <a
+                @scroll="scrollHandler"
+                href="#top"
+                class="fixed transition-opacity bottom-0 right-0 w-[50px] h-[50px] m-[2%] z-50"
+                v-show="isVisible">
+                <img src="../assets/vector.svg" alt="vector" />
+            </a>
+        </Transition>
     </div>
 </template>
 <script lang="js">
@@ -93,12 +105,14 @@ export default Vue.extend({
         window.removeEventListener('scroll', this.scrollHandler)
     },
     data: function () {
-        return { isVisible: false };
+        return { isVisible: false, isVisibleBounce: true };
     },
     methods: {
         scrollHandler: function scrollHandler(e) {
             this.isVisible = e.target.scrollingElement.scrollTop > window.screen.height * 0.5 ? true : false;
-        }
+            this.isVisibleBounce = e.target.scrollingElement.scrollTop > window.screen.height * 0.001 ? false : true;
+        },
+
     },
     components: { MapVue, AmisVue, PersoVue }
 })
@@ -106,7 +120,7 @@ export default Vue.extend({
 
 <style>
 .tashas {
-    background-image: url('../assets/index/tashasCauldronOfEverythingDnd.svg');
+    background-image: url('../assets/index/background.jpg');
     background-size: cover;
 }
 
@@ -117,5 +131,14 @@ export default Vue.extend({
 
 html {
     scroll-behavior: smooth;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
