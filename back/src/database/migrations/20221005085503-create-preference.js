@@ -1,4 +1,4 @@
-const { defaultPreference } = require("../seeders/fixtures/preferences")
+const { defaultPreference } = require("../fixtures/preferences")
 
 module.exports = {
     up: async(queryInterface, DataTypes) => {

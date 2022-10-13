@@ -1,4 +1,4 @@
-const { defaultPreference, darkPreference } = require("./fixtures/preferences.js")
+const { defaultPreference, darkPreference } = require("../fixtures/preferences.js")
 
 module.exports = {
     up: (queryInterface, Sequelize) => {

@@ -1,4 +1,4 @@
-const { defaultUser, defaultAdmin, defaultSuperAdmin } = require("./fixtures/users.js")
+const { defaultUser, defaultAdmin, defaultSuperAdmin } = require("../fixtures/users.js")
 
 module.exports = {
     up: (queryInterface, Sequelize) => {

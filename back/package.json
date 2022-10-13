@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "ts-node-dev --respawn --transpile-only ./src/swaggerJsonGen.ts",
-        "start": "ts-node src/swaggerJsonGen.ts",
+        "start": "ts-node src/utils/swagger/swaggerJsonGen.ts",
         "db:refresh": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
         "db:drop": "npx sequelize-cli db:drop",
         "db:create": "npx sequelize-cli db:create",
@@ -37,11 +37,13 @@
         "body-parser": "^1.20.1",
         "cors": "^2.8.5",
         "express": "^4.18.1",
+        "fs": "^0.0.1-security",
         "jsonwebtoken": "^8.5.1",
         "pg": "^8.8.0",
         "sequelize": "^6.23.2",
         "sequelize-cli-typescript": "^3.2.0-c",
         "sqlite3": "^5.1.1",
+        "swagger-express-ts": "^1.1.0",
         "swagger-jsdoc": "^6.2.5",
         "swagger-ui-express": "^4.5.0",
         "tsoa": "^4.1.3"
