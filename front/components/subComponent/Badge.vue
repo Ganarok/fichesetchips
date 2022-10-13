@@ -1,8 +1,10 @@
 <template>
     <div
-        class="rounded-full bg-fiche-green border-[0.2em] border-fc-black h-16 w-16">
+        class="rounded-full bg-fiche-green border-[0.2em] border-fc-black h-16 md:h-10"
+        style="aspect-ratio: 1/1">
         <div
-            class="relative left-9 bottom-1 rounded-full border-[0.15em] border-white h-6 w-6 cursor-pointer"
+            class="relative left-9 md:left-6 bottom-1 rounded-full border-[0.15em] border-white h-4 cursor-pointer"
+            style="aspect-ratio: 1/1"
             :class="displayFav ? 'bg-white' : null"
             @click="localFav = !localFav"></div>
     </div>
