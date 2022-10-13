@@ -15,6 +15,8 @@ RUN apk add git
 COPY . /app
 RUN npm install
 RUN chmod +x build.sh
+RUN echo BACK_HOST
+RUN echo BACK_PORT
 RUN ./build.sh BACK_HOST BACK_PORT
 
 EXPOSE 8000
