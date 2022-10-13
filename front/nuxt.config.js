@@ -39,7 +39,7 @@ export default {
     },
 
     // Define the development or production mode of Nuxt
-    dev: process.env.NODE_ENV !== 'production' || 'development',
+    dev: process.env.NODE_ENV === 'dev',
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: ['@/assets/main.css'],
