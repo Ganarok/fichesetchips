@@ -7,10 +7,9 @@
             </NuxtLink>
         </div>
 
-        
         <div
             class="flex flex-col items-center justify-center text-white space-y-8"
-            v-if='connected()'>
+            v-if="connected()">
             <NuxtLink
                 to="/dashboard"
                 class="font-bold text-xl"
@@ -69,8 +68,8 @@
                 active-class="text-chips-yellow"
                 @click.native="logout()"
                 v-if="connected()"
-                ><Button buttonText="Logout" color="chips-yellow" /></NuxtLink
-            >
+                ><Button buttonText="Logout" color="chips-yellow"
+            /></NuxtLink>
             <img src="../../assets/icon.png" class="w-2/4" alt="F&C logo" />
             <p class="text-white text-[10px]">Made with love by fiches&chips</p>
         </div>
@@ -78,19 +77,19 @@
 </template>
 
 <script>
-    import Button from '~/components/subComponent/Button.vue'
-    export default {
-        name: 'Sidebar',
-        components: { Button },
-        methods: {
-            connected: function () {
-                return this.$store.getters.connected
-            },
-            logout: function () {
-                this.$store.commit('logout')
-            }
+import Button from '~/components/subComponent/Button.vue'
+export default {
+    name: 'Sidebar',
+    components: { Button },
+    methods: {
+        connected: function () {
+            return this.$store.getters.connected
         },
-    }
+        logout: function () {
+            this.$store.commit('logout')
+        },
+    },
+}
 </script>
 
 <style></style>

@@ -9,8 +9,7 @@
             class="flex flex-grow ml-1 h-[1.4em] border placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
             :placeholder="displayValue"
             :type="password ? 'password' : 'text'"
-            @keyup.enter="toggleEdit"
-        />
+            @keyup.enter="toggleEdit" />
         <div @click="toggleEdit" class="ml-1" v-show="!edit">
             {{ displayValue }}
         </div>

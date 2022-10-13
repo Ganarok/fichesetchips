@@ -24,14 +24,12 @@ export const mutations = {
         state.user.createdAt = ''
         state.user.updatedAt = ''
         state.user.access_token = ''
-    }
+    },
 }
 
 export const getters = {
     connected(state) {
-        if(state.user.access_token != '')
-                    return true
-                else
-                    return false
-    }
+        if (state.user.access_token != '') return true
+        else return false
+    },
 }
