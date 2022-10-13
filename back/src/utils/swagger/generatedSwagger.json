@@ -44,6 +44,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -54,12 +57,51 @@
           "Authentification"
         ],
         "description": "Register a user",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Register Body",
+            "in": "body",
+            "description": "The user that want to register",
+            "schema": {
+              "$ref": "#/definitions/registerRequest"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": [
+          "Authentification"
+        ],
+        "description": "Get the profile of a user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
       }
     }
   }

@@ -2,10 +2,10 @@ import { DataTypes, Model } from "sequelize";
 import { ROLE } from "../../utils/types/users";
 import { sequelize } from "../connection";
 import Preference from "./preference";
-const defaultUsers: { [key: string]: User } = require("../seeders/fixtures/users.js")
-const defaultPreferences: { [key: string]: Preference } = require("../seeders/fixtures/preferences.js")
-const avatar: string = require("../seeders/fixtures/avatar.js")
-const bcrypt = require('bcrypt');
+import * as bcrypt from "bcrypt"
+
+const defaultPreferences: { [key: string]: Preference } = require("../fixtures/preferences.js")
+const avatar: string = require("../fixtures/avatar.js")
 
 export default class User extends Model {
     declare id: string;
@@ -36,6 +36,7 @@ User.init({
     modelName: 'User'
 })
 
+// DO TO HASH PASSWORD BEFORE UPDATE
 User.beforeCreate(async (user: User, options) => {
     if (user.password) {
         const salt = await bcrypt.genSalt();

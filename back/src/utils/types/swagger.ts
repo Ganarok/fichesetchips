@@ -14,6 +14,7 @@ export type SwaggerConfig = {
             "url": string
         }
     },
+    "components": {},
     "host": string,
     "basePath": string,
     "tags"?: Tag[],
