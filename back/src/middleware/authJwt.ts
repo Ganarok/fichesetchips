@@ -7,7 +7,7 @@ export interface CustomRequest extends Request {
   jwtPayload: string | JwtPayload;
 }
 
-export const auth = async (req: any, res: Response, next: NextFunction) => {
+export const verifyToken = async (req: any, res: Response, next: NextFunction) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
 

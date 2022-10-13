@@ -8,7 +8,8 @@ import config from "./config";
 const outputFile = "./generatedSwagger.json";
 const endpointsFiles = ["../../routes/routes"];
 
-swaggerAutogen()(outputFile, endpointsFiles, {}).then(async () => {
+swaggerAutogen()(outputFile, endpointsFiles, config).then(async () => {
+  
   const swaggerConfig: SwaggerConfig = {
     ...generatedSwagger,
     components: {
@@ -17,14 +18,15 @@ swaggerAutogen()(outputFile, endpointsFiles, {}).then(async () => {
           type: 'http',
           description: 'Enter JWT token',
           name: 'JWT',
-          in: 'header',
           scheme: 'bearer',
           bearerFormat: 'JWT',
+          value: "Bearer <JWT token here>"
         }
       },
-      security: { bearerAuth: [] }
     }
   }
+
+  delete swaggerConfig.swagger
 
   swaggerConfig["definitions"] = definitions
 
@@ -35,5 +37,4 @@ swaggerAutogen()(outputFile, endpointsFiles, {}).then(async () => {
 
   await new Promise((resolve, reject) => setTimeout(() => resolve(true), 1000));
 
-  await import('../../server');
 });

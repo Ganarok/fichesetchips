@@ -1,28 +1,67 @@
 {
   "swagger": "2.0",
+  "openapi": "3.0.3",
   "info": {
-    "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "Fiches&Chips",
+    "description": "API REST du projet Fiches&Chips",
+    "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": [
-    "http"
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
   ],
   "paths": {
-    "/users/": {
+    "/users/profile": {
       "get": {
         "tags": [
           "Users"
         ],
-        "description": "Get a user",
+        "description": "Get his profile",
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        }
+        },
+        "security": []
+      }
+    },
+    "/users/profile/{username}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Get the public profile of a dedicated user",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "username of the user to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
       }
     },
     "/auth/login": {
@@ -44,6 +83,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -71,37 +113,13 @@
           "200": {
             "description": "OK"
           },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/auth/profile": {
-      "get": {
-        "tags": [
-          "Authentification"
-        ],
-        "description": "Get the profile of a user",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
           "401": {
             "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        },
-        "security": []
+        }
       }
     }
   }

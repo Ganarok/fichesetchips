@@ -4,8 +4,9 @@ type Tag = {
 }
 
 export type SwaggerConfig = {
-    "swagger": string,
-    "info": {
+    "openapi"?: string,
+    "swagger"?: string,
+    "info"?: {
         "version": string,
         "title": string,
         "description": string,
@@ -14,13 +15,13 @@ export type SwaggerConfig = {
             "url": string
         }
     },
-    "components": {},
-    "host": string,
-    "basePath": string,
+    "components"?: {},
+    "host"?: string,
+    "basePath"?: string,
     "tags"?: Tag[],
-    "schemes": string[],
+    "schemes"?: string[],
     "consumes"?: string[],
     "produces"?: string[],
-    "paths": {},
+    "paths"?: {},
     "definitions"?: {}
 }

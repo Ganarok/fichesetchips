@@ -9,6 +9,7 @@ dotenv.config()
 const jwtSecret = process.env.JWTSECRET || "SECRET"
 
 export async function login(user: LoginRequest): Promise<AuthResponse> {
+    console.log(user)
     const found_user = await validate(user)
     const payload: Payload = { username: found_user.username, id: found_user.id, email: found_user.email };
     return {

@@ -5,14 +5,15 @@
     "main": "server.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "ts-node-dev --respawn --transpile-only ./src/swaggerJsonGen.ts",
-        "start": "ts-node src/utils/swagger/swaggerJsonGen.ts",
+        "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+        "start": "ts-node src/server.ts",
         "db:refresh": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
         "db:drop": "npx sequelize-cli db:drop",
         "db:create": "npx sequelize-cli db:create",
         "db:migrate": "npx sequelize-cli db:migrate",
         "db:seed": "npx sequelize-cli db:seed:all",
-        "db:seed:undo": "npx sequelize-cli db:seed:undo:all"
+        "db:seed:undo": "npx sequelize-cli db:seed:undo:all",
+        "swagger:generate": "ts-node src/utils/swagger/swaggerJsonGen.ts"
     },
     "author": "",
     "license": "ISC",

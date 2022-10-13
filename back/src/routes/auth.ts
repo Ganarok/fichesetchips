@@ -1,6 +1,6 @@
 import express from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { auth, CustomRequest } from "../middleware/authJwt";
+import { verifyToken, CustomRequest } from "../middleware/authJwt";
 import * as authService from "../services/auth"
 import * as usersService from "../services/users"
 import { getErrorMessage } from "../utils/error-handler/getErrorMessage";
@@ -19,6 +19,7 @@ router.post("/login", async (req, res) => {
         }
     */
     try {
+        console.log(req.body)
         const response = await authService.login(req.body);
         res.status(200).send({ ...response, message: "User succesfully logged" });
     } catch (error) {
@@ -40,20 +41,6 @@ router.post("/register", async (req, res) => {
     try {
         const response = await authService.register(req.body);
         res.status(200).send({ ...response, message: 'User successfully registered' });
-    } catch (error) {
-        return res.status(500).send(getErrorMessage(error));
-    }
-})
-
-router.get("/profile", auth, async (req, res) => {
-    /*
-      #swagger.tags = ["Authentification"]
-      #swagger.description = 'Get the profile of a user'
-      #swagger.security = { bearerAuth: [] }
-    */
-    try {
-        const response = await usersService.findOne((req as CustomRequest).jwtPayload as JwtPayload);
-        res.status(200).send({ ...response, message: 'User profile successfully found' });
     } catch (error) {
         return res.status(500).send(getErrorMessage(error));
     }
