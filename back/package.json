@@ -41,10 +41,11 @@
         "fs": "^0.0.1-security",
         "jsonwebtoken": "^8.5.1",
         "pg": "^8.8.0",
-        "sequelize": "^6.23.2",
+        "sequelize": "^6.25.1",
+        "sequelize-cli": "6.3.0",
         "sequelize-cli-typescript": "^3.2.0-c",
         "sqlite3": "^5.1.1",
-        "swagger-jsdoc": "5.0.1",
+        "swagger-jsdoc": "6.2.5",
         "swagger-ui-express": "^4.5.0",
         "tsoa": "^4.1.3"
     }
