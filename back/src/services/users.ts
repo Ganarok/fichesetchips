@@ -12,6 +12,7 @@ export async function findProfile(payload: JwtPayload) {
 }
 
 export async function findPublicProfile(username: string) {
+    console.log(username)
     const user = await User.findOne({ where: { username: username } })
     if (user) {
         return { user: { id: user.id, username: user.username, email: user.email } }

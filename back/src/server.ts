@@ -1,21 +1,35 @@
-import express from "express";
-import { routing } from "./routes/routes";
+import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
+
 import * as swaggerUi from "swagger-ui-express"
-import * as swaggerDocument from "./utils/swagger/swagger.json"
+
+import { routing } from "./routes/routes"
+import { config as swaggerDefinition } from "./utils/swagger/config"
+
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 const app = express();
 
-const port = parseInt(process.env.PORT || "5432")
+const port = parseInt(process.env.PORT || "9000")
 const host = process.env.HOST || "localhost"
+
+// swaggerJSDoc
+const swaggerJSDoc = require('swagger-jsdoc');
+
+const options = {
+    swaggerDefinition,
+    apis: ['src/routes/users.ts', 'src/routes/auth.ts'],
+};
+
+const swaggerSpec = swaggerJSDoc(options)
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+// end swaggerJSDoc
 
 app.use(cors())
 app.use(bodyParser.json());
-
-// BEGIN swaggerUi
-app.use('/docs', swaggerUi.serve);
-app.get('/docs', swaggerUi.setup(swaggerDocument));
-// END swaggerUi
 
 routing(app);
 
