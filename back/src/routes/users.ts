@@ -7,11 +7,23 @@ import { getErrorMessage } from "../utils/error-handler/getErrorMessage";
 const router = express.Router();
 
 router.get("/profile", async (req, res) => {
-  /*
-    #swagger.tags = ["Users"]
-    #swagger.description = 'Get his profile'
-    #swagger.security = { bearerAuth: [] }
-  */
+  /**
+   * @swagger
+   * /users/profile:
+   *   get:
+   *     description: Get my profile.
+   *     tags: 
+   *       - Users
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Private profile found.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   */
   try {
     const response = await usersService.findProfile((req as CustomRequest).jwtPayload as JwtPayload);
     res.status(200).send({ ...response, message: 'User profile successfully found' });
@@ -20,18 +32,29 @@ router.get("/profile", async (req, res) => {
   }
 })
 router.get("/profile/:username", async (req, res) => {
-  /*
-    #swagger.tags = ["Users"]
-    #swagger.description = 'Get the public profile of a dedicated user'
-    #swagger.parameters = {
-        in: "path",
-        name: "username",
-        schema: { type: "string" },
-        required: true,
-        description: "username of the user to get"
-      }
-    #swagger.security = { bearerAuth: [] }
-  */
+  /**
+   * @swagger
+   * /users/profile/:username:
+   *   get:
+   *     description: Get the public profile of a dedicated user.
+   *     tags: 
+   *       - Users
+   *     parameters:
+   *     - in: "path"
+   *       name: "username"
+   *       schema: { type: "string" }
+   *       required: true
+   *       description: "username of the user to get"
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Public profile found.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   */
   try {
     const response = await usersService.findPublicProfile(req.params.username);
     res.status(200).send({ ...response, message: 'User profile successfully found' });

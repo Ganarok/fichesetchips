@@ -8,18 +8,29 @@ import { LoginRequest, RegisterRequest } from "../utils/types/auth";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
-    /*
-      #swagger.tags = ["Authentification"]
-      #swagger.description = 'Login as a user'
-      #swagger.parameters['user'] = {
-                "name": "Login Body",
-                in: 'body',
-                description: 'The user that want to login',
-                schema: { $ref: '#/definitions/loginRequest' }
-        }
-    */
+    /**
+     * @swagger
+     * /auth/login:
+     *   post:
+     *     description: Login as a user.
+     *     tags: 
+     *       - Authentification
+     *     parameters:
+     *       - in: body
+     *         name: loginRequest
+     *         required: true
+     *         description: The user that wants to login.
+     *         schema: { $ref: '#/definitions/loginRequest' }
+     *     responses:
+     *       200:
+     *         description: User logged.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     */
     try {
-        console.log(req.body)
+        console.log(req)
         const response = await authService.login(req.body);
         res.status(200).send({ ...response, message: "User succesfully logged" });
     } catch (error) {
@@ -28,16 +39,27 @@ router.post("/login", async (req, res) => {
 })
 
 router.post("/register", async (req, res) => {
-    /*
-      #swagger.tags = ["Authentification"]
-      #swagger.description = 'Register a user'
-      #swagger.parameters['user'] = {
-                "name": "Register Body",
-                in: 'body',
-                description: 'The user that want to register',
-                schema: { $ref: '#/definitions/registerRequest' }
-        }
-    */
+    /**
+     * @swagger
+     * /auth/register:
+     *   post:
+     *     description: Register a user.
+     *     tags: 
+     *       - Authentification
+     *     parameters:
+     *       - in: body
+     *         name: registerRequest
+     *         required: true
+     *         description: The user that wants to register.
+     *         schema: { $ref: '#/definitions/registerRequest' } 
+     *     responses:
+     *       200:
+     *         description: User registered.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     */
     try {
         const response = await authService.register(req.body);
         res.status(200).send({ ...response, message: 'User successfully registered' });
