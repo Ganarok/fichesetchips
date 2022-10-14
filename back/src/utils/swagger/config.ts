@@ -1,11 +1,14 @@
 import { definitions } from "./definitions";
 import * as dotenv from 'dotenv'
+import { Express } from "express";
+import swaggerJSDoc from 'swagger-jsdoc';
+import * as swaggerUi from "swagger-ui-express"
 dotenv.config()
 
 const port = parseInt(process.env.PORT || "9000")
 const host = process.env.HOST || "localhost"
 
-export const config = {
+const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
         title: "Fiches&Chips",
@@ -54,3 +57,17 @@ export const config = {
     ],
     definitions: definitions
 };
+
+
+const options = {
+    swaggerDefinition,
+    apis: ["src/routes/*.ts"],
+};
+
+const swaggerSpec = swaggerJSDoc(options)
+
+
+export const configSwagger = (app : Express) =>
+{
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+}
