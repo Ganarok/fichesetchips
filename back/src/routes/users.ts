@@ -56,9 +56,8 @@ router.get("/profile/:username", async (req, res) => {
    *               type: object
    */
   try {
-    console.log(req.params)
     const response = await usersService.findPublicProfile(req.params.username);
-    res.status(200).send({ ...response, message: 'User profile successfully found' });
+    res.status(200).send({ ...response, message: 'User public profile successfully found' });
   } catch (error) {
     return res.status(500).send(getErrorMessage(error));
   }

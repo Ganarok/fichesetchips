@@ -4,8 +4,10 @@ import cors from "cors"
 import { routing } from "./routes/routes"
 import { configSwagger } from "./utils/swagger/config"
 import * as dotenv from 'dotenv'
+import { databaseConnection } from "./database/connection";
 dotenv.config()
 
+databaseConnection()
 const app = express();
 
 const port = parseInt(process.env.PORT || "9000")

@@ -47,16 +47,17 @@ Set your environnment variable as you want.
 
 Init db :
 
+1- Create database
+
+2- Migrate database
+
 ```bash
-npm run db:create
-npm run db:migrate
-npm run db:seed
+npm run migration:run
 ```
-
-Refresh db :
+2- Seed database
 
 ```bash
-npm run db:refresh
+npm run db:seed
 ```
 
 
@@ -87,7 +88,7 @@ npm run test:cov
 
 ### Swagger
 
-Go to `http://localhost:3000/api`
+Go to `http://localhost:3000/docs`
 
 - Authorization : Bearer Token
 
@@ -98,3 +99,29 @@ Go to the padlock image
 And enter your Bearer Token
 
 ![And enter your Bearer Token](./img/auth2.png)
+
+### Migrations
+
+- Generate migration file from new entities
+
+```
+npm run migration:generate src/database/migrations/<YourEntityName>Migrations
+```
+
+- Create blank migration file
+
+```
+npm run migration:create src/database/migrations/<YourMigrationName>
+```
+
+- Revert last migration
+
+```
+npm run migration:revert
+```
+
+- Show migrations
+
+```
+npm run migration:show
+```
