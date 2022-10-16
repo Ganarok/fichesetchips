@@ -21,3 +21,4 @@ routing(app);
 app.listen(port, host, () => {
     console.log(`App is running here : http://${host}:${port} \nYou can find the doc here : http://${host}:${port}/docs`);
 });
+export default app
