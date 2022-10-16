@@ -13,7 +13,8 @@
         "migration:create": "npm run -- typeorm migration:create",
         "migration:revert": "npm run -- typeorm migration:revert --dataSource src/database/data-source.ts",
         "migration:show": "npm run -- typeorm migration:show --dataSource src/database/data-source.ts",
-        "db:seed": "DB_MIGRATION_DIR=src/database/seeders/*.ts npm run -- typeorm migration:run --dataSource src/database/data-source.ts"
+        "db:seed": "DB_MIGRATION_DIR=src/database/seeders/*.ts npm run -- typeorm migration:run --dataSource src/database/data-source.ts",
+        "db:refresh": "npm run -- typeorm schema:drop --dataSource src/database/data-source.ts && npm run migration:run && npm run db:seed"
     },
     "author": "",
     "license": "ISC",
