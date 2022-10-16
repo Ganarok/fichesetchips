@@ -1,4 +1,5 @@
-import User from "../../database/models/users";
+
+import { User } from "../../database/entities/User";
 import { CreateUser } from "./users";
 
 export type LoginRequest = {
