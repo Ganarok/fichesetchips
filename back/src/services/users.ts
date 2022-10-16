@@ -1,31 +1,22 @@
 import { JwtPayload } from "jsonwebtoken";
-import User from "../database/models/users";
-import { CreateUser } from "../utils/types/users";
+import { AppDataSource } from "../database/data-source";
+import { User } from "../database/entities/User";
+import { CreateUser, PublicProfile } from "../utils/types/users";
 
+const UserRepository = AppDataSource.getRepository(User)
 export async function create(user: CreateUser) {
-    return await User.create({ ...user })
+    const new_user = await UserRepository.save(user)
+    return new_user
 }
 
 export async function findProfile(payload: JwtPayload) {
-    const user = await User.findOne({ where: { username: payload.username } })
+    const user = await UserRepository.findOneByOrFail({ username: payload.username })
     return { user: user }
 }
 
 export async function findPublicProfile(username: string) {
-    console.log(username)
-    const user = await User.findOne({ where: { username: username } })
-    if (user) {
-        return { user: { id: user.id, username: user.username, email: user.email } }
-    } else {
-        throw new Error("User not found")
-    }
-}
-
-export async function update() {
-    return await User.findOne()
-}
-
-export async function destroy() {
-    return await User.findOne()
+    const user = await UserRepository.findOneByOrFail({ username: username })
+    let public_profile = new PublicProfile(user)
+    return { user: public_profile }
 }
 

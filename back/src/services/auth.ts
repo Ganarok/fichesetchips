@@ -1,11 +1,13 @@
-import User from "../database/models/users";
 import * as usersService from "../services/users"
 import { AuthResponse, LoginRequest, Payload, RegisterRequest } from "../utils/types/auth";
 import * as jwt from "jsonwebtoken"
 import * as dotenv from 'dotenv'
 import * as bcrypt from 'bcrypt'
+import { User } from "../database/entities/User";
+import { AppDataSource } from "../database/data-source";
 dotenv.config()
 
+const UserRepository = AppDataSource.getRepository(User)
 const jwtSecret = process.env.JWTSECRET || "SECRET"
 
 export async function login(user: LoginRequest): Promise<AuthResponse> {
@@ -28,9 +30,12 @@ export async function register(user: RegisterRequest): Promise<AuthResponse> {
     }
 }
 
-async function validate(user: LoginRequest): Promise<User> {
-    const found_user = await User.findOne({ where: { username: user.username } })
+async function validate(user: LoginRequest) {
+    const found_user = await UserRepository.findOneByOrFail({ username: user.username })
+    found_user.last_connection = new Date().toISOString()
+    await UserRepository.save(found_user)
     if (found_user && await bcrypt.compare(user.password, found_user.password)) {
+        console.log(found_user.last_connection)
         return found_user
     } else {
         throw new Error("Wrong username or password")
