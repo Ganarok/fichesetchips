@@ -20,6 +20,6 @@ export const verifyToken = async (req: any, res: Response, next: NextFunction) =
 
     next();
   } catch (err) {
-    res.status(401).send({ message: 'Authentification failed: wrong bearer token' });
+    res.status(401).send({ message: 'Authentification failed: wrong bearer token', error: "Unauthorized" });
   }
 };

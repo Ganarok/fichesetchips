@@ -1,7 +1,9 @@
-const defaultAvatar = require("./avatar.js")
-const { defaultPreference } = require("./preferences")
+import defaultAvatar from "./avatar"
+import defaultPreferences from "./preferences"
 
-module.exports = {
+const defaultPreference = defaultPreferences.defaultPreference
+
+export default  {
     defaultUser: {
         id: "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
         username: "user",
@@ -11,8 +13,8 @@ module.exports = {
         role: "USER",
         preference_id: defaultPreference.id,
         last_connection: "2022-06-24T11:29:59.619Z",
-        createdAt: "2022-06-24T11:29:59.619Z",
-        updatedAt: "2022-06-24T11:29:59.619Z"
+        created_at: "2022-06-24T11:29:59.619Z",
+        updated_at: "2022-06-24T11:29:59.619Z"
     },
     defaultAdmin: {
         id: "d1ba718d-07c4-41e1-b852-232e686e8535",
@@ -23,8 +25,8 @@ module.exports = {
         role: "ADMIN",
         preference_id: defaultPreference.id,
         last_connection: "2022-06-24T11:29:59.619Z",
-        createdAt: "2022-06-24T11:29:59.619Z",
-        updatedAt: "2022-06-24T11:29:59.619Z"
+        created_at: "2022-06-24T11:29:59.619Z",
+        updated_at: "2022-06-24T11:29:59.619Z"
     },
     defaultSuperAdmin: {
         id: "abba718d-07c4-41e1-b852-232e686e8535",
@@ -35,7 +37,7 @@ module.exports = {
         role: "SUPERADMIN",
         preference_id: defaultPreference.id,
         last_connection: "2022-06-24T11:29:59.619Z",
-        createdAt: "2022-06-24T11:29:59.619Z",
-        updatedAt: "2022-06-24T11:29:59.619Z"
+        created_at: "2022-06-24T11:29:59.619Z",
+        updated_at: "2022-06-24T11:29:59.619Z"
     }
 }
