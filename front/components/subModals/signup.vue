@@ -44,17 +44,17 @@ export default {
     components: { CustomInput },
     data() {
         return {
-            identifiant: '',
-            mail: '',
+            username: '',
+            email: '',
             password: '',
         }
     },
     methods: {
         handleGo() {
-            console.log('go', this.identifiant, this.password)
+            console.log('go', this.username, this.password)
 
-            if (this.identifiant && this.mail && this.password) {
-                const { identifiant: username, mail, password } = this
+            if (this.username && this.email && this.password) {
+                const { username: username, email, password } = this
 
                 apiCall({
                     method: 'POST',
@@ -62,6 +62,7 @@ export default {
                     body: JSON.stringify({
                         username,
                         password,
+                        email,
                         avatar: '',
                     }),
                 })
@@ -79,7 +80,7 @@ export default {
             }
         },
         handleId(value) {
-            this.identifiant = value
+            this.username = value
 
             // TODO: Error handling
         },

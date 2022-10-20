@@ -33,5 +33,18 @@
     "Pas de description": "Pas de description",
     "Bienvenue": "Bienvenue",
     "Lancée le": "Lancée le",
-    "Campagne en cours": "Campagne en cours"
+    "Campagne en cours": "Campagne en cours",
+    "Connexion": "Connexion",
+    "Pas encore inscrit ? Cliquez ici": "Pas encore inscrit ? Cliquez ici",
+    "Mot de passe oublié": "Mot de passe oublié",
+    "Vous avez perdu quelque chose": "Vous avez perdu quelque chose",
+    "Annuler": "Annuler",
+    "Identifiant": "Identifiant",
+    "Inscription": "Inscription",
+    "L'email n'est pas valide": "L'email n'est pas valide",
+    "Les identifiants ne sont pas valides": "Les identifiants ne sont pas valides",
+    "Une erreur est survenue": "Une erreur est survenue",
+    "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères": "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères",
+    "La confirmation doit correspondre au mot de passe": "La confirmation doit correspondre au mot de passe",
+    "Finalement non": "Finalement non"
 }

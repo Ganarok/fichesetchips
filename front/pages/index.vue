@@ -16,7 +16,7 @@
                 class="flex font-barlow text-center space-x-4 px-2 items-center sm:px-0 sm:space-x-0 sm:w-full sm:space-y-8 sm:flex-col">
                 <button
                     class="rounded-full text-fc-yellow border-fc-yellow border-2 p-1 px-2 sm:p-2 sm:border-[3px] min-w-[50%]">
-                    <NuxtLink to="/login"> {{ $t("S'inscrire") }} </NuxtLink>
+                    <NuxtLink to="/register"> {{ $t("S'inscrire") }} </NuxtLink>
                 </button>
                 <button
                     class="rounded-full text-fc-green border-fc-green border-2 p-1 px-2 sm:p-2 min-w-[50%] sm:border-[3px]">

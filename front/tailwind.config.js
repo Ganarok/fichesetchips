@@ -16,6 +16,7 @@ module.exports = {
                 'fc-yellow-trans': '#FFDB57b3',
                 'fc-black': '#1E1E1E',
                 'fc-black-light': '#353535',
+                'fc-red': '#F04E4E',
             },
             fontFamily: {
                 barlow: ['Barlow', 'sans-serif'],
