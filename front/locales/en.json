@@ -33,5 +33,12 @@
     "Pas de description": "No description",
     "Bienvenue": "Welcome",
     "Lancée le": "Launched on",
-    "Campagne en cours": "Running campaign"
+    "Campagne en cours": "Running campaign",
+    "Connexion": "Connection",
+    "Pas encore inscrit ? Cliquez ici": "Not registered yet ? Click here",
+    "Mot de passe oublié": "Forgotten password",
+    "Vous avez perdu quelque chose": "Did you lost something",
+    "Annuler": "Cancel",
+    "Identifiant": "Username",
+    "Inscription": "Register"
 }

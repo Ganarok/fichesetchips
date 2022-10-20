@@ -8,7 +8,7 @@
 
         <div
             class="absolute -right-24 bottom-0 opacity-90 max-h-screen lg:right-0">
-            <img src="../assets/greenpixels.svg" alt="Pixels" />
+            <img src="../assets/yellowpixels.svg" alt="Pixels" />
         </div>
 
         <img
@@ -18,12 +18,7 @@
         <div
             class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-96">
             <div class="ml-5">
-                <h1 class="text-5xl">{{ $t('Connexion') }}</h1>
-                <NuxtLink
-                    class="underline text-xs opacity-70 cursor-pointer"
-                    to="/register">
-                    {{ $t('Pas encore inscrit ? Cliquez ici') }}
-                </NuxtLink>
+                <h1 class="text-5xl">{{ $t('Inscription') }}</h1>
             </div>
 
             <div v-if="!loading" class="space-y-1 my-4">
@@ -32,27 +27,34 @@
                     @input="(v) => this.handleUsername(v)"
                     :placeHolder="$t('Identifiant')" />
                 <CustomInput
+                    :maxLength="256"
+                    @input="(v) => this.handleEmail(v)"
+                    placeHolder="Email" />
+                <CustomInput
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v)"
+                    typeInput="password"
+                    :placeHolder="$t('Mot de passe')" />
+                <CustomInput
+                    :maxLength="64"
+                    @input="(v) => this.handlePasswordConfirm(v)"
                     typeInput="password"
                     :placeHolder="$t('Mot de passe')" />
             </div>
 
             <div class="self-center my-12" v-else>
-                <Loader cubeColor="fc-yellow" />
+                <Loader />
             </div>
 
             <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
                 <NuxtLink
                     class="underline text-xs opacity-70 cursor-pointer"
-                    to="/forgot-password">
-                    {{ $t('Mot de passe oublié') }}
+                    to="/login">
+                    {{ $t('Annuler') }}
                 </NuxtLink>
             </p>
 
-            <button
-                @click="handleLogin"
-                class="mr-5 self-end text-5xl font-bold">
+            <button @click="handleGo" class="mr-5 self-end text-5xl font-bold">
                 Go
             </button>
         </div>
@@ -63,9 +65,9 @@
 import Vue from 'vue'
 import CustomInput from '~/components/subComponent/CustomInput.vue'
 import subModalSignup from '~/components/subModals/signup.vue'
-import Loader from '@/components/Loader.vue'
 import { apiCall } from '~/utils/apiCall'
 import bcrypt from 'bcryptjs'
+import Loader from '@/components/Loader.vue'
 
 export default Vue.extend({
     name: 'Login',
@@ -79,12 +81,22 @@ export default Vue.extend({
     data() {
         return {
             username: '',
+            email: '',
             password: '',
+            passwordConfirm: '',
         }
     },
     methods: {
         handleUsername(v) {
             this.username = v
+        },
+        isEmailMatching(email) {
+            const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+
+            return this.email.match(regex) !== null
+        },
+        handleEmail(v) {
+            this.email = v
         },
         handlePassword(v) {
             this.password = v
@@ -93,40 +105,42 @@ export default Vue.extend({
             //     this.password = result
             // })
         },
-        handleLogin() {
-            const { username, password } = this
+        handlePasswordConfirm(v) {
+            this.passwordConfirm = v
 
-            if (username && password) {
+            // if (this.password !== this.passwordConfirm) {
+
+            // }
+            // let saltRounds = parseInt(process.env.SALTROUNDS)
+            // bcrypt.hash(v, saltRounds).then((result) => {
+            //     this.password = result
+            // })
+        },
+        handleGo() {
+            if (this.username && this.email && this.password) {
+                const { username: username, email, password } = this
+
                 apiCall({
                     method: 'POST',
-                    route: '/auth/login',
+                    route: '/auth/signup',
                     body: JSON.stringify({
                         username,
                         password,
+                        email,
+                        avatar: '',
                     }),
                 })
-                    .then(async (res) => {
-                        this.$store.commit('setUser', {
-                            ...res.user,
-                            access_token: res.access_token,
-                        })
-
-                        await this.$router.push('/user/dashboard')
-
-                        setTimeout(
-                            () =>
-                                this.$toast.show(
-                                    `${this.$t('Bienvenue')} ${
-                                        res.user.username
-                                    } !`,
-                                    {
-                                        theme: 'toasted-primary',
-                                        position: 'top-right',
-                                        duration: 4000,
-                                    }
-                                ),
-                            400
+                    .then((res) => {
+                        this.$toast.show(
+                            this.$t('Inscription réalisée avec succès'),
+                            {
+                                theme: 'toasted-primary',
+                                position: 'top-right',
+                                duration: 4000,
+                            }
                         )
+
+                        this.$router.push('/login')
                     })
                     .catch((err) => {
                         this.$toast.show(err, {
