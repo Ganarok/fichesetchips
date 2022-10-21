@@ -1,69 +1,97 @@
 <template>
-    <div class="w-screen h-screen flex relative">
-        <div class="absolute right-0 bottom-0">
-            <img
-                class="object-scale-down max-h-screen"
-                src="../assets/greenpixels.svg"
-                alt="" />
-        </div>
+    <div
+        class="flex flex-col relative justify-center items-center p-4 w-screen h-screen overflow-hidden lg:items-start lg:p-0 lg:justify-between">
         <img
-            class="mt-12 ml-12 max-h-52"
+            class="absolute hidden object-cover h-full w-full lg:flex"
+            src="@/assets/index/background.jpg"
+            alt="Background" />
+
+        <div
+            class="absolute -right-24 bottom-0 opacity-95 max-h-screen lg:right-0">
+            <img src="../assets/greenpixels.svg" alt="Pixels" />
+        </div>
+
+        <img
+            class="z-10 w-[50%] max-w-xs lg:m-4"
             src="../static/logo.png"
             alt="Fiche&Chips" />
         <div
-            action=""
-            class="flex flex-col lg:absolute lg:right-32 lg:bottom-32 lg:w-96">
-            <div class="ml-5 mb-4">
-                <h1 class="text-5xl">Connexion</h1>
-                <p
+            class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-80">
+            <div v-if="!loading" class="ml-5">
+                <h1 class="text-5xl">{{ $t('Connexion') }}</h1>
+                <NuxtLink
                     class="underline text-xs opacity-70 cursor-pointer"
-                    @click="showModal = true">
-                    Pas encore inscrit ? Cliquez ici
-                </p>
+                    to="/register">
+                    {{ $t('Pas encore inscrit ? Cliquez ici') }}
+                </NuxtLink>
             </div>
-            <div class="space-y-1">
+
+            <div v-if="!loading" class="space-y-1 mt-4">
                 <CustomInput
                     :maxLength="36"
                     @input="(v) => this.handleUsername(v)"
-                    placeHolder="Identifiant" />
+                    :placeHolder="$t('Identifiant')"
+                    :hasError="credentialsError"
+                    :onFocusOut="() => this.handleFocusOut()" />
+
                 <CustomInput
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v)"
                     typeInput="password"
-                    placeHolder="Mot de passe" />
-            </div>
-            <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
-                Mot de passe oublié
-            </p>
+                    :placeHolder="$t('Mot de passe')"
+                    :hasError="credentialsError"
+                    :onFocusOut="() => this.handleFocusOut()" />
 
-            <button @click="handleLogin" class="mr-5 self-end text-5xl">
-                Go
-            </button>
+                <p
+                    class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">
+                    <NuxtLink to="/forgot-password">
+                        {{ $t('Mot de passe oublié') }}
+                    </NuxtLink>
+                </p>
+            </div>
+
+            <div class="self-center my-16" v-else>
+                <Loader cubeColor="fc-yellow" />
+            </div>
+
+            <div v-if="!loading" class="flex justify-between items-end">
+                <p class="flex ml-5 text-sm text-fc-red italic items-center">
+                    {{ errorText }}
+                </p>
+
+                <button
+                    @click="handleLogin"
+                    class="mr-5 self-end text-5xl font-bold">
+                    Go
+                </button>
+            </div>
         </div>
-        <Modal v-show="showModal" @close-modal="showModal = false">
-            <subModalSignup
-                v-show="showModal"
-                @close-modal="showModal = false" />
-        </Modal>
     </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import Modal from '~/components/Modal.vue'
 import CustomInput from '~/components/subComponent/CustomInput.vue'
 import subModalSignup from '~/components/subModals/signup.vue'
+import Loader from '@/components/Loader.vue'
 import { apiCall } from '~/utils/apiCall'
 import bcrypt from 'bcryptjs'
 
 export default Vue.extend({
     name: 'Login',
-    components: { Modal, subModalSignup, CustomInput },
+    components: { subModalSignup, CustomInput, Loader },
+    props: {
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
-            showModal: false,
             username: '',
             password: '',
+            credentialsError: false,
+            errorText: '',
         }
     },
     methods: {
@@ -76,6 +104,10 @@ export default Vue.extend({
             // bcrypt.hash(v, saltRounds).then((result) => {
             //     this.password = result
             // })
+        },
+        handleFocusOut() {
+            this.errorText = ''
+            this.credentialsError = false
         },
         handleLogin() {
             const { username, password } = this
@@ -119,6 +151,11 @@ export default Vue.extend({
                             duration: 4000,
                         })
                         console.log('err', err)
+
+                        this.credentialsError = true
+                        this.errorText = this.$t(
+                            'Les identifiants ne sont pas valides'
+                        )
                     })
             }
         },

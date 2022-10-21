@@ -1,6 +1,6 @@
 <template>
-    <transition name="modal-fade">
-        <slot></slot>
+    <transition class="z-50" name="modal-fade">
+        <slot class="z-50"></slot>
     </transition>
 </template>
 

@@ -33,5 +33,18 @@
     "Pas de description": "No description",
     "Bienvenue": "Welcome",
     "Lancée le": "Launched on",
-    "Campagne en cours": "Running campaign"
+    "Campagne en cours": "Running campaign",
+    "Connexion": "Connection",
+    "Pas encore inscrit ? Cliquez ici": "Not registered yet ? Click here",
+    "Mot de passe oublié": "Forgotten password",
+    "Vous avez perdu quelque chose": "Did you lost something",
+    "Annuler": "Cancel",
+    "Identifiant": "Username",
+    "Inscription": "Register",
+    "L'email n'est pas valide": "Email is not valid",
+    "Invalid credentials": "Invalid credentials",
+    "Une erreur est survenue": "An error has occured",
+    "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères": "Password should contain at least 1 upper case, 1 digit and 8 characters",
+    "La confirmation doit correspondre au mot de passe": "Password must match with confirmation",
+    "Finalement non": "I don't think so"
 }
