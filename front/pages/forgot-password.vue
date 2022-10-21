@@ -65,6 +65,7 @@ import subModalSignup from '~/components/subModals/signup.vue'
 import Loader from '@/components/Loader.vue'
 import { apiCall } from '~/utils/apiCall'
 import bcrypt from 'bcryptjs'
+import { isEmailValid } from '@/utils/validations'
 
 export default Vue.extend({
     name: 'Login',
@@ -92,7 +93,7 @@ export default Vue.extend({
             return this.email.match(regex) !== null
         },
         handleEmailFocusOut() {
-            if (!this.isEmailMatching()) {
+            if (!isEmailValid(this.email)) {
                 this.emailError = true
                 this.errorText = this.$t("L'email n'est pas valide")
             } else {
