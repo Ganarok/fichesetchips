@@ -7,8 +7,8 @@
             alt="Background" />
 
         <div
-            class="absolute -right-24 bottom-0 opacity-90 max-h-screen lg:right-0">
-            <img src="../assets/yellowpixels.svg" alt="Pixels" />
+            class="absolute -right-24 bottom-0 opacity-95 max-h-screen lg:right-0">
+            <img src="../assets/greenpixels.svg" alt="Pixels" />
         </div>
 
         <img
@@ -17,36 +17,43 @@
             alt="Fiche&Chips" />
         <div
             class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-96">
-            <div class="ml-5">
+            <div v-if="!loading" class="ml-5">
                 <h1 class="text-5xl">
                     {{ $t('Vous avez perdu quelque chose') }} ?
                 </h1>
+
+                <p class="my-4 underline text-xs opacity-70 cursor-pointer">
+                    <NuxtLink to="/login">
+                        {{ $t('Finalement non') }} !
+                    </NuxtLink>
+                </p>
             </div>
 
-            <div v-if="!loading" class="space-y-1 my-4">
+            <div v-if="!loading" class="space-y-1">
                 <CustomInput
                     :maxLength="256"
-                    @input="(v) => this.handleUsername(v)"
-                    placeHolder="Email" />
+                    @input="(v) => this.handleEmail(v)"
+                    placeHolder="Email"
+                    :hasError="emailError"
+                    :onFocusOut="() => this.handleEmailFocusOut()" />
             </div>
 
             <div class="self-center my-12" v-else>
-                <Loader />
+                <Loader cubeColor="fc-yellow" />
             </div>
 
-            <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
-                <NuxtLink
-                    class="underline text-xs opacity-70 cursor-pointer"
-                    to="/login">
-                    {{ $t('Annuler') }}
-                </NuxtLink>
-            </p>
+            <div v-if="!loading" class="flex justify-between items-start mt-4">
+                <p
+                    class="flex ml-5 h-6 text-sm text-fc-red italic items-center">
+                    {{ errorText }}
+                </p>
 
-            <button
-                @click="handleEmail"
-                class="mr-5 self-end text-5xl font-bold">
-                Go
-            </button>
+                <button
+                    @click="handleEmail"
+                    class="mr-5 self-end text-5xl font-bold">
+                    Go
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -71,11 +78,27 @@ export default Vue.extend({
     data() {
         return {
             email: '',
+            errorText: '',
+            emailError: false,
         }
     },
     methods: {
         handleEmail(v) {
             this.email = v
+        },
+        isEmailMatching() {
+            const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+
+            return this.email.match(regex) !== null
+        },
+        handleEmailFocusOut() {
+            if (!this.isEmailMatching()) {
+                this.emailError = true
+                this.errorText = this.$t("L'email n'est pas valide")
+            } else {
+                this.emailError = false
+                this.errorText = ''
+            }
         },
         handleSend() {
             const { email } = this
@@ -84,7 +107,7 @@ export default Vue.extend({
                 //TODO : Send a mail for updating password
                 // apiCall({
                 //     method: 'POST',
-                //     route: '/auth/login',
+                //     route: // TODO: ENDPOINT MAIL,
                 //     body: JSON.stringify({
                 //         username,
                 //         password,
@@ -117,6 +140,9 @@ export default Vue.extend({
                 //         position: 'top-right',
                 //         duration: 4000,
                 //     })
+                //
+                //     this.emailError = true
+                //     this.errorText = this.$t('Une erreur est survenue')
                 //     console.log('err', err)
                 // })
             }

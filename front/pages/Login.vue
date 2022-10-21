@@ -7,7 +7,7 @@
             alt="Background" />
 
         <div
-            class="absolute -right-24 bottom-0 opacity-90 max-h-screen lg:right-0">
+            class="absolute -right-24 bottom-0 opacity-95 max-h-screen lg:right-0">
             <img src="../assets/greenpixels.svg" alt="Pixels" />
         </div>
 
@@ -16,8 +16,8 @@
             src="../static/logo.png"
             alt="Fiche&Chips" />
         <div
-            class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-96">
-            <div class="ml-5">
+            class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-80">
+            <div v-if="!loading" class="ml-5">
                 <h1 class="text-5xl">{{ $t('Connexion') }}</h1>
                 <NuxtLink
                     class="underline text-xs opacity-70 cursor-pointer"
@@ -26,35 +26,45 @@
                 </NuxtLink>
             </div>
 
-            <div v-if="!loading" class="space-y-1 my-4">
+            <div v-if="!loading" class="space-y-1 mt-4">
                 <CustomInput
                     :maxLength="36"
                     @input="(v) => this.handleUsername(v)"
-                    :placeHolder="$t('Identifiant')" />
+                    :placeHolder="$t('Identifiant')"
+                    :hasError="credentialsError"
+                    :onFocusOut="() => this.handleFocusOut()" />
+
                 <CustomInput
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v)"
                     typeInput="password"
-                    :placeHolder="$t('Mot de passe')" />
+                    :placeHolder="$t('Mot de passe')"
+                    :hasError="credentialsError"
+                    :onFocusOut="() => this.handleFocusOut()" />
+
+                <p
+                    class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">
+                    <NuxtLink to="/forgot-password">
+                        {{ $t('Mot de passe oublié') }}
+                    </NuxtLink>
+                </p>
             </div>
 
-            <div class="self-center my-12" v-else>
+            <div class="self-center my-16" v-else>
                 <Loader cubeColor="fc-yellow" />
             </div>
 
-            <p class="ml-5 mt-0 underline text-xs opacity-70 cursor-pointer">
-                <NuxtLink
-                    class="underline text-xs opacity-70 cursor-pointer"
-                    to="/forgot-password">
-                    {{ $t('Mot de passe oublié') }}
-                </NuxtLink>
-            </p>
+            <div v-if="!loading" class="flex justify-between items-end">
+                <p class="flex ml-5 text-sm text-fc-red italic items-center">
+                    {{ errorText }}
+                </p>
 
-            <button
-                @click="handleLogin"
-                class="mr-5 self-end text-5xl font-bold">
-                Go
-            </button>
+                <button
+                    @click="handleLogin"
+                    class="mr-5 self-end text-5xl font-bold">
+                    Go
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -80,6 +90,8 @@ export default Vue.extend({
         return {
             username: '',
             password: '',
+            credentialsError: false,
+            errorText: '',
         }
     },
     methods: {
@@ -92,6 +104,10 @@ export default Vue.extend({
             // bcrypt.hash(v, saltRounds).then((result) => {
             //     this.password = result
             // })
+        },
+        handleFocusOut() {
+            this.errorText = ''
+            this.credentialsError = false
         },
         handleLogin() {
             const { username, password } = this
@@ -135,6 +151,11 @@ export default Vue.extend({
                             duration: 4000,
                         })
                         console.log('err', err)
+
+                        this.credentialsError = true
+                        this.errorText = this.$t(
+                            'Les identifiants ne sont pas valides'
+                        )
                     })
             }
         },
