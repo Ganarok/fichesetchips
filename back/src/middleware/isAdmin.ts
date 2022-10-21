@@ -19,7 +19,7 @@ export const isAdmin = async (
       return;
     }
 
-    if (user.user.role != "ADMIN") {
+    if (user.user.role != "ADMIN" && user.user.role != "SUPERADMIN") {
       res.status(401).send({ message: "Unauthorized" });
       return;
     }
