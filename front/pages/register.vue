@@ -83,6 +83,7 @@ import subModalSignup from '~/components/subModals/signup.vue'
 import { apiCall } from '~/utils/apiCall'
 import bcrypt from 'bcryptjs'
 import Loader from '@/components/Loader.vue'
+import { isEmailValid, isPasswordValid } from '@/utils/validations'
 
 export default Vue.extend({
     name: 'Login',
@@ -110,18 +111,8 @@ export default Vue.extend({
         handleUsername(v) {
             this.username = v
         },
-        isEmailMatching() {
-            const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
-
-            return this.email.match(regex) !== null
-        },
-        isPasswordMatching() {
-            const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
-
-            return this.password.match(regex) !== null
-        },
         handleErrors() {
-            if (!this.isEmailMatching()) {
+            if (!isEmailValid(this.email)) {
                 this.emailError = true
                 this.errorText = this.$t("L'email n'est pas valide")
             }
@@ -130,7 +121,7 @@ export default Vue.extend({
             this.email = v
         },
         handleEmailFocusOut() {
-            if (!this.isEmailMatching()) {
+            if (!isEmailValid(this.email)) {
                 this.emailError = true
                 this.errorText = this.$t("L'email n'est pas valide")
             } else {
@@ -140,7 +131,7 @@ export default Vue.extend({
         },
         handlePasswordFocusOut() {
             if (process.env.NODE_ENV !== 'production') {
-                if (!this.isPasswordMatching()) {
+                if (!isPasswordValid(this.email)) {
                     this.passwordError = true
                     this.errorText = this.$t(
                         'Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères'
@@ -161,7 +152,7 @@ export default Vue.extend({
                     )
                 } else {
                     this.passwordConfirmError = false
-                    if (this.isPasswordMatching()) {
+                    if (isPasswordValid(this.password)) {
                         this.passwordError = false
                         this.errorText = ''
                     } else {
@@ -183,9 +174,6 @@ export default Vue.extend({
         handlePasswordConfirm(v) {
             this.passwordConfirm = v
 
-            // if (this.password !== this.passwordConfirm) {
-
-            // }
             // let saltRounds = parseInt(process.env.SALTROUNDS)
             // bcrypt.hash(v, saltRounds).then((result) => {
             //     this.password = result
