@@ -6,11 +6,11 @@
             :name="value"
             v-model="newValue"
             v-show="edit"
-            class="flex flex-grow ml-1 h-[1.4em] border placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
+            class="flex flex-grow h-[1.4em] placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
             :placeholder="displayValue"
             :type="password ? 'password' : 'text'"
             @keyup.enter="toggleEdit" />
-        <div @click="toggleEdit" class="ml-1" v-show="!edit">
+        <div @click="toggleEdit" class="ml-1 cursor-pointer" v-show="!edit">
             {{ displayValue }}
         </div>
     </div>

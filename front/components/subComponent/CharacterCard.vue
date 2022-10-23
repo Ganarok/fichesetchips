@@ -9,7 +9,7 @@
         </div>
         <div class="h-[58%] bg-yellow-300 w-full my-auto"></div>
         <div class="w-full h-[26%] p-1 pt-4 bg-fiche-green my-auto">
-            <p class="text-xs">
+            <p class="text-[0.6em]">
                 Didier est née dans la valée des saucisses. Grand mage de
                 l’école du Hot Dog 100% Pur Porc et maître de la cuisson vapeur,
                 Dider est à quitter sa terre natale pour diversifier son
