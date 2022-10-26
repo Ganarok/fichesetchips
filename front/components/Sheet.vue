@@ -27,8 +27,6 @@ export default {
                 type: Boolean,
                 default: true,
             },
-            route: this.route,
-            search: this.search,
         }
     },
     watch: {
