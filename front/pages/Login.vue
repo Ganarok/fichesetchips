@@ -100,17 +100,17 @@ export default Vue.extend({
         },
         handlePassword(v) {
             this.password = v
-            // let saltRounds = parseInt(process.env.SALTROUNDS)
-            // bcrypt.hash(v, saltRounds).then((result) => {
-            //     this.password = result
-            // })
         },
         handleFocusOut() {
             this.errorText = ''
             this.credentialsError = false
         },
         handleLogin() {
-            const { username, password } = this
+            const { username } = this
+            let { password } = this
+
+            let saltRounds = parseInt(process.env.SALTROUNDS)
+            password = bcrypt.hashSync(this.password, saltRounds)
 
             if (username && password) {
                 apiCall({
@@ -126,6 +126,7 @@ export default Vue.extend({
                             ...res.user,
                             access_token: res.access_token,
                         })
+
 
                         await this.$router.push('/user/dashboard')
 
