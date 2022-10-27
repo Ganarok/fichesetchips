@@ -21,8 +21,8 @@
             </div>
 
             <input
-                class="w-[20%] px-2 h-full bg-fc-black-light outline-none"
-                :class="query.length > 0 ? 'text-fc-yellow font-bold' : ''"
+                class="w-[20%] px-2 h-full bg-fc-black-light font-bold outline-none"
+                :class="query.length > 0 ? 'text-fc-yellow' : ''"
                 :value="query"
                 @input="(v) => (this.query = v.target.value)"
                 placeholder="Rechercher..."

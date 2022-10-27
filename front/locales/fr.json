@@ -46,5 +46,7 @@
     "Une erreur est survenue": "Une erreur est survenue",
     "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères": "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères",
     "La confirmation doit correspondre au mot de passe": "La confirmation doit correspondre au mot de passe",
-    "Finalement non": "Finalement non"
+    "Finalement non": "Finalement non",
+    "Statut": "Statut",
+    "Expérience": "Expérience"
 }
