@@ -6,6 +6,7 @@ before(function(done) {
         done()
     })
 });
+
 describe("Root suite", function() {
     import('./auth/auth.spec');
 });
