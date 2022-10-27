@@ -8,14 +8,36 @@
                     class="relative -left-6 -top-6 bg-fc-green w-12 h-12" />
             </div>
 
-            <div class="flex flex-row pl-6 space-x-6">
+            <div class="flex flex-row items-center pl-6 space-x-6">
                 <Selector
                     :items="ROOMSTATUS"
+                    :defaultSelectedItem="$t('Statut')"
                     :onSelectItem="(v) => this.updateRoomStatus(v)" />
 
                 <Selector
                     :items="PLAYSTYLE"
+                    :defaultSelectedItem="$t('Expérience')"
                     :onSelectItem="(v) => this.updatePlayStyle(v)" />
+
+                <ParamInput
+                    :inputText="'Niv. Min:'"
+                    inputType="number"
+                    :inputValue="minLevel"
+                    :onValueChanged="(v) => updateMinLevel(v.target.value)" />
+
+                <ParamInput
+                    :inputText="'Salles pleines'"
+                    inputType="checkbox"
+                    :inputValue="roomfull"
+                    :onValueChanged="(v) => updateRoomFull(v.target.value)" />
+
+                <ParamInput
+                    :inputText="'Salles privées'"
+                    inputType="checkbox"
+                    :inputValue="roomprivate"
+                    :onValueChanged="
+                        (v) => updateRoomPrivate(v.target.value)
+                    " />
             </div>
 
             <input
@@ -35,6 +57,7 @@
 import SidebarLayout from '~/layouts/Sidebar.vue'
 import Sheet from '@/components/Sheet.vue'
 import Selector from '@/components/subComponent/Selector.vue'
+import ParamInput from '@/components/subComponent/ParamInput.vue'
 import { ROOMSTATUS, PLAYSTYLE } from '~/utils/enums'
 
 export default {
@@ -42,23 +65,32 @@ export default {
         SidebarLayout,
         Sheet,
         Selector,
+        ParamInput,
     },
     methods: {
         updateRoomStatus(status) {
             this.selectedRoomStatus = status
-            this.parseQueries('roomStatus', status)
+            this.parseQueries('roomstatus', status)
         },
-        updateMinLevel() {},
-        updateExperience() {},
         updatePlayStyle(playStyle) {
             this.selectedPlayStyle = playStyle
             this.parseQueries('playstyle', playStyle)
         },
+        updateMinLevel(level) {
+            this.minLevel = level
+            this.parseQueries('minlevel', level)
+        },
+        updateRoomFull(state) {
+            this.roomfull = state
+            this.parseQueries('roomfull', state)
+        },
+        updateRoomPrivate(state) {
+            this.roomprivate = state
+            this.parseQueries('roomprivate', state)
+        },
         parseQueries(queryType, queryToAdd) {
             const queryRank = this.query.search(`${queryType}=`)
             const queryNumber = (this.query.match('=') || []).length
-
-            console.log('number', queryNumber)
 
             // If we don't find the query, we simply add it
             if (queryRank === -1)
@@ -77,13 +109,16 @@ export default {
     },
     data() {
         return {
-            query: '?',
             ROOMSTATUS,
             PLAYSTYLE,
+            query: '?',
             search: '',
             selectedRoomStatus: '',
             selectedPlayStyle: '',
             apiRoute: 'rooms',
+            minLevel: 0,
+            roomfull: false,
+            roomprivate: false,
         }
     },
 }

@@ -46,5 +46,7 @@
     "Une erreur est survenue": "An error has occured",
     "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères": "Password should contain at least 1 upper case, 1 digit and 8 characters",
     "La confirmation doit correspondre au mot de passe": "Password must match with confirmation",
-    "Finalement non": "I don't think so"
+    "Finalement non": "I don't think so",
+    "Statut": "Status",
+    "Expérience": "Experience"
 }

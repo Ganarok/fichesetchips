@@ -1,5 +1,8 @@
 <template>
-    <div :class="selectorClass" @click="() => this.switchOpened()">
+    <div
+        :class="selectorClass"
+        @click="switchOpened()"
+        v-click-outside="closeSelector">
         <div class="flex">
             <option class="font-bold" default>{{ selectedItem }}</option>
 
@@ -15,10 +18,7 @@
             </div>
         </div>
 
-        <div
-            v-if="isOpened"
-            class="absolute pt-[20%] top-0 w-full"
-            tabindex="0">
+        <div v-if="isOpened" class="absolute pt-[20%] top-4 w-32">
             <option
                 v-for="(item, index) in computedItems"
                 @click="
@@ -27,16 +27,18 @@
                         onSelectItem(v.target.value)
                     }
                 "
-                :class="optionClass"
+                :class="
+                    item === selectedItem
+                        ? optionClass + ' text-fc-green'
+                        : optionClass
+                "
                 :key="index">
-                <p class="z-10">
-                    {{ item }}
-                </p>
+                {{ item }}
             </option>
 
             <img
-                class="absolute bottom-0 right-0 rotate-180 h-12 scale-x-[-1] opacity-60"
-                src="@/assets/topRightPixels.svg" />
+                class="absolute -bottom-6 -right-6 rotate-180 h-12 scale-x-[-1]"
+                src="@/assets/cornerPixels.svg" />
         </div>
     </div>
 </template>
@@ -63,12 +65,12 @@ export default {
         selectorClass: {
             type: String,
             default:
-                'flex flex-col relative text-white cursor-pointer select-none w-32',
+                'flex flex-col relative text-white cursor-pointer select-none',
         },
         optionClass: {
             type: String,
             default:
-                'hover:font-bold relative px-4 py-2 bg-fc-black hover:bg-fc-black-light',
+                'hover:font-bold relative px-4 py-2 bg-fc-black-light hover:bg-fc-black',
         },
         imageClass: {
             type: String,
@@ -81,7 +83,7 @@ export default {
     },
     data() {
         return {
-            computedItems: { default: 'Selectionner', ...this.items },
+            computedItems: { default: this.defaultSelectedItem, ...this.items },
             isOpened: this.opened,
             selectedItem: this.defaultSelectedItem,
         }
@@ -89,6 +91,9 @@ export default {
     methods: {
         switchOpened() {
             this.isOpened = !this.isOpened
+        },
+        closeSelector(value) {
+            this.isOpened = false
         },
         handleFocus() {
             console.log('focus')
