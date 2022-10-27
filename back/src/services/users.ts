@@ -9,6 +9,11 @@ export async function create(user: CreateUser) {
     return new_user
 }
 
+export async function findPrivateProfile(username: string) {
+    const user = await UserRepository.findOneByOrFail({ username: username })
+    return { user: user }
+}
+
 export async function findProfile(payload: JwtPayload) {
     const user = await UserRepository.findOneByOrFail({ username: payload.username })
     return { user: user }

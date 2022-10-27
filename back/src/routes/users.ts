@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { CustomRequest } from "../middleware/authJwt";
 import * as usersService from "../services/users"
@@ -6,7 +6,7 @@ import { getErrorMessage } from "../utils/error-handler/getErrorMessage";
 
 const router = express.Router();
 
-router.get("/profile", async (req, res) => {
+router.get("/profile", async (req: Request, res) => {
   /**
    * @swagger
    * /users/profile:
@@ -31,7 +31,7 @@ router.get("/profile", async (req, res) => {
   const response = await usersService.findProfile((req as CustomRequest).jwtPayload as JwtPayload);
   res.status(200).send({ ...response, message: 'User profile successfully found' });
 })
-router.get("/profile/:username", async (req, res) => {
+router.get("/profile/:username", async (req: Request, res) => {
   /**
    * @swagger
    * /users/profile/{username}:
@@ -65,8 +65,14 @@ router.get("/profile/:username", async (req, res) => {
    *             schema: { $ref: '#/definitions/notFoundResponse' }
    */
   try {
-    const response = await usersService.findPublicProfile(req.params.username);
-    res.status(200).send({ ...response, message: 'User public profile successfully found' });
+    const { user } = await usersService.findProfile((req as CustomRequest).jwtPayload as JwtPayload);
+    if (user.role == "ADMIN" || user.role == "SUPERADMIN") {
+      const response = await usersService.findPrivateProfile(req.params.username);
+      res.status(200).send({ ...response, message: 'User private profile successfully found' });
+    } else {
+      const response = await usersService.findPublicProfile(req.params.username);
+      res.status(200).send({ ...response, message: 'User public profile successfully found' });
+    }
   } catch (error) {
     return res.send(getErrorMessage(error, res));
   }
