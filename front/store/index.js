@@ -7,7 +7,7 @@ export const state = () => ({
         role: '',
         createdAt: '',
         updatedAt: '',
-        access_token: '',
+        access_token: '12',
     },
 })
 

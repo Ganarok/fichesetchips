@@ -17,7 +17,7 @@
                 v-if="connected()"
 >
                 <NuxtLink
-                    to="/dashboard"
+                    to="/user/dashboard"
                     class="font-bold text-xl"
                     active-class="underline"
                     >Dashboard</NuxtLink
