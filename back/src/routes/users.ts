@@ -1,6 +1,7 @@
 import express, { Request } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { CustomRequest } from "../middleware/authJwt";
+import { isAdmin } from "../middleware/isAdmin";
 import * as usersService from "../services/users"
 import { getErrorMessage } from "../utils/error-handler/getErrorMessage";
 
@@ -28,9 +29,14 @@ router.get("/profile", async (req: Request, res) => {
    *           application/json:
    *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
    */
-  const response = await usersService.findProfile((req as CustomRequest).jwtPayload as JwtPayload);
-  res.status(200).send({ ...response, message: 'User profile successfully found' });
+  try {
+    const response = await usersService.findProfile(((req as CustomRequest).jwtPayload as JwtPayload).username);
+    res.status(200).send({ ...response, message: 'User profile successfully found' });
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
 })
+
 router.get("/profile/:username", async (req: Request, res) => {
   /**
    * @swagger
@@ -65,16 +71,206 @@ router.get("/profile/:username", async (req: Request, res) => {
    *             schema: { $ref: '#/definitions/notFoundResponse' }
    */
   try {
-    const { user } = await usersService.findProfile((req as CustomRequest).jwtPayload as JwtPayload);
+    const { user } = await usersService.findProfile(((req as CustomRequest).jwtPayload as JwtPayload).username);
     if (user.role == "ADMIN" || user.role == "SUPERADMIN") {
-      const response = await usersService.findPrivateProfile(req.params.username);
+      const response = await usersService.findProfile(req.params.username);
       res.status(200).send({ ...response, message: 'User private profile successfully found' });
     } else {
       const response = await usersService.findPublicProfile(req.params.username);
       res.status(200).send({ ...response, message: 'User public profile successfully found' });
     }
   } catch (error) {
-    return res.send(getErrorMessage(error, res));
+    return getErrorMessage(error, res);
+  }
+})
+
+router.patch("/", async (req: Request, res) => {
+  /**
+   * @swagger
+   * /users:
+   *   patch:
+   *     description: Update my profile.
+   *     tags: 
+   *       - Users
+   *     requestBody:
+   *       description: The updates to do to the User
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema: { $ref: '#/definitions/updateUserRequest' }
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: User succesfully updated.
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/privateProfileResponse' }
+   *       401:
+   *         description: User isn't authorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   *       404:
+   *         description: Not Found
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/notFoundResponse' }
+   */
+  try {
+    const response = await usersService.update(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body);
+    res.status(200).send({ ...response, message: 'User succesfully updated' });
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
+})
+
+router.patch("/:username", isAdmin, async (req: Request, res) => {
+  /**
+   * @swagger
+   * /users/{username}:
+   *   patch:
+   *     description: Update the profile of a user.
+   *     tags: 
+   *       - Users
+   *     parameters:
+   *     - in: "path"
+   *       name: "username"
+   *       schema: { type: "string" }
+   *       required: true
+   *       description: "username of the user to update"
+   *     requestBody:
+   *       description: The updates to do to the User
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema: { $ref: '#/definitions/updateUserRequest' }
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: User succesfully updated.
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/privateProfileResponse' }
+   *       401:
+   *         description: User isn't authorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   *       404:
+   *         description: Not Found
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/notFoundResponse' }
+   */
+  try {
+    const { user } = await usersService.findProfile(req.params.username);
+    if (user.role == "SUPERADMIN") {
+      res.status(401).send({ message: 'You cannot update a SUPERADMIN', error: "Unauthorized" });
+    } else if (user.role == "ADMIN") {
+      const { user } = await usersService.findProfile(((req as CustomRequest).jwtPayload as JwtPayload).username);
+      if (user.role != "SUPERADMIN") {
+        res.status(401).send({ message: 'You cannot update an ADMIN', error: "Unauthorized" });
+      } else {
+        const response = await usersService.update(req.params.username, req.body);
+        res.status(200).send({ ...response, message: 'User succesfully updated' });
+      }
+    } else {
+      const response = await usersService.update(req.params.username, req.body);
+      res.status(200).send({ ...response, message: 'User succesfully updated' });
+    }
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
+})
+
+router.delete("/", async (req: Request, res) => {
+  /**
+   * @swagger
+   * /users:
+   *   delete:
+   *     description: Delete my profile.
+   *     tags: 
+   *       - Users
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: User succesfully deleted.
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/privateProfileResponse' }
+   *       401:
+   *         description: User isn't authorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   *       404:
+   *         description: Not Found
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/notFoundResponse' }
+   */
+  try {
+    const response = await usersService.destroy(((req as CustomRequest).jwtPayload as JwtPayload).username);
+    res.status(200).send({ ...response, message: 'User succesfully deleted' });
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
+})
+
+router.delete("/:username", isAdmin, async (req: Request, res) => {
+  /**
+   * @swagger
+   * /users/{username}:
+   *   delete:
+   *     description: Delete the profile of a user.
+   *     tags: 
+   *       - Users
+   *     parameters:
+   *     - in: "path"
+   *       name: "username"
+   *       schema: { type: "string" }
+   *       required: true
+   *       description: "username of the user to update"
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: User succesfully deleted.
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/privateProfileResponse' }
+   *       401:
+   *         description: User isn't authorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   *       404:
+   *         description: Not Found
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/notFoundResponse' }
+   */
+  try {
+    const { user } = await usersService.findProfile(req.params.username);
+    if (user.role == "SUPERADMIN") {
+      res.status(401).send({ message: 'You cannot delete a SUPERADMIN', error: "Unauthorized" });
+    } else if (user.role == "ADMIN") {
+      const { user } = await usersService.findProfile(((req as CustomRequest).jwtPayload as JwtPayload).username);
+      if (user.role != "SUPERADMIN") {
+        res.status(401).send({ message: 'You cannot delete an ADMIN', error: "Unauthorized" });
+      } else {
+        const response = await usersService.destroy(req.params.username);
+        res.status(200).send({ ...response, message: 'User succesfully deleted' });
+      }
+    } else {
+      const response = await usersService.destroy(req.params.username);
+      res.status(200).send({ ...response, message: 'User succesfully deleted' });
+    }
+  } catch (error) {
+    return getErrorMessage(error, res);
   }
 })
 

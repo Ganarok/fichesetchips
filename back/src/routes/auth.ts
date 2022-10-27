@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
         const response = await authService.login(req.body);
         res.status(200).send({ ...response, message: "User succesfully authenticate" });
     } catch (error) {
-        return res.status(500).send(getErrorMessage(error, res));
+        return getErrorMessage(error, res);
     }
 })
 
@@ -71,7 +71,7 @@ router.post("/register", async (req, res) => {
         const response = await authService.register(req.body);
         res.status(200).send({ ...response, message: 'User successfully authenticate' });
     } catch (error) {
-        return res.status(500).send(getErrorMessage(error, res));
+        return getErrorMessage(error, res);
     }
 })
 

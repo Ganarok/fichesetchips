@@ -165,12 +165,12 @@ npm run db:seed
 
 - Use a try catch and the method `getErrorMessage` in order to handle possible errors :
 
-```
+```typescript
   try {
-  const response = await <Your Service>.<Your method>(<Your params>);
-  res.status(200).send({ ...response, message: <Your message> });
+    const response = await <Your Service>.<Your method>(<Your params>);
+    res.status(200).send({ ...response, message: <Your message> });
   } catch (error) {
-    return res.send(getErrorMessage(error, res));
+    return getErrorMessage(error, res);
   }
 ```
 

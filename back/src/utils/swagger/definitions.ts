@@ -1,4 +1,4 @@
-import { loginRequest, registerRequest } from "./defaultValues";
+import { loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
 export const definitions = {
     loginRequest: {
@@ -37,6 +37,37 @@ export const definitions = {
             }
         }
     },
+    updateUserRequest: {
+        properties: {
+            username: {
+                type: "string",
+                uniqueItems: true,
+                required: false,
+                default: updateRequest.username
+            },
+            email: {
+                type: "string",
+                uniqueItems: true,
+                required: false,
+                default: updateRequest.email
+            },
+            password: {
+                type: "string",
+                required: false,
+                default: updateRequest.password
+            },
+            avatar: {
+                type: "string",
+                required: false,
+                default: updateRequest.avatar
+            },
+            preference_id: {
+                type: "string",
+                required: false,
+                default: updateRequest.preference_id
+            }
+        }
+    },
     unAuthorizedResponse: {
         properties: {
             message: {
@@ -53,7 +84,7 @@ export const definitions = {
         properties: {
             message: {
                 type: "string",
-                default: "Could not find any entity of type \"User\" matching: {\n    \"username\": \"user1\"\n}"
+                default: "Could not find any entity of type \"User\" matching: {\n    \"username\": \"user\"\n}"
             },
             error: {
                 type: "string",
