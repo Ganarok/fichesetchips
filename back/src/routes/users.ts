@@ -21,15 +21,15 @@ router.get("/profile", async (req, res) => {
    *         description: Private profile found.
    *         content:
    *           application/json:
-   *             schema:
-   *               type: object
+   *             schema: { $ref: '#/definitions/privateProfileResponse' }
+   *       401:
+   *         description: UnAuthorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
    */
-  try {
-    const response = await usersService.findProfile((req as CustomRequest).jwtPayload as JwtPayload);
-    res.status(200).send({ ...response, message: 'User profile successfully found' });
-  } catch (error) {
-    return res.status(500).send(getErrorMessage(error));
-  }
+  const response = await usersService.findProfile((req as CustomRequest).jwtPayload as JwtPayload);
+  res.status(200).send({ ...response, message: 'User profile successfully found' });
 })
 router.get("/profile/:username", async (req, res) => {
   /**
@@ -52,14 +52,23 @@ router.get("/profile/:username", async (req, res) => {
    *         description: Public profile found.
    *         content:
    *           application/json:
-   *             schema:
-   *               type: object
+   *             schema: { $ref: '#/definitions/publicProfileResponse' }
+   *       401:
+   *         description: User isn't authorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   *       404:
+   *         description: Not Found
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/notFoundResponse' }
    */
   try {
     const response = await usersService.findPublicProfile(req.params.username);
     res.status(200).send({ ...response, message: 'User public profile successfully found' });
   } catch (error) {
-    return res.status(500).send(getErrorMessage(error));
+    return res.send(getErrorMessage(error, res));
   }
 })
 

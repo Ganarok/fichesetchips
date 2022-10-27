@@ -26,14 +26,18 @@ router.post("/login", async (req, res) => {
      *         description: User logged.
      *         content:
      *           application/json:
-     *             schema:
-     *               type: object
+     *             schema: { $ref: '#/definitions/authResponse' }
+     *       404:
+     *         description: Not Found
+     *         content:
+     *           application/json:
+     *             schema: { $ref: '#/definitions/notFoundResponse' }
      */
     try {
         const response = await authService.login(req.body);
-        res.status(200).send({ ...response, message: "User succesfully logged" });
+        res.status(200).send({ ...response, message: "User succesfully authenticate" });
     } catch (error) {
-        return res.status(500).send(getErrorMessage(error));
+        return res.status(500).send(getErrorMessage(error, res));
     }
 })
 
@@ -56,14 +60,18 @@ router.post("/register", async (req, res) => {
      *         description: User registered.
      *         content:
      *           application/json:
-     *             schema:
-     *               type: object
+     *             schema: { $ref: '#/definitions/authResponse' }
+     *       409:
+     *         description: Database conflict
+     *         content:
+     *           application/json:
+     *             schema: { $ref: '#/definitions/conflictResponse' }
      */
     try {
         const response = await authService.register(req.body);
-        res.status(200).send({ ...response, message: 'User successfully registered' });
+        res.status(200).send({ ...response, message: 'User successfully authenticate' });
     } catch (error) {
-        return res.status(500).send(getErrorMessage(error));
+        return res.status(500).send(getErrorMessage(error, res));
     }
 })
 
