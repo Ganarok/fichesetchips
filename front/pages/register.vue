@@ -115,7 +115,11 @@ export default Vue.extend({
             if (!isEmailValid(this.email)) {
                 this.emailError = true
                 this.errorText = this.$t("L'email n'est pas valide")
+
+                return false
             }
+
+            return true
         },
         handleEmail(v) {
             this.email = v
@@ -166,22 +170,18 @@ export default Vue.extend({
         },
         handlePassword(v) {
             this.password = v
-            // let saltRounds = parseInt(process.env.SALTROUNDS)
-            // bcrypt.hash(v, saltRounds).then((result) => {
-            //     this.password = result
-            // })
         },
         handlePasswordConfirm(v) {
             this.passwordConfirm = v
-
-            // let saltRounds = parseInt(process.env.SALTROUNDS)
-            // bcrypt.hash(v, saltRounds).then((result) => {
-            //     this.password = result
-            // })
         },
         handleGo() {
             if (this.handleErrors()) {
-                const { username, email, password, passwordConfirm } = this
+                const { username, email } = this
+                let { password, passwordConfirm } = this
+
+                let saltRounds = parseInt(process.env.SALTROUNDS)
+                password = bcrypt.hashSync(this.password, saltRounds)
+                passwordConfirm = bcrypt.hashSync(this.passwordConfirm, saltRounds)
 
                 if (username && email && password && passwordConfirm) {
                     apiCall({
@@ -194,7 +194,7 @@ export default Vue.extend({
                             avatar: '',
                         }),
                     })
-                        .then((res) => {
+                      .then((res) => {
                             this.$toast.show(
                                 this.$t('Inscription réalisée avec succès'),
                                 {
