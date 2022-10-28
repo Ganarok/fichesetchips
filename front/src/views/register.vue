@@ -13,7 +13,7 @@
 
         <img
             class="z-10 w-[50%] max-w-xs lg:m-4"
-            src="../static/logo.png"
+            src="@/assets/logo.png"
             alt="Fiche&Chips" />
         <div
             class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-80">
@@ -22,34 +22,34 @@
 
                 <p
                     class="mb-4 mt-2 underline text-xs opacity-70 cursor-pointer">
-                    <NuxtLink to="/login">
+                    <router-link to="/login">
                         {{ $t('Annuler') }}
-                    </NuxtLink>
+                    </router-link>
                 </p>
             </div>
 
             <div v-if="!loading" class="space-y-1">
                 <CustomInput
                     :maxLength="36"
-                    @input="(v) => this.handleUsername(v)"
+                    @input="(v) => this.handleUsername(v.target.value)"
                     :placeHolder="$t('Identifiant')"
                     :hasError="usernameError" />
                 <CustomInput
                     :maxLength="256"
-                    @input="(v) => this.handleEmail(v)"
+                    @input="(v) => this.handleEmail(v.target.value)"
                     placeHolder="Email"
                     :hasError="emailError"
                     :onFocusOut="() => this.handleEmailFocusOut()" />
                 <CustomInput
                     :maxLength="64"
-                    @input="(v) => this.handlePassword(v)"
+                    @input="(v) => this.handlePassword(v.target.value)"
                     typeInput="password"
                     :placeHolder="$t('Mot de passe')"
                     :hasError="passwordError"
                     :onFocusOut="() => this.handlePasswordFocusOut()" />
                 <CustomInput
                     :maxLength="64"
-                    @input="(v) => this.handlePasswordConfirm(v)"
+                    @input="(v) => this.handlePasswordConfirm(v.target.value)"
                     typeInput="password"
                     :placeHolder="$t('Mot de passe')"
                     :hasError="passwordConfirmError"
@@ -77,15 +77,15 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import CustomInput from '@/components/subComponent/CustomInput.vue'
 import subModalSignup from '@/components/subModals/signup.vue'
 import { apiCall } from '@/utils/apiCall'
 import bcrypt from 'bcryptjs'
 import Loader from '@/components/Loader.vue'
 import { isEmailValid, isPasswordValid } from '@/utils/validations'
+import { useToast } from 'vue-toastification'
 
-export default Vue.extend({
+export default {
     name: 'Login',
     components: { subModalSignup, CustomInput, Loader },
     props: {
@@ -135,7 +135,7 @@ export default Vue.extend({
         },
         handlePasswordFocusOut() {
             if (process.env.NODE_ENV !== 'production') {
-                if (!isPasswordValid(this.email)) {
+                if (!isPasswordValid(this.password)) {
                     this.passwordError = true
                     this.errorText = this.$t(
                         'Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères'
@@ -178,8 +178,9 @@ export default Vue.extend({
             if (this.handleErrors()) {
                 const { username, email } = this
                 let { password, passwordConfirm } = this
-
                 let saltRounds = parseInt(process.env.SALTROUNDS)
+                const toast = useToast()
+
                 password = bcrypt.hashSync(this.password, saltRounds)
                 passwordConfirm = bcrypt.hashSync(this.passwordConfirm, saltRounds)
 
@@ -194,29 +195,19 @@ export default Vue.extend({
                             avatar: '',
                         }),
                     })
-                      .then((res) => {
-                            this.$toast.show(
-                                this.$t('Inscription réalisée avec succès'),
-                                {
-                                    theme: 'toasted-primary',
-                                    position: 'top-right',
-                                    duration: 4000,
-                                }
-                            )
+                        .then((res) => {
+                            toast.success(
+                                this.$t('Inscription réalisée avec succès'))
 
                             this.$router.push('/login')
                         })
                         .catch((err) => {
-                            this.$toast.show(err, {
-                                theme: 'toasted-primary',
-                                position: 'top-right',
-                                duration: 4000,
-                            })
+                            toast.error( typeof err === 'object' ? err.message : err)
                             console.log('err', err)
                         })
                 }
             }
         },
     },
-})
+}
 </script>
