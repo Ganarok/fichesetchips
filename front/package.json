@@ -10,8 +10,8 @@
         "dev:prod": "http-server dist --port=8000"
     },
     "dependencies": {
-        "bcryptjs": "^2.4.3",
         "core-js": "^3.24.1",
+        "crypto-js": "^4.1.1",
         "phaser": "^3.55.2",
         "vue": "^3.2.37",
         "vue-i18n": "^9.2.2",

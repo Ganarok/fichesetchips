@@ -63,7 +63,6 @@ import CustomInput from '@/components/subComponent/CustomInput.vue'
 import subModalSignup from '@/components/subModals/signup.vue'
 import Loader from '@/components/Loader.vue'
 import { apiCall } from '@/utils/apiCall'
-import bcrypt from 'bcryptjs'
 import { isEmailValid } from '@/utils/validations'
 import { useToast } from 'vue-toastification'
 
