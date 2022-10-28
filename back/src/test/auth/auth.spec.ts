@@ -1,6 +1,7 @@
 import app from '../../server';
 import { expect } from 'chai';
 import {agent as request} from 'supertest';
+import 'mocha'
 
 describe('Auth', () => {
     it('Login should not return 200 because account do not exist', async () => {
@@ -18,6 +19,7 @@ describe('Auth', () => {
             password: '12345678',
             username: "brayan"
         });
+        console.log(res.body)
         expect(res.status).to.equal(200);
     });
     it('Login should return 200', async () => {
