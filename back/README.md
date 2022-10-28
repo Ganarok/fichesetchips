@@ -130,6 +130,16 @@ npm run migration:show
 
 1- Creation of the Entity in `back/src/database/entities/<EntityName>.ts`
 
+- Relations
+
+**ManyToOne**
+See https://orkhan.gitbook.io/typeorm/docs/many-to-one-one-to-many-relations
+An example with preference_id inside the User entity (a user can have only one preference but a preference concern many users).
+
+**Many-to-many relations with custom properties**
+See https://orkhan.gitbook.io/typeorm/docs/many-to-many-relations
+An example with Friend entity and User entity (a user can ask many user as friend and a user can been asked by many user as friend).
+
 2- Generation migration file with :
 ```
 npm run migration:generate src/database/migrations/<YourEntityName>Migrations
@@ -151,7 +161,7 @@ npm run migration:create src/database/seeders/<YourSeederName>
 
 - Create the different fixture in `back/src/database/fixtures`
 
-- Implement the seeder inside the migration file you created like this one : `back/src/database/seeders/1665931703695-SeedPrefrencesAndUsers.ts` using the fixtures
+- Implement the seeder inside the migration file you created like this one : `back/src/database/seeders/1665931703695-SeedPrefrencesAndUsers.ts` using the fixtures and and the name=name of your class ex : `name = 'SeedPrefrencesAndUsers1665927924682'`
 
 - Seed db with :
 
