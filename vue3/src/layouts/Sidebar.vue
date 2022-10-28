@@ -1,14 +1,9 @@
 <template>
     <div name="SidebarLayout" class="flex mobile:flex-col">
-        <Sidebar />
-
-        <div
-            v-if="topRightPixels"
-            class="absolute top-0 right-0 mobile:top-[80px] mobile:w-12 z-[-1]">
-            <img
-                src="../assets/topRightPixels.svg"
-                alt="pixels"
-                class="w-full h-full -z-10 relative" />
+            <Sidebar/>
+        
+        <div v-if="topRightPixels" class="absolute top-0 right-0 mobile:top-[80px] mobile:w-12 z-[-1]">
+                <img src="../assets/topRightPixels.svg" alt="pixels" class="w-full h-full -z-10 relative" />
         </div>
 
         <div
