@@ -11,6 +11,9 @@ const UserRepository = AppDataSource.getRepository(User)
 const jwtSecret = process.env.JWTSECRET || "SECRET"
 
 export async function login(user: LoginRequest): Promise<AuthResponse> {
+    if (Object.keys(user).every(elem => ["username", "password"].includes(elem)) == false) {// != ["username", "email", "password"]) {
+        throw new Error("Unexpected parameters")
+    }
     const found_user = await validate(user)
     const payload: Payload = { username: found_user.username, id: found_user.id, email: found_user.email };
     return {
@@ -21,6 +24,9 @@ export async function login(user: LoginRequest): Promise<AuthResponse> {
 }
 
 export async function register(user: RegisterRequest): Promise<AuthResponse> {
+    if (Object.keys(user).every(elem => ["username", "email", "password"].includes(elem)) == false) {// != ["username", "email", "password"]) {
+        throw new Error("Unexpected parameters")
+    }
     const new_user = await usersService.create(user)
     const payload: Payload = { username: new_user.username, id: new_user.id, email: new_user.email };
     return {
