@@ -141,14 +141,7 @@ export const definitions = {
                     "preference_id": "3a9975f8-f34c-4a07-bbff-ab8a9b2e6309",
                     "last_connection": "2022-10-27T09:11:50.268Z",
                     "created_at": "2022-06-24T11:29:59.619Z",
-                    "updated_at": "2022-10-27T09:11:50.273Z",
-                    "preference": {
-                        "id": "3a9975f8-f34c-4a07-bbff-ab8a9b2e6309",
-                        "theme": "DEFAULT",
-                        "language": "FRENCH",
-                        "created_at": "2022-06-24T11:29:59.619Z",
-                        "updated_at": "2022-06-24T11:29:59.619Z"
-                    }
+                    "updated_at": "2022-10-27T09:11:50.273Z"
                 }
             },
         }
@@ -171,14 +164,7 @@ export const definitions = {
                     "preference_id": "3a9975f8-f34c-4a07-bbff-ab8a9b2e6309",
                     "last_connection": "2022-10-27T09:13:21.217Z",
                     "created_at": "2022-06-24T11:29:59.619Z",
-                    "updated_at": "2022-10-27T09:13:21.225Z",
-                    "preference": {
-                        "id": "3a9975f8-f34c-4a07-bbff-ab8a9b2e6309",
-                        "theme": "DEFAULT",
-                        "language": "FRENCH",
-                        "created_at": "2022-06-24T11:29:59.619Z",
-                        "updated_at": "2022-06-24T11:29:59.619Z"
-                    }
+                    "updated_at": "2022-10-27T09:13:21.225Z"
                 }
             },
             access_token: {
@@ -188,6 +174,89 @@ export const definitions = {
             expires_id: {
                 type: "string",
                 default: "3600"
+            }
+        }
+    },
+    friendsResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Friends succesfully found"
+            },
+            friends: {
+                type: "array",
+                default: [
+                    {
+                        "id": "569bae7b-288a-40ae-950e-d14be05b12ec",
+                        "user_asked_id": "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
+                        "user_answered_id": "0e72ef93-286e-489c-8f11-20c45fb84af3",
+                        "accepted": true,
+                        "nb_games": 0,
+                        "created_at": "2022-06-28T11:30:59.619Z",
+                        "updated_at": "2022-06-30T11:29:59.619Z",
+                        "user_asked": {
+                            "username": "user",
+                            "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png",
+                            "last_connection": "2022-10-28T13:57:03.740Z"
+                        },
+                        "user_answered": {
+                            "username": "user2",
+                            "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png",
+                            "last_connection": "2022-06-24T11:29:59.619Z"
+                        }
+                    },
+                    {
+                        "id": "f34e710f-ac0d-42e5-bebd-797f694c047e",
+                        "user_asked_id": "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
+                        "user_answered_id": "f329fe99-8da0-421a-84b6-430765b65d97",
+                        "accepted": true,
+                        "nb_games": 0,
+                        "created_at": "2022-06-24T11:29:59.619Z",
+                        "updated_at": "2022-06-25T12:29:59.619Z",
+                        "user_asked": {
+                            "username": "user",
+                            "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png",
+                            "last_connection": "2022-10-28T13:57:03.740Z"
+                        },
+                        "user_answered": {
+                            "username": "user1",
+                            "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png",
+                            "last_connection": "2022-06-24T11:29:59.619Z"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    friendsPendingResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Friends succesfully found"
+            },
+            friends: {
+                type: "array",
+                default: [
+                    {
+                        "id": "569bae7b-288a-40ae-950e-d14be05b12ec",
+                        "user_asked_id": "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
+                        "user_answered_id": "0e72ef93-286e-489c-8f11-20c45fb84af3",
+                        "accepted": false,
+                        "nb_games": 0,
+                        "created_at": "2022-06-28T11:30:59.619Z",
+                        "updated_at": "2022-06-30T11:29:59.619Z",
+                        "user_asked": {
+                            "username": "user",
+                            "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png",
+                            "last_connection": "2022-10-28T13:57:03.740Z"
+                        },
+                        "user_answered": {
+                            "username": "user2",
+                            "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png",
+                            "last_connection": "2022-06-24T11:29:59.619Z"
+                        }
+                    }
+                ]
             }
         }
     },

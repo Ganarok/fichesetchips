@@ -1,10 +1,6 @@
 import express from "express";
-import { JwtPayload } from "jsonwebtoken";
-import { verifyToken, CustomRequest } from "../middleware/authJwt";
 import * as authService from "../services/auth"
-import * as usersService from "../services/users"
 import { getErrorMessage } from "../utils/error-handler/getErrorMessage";
-import { LoginRequest, RegisterRequest } from "../utils/types/auth";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {

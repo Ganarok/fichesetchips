@@ -9,7 +9,7 @@ import defaultAvatar from "../../database/fixtures/avatar"
 import defaultPreferences from "../../database/fixtures/preferences"
 import { User } from '../../database/entities/User';
 import * as jwt from "jsonwebtoken"
-import { PrivateProfileWhithoutDate, PublicProfile, PublicProfileWhithoutDate } from '../../utils/types/users';
+import { PrivateProfileWhithoutDate, PublicProfileWhithoutDate } from '../../utils/types/users';
 
 
 const defaultPreference = defaultPreferences.defaultPreference
@@ -26,6 +26,12 @@ const userToken = jwt.sign(userPayload, jwtSecret)
 const adminToken = jwt.sign(adminPayload, jwtSecret)
 const superAdminToken = jwt.sign(superAdminPayload, jwtSecret)
 
+async function delete_user(token: string) {
+    const res = await request(app)
+        .delete(`/users`)
+        .set({ "Authorization": `Bearer ${token}` })
+}
+
 describe('Users', () => {
     describe('User Profile', () => {
         it('Should return 401 when asking for my profile without a bearer token', async () => {
@@ -35,7 +41,8 @@ describe('Users', () => {
         });
         it('Should return 200 when asking for my profile with a bearer token', async () => {
             const res = await request(app)
-                .get('/users/profile').set({ "Authorization": `Bearer ${userToken}` });
+                .get('/users/profile')
+                .set({ "Authorization": `Bearer ${userToken}` });
             expect(res.status).to.equal(200);
         });
         it('Should return my private profile when asking for my profile with a bearer token', async () => {
@@ -200,6 +207,7 @@ describe('Users', () => {
             expect(update.status).to.equal(200);
             // check that password and username are correctly updated
             expect(login.status).to.equal(200);
+            await delete_user(login.body.access_token)
         });
         it('Should return 200 and properties updated when an admin is asking for patch user properties', async () => {
             const previous_user = {
@@ -243,6 +251,7 @@ describe('Users', () => {
             expect(update.status).to.equal(200);
             // check that password and username are correctly updated
             expect(login.status).to.equal(200);
+            await delete_user(login.body.access_token)
         });
         it('Should return 401 when a not admin is asking for patch user properties', async () => {
             const res = await request(app)
@@ -359,6 +368,7 @@ describe('Users', () => {
                 .delete(`/users/${user_to_delete.username}`)
                 .set({ "Authorization": `Bearer ${userToken}` })
             expect(res.status).to.equal(401);
+            await delete_user(register.body.access_token)
         });
         it('Should return 401 when an admin or a user is asking for delete the profile of an admin', async () => {
             const res1 = await request(app)
