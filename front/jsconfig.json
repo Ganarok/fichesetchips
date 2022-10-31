@@ -1,30 +1,25 @@
 {
     "compilerOptions": {
-        "checkJs": true,
-        "resolveJsonModule": true,
+        "target": "es5",
+        "module": "esnext",
+        "baseUrl": "./",
         "moduleResolution": "node",
-        "target": "es2020",
-        "module": "es2015",
-        "baseUrl": ".",
+        "jsx": "preserve",
         "paths": {
-            "@/components/*": ["components/*"],
-            "@/assets/*": ["assets/*"],
-            "@/utils/*": ["utils/*"],
-            "@/pages/*": ["pages/*"]
-        }
+            "@/*": [ "./src/*" ],
+            "@/components/subComponent" : [ "./src/components/subComponents*" ],
+            "@/components" : [ "./src/components/*" ],
+            "@/views" : [ "./src/views/*" ],
+            "@/assets" : [ "./src/assets/*" ],
+            "@/lib" : [ "./src/lib/*" ],
+            "@/utils" : [ "./src/utils/*" ]
+        },
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ]
     },
-    "exclude": [
-        "dist",
-        "node_modules",
-        "build",
-        ".vscode",
-        ".next",
-        "coverage",
-        ".npm",
-        ".yarn"
-    ],
-    "typeAcquisition": {
-        "enable": true,
-        "include": ["react", "react-dom"]
-    }
+    "exclude": ["node_modules", "dist"]
 }
