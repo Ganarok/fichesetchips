@@ -3,21 +3,21 @@
         <div
             class="mobile:flex mobile:flex-row mobile:justify-between mobile:px-6 h-[80px] w-full mobileSup:hidden">
             <img
-                src="../../assets/menuIcon.svg"
+                src="@/assets/menuIcon.svg"
                 class="w-1/7 my-auto"
                 alt="F&C logo"
                 v-on:click="mobileMenu()" />
             <img
-                src="../../assets/logoUperbar.png"
+                src="@/assets/logoUperbar.png"
                 class="w-1/7 my-auto"
                 alt="F&C logo" />
         </div>
 
         <div
-            class="sidebar bg-[#1E1E1E] flex flex-col justify-between h-screen mobile:h-[calc(100vh-80px)] w-[220px] py-4 absolute left-0 transform -translate-x-full transition duration-200 ease-in-out mobileSup:relative mobileSup:translate-x-0 transition duration-200 ease-in-out">
+            class="sidebar bg-[#1E1E1E] flex flex-col justify-between h-screen mobile:h-[calc(100vh-80px)] w-[220px] py-4 absolute left-0 transform -translate-x-full transition duration-200 ease-in-out mobileSup:relative mobileSup:translate-x-0">
             <div class="w-full top-0 justify-center p-6">
                 <NuxtLink to="/">
-                    <img src="../../assets/fetc.png" alt="Fiche&Chips" />
+                    <img src="@/assets/fetc.png" alt="Fiche&Chips" />
                 </NuxtLink>
             </div>
 
@@ -75,7 +75,7 @@
                         class="text-fc-yellow"
                         color="fc-yellow"
                 /></NuxtLink>
-                <img src="../../assets/icon.png" class="w-2/4" alt="F&C logo" />
+                <img src="@/assets/icon.png" class="w-2/4" alt="F&C logo" />
                 <p class="text-white text-[10px]">
                     Made with love by fiches&chips
                 </p>
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import Button from '~/components/subComponent/Button.vue'
+import Button from '@/components/subComponent/Button.vue'
 export default {
     name: 'Sidebar',
     components: { Button },

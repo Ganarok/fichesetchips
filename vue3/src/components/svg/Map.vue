@@ -5,8 +5,6 @@
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="Map">
-            <!-- Create your own maps and campaigns with a prepared engine -->
-            <!-- Créez vos propres cartes et campagnes avec un moteur adapté -->
             <circle id="Ellipse 3" cx="243" cy="283" r="243" fill="#FFDB57" />
             <g id="Create your own maps and campaigns with a prepared engine.">
                 <text
@@ -31,7 +29,7 @@
                     font-weight="900"
                     letter-spacing="0em">
                     <tspan x="185.008" y="228">{{ $t('vos propres') }}</tspan>
-                    <tspan x="-135" y="276">
+                    <tspan x="75" y="276">
                         {{ $t('cartes et campagnes') }}
                     </tspan>
                 </text>

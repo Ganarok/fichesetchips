@@ -72,14 +72,6 @@
 <script>
 export default {
     props: {
-        username: {
-            type: String,
-            default() {
-                return this.$store.state.user.username
-                    ? this.$store.state.user.username
-                    : 'Profil'
-            },
-        },
         description: {
             type: String,
         },
@@ -102,5 +94,15 @@ export default {
             },
         },
     },
+    data() {
+        const username = this.$store.state.user.username
+            ? this.$store.state.user.username
+            : 'Profil'
+
+        return {
+            username,
+        }
+
+    }
 }
 </script>

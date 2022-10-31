@@ -3,27 +3,37 @@
         <div
             class="flex flex-row w-full items-center bg-fc-black justify-between z-10 p-4 h-[10%] sm:p-auto sm:flex-col sm:fixed sm:h-screen sm:w-[13%]">
             <img
-                src="../assets/logo.svg"
+                src="@/assets/logo.svg"
                 class="w-[10%] sm:w-auto sm:m-[15%]"
                 alt="logo" />
             <div
                 class="text-center font-barlow text-white font-bold text-lg sm:text-xl">
                 <h1 class="hover:underline">
-                    <NuxtLink to="/"> {{ $t('Accueil') }} </NuxtLink>
+                    <router-link to="/"> {{ $t('Accueil') }} </router-link>
                 </h1>
             </div>
             <div
                 class="flex font-barlow text-center space-x-4 px-2 items-center sm:px-0 sm:space-x-0 sm:w-full sm:space-y-8 sm:flex-col">
-                <button
-                    class="rounded-full text-fc-yellow border-fc-yellow border-2 p-1 px-2 sm:p-2 sm:border-[3px] min-w-[50%]">
-                    <NuxtLink to="/register"> {{ $t("S'inscrire") }} </NuxtLink>
-                </button>
-                <button
-                    class="rounded-full text-fc-green border-fc-green border-2 p-1 px-2 sm:p-2 min-w-[50%] sm:border-[3px]">
-                    <NuxtLink to="/login"> {{ $t('Se connecter') }} </NuxtLink>
-                </button>
+                <router-link to="/register">
+                    <button
+                        class="rounded-full text-fc-yellow border-fc-yellow border-2 p-1 px-2 sm:p-2 sm:border-[3px] min-w-[50%]">
+                        {{ $t("S'inscrire") }}
+                    </button>
+                </router-link>
+                <router-link to="/login">
+                    <button
+                        class="rounded-full text-fc-green border-fc-green border-2 p-1 px-2 sm:p-2 min-w-[50%] sm:border-[3px]">
+                        {{ $t('Se connecter') }} 
+                    </button>
+                </router-link>
+
+                <Button 
+                    @click="showToaster()"
+                    :filled="'true'"
+                />
+
                 <img
-                    src="../assets/marque.svg"
+                    src="@/assets/marque.svg"
                     class="hidden sm:block sm:h-[20%] sm:w-[20%] mt-[15%] ml-auto mr-auto"
                     alt="Fiches&Chips" />
                 <p class="hidden sm:block text-white text-[11px]">
@@ -44,10 +54,12 @@
                         Notre site il est trop bien alors tu t’inscris et tu
                         kiffes ! Sinon je te retrouve et je te pète les genoux !
                     </p>
-                    <button
-                        class="flex flex-row justify-center w-20 lg:w-24 xl:w-28 border-[3px] self-end rounded-full text-3xl font-bold text-white tablet:text-xl">
-                        <NuxtLink to="/login"> GO -> </NuxtLink>
-                    </button>
+                    <router-link to="/login"> 
+                        <button
+                            class="flex flex-row justify-center w-20 lg:w-24 xl:w-28 border-[3px] self-end rounded-full text-3xl font-bold text-white tablet:text-xl">
+                            GO -> 
+                        </button>
+                    </router-link>
                     <div
                         class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px]"></div>
                 </div>
@@ -58,7 +70,7 @@
                         <a @scroll="scrollHandler" href="#MapVue">
                             <img
                                 class="w-[50px] h-[50px] rotate-180"
-                                src="../assets/vector.svg"
+                                src="@/assets/vector.svg"
                                 alt="vector" />
                         </a>
                     </div>
@@ -85,21 +97,21 @@
                 href="#top"
                 class="fixed transition-opacity bottom-0 right-0 w-[50px] h-[50px] m-[2%] z-50"
                 v-show="isVisible">
-                <img src="../assets/vector.svg" alt="vector" />
+                <img src="@/assets/vector.svg" alt="vector" />
             </a>
         </Transition>
     </div>
 </template>
-<script lang="js">
-import Vue from 'vue'
-import MapVue from '~/components/svg/Map.vue'
-import AmisVue from '~/components/svg/Amis.vue'
-import PersoVue from '~/components/svg/Perso.vue'
+<script>
+import MapVue from '@/components/svg/Map.vue'
+import AmisVue from '@/components/svg/Amis.vue'
+import PersoVue from '@/components/svg/Perso.vue'
+import Button from '@/components/subComponent/Button.vue'
 
-export default Vue.extend({
+export default {
     name: "IndexPage",
     mounted() {
-        window.addEventListener('scroll', this.scrollHandler)
+        window.addEventListener('scroll', this.scrollHandler)        
     },
     destroyed() {
         window.removeEventListener('scroll', this.scrollHandler)
@@ -112,10 +124,12 @@ export default Vue.extend({
             this.isVisible = e.target.scrollingElement.scrollTop > window.screen.height * 0.5 ? true : false;
             this.isVisibleBounce = e.target.scrollingElement.scrollTop > window.screen.height * 0.001 ? false : true;
         },
-
+        showToaster() {
+            console.log('this', this);
+        }
     },
-    components: { MapVue, AmisVue, PersoVue }
-})
+    components: { MapVue, AmisVue, PersoVue, Button }
+}
 </script>
 
 <style>

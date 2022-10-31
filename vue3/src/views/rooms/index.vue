@@ -54,11 +54,11 @@
 </template>
 
 <script>
-import SidebarLayout from '~/layouts/Sidebar.vue'
+import SidebarLayout from '@/layouts/Sidebar.vue'
 import Sheet from '@/components/Sheet.vue'
 import Selector from '@/components/subComponent/Selector.vue'
 import ParamInput from '@/components/subComponent/ParamInput.vue'
-import { ROOMSTATUS, PLAYSTYLE } from '~/utils/enums'
+import { ROOMSTATUS, PLAYSTYLE } from '@/utils/enums'
 
 export default {
     components: {

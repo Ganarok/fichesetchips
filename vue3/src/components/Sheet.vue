@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import { apiCall } from '~/utils/apiCall'
+import { apiCall } from '@/utils/apiCall'
 import Loader from './Loader.vue'
+import { useToast } from 'vue-toastification'
 
 export default {
     props: {
@@ -44,6 +45,8 @@ export default {
     },
     methods: {
         async fetchRoute(route) {
+            const toast = useToast()
+
             if (route) {
                 setTimeout(() => {
                     console.log('Simulating ApiCall')
@@ -60,11 +63,7 @@ export default {
                 //     this.data = await res.json()
                 // } catch (error) {
                 //     console.log(error)
-                //     this.$toast.show("Error when requesting the data.", {
-                //         theme: "toasted-primary",
-                //         position: "top-right",
-                //         duration : 4000
-                //     })
+                //     toast.error("Error when requesting the data.")
                 // } finally {
                 //     this.loading = false
                 // }

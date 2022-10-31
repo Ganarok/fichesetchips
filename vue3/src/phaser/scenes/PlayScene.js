@@ -11,7 +11,7 @@ export default class PlayScene extends Scene {
     const bomb = this.physics.add.image(400, 200, 'bomb')
     bomb.setCollideWorldBounds(true)
     bomb.body.onWorldBounds = true // enable worldbounds collision event
-    bomb.setBounce(1)
+    bomb.setBounce(3)
     bomb.setVelocity(200, 20)
 
     this.sound.add('thud')

@@ -7,11 +7,12 @@
         "jsx": "preserve",
         "paths": {
             "@/*": [ "./src/*" ],
-            "components" : [ "./src/components/*" ],
-            "views" : [ "./src/views/*" ],
-            "assets" : [ "./src/assets/*" ],
-            "lib" : [ "./src/lib/*" ],
-            "utils" : [ "./src/utils/*" ]
+            "@/components/subComponent" : [ "./src/components/subComponents*" ],
+            "@/components" : [ "./src/components/*" ],
+            "@/views" : [ "./src/views/*" ],
+            "@/assets" : [ "./src/assets/*" ],
+            "@/lib" : [ "./src/lib/*" ],
+            "@/utils" : [ "./src/utils/*" ]
         },
         "lib": [
             "esnext",

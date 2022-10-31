@@ -8,12 +8,12 @@
 
         <div
             class="absolute -right-24 bottom-0 opacity-95 max-h-screen lg:right-0">
-            <img src="../assets/greenpixels.svg" alt="Pixels" />
+            <img src="@/assets/greenpixels.svg" alt="Pixels" />
         </div>
 
         <img
             class="z-10 w-[50%] max-w-xs lg:m-4"
-            src="../static/logo.png"
+            src="@/assets/logo.png"
             alt="Fiche&Chips" />
         <div
             class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-96">
@@ -23,16 +23,16 @@
                 </h1>
 
                 <p class="my-4 underline text-xs opacity-70 cursor-pointer">
-                    <NuxtLink to="/login">
+                    <router-link to="/login">
                         {{ $t('Finalement non') }} !
-                    </NuxtLink>
+                    </router-link>
                 </p>
             </div>
 
             <div v-if="!loading" class="space-y-1">
                 <CustomInput
                     :maxLength="256"
-                    @input="(v) => this.handleEmail(v)"
+                    @input="(v) => this.handleEmail(v.target.value)"
                     placeHolder="Email"
                     :hasError="emailError"
                     :onFocusOut="() => this.handleEmailFocusOut()" />
@@ -59,16 +59,16 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import CustomInput from '~/components/subComponent/CustomInput.vue'
-import subModalSignup from '~/components/subModals/signup.vue'
+import CustomInput from '@/components/subComponent/CustomInput.vue'
+import subModalSignup from '@/components/subModals/signup.vue'
 import Loader from '@/components/Loader.vue'
-import { apiCall } from '~/utils/apiCall'
+import { apiCall } from '@/utils/apiCall'
 import bcrypt from 'bcryptjs'
 import { isEmailValid } from '@/utils/validations'
+import { useToast } from 'vue-toastification'
 
-export default Vue.extend({
-    name: 'Login',
+export default {
+name: 'Login',
     components: { subModalSignup, CustomInput, Loader },
     props: {
         loading: {
@@ -103,6 +103,7 @@ export default Vue.extend({
         },
         handleSend() {
             const { email } = this
+            const toast = useToast()
 
             if (email) {
                 //TODO : Send a mail for updating password
@@ -122,21 +123,15 @@ export default Vue.extend({
                 //         await this.$router.push('/user/dashboard')
                 //         setTimeout(
                 //             () =>
-                //                 this.$toast.show(
+                //                 toast.success(
                 //                     `${this.$t('Bienvenue')} ${
                 //                         res.user.username
-                //                     } !`,
-                //                     {
-                //                         theme: 'toasted-primary',
-                //                         position: 'top-right',
-                //                         duration: 4000,
-                //                     }
-                //                 ),
+                //                     } !`),
                 //             400
                 //         )
                 //     })
                 //     .catch((err) => {
-                //     this.$toast.show(err, {
+                //     toast.error(err, {
                 //         theme: 'toasted-primary',
                 //         position: 'top-right',
                 //         duration: 4000,
@@ -149,5 +144,5 @@ export default Vue.extend({
             }
         },
     },
-})
+}
 </script>

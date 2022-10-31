@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import SidebarLayout from '~/layouts/Sidebar.vue'
+import SidebarLayout from '@/layouts/Sidebar.vue'
 import Sheet from '@/components/Sheet.vue'
 
 export default {

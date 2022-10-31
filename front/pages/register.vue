@@ -78,9 +78,9 @@
 
 <script>
 import Vue from 'vue'
-import CustomInput from '~/components/subComponent/CustomInput.vue'
-import subModalSignup from '~/components/subModals/signup.vue'
-import { apiCall } from '~/utils/apiCall'
+import CustomInput from '@/components/subComponent/CustomInput.vue'
+import subModalSignup from '@/components/subModals/signup.vue'
+import { apiCall } from '@/utils/apiCall'
 import bcrypt from 'bcryptjs'
 import Loader from '@/components/Loader.vue'
 import { isEmailValid, isPasswordValid } from '@/utils/validations'

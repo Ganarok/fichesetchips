@@ -8,35 +8,35 @@
 
         <div
             class="absolute -right-24 bottom-0 opacity-95 max-h-screen lg:right-0">
-            <img src="../assets/greenpixels.svg" alt="Pixels" />
+            <img src="@/assets/greenpixels.svg" alt="Pixels" />
         </div>
 
         <img
             class="z-10 w-[50%] max-w-xs lg:m-4"
-            src="../static/logo.png"
+            src="@/assets/logo.png"
             alt="Fiche&Chips" />
         <div
             class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-80">
             <div v-if="!loading" class="ml-5">
                 <h1 class="text-5xl">{{ $t('Connexion') }}</h1>
-                <NuxtLink
+                <router-link
                     class="underline text-xs opacity-70 cursor-pointer"
                     to="/register">
                     {{ $t('Pas encore inscrit ? Cliquez ici') }}
-                </NuxtLink>
+                </router-link>
             </div>
 
             <div v-if="!loading" class="space-y-1 mt-4">
                 <CustomInput
                     :maxLength="36"
-                    @input="(v) => this.handleUsername(v)"
+                    @input="(v) => this.handleUsername(v.target.value)"
                     :placeHolder="$t('Identifiant')"
                     :hasError="credentialsError"
                     :onFocusOut="() => this.handleFocusOut()" />
 
                 <CustomInput
                     :maxLength="64"
-                    @input="(v) => this.handlePassword(v)"
+                    @input="(v) => this.handlePassword(v.target.value)"
                     typeInput="password"
                     :placeHolder="$t('Mot de passe')"
                     :hasError="credentialsError"
@@ -44,9 +44,9 @@
 
                 <p
                     class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">
-                    <NuxtLink to="/forgot-password">
+                    <router-link to="/forgot-password">
                         {{ $t('Mot de passe oublié') }}
-                    </NuxtLink>
+                    </router-link>
                 </p>
             </div>
 
@@ -70,14 +70,14 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import CustomInput from '~/components/subComponent/CustomInput.vue'
-import subModalSignup from '~/components/subModals/signup.vue'
+import CustomInput from '@/components/subComponent/CustomInput.vue'
+import subModalSignup from '@/components/subModals/signup.vue'
 import Loader from '@/components/Loader.vue'
-import { apiCall } from '~/utils/apiCall'
+import { apiCall } from '@/utils/apiCall'
 import bcrypt from 'bcryptjs'
+import { useToast } from 'vue-toastification'
 
-export default Vue.extend({
+export default {
     name: 'Login',
     components: { subModalSignup, CustomInput, Loader },
     props: {
@@ -100,17 +100,18 @@ export default Vue.extend({
         },
         handlePassword(v) {
             this.password = v
-            // let saltRounds = parseInt(process.env.SALTROUNDS)
-            // bcrypt.hash(v, saltRounds).then((result) => {
-            //     this.password = result
-            // })
         },
         handleFocusOut() {
             this.errorText = ''
             this.credentialsError = false
         },
         handleLogin() {
-            const { username, password } = this
+            const { username } = this
+            let { password } = this
+            const toast = useToast()
+            let saltRounds = parseInt(process.env.SALTROUNDS)
+
+            password = bcrypt.hashSync(this.password, saltRounds)
 
             if (username && password) {
                 apiCall({
@@ -118,7 +119,7 @@ export default Vue.extend({
                     route: '/auth/login',
                     body: JSON.stringify({
                         username,
-                        password,
+                        password: this.password,
                     }),
                 })
                     .then(async (res) => {
@@ -131,25 +132,15 @@ export default Vue.extend({
 
                         setTimeout(
                             () =>
-                                this.$toast.show(
+                                toast.success(
                                     `${this.$t('Bienvenue')} ${
                                         res.user.username
-                                    } !`,
-                                    {
-                                        theme: 'toasted-primary',
-                                        position: 'top-right',
-                                        duration: 4000,
-                                    }
-                                ),
+                                    } !`),
                             400
                         )
                     })
                     .catch((err) => {
-                        this.$toast.show(err, {
-                            theme: 'toasted-primary',
-                            position: 'top-right',
-                            duration: 4000,
-                        })
+                        toast.error( typeof err === 'object' ? err.message : err)
                         console.log('err', err)
 
                         this.credentialsError = true
@@ -160,5 +151,5 @@ export default Vue.extend({
             }
         },
     },
-})
+}
 </script>
