@@ -25,6 +25,9 @@ export async function findPublicProfile(username: string) {
 }
 
 export async function update(username: string, parameters: UpdateUser) {
+    if (Object.keys(parameters).every(elem => ["username", "email", "password", "avatar", "preference_id"].includes(elem)) == false) {
+        throw new Error("Unexpected parameters")
+    }
     const user = await UserRepository.findOneByOrFail({ username: username })
     await UserRepository.save({ id: user.id, ...parameters })
     const new_user = await UserRepository.findOneByOrFail({ id: user.id })
