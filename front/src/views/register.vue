@@ -80,10 +80,10 @@
 import CustomInput from '@/components/subComponent/CustomInput.vue'
 import subModalSignup from '@/components/subModals/signup.vue'
 import { apiCall } from '@/utils/apiCall'
-import bcrypt from 'bcryptjs'
 import Loader from '@/components/Loader.vue'
 import { isEmailValid, isPasswordValid } from '@/utils/validations'
 import { useToast } from 'vue-toastification'
+const CryptoJS = require("crypto-js");
 
 export default {
     name: 'Login',
@@ -177,17 +177,14 @@ export default {
         handleGo() {
             if (this.handleErrors()) {
                 const { username, email } = this
-                let { password, passwordConfirm } = this
-                let saltRounds = parseInt(process.env.SALTROUNDS)
                 const toast = useToast()
 
-                password = bcrypt.hashSync(this.password, saltRounds)
-                passwordConfirm = bcrypt.hashSync(this.passwordConfirm, saltRounds)
+                const password = CryptoJS.SHA256(this.password).toString(CryptoJS.enc.Hex)
 
-                if (username && email && password && passwordConfirm) {
+                if (username && email && password) {
                     apiCall({
                         method: 'POST',
-                        route: '/auth/signup',
+                        route: '/auth/register',
                         body: JSON.stringify({
                             username,
                             password,
