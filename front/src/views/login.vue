@@ -74,8 +74,9 @@ import CustomInput from '@/components/subComponent/CustomInput.vue'
 import subModalSignup from '@/components/subModals/signup.vue'
 import Loader from '@/components/Loader.vue'
 import { apiCall } from '@/utils/apiCall'
-import bcrypt from 'bcryptjs'
 import { useToast } from 'vue-toastification'
+const CryptoJS = require("crypto-js");
+
 
 export default {
     name: 'Login',
@@ -109,9 +110,7 @@ export default {
             const { username } = this
             let { password } = this
             const toast = useToast()
-            let saltRounds = parseInt(process.env.SALTROUNDS)
-
-            password = bcrypt.hashSync(this.password, saltRounds)
+            password = CryptoJS.SHA256(this.password).toString(CryptoJS.enc.Hex)
 
             if (username && password) {
                 apiCall({
@@ -119,7 +118,7 @@ export default {
                     route: '/auth/login',
                     body: JSON.stringify({
                         username,
-                        password: this.password,
+                        password: password,
                     }),
                 })
                     .then(async (res) => {

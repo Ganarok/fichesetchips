@@ -15,7 +15,7 @@
                         </p>
                         <button
                             class="flex flex-row justify-center w-20 lg:w-24 xl:w-28 border-[3px] self-end rounded-full text-3xl font-bold text-white tablet:text-xl">
-                            <NuxtLink to="/login"> GO -> </NuxtLink>
+                            <router-link to="/login"> GO -> </router-link>
                         </button>
                         <div
                             class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px] mobile:hidden"></div>
