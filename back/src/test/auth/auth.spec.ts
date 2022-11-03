@@ -2,34 +2,37 @@ import app from '../../server';
 import { expect } from 'chai';
 import {agent as request} from 'supertest';
 import 'mocha'
-import exp from 'constants';
 let token =  ""
 
+import defaultUsers from "../../database/fixtures/users"
+import { User } from '../../database/entities/User';
+
+const user = defaultUsers.defaultUser as User
 
 describe('Auth', () => {
     describe('Easy test', () => {
         it('Login should return 404 because account do not exist', async () => {
             const res = await request(app)
             .post('/auth/login').send({
-                password: '12345678',
-                username: "brayan"
+                password: "password",
+                username: "account_doesnt_exist"
             });
             expect(res.status).to.equal(404);
         });
         it('Register should return 200', async () => {
             const res = await request(app)
             .post('/auth/register').send({
-                email: "brayan@gmail.com",
-                password: '12345678',
-                username: "brayan"
+                email: Math.random().toString(36).split(".")[1],
+                password: "password",
+                username: Math.random().toString(36).split(".")[1]
             });
             expect(res.status).to.equal(200);
         });
         it('Login should return 200', async () => {
             const res = await request(app)
             .post('/auth/login').send({
-                password: '12345678',
-                username: "brayan"
+                password: "password",
+                username: user.username
             });
             expect(res.status).to.equal(200);
             token = res.body.access_token
@@ -41,60 +44,60 @@ describe('Auth', () => {
         it('Register should return 409 because Query miss email', async () => {
             const res = await request(app)
             .post('/auth/register').send({
-                password: '12345678',
-                username: "test"
+                password: "password",
+                username: Math.random().toString(36).split(".")[1]
             });
             expect(res.status).to.equal(409);
         });
         it('Register should return 409 because Query miss password', async () => {
             const res = await request(app)
             .post('/auth/register').send({
-                email: "test@gmail.com",
-                username: "test"
+                email: Math.random().toString(36).split(".")[1],
+                username: Math.random().toString(36).split(".")[1]
             });
             expect(res.status).to.equal(409);
         });
         it('Register should return 409 because Query miss username', async () => {
             const res = await request(app)
             .post('/auth/register').send({
-                email: "test@gmail.com",
-                password: '12345678'
+                email: Math.random().toString(36).split(".")[1],
+                password: "password"
             });
             expect(res.status).to.equal(409);
         });
         it('Register should return 400 param not expected', async () => {
             const res = await request(app)
             .post('/auth/register').send({
-                email: "test@gmail.com",
-                password: '12345678',
-                username: "test",
+                email: Math.random().toString(36).split(".")[1],
+                password: "password",
+                username: Math.random().toString(36).split(".")[1],
                 banane: "param not expected"
             });
             expect(res.status).to.equal(400);
         });
     });
-    describe('Error gestion for login', () => {
+    describe('Error handler for login', () => {
         it('Login should return 404 because account do not exist', async () => {
             const res = await request(app)
             .post('/auth/login').send({
-                password: '12345678',
-                username: "test"
+                password: "password",
+                username: "account_doesnt_exist"
             });
             expect(res.status).to.equal(404);
         });
         it('Login should return 404 because password is wrong', async () => {
             const res = await request(app)
             .post('/auth/login').send({
-                password: '123456789',
-                username: "brayan"
+                password: "wrong_password",
+                username: user.username
             });
             expect(res.status).to.equal(404);
         });
         it('Login should return 400 because param not expected', async () => {
             const res = await request(app)
             .post('/auth/login').send({
-                password: '12345678',
-                username: "brayan",
+                password: "password",
+                username: user.username,
                 banane: "param not expected"
             });
             expect(res.status).to.equal(400);
@@ -104,9 +107,9 @@ describe('Auth', () => {
         it('Register should return 200', async () => {
             const res = await request(app)
             .post('/auth/register').send({
-                email: "testhard@gmail",
-                password: '12345678',
-                username: "testhard"
+                email: Math.random().toString(36).split(".")[1],
+                password: "password",
+                username: Math.random().toString(36).split(".")[1]
             });
             expect(res.status).to.equal(200);
             expect(res.body.user).to.have.property('email');
@@ -123,8 +126,8 @@ describe('Auth', () => {
         it('Login should return 200', async () => {
             const res = await request(app)
             .post('/auth/login').send({
-                password: '12345678',
-                username: "testhard"
+                password: "password",
+                username: user.username
             });
             expect(res.status).to.equal(200);
             expect(res.body.user).to.have.property('email');

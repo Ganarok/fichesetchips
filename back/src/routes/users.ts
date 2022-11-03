@@ -71,13 +71,21 @@ router.get("/profile/:username", async (req: Request, res) => {
    *             schema: { $ref: '#/definitions/notFoundResponse' }
    */
   try {
-    const { user } = await usersService.findProfile(((req as CustomRequest).jwtPayload as JwtPayload).username);
-    if (user.role == "ADMIN" || user.role == "SUPERADMIN") {
-      const response = await usersService.findProfile(req.params.username);
-      res.status(200).send({ ...response, message: 'User private profile successfully found' });
+    const user_who_asked = await usersService.findProfile(((req as CustomRequest).jwtPayload as JwtPayload).username);
+    const user_we_want = await usersService.findProfile(req.params.username);
+    const user_we_want_public_profile = await usersService.findPublicProfile(req.params.username);
+    if (user_we_want.user.role == "SUPERADMIN") {
+      res.status(401).send({ message: 'You cannot see the profile of this User', error: "Unauthorized" });
+    } else if (user_we_want.user.role == "ADMIN" && user_who_asked.user.role == "SUPERADMIN") {
+      res.status(200).send({ ...user_we_want, message: 'User private profile successfully found' });
+    } else if (user_we_want.user.role == "ADMIN" && user_who_asked.user.role == "ADMIN") {
+      res.status(200).send({ ...user_we_want_public_profile, message: 'User public profile successfully found' });
+    } else if (user_we_want.user.role == "USER" && (user_who_asked.user.role == "SUPERADMIN" || user_who_asked.user.role == "ADMIN")) {
+      res.status(200).send({ ...user_we_want, message: 'User private profile successfully found' });
+    } else if (user_we_want.user.role == "USER" && user_who_asked.user.role == "USER") {
+      res.status(200).send({ ...user_we_want_public_profile, message: 'User public profile successfully found' });
     } else {
-      const response = await usersService.findPublicProfile(req.params.username);
-      res.status(200).send({ ...response, message: 'User public profile successfully found' });
+      res.status(401).send({ message: 'You cannot see the profile of this User', error: "Unauthorized" });
     }
   } catch (error) {
     return getErrorMessage(error, res);
@@ -256,11 +264,11 @@ router.delete("/:username", isAdmin, async (req: Request, res) => {
   try {
     const { user } = await usersService.findProfile(req.params.username);
     if (user.role == "SUPERADMIN") {
-      res.status(401).send({ message: 'You cannot delete a SUPERADMIN', error: "Unauthorized" });
+      res.status(401).send({ message: 'You are not authorized to deleted this user', error: "Unauthorized" });
     } else if (user.role == "ADMIN") {
       const { user } = await usersService.findProfile(((req as CustomRequest).jwtPayload as JwtPayload).username);
       if (user.role != "SUPERADMIN") {
-        res.status(401).send({ message: 'You cannot delete an ADMIN', error: "Unauthorized" });
+        res.status(401).send({ message: 'You are not authorized to deleted this user', error: "Unauthorized" });
       } else {
         const response = await usersService.destroy(req.params.username);
         res.status(200).send({ ...response, message: 'User succesfully deleted' });
