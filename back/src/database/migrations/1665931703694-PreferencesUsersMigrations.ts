@@ -42,18 +42,6 @@ export class PreferencesUsersMigrations1665931703694 implements MigrationInterfa
             )
         `);
         await queryRunner.query(`
-            CREATE TABLE "badge" (
-                "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
-                "name" character varying NOT NULL,
-                "description" character varying NOT NULL,
-                "image" character varying NOT NULL,
-                "created_at" TIMESTAMP NOT NULL DEFAULT now(),
-                "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
-                CONSTRAINT "UQ_3a9975f8f34c4a07bbffab8a9b2e6309" UNIQUE ("name"),
-                CONSTRAINT "PK_3a9975f8f34c4a07bbffab8a9b2e6309" PRIMARY KEY ("id")
-            )
-        `);
-        await queryRunner.query(`
             ALTER TABLE "user"
             ADD CONSTRAINT "FK_0532217bd629d0ccf06499c5841" FOREIGN KEY ("preference_id") REFERENCES "preference"("id") ON DELETE
             SET DEFAULT ON UPDATE CASCADE
@@ -81,6 +69,9 @@ export class PreferencesUsersMigrations1665931703694 implements MigrationInterfa
         `);
         await queryRunner.query(`
             DROP TABLE "badge"
+        `);
+        await queryRunner.query(`
+            DROP TABLE "badge_user"
         `);
     }
 
