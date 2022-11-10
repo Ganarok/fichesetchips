@@ -1,22 +1,18 @@
 <template>
     <div
         :class="
-            'relative rounded-full bg-fiche-green border-[0.2em] border-fc-black ' +
-            badgeSize
+            'relative rounded-full bg-fc-green border-[0.2em] border-fc-black ' +
+            badgeSize.badge
         "
         style="aspect-ratio: 1/1">
         <div class="absolute rounded-full left-0 w-full h-full overflow-hidden">
             <div
-                :style="{
-                    'backdrop-filter': 'grayscale(1)',
-                    height: (100 - completion).toString() + '%',
-                }" />
+                :style="{'backdrop-filter': 'grayscale(1)',height: (100 - completion).toString() + '%',}" />
         </div>
         <div
             v-if="canFav"
-            class="relative left-9 md:left-6 bottom-1 rounded-full border-[0.15em] border-chips-yellow h-4 cursor-pointer"
+            :class="(displayFav ? 'bg-fc-yellow ' : 'bg-white ' ) + 'relative bottom-1 rounded-full border-[0.15em] border-fc-yellow cursor-pointer ' + badgeSize.favButton"
             style="aspect-ratio: 1/1"
-            :class="displayFav ? 'bg-chips-yellow' : 'bg-white'"
             @click="handleFav" />
     </div>
 </template>
@@ -65,17 +61,13 @@ export default {
         badgeSize() {
             switch (this.size) {
                 case 's':
-                    return 'h-16 md:h-10'
-                    break
+                    return {badge:'h-10 md:h-10',favButton:'h-4 left-6'}
                 case 'm':
-                    return 'h-16 md:h-10'
-                    break
+                    return {badge:'h-10 md:h-10',favButton:'h-4 left-6'}
                 case 'l':
-                    return 'h-4/5'
-                    break
+                    return {badge:'h-4/5',favButton:'h-4 left-6'}
                 default:
                     return null
-                    break
             }
         },
     },

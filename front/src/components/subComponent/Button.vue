@@ -19,7 +19,7 @@ export default {
             type: String,
             default: 'fc-green',
         },
-        filled: String,
+        filled: [ String, Boolean ],
         image: String,
     },
     methods: {

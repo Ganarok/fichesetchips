@@ -11,6 +11,7 @@ import Admin from '@/views/user/admin.vue'
 import Rooms from '@/views/rooms/index.vue'
 import RoomID from '@/views/rooms/[id]/index.vue'
 import Session from '@/views/rooms/[id]/session.vue'
+import ProfileID from '@/views/user/profile.vue'
 import NotFound from '@/views/404.vue'
 
 const routes = [
@@ -61,6 +62,12 @@ const routes = [
         path: '/rooms/:id',
         name: 'Rooms',
         component: RoomID,
+        requiresAuth: true
+    },
+    {
+        path: '/user/profile/:id',
+        name: 'ProfileID',
+        component: ProfileID,
         requiresAuth: true
     },
     {

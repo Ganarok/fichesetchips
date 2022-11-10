@@ -8,8 +8,8 @@
             {{ nickname }}
         </h1>
         <div
-            class="rounded-full bg-fiche-green border-[0.4em] md:border-[0.3em] border-fc-black h-40 md:h-28 my-3"
-            style="aspect-ratio: 1/1"></div>
+            class="rounded-full bg-fc-green border-[0.2em] md:border-[0.3em] border-fc-black h-32 my-3"
+            style="aspect-ratio: 1/1;" :style="grayed ? 'filter: grayscale(1)' : null"></div>
         <h1
             v-if="nick_under"
             :class="
@@ -29,6 +29,7 @@ export default {
         nick_under: Boolean,
         nick_size: { type: String, default: '2xl' },
         nick_bold: Boolean,
+        grayed: Boolean,
     },
     methods: {
         callback: function (e) {

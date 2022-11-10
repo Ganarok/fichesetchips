@@ -13,7 +13,7 @@
                 :filled="true"
                 class="w-1/2 self-center"
                 :buttonText="$t('Retour')"
-                @click="() => $router.back()"
+                @click="() => this.handleBack()"
             />
         </div>
     </div>
@@ -27,5 +27,14 @@ export default {
     components: {
         Button,
     },
+
+    methods: {
+        handleBack() {
+            if (this.$store.getters.connected)
+                this.$router.push('/user/dashboard')
+            else
+                this.$router.push('/')
+        }
+    }
 }
 </script>
