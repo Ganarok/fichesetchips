@@ -1,7 +1,7 @@
 <template>
     <div
-        class="flex flex-col items-center max-w-xs max-h-[550px] border-2 border-fc-green p-2"
-    >
+        class="flex flex-col items-center h-full border border-yellow-300 p-2"
+        style="aspect-ratio: 0.6/1">
         <div
             class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold"
             v-if="level || name"

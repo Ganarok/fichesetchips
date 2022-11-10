@@ -9,8 +9,8 @@
         </div>
 
         <div
-            class="flex flex-col space-y-4 w-full h-screen mobile:h-[calc(100vh-80px)] ml-[220px] mobile:ml-0 mobile:mt-[80px]"
-            :class="{ 'px-4 pt-4' : isBorder}">
+            class="flex flex-col space-y-4 w-full h-screen mobile:h-[calc(100vh-80px)] ml-[220px] mobile:ml-0 mobile:mt-[80px] mobile:z-[-1]"
+            :class="{ 'p-4' : isBorder}">
             <h1
                 class="font-bold text-xl p-6 self-center sm:self-start sm:text-2xl md:px-8 lg:px-10 lg:text-3xl xl:text-5xl"
                 v-if="title">

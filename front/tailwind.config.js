@@ -35,13 +35,6 @@ module.exports = {
                 'chip-yellow-trans': '#FFDB57b3',
                 'fc-black': '#1E1E1E',
             },
-            backgroundImage: {
-                tashasCauldronOfEverythingDnd:
-                    'url("../assets/index/tashasCauldronOfEverythingDnd.svg")',
-            },
-            fontFamily: {
-                barlow: ['Barlow', 'sans-serif'],
-            },
             screens: {
                 tablet: { max: '1414px' },
                 mobile: { max: '600px' },

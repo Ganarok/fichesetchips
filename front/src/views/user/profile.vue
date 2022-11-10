@@ -1,77 +1,72 @@
 <template>
-    <SidebarLayout :isBorder="false">
-        <div class="flex flex-col h-screen w-full md:flex-row">
+    <SidebarLayout>
+<!--        <div
+            class="absolute top-0 right-0 mt-4 mr-4 cursor-pointer"
+            @click="preview = !preview">
+            show preview
+        </div>-->
+
+        <div class="h-screen w-full md:overflow-hidden flex md:flex-row flex-col font-barlow">
             <div
-                class="flex flex-col relative items-center justify-between h-full w-full md:w-1/2 md:max-w-sm space-y-4 p-4 md:border-fc-green md:border-r-4"
-            >
-                <img 
-                    src="@/assets/cornerPixels.svg"
-                    class="absolute top-0 right-0 rotate-90 -z-10 scale-x-[-1] invisible sm:visible"
-                />
-
-                <div class="relative text-2xl w-52 sm:w-40 xl:w-52">
+                class="md:w-1/3 h-full md:border-r-4 md:border-fc-green p-4 flex flex-col items-center mb-48">
+                <div class="flex flex-col items-center mb-8">
                     <Avatar
-                        username="Ganarok"
-                        username_under
-                        class="text-3xl xl:text-4xl"
-                    />
+                        nickname="Ganarok"
+                        nick_bold
+                        nick_under
+                        nick_size="5xl"
+                        class="mb-3" />
                 </div>
-
-                <div class="flex flex-col items-center space-y-1 text-xl">
+                <div class="flex flex-col w-full text-xl mb-8">
                     <EditableDiv :editMode="editMode" v-model="user.location" />
                     <EditableDiv :editMode="editMode" v-model="user.email" />
                 </div>
-
-                <p class="flex text-center font-bold italic text-xl">
-                    <EditableDiv v-model="user.description" :editMode="editMode"/>
+                <p class="font-bold italic text-2xl">
+                    <EditableDiv
+                        v-model="user.description"
+                        :editMode="editMode"
+                        class="max-w-full" />
                 </p>
 
-                <div class="flex flex-wrap items-center justify-center ">
+                <div class="grid gap-6 md:gap-4 grid-cols-5 mt-auto">
                     <Badge
                         size="s"
                         canFav
-                        class="m-1"
                         :isFav="badges[badgesPage][idx].isFav"
                         :completion="badge.completion"
                         @favorite="handleFavorite(badge.id)"
                         v-for="(badge, idx) in badges[badgesPage]"
                         :key="badge.id" />
                 </div>
-
-                <div class="flex items-center justify-evenly mt-4">
+                <div class="flex space-x-10 mt-4">
                     <div
                         :class="
                             badgesPage != 0
                                 ? null
-                                : 'pointer-events-none opacity-25'
+                                : 'pointer-events-none text-gray-400'
                         "
                         class="cursor-pointer select-none"
                         @click="badgesPage > 0 ? (badgesPage -= 1) : null
                         ">
-                        <img src="../../assets/icons/fleche.svg"/>
+                        {{"<"}}
                     </div>
-
-                    <div class="mx-2">
-                        {{ badgesPage + 1 }} / {{ badges.length }}
-                    </div>
-
+                    <div>{{ badgesPage + 1 }} / {{ badges.length }}</div>
                     <div
                         :class="
                             badgesPage < badges.length - 1
                                 ? null
-                                : 'pointer-events-none opacity-25'
+                                : 'pointer-events-none text-gray-400'
                         "
-                        class="cursor-pointer select-none rotate-180"
+                        class="cursor-pointer select-none"
                         @click="
                             badgesPage < badges.length - 1
                                 ? (badgesPage += 1)
                                 : null
                         ">
-                      <img src="../../assets/icons/fleche.svg"/>
+                        >
                     </div>
                 </div>
-
-                <div class="flex space-x-10">
+                <div class="flex space-x-10 mt-4">
                     <button class="text-gray-600" @click="editMode = !editMode">
                         {{ editMode ? 'Enregistrer' : 'Editer' }}
                     </button>
@@ -81,22 +76,16 @@
                         Supprimer
                     </button>
                 </div>
-
-                <img 
-                    src="@/assets/cornerPixels.svg"
-                    class="absolute bottom-0 right-0 rotate-180 -z-10 scale-x-[-1] invisible sm:visible"
-                />
             </div>
-
-            <div class="flex flex-col space-y-4 w-full h-full px-4 pt-4">
-                <div class="flex flex-col items-center w-full space-y-4 md:space-x-2 md:space-y-0 md:flex-row xl:space-x-4">
-                    <div class="flex flex-col w-full h-full text-center space-y-2">
+            <div class="w-full h-3/4 flex flex-col md:px-8 md:pb-16 pt-8 space-y-4">
+                <div class="h-full flex md:flex-row flex-col pb-6 justify-center md:mb-0 mb-48">
+                    <div
+                        class="h-full flex flex-col md:w-1/2 text-center space-y-2 md:px-20">
                         <div
-                            class="flex w-full h-20 items-center justify-center text-center text-3xl font-bold bg-fc-black text-fc-green">
+                            class="flex w-full h-20 items-center justify-center text-center font-bold bg-fc-black text-fc-green">
                             Statistiques
                         </div>
-
-                        <div class="flex flex-col justify-evenly h-full space-y-2 p-1">
+                        <div class="flex flex-col space-y-2 p-1">
                             <div class="flex w-full h-16">
                                 <div
                                     class="w-2/5 flex items-center justify-center">
@@ -111,7 +100,6 @@
                                     Parties jouées (Joueur)
                                 </div>
                             </div>
-
                             <div class="flex w-full h-16">
                                 <div
                                     class="relative w-3/5 flex items-center justify-center text-white bg-fc-black">
@@ -156,32 +144,20 @@
                             </div>
                         </div>
                     </div>
-    
-                    <!-- <CharacterCard
-                        name="Ganarok"
-                        image="@/assets/dragon.svg"
-                        :level="12"
-                    /> -->
+                  <div class="h-full flex justify-center items-center">
+                    <CharacterCard class="ml-auto w-auto md:mr-28" />
+                  </div>
                 </div>
-
-                <div class="flex flex-col w-full h-full">
-                    <h1 class="font-bold text-3xl">
-                        Amis
-                    </h1>
-    
+                <div class="w-full mt-auto">
+                    <h1 class="font-bold text-3xl">Amis</h1>
                     <div class="h-1 w-full bg-fc-black" />
-    
-                    <div class="flex self-center overflow-x-auto space-x-2 justify-center items-center h-full w-full md:w-[50vw] my-4">
-                        <div class="flex font-bold text-center h-full items-center" v-if="friendsList.length < 1">
-                            Ajoutez des amis pour voir leur status
-                        </div>
-    
+                    <div class="flex overflow-x-auto justify-center space-x-4">
                         <Avatar
-                            v-for="friend in friendsList"
+                            class="mt-4"
                             :grayed="!friend.online"
-                            :username="friend.username"
-                            :key="friend.username"
-                        />
+                            :nickname="friend.username"
+                            v-for="friend in friendsList"
+                            :key="n" />
                     </div>
                 </div>
             </div>
@@ -246,31 +222,26 @@ export default {
     data() {
         return {
             showModal: false,
-            user: {
-                id: 0,
-                username: 'John Doe',
-                email: 'JohnDoe@mail.com',
-                location: 'FarFarAway Kingdom, Farlands',
-                avatar: '',
-                description: 'Jeune elfe recherche un mage mortel ...',
-                lastConnection: 'il y a 1 heure',
-                createdAt: '',
-            },
-            friendsList: [
-                {username: 'SmithMan', online: true},
-                {username: 'SmithMan', online: false},
-                {username: 'SmithMan', online: false},
-                {username: 'SmithMan', online: false},
-                {username: 'SmithMan', online: false}
-            ],
+          user: {
+            id: 0,
+            username: 'John Doe',
+            email: 'JohnDoe@mail.com',
+            location: 'FarFarAway Kingdom, Farlands',
+            avatar: '',
+            description: '“Jeune elfe recherche un mage mortel ...”',
+            lastConnection: 'il y a 1 heure',
+            createdAt: '',
+          },
+          friendsList: [{username: 'SmithMan', online: true}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}],
             badges: [],
             badgesPage: 0,
+            ownprofile: true,
             preview: false,
             editMode: false,
         }
     },
     mounted() {
-        this.badgeGenerator(3)
+        this.badgeGenerator(50)
     },
     methods: {
         badgeGenerator(pageNbr = 3, badgeNbr = 20) {

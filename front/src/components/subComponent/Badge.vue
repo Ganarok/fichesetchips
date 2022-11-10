@@ -11,7 +11,7 @@
       </div>
         <div class="absolute rounded-full left-0 w-full h-full overflow-hidden">
             <div
-                :style="{'backdrop-filter': 'grayscale(1)', height: (100 - completion).toString() + '%',}" />
+                :style="{'backdrop-filter': 'grayscale(1)',height: (100 - completion).toString() + '%',}" />
         </div>
 
         <div

@@ -18,22 +18,7 @@ export default {
             type: String,
             default: 'fc-green',
         },
-        backgroundColor: {
-            type: String,
-            default: ''
-        },
-        textColor: {
-            type: String,
-            default: 'text-white'
-        },
-        rounded: {
-            type: Boolean,
-            default: true
-        },
-        customClass: {
-            type: String,
-            default: ''
-        },
+        filled: [ String, Boolean ],
         image: String,
     },
     methods: {

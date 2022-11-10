@@ -5,14 +5,9 @@
         >
             {{ username }}
         </h1>
-
-        <div class="relative">
-            <img
-                src="../../assets/avatar/character.png"
-                class="object-contain rounded-full bg-fc-green border-8 border-fc-black"
-                :style="grayed ? 'filter: grayscale(1)' : null">
-        </div>
-
+        <div
+            class="rounded-full bg-fc-green border-[0.2em] md:border-[0.3em] border-fc-black h-32 my-3"
+            style="aspect-ratio: 1/1;" :style="grayed ? 'filter: grayscale(1)' : null"></div>
         <h1
             v-if="username_under"
         >
@@ -25,8 +20,10 @@
 export default {
     props: {
         border: String,
-        username: { type: String, default: null },
-        username_under: Boolean,
+        nickname: { type: String, default: null },
+        nick_under: Boolean,
+        nick_size: { type: String, default: '2xl' },
+        nick_bold: Boolean,
         grayed: Boolean,
     },
     methods: {
