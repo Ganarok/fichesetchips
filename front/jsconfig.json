@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "esnext",
+        "baseUrl": "./",
+        "moduleResolution": "node",
+        "jsx": "preserve",
+        "paths": {
+            "@/*": [ "./src/*" ],
+            "@/components/subComponent" : [ "./src/components/subComponents*" ],
+            "@/components" : [ "./src/components/*" ],
+            "@/views" : [ "./src/views/*" ],
+            "@/assets" : [ "./src/assets/*" ],
+            "@/lib" : [ "./src/lib/*" ],
+            "@/utils" : [ "./src/utils/*" ]
+        },
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ]
+    },
+    "exclude": ["node_modules", "dist"]
+}

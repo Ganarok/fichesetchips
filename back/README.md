@@ -28,7 +28,7 @@
 
 ### Installation
 
-- Dependancies
+- Dependencies
 
 ```bash
 cd server/
@@ -45,27 +45,23 @@ Set your environnment variable as you want.
 
 - Database
 
-```bash
-psql -h localhost -p 5432 -U postgres
-Password for user postgres: 
-psql (14.2 (Ubuntu 14.2-1.pgdg20.04+1))
-SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
-Type "help" for help.
+Init db :
 
-postgres=> CREATE DATABASE fichesetchips;
-CREATE DATABASE
-postgres=> \c fichesetchips
+1- Create database
+
+2- Migrate database
+
+```bash
+npm run migration:run
 ```
+2- Seed database
+
+```bash
+npm run db:seed
+```
+
 
 ### Running the app
-
-- Run the seeder
-```bash
-# base
-npm run seed
-# refresh
-npm run seed:refresh
-```
 
 - Run the app
 ```bash
@@ -92,7 +88,7 @@ npm run test:cov
 
 ### Swagger
 
-Go to `http://localhost:3000/api`
+Go to `http://localhost:3000/docs`
 
 - Authorization : Bearer Token
 
@@ -103,3 +99,121 @@ Go to the padlock image
 And enter your Bearer Token
 
 ![And enter your Bearer Token](./img/auth2.png)
+
+### Migrations
+
+- Generate migration file from new entities
+
+```
+npm run migration:generate src/database/migrations/<YourEntityName>Migrations
+```
+
+- Create blank migration file
+
+```
+npm run migration:create src/database/migrations/<YourMigrationName>
+```
+
+- Revert last migration
+
+```
+npm run migration:revert
+```
+
+- Show migrations
+
+```
+npm run migration:show
+```
+
+### Table creation
+
+1- Creation of the Entity in `back/src/database/entities/<EntityName>.ts`
+
+2- Generation migration file with :
+```
+npm run migration:generate src/database/migrations/<YourEntityName>Migrations
+```
+
+3- Run migrations in order to have the database updated
+
+```
+npm run migration:run
+```
+
+4- Create the Seeder
+
+- Create a blank migration file in `back/src/database/seeders/`
+
+```
+npm run migration:create src/database/seeders/<YourSeederName>
+```
+
+- Create the different fixture in `back/src/database/fixtures`
+
+- Implement the seeder inside the migration file you created like this one : `back/src/database/seeders/1665931703695-SeedPrefrencesAndUsers.ts` using the fixtures
+
+- Seed db with :
+
+```
+npm run db:seed
+```
+
+### Route Creation
+
+1- Create the route file in `back/src/routes`
+
+- Use a try catch and the method `getErrorMessage` in order to handle possible errors :
+
+```typescript
+  try {
+    const response = await <Your Service>.<Your method>(<Your params>);
+    res.status(200).send({ ...response, message: <Your message> });
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
+```
+
+2- Swagger Documentation
+
+You have to add, just after your road description the following kind of swagger documentation :
+
+```typescript
+router.get("/profile/:username", async (req, res) => {
+  /**
+   * @swagger
+   * /users/profile/{username}:
+   *   get:
+   *     description: Get the public profile of a dedicated user.
+   *     tags: 
+   *       - Users
+   *     parameters:
+   *     - in: "path"
+   *       name: "username"
+   *       schema: { type: "string" }
+   *       required: true
+   *       description: "username of the user to get"
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Public profile found.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *       401:
+   *         description: User isn't authorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   */
+```
+
+You have to specify the road itself, the parameters, if a bearerAuth token can be required and the different responses. Each parameters or response schema can refferred to a definition defined here : `back/src/utils/swagger/definitions.ts`. This is needed in order to propose default values to the users of the Swagger interface.
+
+**Code 200**
+
+**Errors code**
+
+If your error isn't managed by `back/src/utils/error-handler/getErrorMessage.ts`, you have to describe it in there.

@@ -1,8 +1,0 @@
-@tailwind base;
-@layer base {
-    html {
-        @apply font-barlow;
-    }
-}
-@tailwind components;
-@tailwind utilities;
