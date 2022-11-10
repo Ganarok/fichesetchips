@@ -15,10 +15,6 @@ module.exports = {
             fontFamily: {
                 barlow: ['Barlow', 'sans-serif'],
             },
-            backgroundImage: {
-                tashasCauldronOfEverythingDnd:
-                    'url("../assets/index/tashasCauldronOfEverythingDnd.svg")',
-            },
             screens: {
                 tablet: { max: '1414px' },
                 mobile: { max: '600px' },
