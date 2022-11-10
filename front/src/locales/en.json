@@ -48,5 +48,7 @@
     "La confirmation doit correspondre au mot de passe": "Password must match with confirmation",
     "Finalement non": "I don't think so",
     "Statut": "Status",
-    "Expérience": "Experience"
+    "Expérience": "Experience",
+    "Page introuvable": "Page not found",
+    "Retour": "Back"
 }
