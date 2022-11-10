@@ -12,10 +12,6 @@ module.exports = {
                 'fc-black-light': '#353535',
                 'fc-red': '#F04E4E',
             },
-            backgroundImage: {
-                tashasCauldronOfEverythingDnd:
-                    'url("../assets/index/tashasCauldronOfEverythingDnd.svg")',
-            },
             fontFamily: {
                 barlow: ['Barlow', 'sans-serif'],
             },

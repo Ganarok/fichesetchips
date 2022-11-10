@@ -26,7 +26,7 @@ export default {
     name: 'EditableDiv',
     props: {
         label: { type: String },
-        value: { type: String },
+        modelValue: {type: String},
         password: { type: Boolean },
         editMode: { type: Boolean },
         canEdit: { type: Boolean },
@@ -54,7 +54,7 @@ export default {
     computed: {
         displayValue() {
             if (this.password) return '*********'
-            else return this.newValue || this.value
+            else return this.newValue || this.value || this.modelValue
         },
         isEditMode() {
             return this.editMode || this.edit
