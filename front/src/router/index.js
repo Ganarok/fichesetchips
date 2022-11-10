@@ -5,6 +5,7 @@ import Home from '@/views/index.vue'
 import Login from '@/views/login.vue'
 import Register from '@/views/register.vue'
 import Glossaire from '@/views/glossaire.vue'
+import About from '@/views/about.vue'
 import ForgotPassword from '@/views/forgot-password.vue'
 import Dashboard from '@/views/user/dashboard.vue'
 import Admin from '@/views/user/admin.vue'
@@ -31,6 +32,11 @@ const routes = [
         path: '/glossaire',
         name: 'Glossaire',
         component: Glossaire
+    },
+    {
+        path: '/about',
+        name: 'About',
+        component: About
     },
     {
         path: '/forgot-password',
