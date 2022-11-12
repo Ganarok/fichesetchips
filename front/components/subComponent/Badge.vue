@@ -1,28 +1,27 @@
 <template>
     <div
         :class="
-            'relative rounded-full bg-fiche-green border-[0.2em] border-fc-black overflow-hidden ' +
+            'relative rounded-full bg-fiche-green border-[0.2em] border-fc-black ' +
             badgeSize
         "
         style="aspect-ratio: 1/1">
-        <div
-            :class="'absolute left-0 w-full'"
-            :style="{
-                'backdrop-filter': 'grayscale(1)',
-                height: (100 - completion).toString() + '%',
-            }" />
+        <div class="absolute rounded-full left-0 w-full h-full overflow-hidden">
+            <div
+                :style="{
+                    'backdrop-filter': 'grayscale(1)',
+                    height: (100 - completion).toString() + '%',
+                }" />
+        </div>
         <div
             v-if="canFav"
             class="relative left-9 md:left-6 bottom-1 rounded-full border-[0.15em] border-chips-yellow h-4 cursor-pointer"
             style="aspect-ratio: 1/1"
             :class="displayFav ? 'bg-chips-yellow' : 'bg-white'"
-            @click="handleFav"></div>
+            @click="handleFav" />
     </div>
 </template>
 
 <script>
-import { numberLiteralTypeAnnotation } from '@babel/types'
-
 export default {
     data() {
         return { localFav: false }

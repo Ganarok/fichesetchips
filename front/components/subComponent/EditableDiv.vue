@@ -5,12 +5,17 @@
             ref="input"
             :name="value"
             v-model="newValue"
-            v-show="edit"
+            v-show="isEditMode"
             class="flex flex-grow h-[1.4em] placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
             :placeholder="displayValue"
             :type="password ? 'password' : 'text'"
-            @keyup.enter="toggleEdit" />
-        <div @click="toggleEdit" class="ml-1 cursor-pointer" v-show="!edit">
+            @keyup.enter="toggleEdit"
+            @input="onInput()" />
+        <div
+            @click="toggleEdit"
+            class="ml-1"
+            :class="canEdit ? ' cursor-pointer' : null"
+            v-show="!isEditMode">
             {{ displayValue }}
         </div>
     </div>
@@ -23,6 +28,8 @@ export default {
         label: { type: String },
         value: { type: String },
         password: { type: Boolean },
+        editMode: { type: Boolean },
+        canEdit: { type: Boolean },
         inputClass: {},
         placeHolderClass: {},
         labelClass: {},
@@ -35,14 +42,22 @@ export default {
     },
     methods: {
         toggleEdit() {
-            this.edit = !this.edit
-            if (this.edit) this.$refs.input.focus()
+            if (this.canEdit) {
+                this.edit = !this.edit
+                if (this.edit) this.$refs.input.focus()
+            }
+        },
+        onInput() {
+            this.$emit('input', this.newValue)
         },
     },
     computed: {
         displayValue() {
             if (this.password) return '*********'
             else return this.newValue || this.value
+        },
+        isEditMode() {
+            return this.editMode || this.edit
         },
     },
 }
