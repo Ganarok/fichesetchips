@@ -10,10 +10,7 @@ import ForgotPassword from '@/views/forgot-password.vue'
 import Dashboard from '@/views/user/dashboard.vue'
 import Admin from '@/views/user/admin.vue'
 import Rooms from '@/views/rooms/index.vue'
-import RoomID from '@/views/rooms/[id]/index.vue'
-import Session from '@/views/rooms/[id]/session.vue'
-import ProfileID from '@/views/user/profile.vue'
-import Create_Room from '@/views/rooms/create.vue'
+import Room from '@/views/rooms/[id].vue'
 import NotFound from '@/views/404.vue'
 import CharacterCreate from '@/views/character/create.vue'
 import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
@@ -74,21 +71,9 @@ const routes = [
         requiresAuth: true
     },
     {
-        path: '/rooms/create',
-        name: 'Create_Room',
-        component: Create_Room,
-        requiresAuth: true
-    },
-    {
         path: '/rooms/:id',
-        name: 'RoomsID',
-        component: RoomID,
-        requiresAuth: true
-    },
-    {
-        path: '/rooms/:id/session',
-        name: 'Session',
-        component: Session,
+        name: 'Room',
+        component: Room,
         requiresAuth: true
     },
     {

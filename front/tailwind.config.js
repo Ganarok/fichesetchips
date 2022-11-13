@@ -17,7 +17,6 @@ const parseColors = () => {
         parsedColors.push('bg-'+color)
         parsedColors.push('text-'+color)
         parsedColors.push('border-'+color)
-        parsedColors.push('outline-'+color)
     })
 
     return parsedColors
@@ -29,11 +28,9 @@ module.exports = {
     safelist: parseColors(),
     theme: {
         extend: {
-            colors: {
-                'fiche-green': '#4FEA74',
-                'chips-yellow': '#FFDB57',
-                'chip-yellow-trans': '#FFDB57b3',
-                'fc-black': '#1E1E1E',
+            colors: customColors,
+            fontFamily: {
+                barlow: ['Barlow', 'sans-serif'],
             },
             screens: {
                 tablet: { max: '1414px' },
