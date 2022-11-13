@@ -72,7 +72,7 @@ const routes = [
     },
     {
         path: '/rooms/:id/session',
-        name: 'Rooms',
+        name: 'Session',
         component: Session,
         requiresAuth: true
     },
