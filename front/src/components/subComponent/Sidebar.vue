@@ -1,11 +1,11 @@
 <template>
     <div class="bg-[#1E1E1E]">
-        <div class="mobile:flex mobile:flex-row mobile:justify-between mobile:px-6 h-[80px] w-full mobileSup:hidden">
-            <img src="@/assets/menuIcon.svg" class="w-1/7 my-auto" alt="F&C logo" v-on:click="mobileMenu()"  />
-            <img src="@/assets/logoUperbar.png" class="w-1/7 my-auto" alt="F&C logo" />
+        <div class="mobile:flex mobile:justify-between mobile:px-6 h-[80px] w-[100vw] mobileSup:hidden">
+            <img src="../../assets/menuIcon.svg" class="w-1/7 my-auto" alt="F&C logo" v-on:click="mobileMenu()"  />
+            <img src="../../assets/icon.svg" class="w-1/7 my-4" alt="F&C logo" />
         </div>
 
-        <div class="sidebar bg-[#1E1E1E] flex flex-col justify-between h-screen mobile:h-[calc(100vh-80px)] w-[220px] py-4 absolute left-0 transform -translate-x-full transition duration-200 ease-in-out mobileSup:relative mobileSup:translate-x-0 transition duration-200 ease-in-out ">
+        <div class="sidebar bg-[#1E1E1E] flex flex-col justify-between h-screen mobile:h-[calc(100vh-80px)] w-[220px] py-4 absolute left-0 transform -translate-x-full mobileSup:relative mobileSup:translate-x-0 transition duration-200 ease-in-out ">
             <div class="w-full top-0 justify-center p-6">
                 <router-link to="/">
                     <img src="@/assets/fetc.png" alt="Fiche&Chips" />
@@ -15,7 +15,7 @@
             <div
                 class="flex flex-col items-center justify-center text-white space-y-8"
                 v-if="connected()"
->
+            >
                 <router-link
                     to="/user/dashboard"
                     class="font-bold text-xl"
