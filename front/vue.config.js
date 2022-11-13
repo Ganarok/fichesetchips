@@ -4,6 +4,8 @@ module.exports = defineConfig({
     transpileDependencies: true,
 
     chainWebpack: config => {
+        config.resolve.alias.set('vue-i18n', 'vue-i18n/dist/vue-i18n.cjs.js')
+
         /* disable insertion of assets as data urls b/c Phaser doesn't support it */
         const rules = ['images', 'media']
     
