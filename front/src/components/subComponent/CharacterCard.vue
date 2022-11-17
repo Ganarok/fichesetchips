@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center h-[100%] border border-yellow-300 p-2"
+        class="flex flex-col items-center h-full border border-yellow-300 p-2"
         style="aspect-ratio: 0.6/1">
         <div
             class="w-full h-[8%] bg-fc-green my-auto flex py-1 px-1 font-extrabold">

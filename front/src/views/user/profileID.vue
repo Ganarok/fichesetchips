@@ -93,6 +93,25 @@ export default {
       // min and max included
       return Math.floor(Math.random() * (max - min + 1) + min)
     },
+    setupUserInfos() {
+      this.user = this.getUser()
+
+      if (this.user) {
+
+      }
+    },
+    getUser(username) {
+      apiCall({
+        method: 'GET',
+        route: '/user/' + username,
+      })
+          .then((res) => {
+            this.friends = res.friends
+          })
+          .catch((err) => {
+            console.log('err', err)
+          })
+    },
   }
 }
 </script>

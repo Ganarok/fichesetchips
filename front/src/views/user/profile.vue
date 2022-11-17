@@ -6,9 +6,9 @@
             show preview
         </div>-->
 
-        <div class="h-screen w-full overflow-hidden flex font-barlow">
+        <div class="h-screen w-full md:overflow-hidden flex md:flex-row flex-col font-barlow">
             <div
-                class="w-1/3 h-full border-r-4 border-fc-green p-8 flex flex-col items-center">
+                class="md:w-1/3 h-full md:border-r-4 md:border-fc-green p-4 flex flex-col items-center mb-48">
                 <div class="flex flex-col items-center mb-8">
                     <Avatar
                         nickname="Ganarok"
@@ -17,7 +17,7 @@
                         nick_size="5xl"
                         class="mb-3" />
                 </div>
-                <div class="flex flex-col w-full text-2xl mb-8">
+                <div class="flex flex-col w-full text-xl mb-8">
                     <EditableDiv :editMode="editMode" v-model="user.location" />
                     <EditableDiv :editMode="editMode" v-model="user.email" />
                 </div>
@@ -77,10 +77,10 @@
                     </button>
                 </div>
             </div>
-            <div class="w-full h-3/4 flex flex-col px-8 pb-16 pt-8">
-                <div class="h-full flex pb-6">
+            <div class="w-full h-3/4 flex flex-col md:px-8 md:pb-16 pt-8 space-y-4">
+                <div class="h-full flex md:flex-row flex-col pb-6 justify-center md:mb-0 mb-48">
                     <div
-                        class="h-full flex flex-col w-1/2 text-center space-y-2 px-20">
+                        class="h-full flex flex-col md:w-1/2 text-center space-y-2 md:px-20">
                         <div
                             class="flex w-full h-20 items-center justify-center text-center font-bold bg-fc-black text-fc-green">
                             Statistiques
@@ -144,14 +144,16 @@
                             </div>
                         </div>
                     </div>
-                    <CharacterCard class="ml-auto mr-28" />
+                  <div class="h-full flex justify-center items-center">
+                    <CharacterCard class="ml-auto w-auto md:mr-28" />
+                  </div>
                 </div>
                 <div class="w-full mt-auto">
                     <h1 class="font-bold text-3xl">Amis</h1>
                     <div class="h-1 w-full bg-fc-black" />
-                    <div class="flex">
+                    <div class="flex overflow-x-auto justify-center space-x-4">
                         <Avatar
-                            class="mx-auto mt-4"
+                            class="mt-4"
                             :grayed="!friend.online"
                             :nickname="friend.username"
                             v-for="friend in friendsList"

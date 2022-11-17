@@ -8,7 +8,7 @@
             {{ nickname }}
         </h1>
         <div
-            class="rounded-full bg-fc-green border-[0.4em] md:border-[0.3em] border-fc-black md:h-36 sm:h-20 my-3"
+            class="rounded-full bg-fc-green border-[0.2em] md:border-[0.3em] border-fc-black h-32 my-3"
             style="aspect-ratio: 1/1;" :style="grayed ? 'filter: grayscale(1)' : null"></div>
         <h1
             v-if="nick_under"
