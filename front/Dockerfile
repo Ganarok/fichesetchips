@@ -1,26 +1,31 @@
 # Dockerfile
-FROM node:14-alpine
+FROM node:16-alpine as build-stage
 
 # create destination directory
 WORKDIR /app
+COPY package*.json ./
 
 ARG BACK_HOST_ARG
 ARG BACK_PORT_ARG
 
-# update and install dependency
-RUN apk update && apk upgrade
-RUN apk add git
+# # update and install dependency
+# RUN apk update && apk upgrade
+# RUN apk add git
 
-# copy the app, note .dockerignore
-COPY . /app
+# copy the app
 RUN npm install
-RUN chmod +x build.sh
+COPY . .
 
 ENV BACK_HOST=${BACK_HOST_ARG}
 ENV BACK_PORT=${BACK_PORT_ARG}
 
+# Runs custom .sh script
+RUN chmod +x build.sh
 RUN ./build.sh ${BACK_HOST} ${BACK_PORT}
 
-EXPOSE 8000
+EXPOSE 8000:8000
 
-CMD [ "npm", "run", "start" ]
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
