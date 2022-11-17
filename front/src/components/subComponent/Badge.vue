@@ -7,10 +7,7 @@
         style="aspect-ratio: 1/1">
         <div class="absolute rounded-full left-0 w-full h-full overflow-hidden">
             <div
-                :style="{
-                    'backdrop-filter': 'grayscale(1)',
-                    height: (100 - completion).toString() + '%',
-                }" />
+                :style="{'backdrop-filter': 'grayscale(1)',height: (100 - completion).toString() + '%',}" />
         </div>
         <div
             v-if="canFav"
@@ -66,16 +63,12 @@ export default {
             switch (this.size) {
                 case 's':
                     return 'h-16 md:h-10'
-                    break
                 case 'm':
                     return 'h-16 md:h-10'
-                    break
                 case 'l':
                     return 'h-4/5'
-                    break
                 default:
                     return null
-                    break
             }
         },
     },

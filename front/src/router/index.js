@@ -65,7 +65,7 @@ const routes = [
     },
     {
         path: '/user/profile/:id',
-        name: 'Profile',
+        name: 'ProfileID',
         component: ProfileID,
         requiresAuth: true
     },

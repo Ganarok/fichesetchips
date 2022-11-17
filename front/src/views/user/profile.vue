@@ -1,213 +1,348 @@
 <template>
     <SidebarLayout>
-        <div class="h-screen w-full p-8 overflow-hidden flex flex-col">
-            <h1 class="text-[40px] font-bold ml-6 mt-4 mb-4">
-                Bonjour [Pseudo]
-            </h1>
-            <div class="h-full w-full overflow-hidden flex">
-                <div class="flex flex-col w-2/3 h-full space-y-4 mx-2">
-                    <div class="flex h-full overflow-hidden">
-                        <div
-                            class="flex w-full h-full mx-2 border-2 border-fc-green p-6 text-xl overflow-y-auto items-center">
-                            <div class="flex w-full justify-between">
-                                <div>
-                                    <div
-                                        class="h-1/5 pb-8 flex font-bold text-xl text-fc-green items-center w-full">
-                                        <h1>Profile</h1>
-                                    </div>
+<!--        <div
+            class="absolute top-0 right-0 mt-4 mr-4 cursor-pointer"
+            @click="preview = !preview">
+            show preview
+        </div>-->
 
-                                    <EditableDiv
-                                        label="Localisation"
-                                        value="Paris" />
-                                    <EditableDiv
-                                        label="Pseudo"
-                                        value="Galadows" />
-                                    <EditableDiv label="Mail" value="Privé" />
-                                    <EditableDiv
-                                        label="Bio"
-                                        value="Jeune elfe recherche un mage mortel" />
+        <div class="h-screen w-full overflow-hidden flex font-barlow">
+            <div
+                class="w-1/3 h-full border-r-4 border-fc-green p-8 flex flex-col items-center">
+                <div class="flex flex-col items-center mb-8">
+                    <Avatar
+                        nickname="Ganarok"
+                        nick_bold
+                        nick_under
+                        nick_size="5xl"
+                        class="mb-3" />
+                </div>
+                <div class="flex flex-col w-full text-2xl mb-8">
+                    <EditableDiv :editMode="editMode" v-model="user.location" />
+                    <EditableDiv :editMode="editMode" v-model="user.email" />
+                </div>
+                <p class="font-bold italic text-2xl">
+                    <EditableDiv
+                        v-model="user.description"
+                        :editMode="editMode"
+                        class="max-w-full" />
+                </p>
 
-                                    <!-- <div>Pseudo: <span> [Pseudo] </span></div>
-                                    <div>Mail: <span> Privé </span></div>
-                                    <div>
-                                        Bio:
-                                        <span>
-                                            Jeune elfe recherche un mage mortel
-                                        </span>
-                                    </div> -->
-                                </div>
-                                <div>
-                                    <div
-                                        class="h-1/5 pb-8 flex font-bold text-xl text-fc-green items-center w-full">
-                                        <h1>
-                                            Informations personelles privées
-                                        </h1>
-                                    </div>
-                                    <EditableDiv
-                                        label="Mail"
-                                        value="fiche&chips@chips.com" />
-                                    <EditableDiv
-                                        label="Mot de passe"
-                                        value="Ceciestunmotdepasse"
-                                        password />
-                                    <div
-                                        class="h-1/5 flex text-[24px] justify-center items-center w-full">
-                                        <button
-                                            class="relative top-20 border-2 py-1 text-base text-fc-green border-fc-green rounded-full px-28">
-                                            Voir mon profil public
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="grid gap-6 md:gap-4 grid-cols-5 mt-auto">
+                    <Badge
+                        size="s"
+                        canFav
+                        :isFav="badges[badgesPage][idx].isFav"
+                        :completion="badge.completion"
+                        @favorite="handleFavorite(badge.id)"
+                        v-for="(badge, idx) in badges[badgesPage]"
+                        :key="badge.id" />
+                </div>
+                <div class="flex space-x-10 mt-4">
+                    <div
+                        :class="
+                            badgesPage != 0
+                                ? null
+                                : 'pointer-events-none text-gray-400'
+                        "
+                        class="cursor-pointer select-none"
+                        @click="badgesPage > 0 ? (badgesPage -= 1) : null
+                        ">
+                        {{"<"}}
                     </div>
-
-                    <div class="flex h-full overflow-hidden">
-                        <div
-                            class="w-7/12 mx-2 h-full border-2 border-fc-black p-6 text-xl overflow-y-auto">
-                            <div>
-                                <div
-                                    class="h-1/5 pb-8 flex font-bold text-xl text-fc-black items-center w-full">
-                                    <h1>Statistiques</h1>
-                                </div>
-                                <div class="">
-                                    Nombre de parties en tant que joueur:
-                                    <span> 666 </span>
-                                </div>
-                                <div>
-                                    Nombre de parties en tant que MJ:
-                                    <span> 666 </span>
-                                </div>
-                                <div>
-                                    Date d'inscription:
-                                    <span> 01-01-01 </span>
-                                </div>
-                                <div>
-                                    Dernière connexion:
-                                    <span> 01-01-01 </span>
-                                </div>
-                                <div>
-                                    Temps passé en campagne:
-                                    <span> 100h </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="w-5/12 mx-2 border-2 border-fc-yellow p-6 text-xl overflow-y-auto">
-                            <div>
-                                <div
-                                    class="h-1/5 pb-8 flex font-bold text-xl text-fc-yellow items-center w-full">
-                                    <h1>Badges remportés</h1>
-                                </div>
-                                <div class="">
-                                    1ère partie en tant que MJ <span> </span>
-                                </div>
-                                <div>100h dépassées: <span> </span></div>
-                                <div>Finir une campagne <span> </span></div>
-                                <div
-                                    class="h-1/5 flex text-[24px] justify-center items-center w-full">
-                                    <button
-                                        class="relative top-10 border-2 py-1 text-base text-fc-yellow border-fc-yellow rounded-full px-28">
-                                        Voir plus
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex h-full overflow-hidden">
-                        <div
-                            class="w-6/12 h-full mx-2 border-2 border-fc-yellow p-6 text-xl overflow-y-auto">
-                            <div>
-                                <div
-                                    class="h-1/5 pb-8 flex font-bold text-xl text-fc-yellow items-center w-full">
-                                    <h1>Préférences</h1>
-                                </div>
-                                <div class="">
-                                    Thème:
-                                    <span> Light </span>
-                                </div>
-                                <div>
-                                    Langue:
-                                    <span> Français </span>
-                                </div>
-                                <div>
-                                    Fréquence mail:
-                                    <span> hebdomadaire </span>
-                                </div>
-                                <div>
-                                    Alerte quand ami joue:
-                                    <span> oui </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="w-full h-full mx-2 border-2 border-fc-green p-6 text-xl overflow-y-auto"></div>
+                    <div>{{ badgesPage + 1 }} / {{ badges.length }}</div>
+                    <div
+                        :class="
+                            badgesPage < badges.length - 1
+                                ? null
+                                : 'pointer-events-none text-gray-400'
+                        "
+                        class="cursor-pointer select-none"
+                        @click="
+                            badgesPage < badges.length - 1
+                                ? (badgesPage += 1)
+                                : null
+                        ">
+                        >
                     </div>
                 </div>
-                <div class="w-1/3 mx-2">
+                <div class="flex space-x-10 mt-4">
+                    <button class="text-gray-600" @click="editMode = !editMode">
+                        {{ editMode ? 'Enregistrer' : 'Editer' }}
+                    </button>
+                    <button
+                        class="text-gray-600 hover:text-red-500"
+                        @click="showModal = true">
+                        Supprimer
+                    </button>
+                </div>
+            </div>
+            <div class="w-full h-3/4 flex flex-col px-8 pb-16 pt-8">
+                <div class="h-full flex pb-6">
                     <div
-                        class="w-full h-full border-2 border-fc-black p-6 text-xl overflow-y-auto">
-                        <div>
-                            <div
-                                class="h-1/5 pb-8 flex font-bold text-xl text-fc-black items-center w-full">
-                                <h1>Dernières campagnes</h1>
+                        class="h-full flex flex-col w-1/2 text-center space-y-2 px-20">
+                        <div
+                            class="flex w-full h-20 items-center justify-center text-center font-bold bg-fc-black text-fc-green">
+                            Statistiques
+                        </div>
+                        <div class="flex flex-col space-y-2 p-1">
+                            <div class="flex w-full h-16">
+                                <div
+                                    class="w-2/5 flex items-center justify-center">
+                                    666
+                                </div>
+                                <div
+                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black">
+                                    <div
+                                        class="absolute -right-1 -top-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    <div
+                                        class="absolute -right-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    Parties jouées (Joueur)
+                                </div>
                             </div>
-                            <div class="mb-8">
-                                <div class="">Le Chat Triste</div>
-                                <div>04-01-01</div>
-                                <div>John Doe</div>
-                                <div>==> En cours</div>
+                            <div class="flex w-full h-16">
+                                <div
+                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black">
+                                    <div
+                                        class="absolute -left-1 -top-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    <div
+                                        class="absolute -left-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    Parties jouées (MJ)
+                                </div>
+                                <div
+                                    class="w-2/5 flex items-center justify-center">
+                                    666
+                                </div>
                             </div>
-                            <div class="mb-8">
-                                <div class="">Le Chat Triste</div>
-                                <div>03-01-01</div>
-                                <div>John Doe</div>
-                                <div>==> En cours</div>
+                            <div class="flex w-full h-16">
+                                <div
+                                    class="w-2/5 flex items-center justify-center">
+                                    01-01-01
+                                </div>
+                                <div
+                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black">
+                                    <div
+                                        class="absolute -right-1 -top-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    <div
+                                        class="absolute -right-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    Date d'inscription
+                                </div>
                             </div>
-                            <div class="mb-8">
-                                <div class="">Le Chat Triste</div>
-                                <div>02-01-01</div>
-                                <div>John Doe</div>
-                                <div>==> En cours</div>
-                            </div>
-                            <div class="mb-8">
-                                <div class="">Le Chat Triste</div>
-                                <div>01-01-01</div>
-                                <div>John Doe</div>
-                                <div>==> En cours</div>
-                            </div>
-                            <div
-                                class="h-1/5 flex text-[24px] justify-center items-center w-full">
-                                <button
-                                    class="relative top-20 border-2 py-1 text-base text-fc-black border-fc-black rounded-full px-28">
-                                    Voir plus
-                                </button>
+                            <div class="flex w-full h-16">
+                                <div
+                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black">
+                                    <div
+                                        class="absolute -left-1 -top-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    <div
+                                        class="absolute -left-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2" />
+                                    Temps de jeu
+                                </div>
+                                <div
+                                    class="w-2/5 flex items-center justify-center">
+                                    666
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <CharacterCard class="ml-auto mr-28" />
+                </div>
+                <div class="w-full mt-auto">
+                    <h1 class="font-bold text-3xl">Amis</h1>
+                    <div class="h-1 w-full bg-fc-black" />
+                    <div class="flex">
+                        <Avatar
+                            class="mx-auto mt-4"
+                            :grayed="!friend.online"
+                            :nickname="friend.username"
+                            v-for="friend in friendsList"
+                            :key="n" />
                     </div>
                 </div>
             </div>
         </div>
+
+        <Modal v-show="showModal" @close-modal="showModal = false">
+            <div
+                class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-fc-yellow-trans">
+                <div
+                    class="bg-white h-1/3 w-1/3 flex flex-col justify-center items-center text-red-500 font-bold text-xl space-y-10">
+                    <div class="text-center">
+                        <div>
+                            Voulez-vous vraiment supprimer votre profil ?
+                        </div>
+                        <div class="text-sm">
+                            Attention, cette action est irreversible et toute
+                            vos donnée serons perdues définitivement
+                        </div>
+                    </div>
+                    <div
+                        class="flex justify-center items-center w-full space-x-16">
+                        <button
+                            class="bg-red-500 text-white h-[2.5em] p-1"
+                            style="aspect-ratio: 1/1"
+                            @click="deleteProfile">
+                            Oui
+                        </button>
+                        <button
+                            class="bg-fc-green text-white h-[2.5em] p-1"
+                            style="aspect-ratio: 1/1"
+                            @click="showModal = false">
+                            Non
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Modal>
     </SidebarLayout>
 </template>
 
 <script>
 import CustomTable from '@/components/subComponent/CustomTable.vue'
+import Modal from '@/components/Modal.vue'
 import EditableDiv from '@/components/subComponent/EditableDiv.vue'
+import Avatar from '@/components/subComponent/Avatar.vue'
+import Badge from '@/components/subComponent/Badge.vue'
+import CharacterCard from '@/components/subComponent/CharacterCard.vue'
 import SidebarLayout from '@/layouts/Sidebar.vue'
 import { apiCall } from '@/utils/apiCall'
 
 export default {
-    components: { CustomTable, EditableDiv, SidebarLayout },
+    components: {
+        Modal,
+        CustomTable,
+        EditableDiv,
+        Avatar,
+        Badge,
+        CharacterCard,
+        SidebarLayout
+    },
+
     data() {
         return {
-            profile: {},
-            stats: {},
-            prefs: {},
-            campaignsHistory: [],
+            showModal: false,
+          user: {
+            id: 0,
+            username: 'John Doe',
+            email: 'JohnDoe@mail.com',
+            location: 'FarFarAway Kingdom, Farlands',
+            avatar: '',
+            description: '“Jeune elfe recherche un mage mortel ...”',
+            lastConnection: 'il y a 1 heure',
+            createdAt: '',
+          },
+          friendsList: [{username: 'SmithMan', online: true}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}],
             badges: [],
+            badgesPage: 0,
+            ownprofile: true,
+            preview: false,
+            editMode: false,
         }
+    },
+    mounted() {
+        this.badgeGenerator(50)
+    },
+    methods: {
+        badgeGenerator(pageNbr = 3, badgeNbr = 20) {
+            for (let i = 0; i < pageNbr; i++) {
+                let tempBadges = []
+                for (let index = 0; index < badgeNbr; index++) {
+                    tempBadges.push({
+                        id: i + '-' + index,
+                        isFav: false,
+                        completion: this.randomIntFromInterval(0, 100),
+                    })
+                }
+                this.badges.push(tempBadges)
+            }
+        },
+        handleFavorite(badgeID) {
+            this.badges.forEach((badgeList, page) => {
+                const badgeIndex = badgeList.findIndex(
+                    (badge) => badge.id == badgeID
+                )
+                console.log(badgeID, badgeIndex)
+                if (badgeIndex != -1) {
+                    this.badges[page][badgeIndex].isFav =
+                        !this.badges[page][badgeIndex].isFav
+                }
+            })
+        },
+        randomIntFromInterval(min, max) {
+            // min and max included
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        },
+        setupUserInfos() {
+            this.user = this.$store.state.user.user
+
+            if (this.user) {
+                this.getFriends()
+            }
+        },
+        getFriends(username = this.user.username) {
+            apiCall({
+                method: 'GET',
+                route: '/friends/' + username,
+            })
+                .then((res) => {
+                    this.friends = res.friends
+                })
+                .catch((err) => {
+                    console.log('err', err)
+                })
+        },
+        getBadges(username = this.user.username) {
+            apiCall({
+                method: 'GET',
+                route: '/badges/' + username,
+            })
+                .then((res) => {
+                    this.badges = res.badges
+                })
+                .catch((err) => {
+                    console.log('err', err)
+                })
+        },
+        updateProfile() {
+            apiCall({
+                method: 'PATCH',
+                route: '/users',
+                body: {
+                    username: this.user.username,
+                    email: this.user.email,
+                    location: this.user.location,
+                    avatar: this.user.avatar,
+                },
+            })
+                .then((res) => {
+                    this.badges = res.badges
+                })
+                .catch((err) => {
+                    console.log('err', err)
+                })
+        },
+        deleteProfile() {
+            apiCall({
+                method: 'DELETE',
+                route: '/users',
+            })
+                .then((res) => {
+                    this.$router.push('/')
+                })
+                .catch((err) => {
+                    console.log('err', err)
+                })
+        },
+    },
+    computed: {
+        badgesToDisplayWhenPublic() {
+            let toDisplay = []
+            this.badges.forEach((badgeList) =>
+                badgeList.forEach((badge) =>
+                    badge.isFav ? toDisplay.push(badge) : null
+                )
+            )
+            return toDisplay
+        },
     },
 }
 </script>
