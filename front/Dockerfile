@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:16-alpine
+FROM node:16-alpine as build-stage
 
 # create destination directory
 WORKDIR /app
@@ -23,6 +23,9 @@ ENV BACK_PORT=${BACK_PORT_ARG}
 RUN chmod +x build.sh
 RUN ./build.sh ${BACK_HOST} ${BACK_PORT}
 
-EXPOSE 8000
+EXPOSE 8000:8000
 
-CMD [ "npm", "run", "start" ]
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
