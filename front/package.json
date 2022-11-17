@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "NODE_ENV=development HOST=0.0.0.0 vue-cli-service serve",
         "build": "vue-cli-service build",
-        "start": "NODE_ENV=production vue-cli-service serve --port 8000",
+        "start": "NODE_ENV=production vue-cli-service --mode production",
         "dev:prod": "http-server dist --port=8000"
     },
     "dependencies": {
