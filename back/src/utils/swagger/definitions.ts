@@ -1,4 +1,4 @@
-import { loginRequest, registerRequest } from "./defaultValues";
+import { loginRequest, registerRequest, SendReportRequest } from "./defaultValues";
 
 export const definitions = {
     loginRequest: {
@@ -36,5 +36,15 @@ export const definitions = {
                 default: registerRequest.password
             }
         }
-    }
+    },
+    sendReportRequest: {
+        properties: {
+            reason: {
+                type: "string",
+                uniqueItems: true,
+                required: true,
+                default: SendReportRequest.reason
+            },
+        }
+    },
 }

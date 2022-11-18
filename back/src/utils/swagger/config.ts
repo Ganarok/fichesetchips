@@ -53,6 +53,10 @@ const swaggerDefinition = {
         {
             name: "Users",
             description: "Everything about the users"
+        },
+        {
+            name: "Reports",
+            description: "Everything about the reports"
         }
     ],
     definitions: definitions
