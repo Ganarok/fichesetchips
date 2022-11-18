@@ -32,7 +32,7 @@ export class User {
     })
     role: ROLE;
 
-    @ManyToOne(() => Preference, (preference) => preference.id, { onDelete: ("SET DEFAULT" as OnDeleteType), onUpdate: "CASCADE", eager: true })
+    @ManyToOne(() => Preference, (preference) => preference.id, { onDelete: ("SET DEFAULT" as OnDeleteType), onUpdate: "CASCADE" })
     @JoinColumn({
         name: 'preference_id',
         referencedColumnName: "id"
