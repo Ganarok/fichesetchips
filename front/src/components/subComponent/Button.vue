@@ -1,11 +1,10 @@
 <template>
     <button
-        class="border-[3px] rounded-full p-[2%] w-full font-barlow font-bold flex justify-center opacity-100 text-white hover:opacity-80"
-        :class="'border-' + color + backgroundColor()"
+        :class="`flex justify-center border-4 border-${this.color} ${this.filled && 'bg-' + this.color} rounded-full p-4 font-barlow font-bold text-white select-none hover:opacity-80`"
         @click="callback($event)">
         {{ buttonText }}
         <img
-            v-if="image != undefined"
+            v-if="image !== undefined"
             :src="image"
             class="w-[30px] h-[30px] ml-[5px]" />
     </button>
@@ -19,20 +18,41 @@ export default {
             type: String,
             default: 'fc-green',
         },
-        filled: [ String, Boolean ],
+        filled: {
+            type: [ String, Boolean ],
+            default: true
+        },
         image: String,
     },
     methods: {
         callback: function (e) {
             this.$emit('click', e)
         },
-        backgroundColor: function () {
-            if (this.filled == undefined) {
-                return ''
+        backgroundColor() {
+            const base = 'border-'
+            if (!this.filled) {
+                return base + this.color
             } else {
-                return ' bg-' + this.color
+                console.log(`${base}${this.color} bg-${this.color}`);
+                return `${base}${this.color} bg-${this.color}`
             }
         },
     },
+    mounted() {
+        const classes = {
+                'fc-green': '#4FEA74',
+                'fc-yellow': '#FFDB57',
+                'fc-yellow-trans': '#FFDB57b3',
+                'fc-black': '#1E1E1E',
+                'fc-black-light': '#353535',
+                'fc-red': '#F04E4E',
+            }
+
+        console.log(Object.keys(classes));
+    }
 }
 </script>
+
+<style>
+
+</style>
