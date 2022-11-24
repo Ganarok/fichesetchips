@@ -29,6 +29,7 @@ export class SeedReports1665931703696 implements MigrationInterface {
   }
 
   public async down(_: QueryRunner): Promise<any> {
-    // do nothing
+    const ReportRepository = AppDataSource.getRepository(Reports);
+    await ReportRepository.delete({});
   }
 }
