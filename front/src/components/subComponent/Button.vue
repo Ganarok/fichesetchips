@@ -1,11 +1,10 @@
 <template>
     <button
-        class="border-[3px] rounded-full p-[2%] w-full font-barlow font-bold flex justify-center opacity-100 text-white hover:opacity-80"
-        :class="'border-' + color + backgroundColor()"
+        :class="`flex justify-center items-center border-4 ${backgroundColor ? 'bg-' + backgroundColor : 'bg-' + this.color } border-${this.color} ${rounded && 'rounded-full'} p-4 font-bold ${this.textColor} select-none hover:opacity-80 ${customClass}`"
         @click="callback($event)">
         {{ buttonText }}
         <img
-            v-if="image != undefined"
+            v-if="image !== undefined"
             :src="image"
             class="w-[30px] h-[30px] ml-[5px]" />
     </button>
@@ -19,20 +18,32 @@ export default {
             type: String,
             default: 'fc-green',
         },
-        filled: [ String, Boolean ],
+        backgroundColor: {
+            type: String,
+            default: ''
+        },
+        textColor: {
+            type: String,
+            default: 'text-white'
+        },
+        rounded: {
+            type: Boolean,
+            default: true
+        },
+        customClass: {
+            type: String,
+            default: ''
+        },
         image: String,
     },
     methods: {
         callback: function (e) {
             this.$emit('click', e)
         },
-        backgroundColor: function () {
-            if (this.filled == undefined) {
-                return ''
-            } else {
-                return ' bg-' + this.color
-            }
-        },
     },
 }
 </script>
+
+<style>
+
+</style>
