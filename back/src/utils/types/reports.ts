@@ -11,7 +11,6 @@ export class GetReports {
     reported: string;
     by: string;
     reason: string;
-    last_connection: string
     created_at: string
     updated_at: string
 }
