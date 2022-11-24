@@ -12,15 +12,16 @@ export async function findAll() {
   return { reports: reports };
 }
 
-export async function findOne(id: string) {
-  const reports = await ReportsRepository.find({ where: { id: id } });
+export async function findOne(username: string) {
+  const user = await UserRepository.findOne({ where: { username: username } });
+  const reports = await ReportsRepository.find({ where: { id: user?.id } });
   return { reports: reports };
 }
 
-export async function addReport(id: string, reason: string, payload: JwtPayload) {
+export async function addReport(username: string, reason: string, payload: JwtPayload) {
   const user = await UserRepository.findOneByOrFail({ username: payload.username })  
   const reports = ReportsRepository.create({
-    reported: id,
+    reported: username,
     by: user.id,
     reason: reason,
   });

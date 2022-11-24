@@ -34,20 +34,20 @@ router.get("/", isAdmin, async (req, res) => {
     return getErrorMessage(error, res);
   }
 });
-router.get("/:id", isAdmin, async (req, res) => {
+router.get("/:username", isAdmin, async (req, res) => {
   /**
    * @swagger
-   * /reports/{id}:
+   * /reports/{username}:
    *   get:
    *     description: Get a specific report.
    *     tags:
    *       - Reports
    *     parameters:
    *     - in: "path"
-   *       name: "id"
+   *       name: "username"
    *       schema: { type: "string" }
    *       required: true
-   *       description: "id of the report to get"
+   *       description: "username of the report to get"
    *     security:
    *       - bearerAuth: []
    *     responses:
@@ -59,7 +59,7 @@ router.get("/:id", isAdmin, async (req, res) => {
    *               type: object
    */
   try {
-    const response = await reportsService.findOne(req.params.id);
+    const response = await reportsService.findOne(req.params.username);
     res
       .status(200)
       .send({ ...response, message: "User's reports successfully found" });
@@ -68,20 +68,20 @@ router.get("/:id", isAdmin, async (req, res) => {
   }
 });
 
-router.post("/:id", isAdmin, async (req, res) => {
+router.post("/:username", isAdmin, async (req, res) => {
   /**
    * @swagger
-   * /reports/{id}:
+   * /reports/{username}:
    *   post:
    *     description: Report a user.
    *     tags:
    *       - Reports
    *     parameters:
    *     - in: "path"
-   *       name: "id"
+   *       name: "username"
    *       schema: { type: "string" }
    *       required: true
-   *       description: "id of the report to get"
+   *       description: "username of the report to get"
    *     security:
    *       - bearerAuth: []
    *     requestBody:
@@ -100,7 +100,7 @@ router.post("/:id", isAdmin, async (req, res) => {
    */
   try {
     const response = await reportsService.addReport(
-      req.params.id,
+      req.params.username,
       req.body.reason,
       (req as CustomRequest).jwtPayload as JwtPayload
     );
