@@ -3,10 +3,11 @@ import * as reportsService from "../services/reports";
 import { getErrorMessage } from "../utils/error-handler/getErrorMessage";
 import { CustomRequest } from "../middleware/authJwt";
 import { JwtPayload } from "jsonwebtoken";
+import { isAdmin } from "../middleware/isAdmin";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", isAdmin, async (req, res) => {
   /**
    * @swagger
    * /reports:
@@ -33,7 +34,7 @@ router.get("/", async (req, res) => {
     return res.status(500).send(getErrorMessage(error));
   }
 });
-router.get("/:id", async (req, res) => {
+router.get("/:id", isAdmin, async (req, res) => {
   /**
    * @swagger
    * /reports/{id}:
@@ -67,7 +68,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/:id", async (req, res) => {
+router.post("/:id", isAdmin, async (req, res) => {
   /**
    * @swagger
    * /reports/{id}:
@@ -111,7 +112,7 @@ router.post("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:reports_id", async (req, res) => {
+router.delete("/:reports_id", isAdmin, async (req, res) => {
   /**
    * @swagger
    * /reports/{reports_id}:
@@ -143,7 +144,7 @@ router.delete("/:reports_id", async (req, res) => {
   }
 });
 
-router.patch("/:reports_id", async (req, res) => {
+router.patch("/:reports_id", isAdmin, async (req, res) => {
   /**
    * @swagger
    * /reports/{reports_id}:

@@ -18,7 +18,7 @@ export class PreferencesUsersMigrations1665931703694 implements MigrationInterfa
                 "created_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
                 CONSTRAINT "UQ_2718b1256b91be1716010047163" UNIQUE ("theme", "language"),
-                CONSTRAINT "PK_5c4cbf49a1e97dcbc695bf462a6" PRIMARY KEY ("id")
+                CONSTRAINT "PK_5c4dbe49a1e97dcbc695bf462a6" PRIMARY KEY ("id")
             )
         `);
         await queryRunner.query(`
