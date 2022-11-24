@@ -31,7 +31,7 @@ router.get("/", isAdmin, async (req, res) => {
       .status(200)
       .send({ ...response, message: "Reports successfully found" });
   } catch (error) {
-    return res.status(500).send(getErrorMessage(error));
+    return getErrorMessage(error, res);
   }
 });
 router.get("/:id", isAdmin, async (req, res) => {
@@ -64,7 +64,7 @@ router.get("/:id", isAdmin, async (req, res) => {
       .status(200)
       .send({ ...response, message: "User's reports successfully found" });
   } catch (error) {
-    return res.status(500).send(getErrorMessage(error));
+    return getErrorMessage(error, res);
   }
 });
 
@@ -108,7 +108,7 @@ router.post("/:id", isAdmin, async (req, res) => {
       .status(200)
       .send({ ...response, message: "Report successfully created" });
   } catch (error) {
-    return res.status(500).send(getErrorMessage(error));
+    return getErrorMessage(error, res);
   }
 });
 
@@ -140,7 +140,7 @@ router.delete("/:reports_id", isAdmin, async (req, res) => {
     const response = await reportsService.deleteReport(req.params.reports_id);
     res.status(200).send({ ...response });
   } catch (error) {
-    return res.status(500).send(getErrorMessage(error));
+    return getErrorMessage(error, res);
   }
 });
 
@@ -187,7 +187,7 @@ router.patch("/:reports_id", isAdmin, async (req, res) => {
       .status(200)
       .send({ ...response, message: "Report successfully modified" });
   } catch (error) {
-    return res.status(500).send(getErrorMessage(error));
+    return getErrorMessage(error, res);
   }
 });
 
