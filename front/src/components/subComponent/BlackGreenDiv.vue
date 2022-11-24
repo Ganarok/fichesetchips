@@ -5,20 +5,10 @@
         <div class="absolute left-0 bg-fc-green h-full w-3 sm:w-8" v-if="leftGreenDiv" />
 
         <p 
-            :class="`flex text-ellipsis text-xl font-bold ${color} sm:${this.getTextSize()}`"
-            v-if="!canEdit"
+            :class="`flex font-bol text-ellipsis text-xl font-bold ${color} sm:${this.getTextSize()}`"
         >
             {{ title }}
         </p>
-
-        <input
-            :class="`flex text-center self-center sm:w-1/2 w-full bg-transparent outline-none font-bold placeholder:font-normal placeholder:text-fc-yellow placeholder:italic ${color} ${maxWidth} ${height}`"
-            type="text"
-            :value="this.title"
-            :placeholder="placeholder"
-            @change="onChange"
-            v-else
-        />
 
         <div class="absolute right-0 bg-fc-green h-full w-3 sm:w-8" v-if="rightGreenDiv" />
     </div>
@@ -55,18 +45,6 @@ export default {
         class: {
             type: String,
             default: ''
-        },
-        canEdit: {
-            type: Boolean,
-            default: false
-        },
-        placeholder: {
-            type: String,
-            default: ''
-        },
-        onChange: {
-            type: Function,
-            default: () => {}
         }
     },
     methods: {

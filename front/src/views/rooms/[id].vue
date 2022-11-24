@@ -28,6 +28,8 @@ export default {
         async getRoomData() {
             const { id } = this.$route.params
 
+            console.log(this.$route);
+
             try {
                 const res = await apiCall({
                     route: `/rooms/${id}`,
@@ -39,7 +41,7 @@ export default {
                 const toast = useToast()
 
                 console.log(error)
-                // toast.error(typeof error === 'object' ? error.message : error)
+                toast.error(typeof error === 'object' ? error.message : error)
             } finally {
                 this.loading = false
             }
@@ -55,7 +57,7 @@ export default {
             id,
             loading: true,
             room: {
-                title: "Ta race l'orc",
+                title: "Blablabla",
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                 universe: "Caves & Monstres",
                 style: "Serieux",
@@ -71,8 +73,21 @@ export default {
                     {
                         username: "Ganarok",
                         avatar: ""
-                    }
+                    },
+                    {
+                        username: "Ganarok",
+                        avatar: ""
+                    },
+                    {
+                        username: "Ganarok",
+                        avatar: ""
+                    },
+                    {
+                        username: "Ganarok",
+                        avatar: ""
+                    },
                 ],
+                vocal: 'Discord',
                 isPrivate: false
             }
         }
