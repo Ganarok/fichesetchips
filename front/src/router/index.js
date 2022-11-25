@@ -77,7 +77,8 @@ const routes = [
     {
         path: '/character/create',
         name: 'CharacterCreate',
-        component: CharacterCreate
+        component: CharacterCreate,
+        requiresAuth: true
     }
 ]
 
