@@ -30,30 +30,34 @@
 
             <div v-if="!loading" class="space-y-1">
                 <CustomInput
+                    outline="fc-yellow-trans"
                     :maxLength="36"
                     @input="(v) => this.handleUsername(v.target.value)"
                     :placeHolder="$t('Identifiant')"
                     :hasError="usernameError" />
                 <CustomInput
+                    outline="fc-yellow-trans"
                     :maxLength="256"
                     @input="(v) => this.handleEmail(v.target.value)"
                     placeHolder="Email"
                     :hasError="emailError"
                     :onFocusOut="() => this.handleEmailFocusOut()" />
                 <CustomInput
+                    outline="fc-yellow-trans"
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v.target.value)"
-                    typeInput="password"
                     :placeHolder="$t('Mot de passe')"
                     :hasError="passwordError"
-                    :onFocusOut="() => this.handlePasswordFocusOut()" />
+                    :onFocusOut="() => this.handlePasswordFocusOut()"
+                    type="password" />
                 <CustomInput
+                    outline="fc-yellow-trans"
                     :maxLength="64"
                     @input="(v) => this.handlePasswordConfirm(v.target.value)"
-                    typeInput="password"
                     :placeHolder="$t('Mot de passe')"
                     :hasError="passwordConfirmError"
-                    :onFocusOut="() => this.handleConfirmFocusOut()" />
+                    :onFocusOut="() => this.handleConfirmFocusOut()"
+                    type="password" />
             </div>
 
             <div class="self-center my-16" v-else>

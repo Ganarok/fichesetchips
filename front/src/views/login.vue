@@ -32,16 +32,17 @@
                     @input="(v) => this.handleUsername(v.target.value)"
                     :placeHolder="$t('Identifiant')"
                     :hasError="credentialsError"
+                    outline="fc-green"
                     :onFocusOut="() => this.handleFocusOut()" />
 
                 <CustomInput
                     :maxLength="64"
                     @input="(v) => this.handlePassword(v.target.value)"
-                    typeInput="password"
+                    type="password"
                     :placeHolder="$t('Mot de passe')"
                     :hasError="credentialsError"
+                    outline="fc-green"
                     :onFocusOut="() => this.handleFocusOut()" />
-
                 <p
                     class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">
                     <router-link to="/forgot-password">

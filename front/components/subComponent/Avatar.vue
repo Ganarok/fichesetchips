@@ -1,22 +1,22 @@
 <template>
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center font-bold space-y-4">
         <h1
-            v-if="!nick_under"
-            :class="
-                'text-' + nick_size + ' ' + (nick_bold ? 'font-bold' : null)
-            ">
-            {{ nickname }}
+            v-if="!username_under"
+        >
+            {{ username }}
         </h1>
-        <img
-            src="../../assets/avatar/character.png"
-            class="rounded-full bg-fc-green border-[0.2em] md:border-[0.3em] border-fc-black h-full my-3"
-            style="aspect-ratio: 1/1;" :style="grayed ? 'filter: grayscale(1)' : null">
+
+        <div class="relative">
+            <img
+                src="../../assets/avatar/character.png"
+                class="object-contain rounded-full bg-fc-green border-8 border-fc-black"
+                :style="grayed ? 'filter: grayscale(1)' : null">
+        </div>
+
         <h1
-            v-if="nick_under"
-            :class="
-                'text-' + nick_size + ' ' + (nick_bold ? 'font-bold' : null)
-            ">
-            {{ nickname }}
+            v-if="username_under"
+        >
+            {{ username }}
         </h1>
     </div>
 </template>
@@ -24,24 +24,14 @@
 <script>
 export default {
     props: {
-        background: String,
         border: String,
-        nickname: { type: String, default: null },
-        nick_under: Boolean,
-        nick_size: { type: String, default: '2xl' },
-        nick_bold: Boolean,
+        username: { type: String, default: null },
+        username_under: Boolean,
         grayed: Boolean,
     },
     methods: {
         callback: function (e) {
             this.$emit('click', e)
-        },
-        backgroundColor: function () {
-            if (this.filled == undefined) {
-                return ''
-            } else {
-                return ' bg-' + this.color
-            }
         },
         borderColor: function () {
             if (this.border == undefined) {
@@ -53,5 +43,3 @@ export default {
     },
 }
 </script>
-
-<!-- <Button buttonText="Exemple" color="fiche-green" v-on:click="test()" filled="chips-yellow" :image="require('../assets/icon.png')"/> -->

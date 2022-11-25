@@ -13,7 +13,6 @@
             @input="onInput()" />
         <div
             @click="toggleEdit"
-            class="ml-1"
             :class="canEdit ? ' cursor-pointer' : null"
             v-show="!isEditMode">
             {{ displayValue }}

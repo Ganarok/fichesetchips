@@ -12,11 +12,12 @@ import Rooms from '@/views/rooms/index.vue'
 import RoomID from '@/views/rooms/[id]/index.vue'
 import Session from '@/views/rooms/[id]/session.vue'
 import ProfileID from '@/views/user/profile.vue'
+import Create_Room from '@/views/rooms/create.vue'
 import NotFound from '@/views/404.vue'
 import CharacterCreate from '@/views/character/create.vue'
+import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         name: 'Home',
         component: Home
@@ -60,6 +61,12 @@ const routes = [
         requiresAuth: true
     },
     {
+        path: '/rooms/create',
+        name: 'Create_Room',
+        component: Create_Room,
+        requiresAuth: true
+    },
+    {
         path: '/rooms/:id',
         name: 'Rooms',
         component: RoomID,
@@ -87,6 +94,11 @@ const routes = [
         name: 'CharacterCreate',
         component: CharacterCreate,
         requiresAuth: true
+    },
+    {
+        path: "/tilemap/editor",
+        name: "TilemapEditr",
+        component: TilemapEditor,
     }
 ]
 

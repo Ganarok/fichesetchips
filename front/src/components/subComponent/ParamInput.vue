@@ -7,10 +7,11 @@
         <input
             :type="inputType"
             :value="inputValue"
+            :placeholder="placeholder"
             v-on:focusout="onValueChanged"
             :class="defaultInputClass"
-            max="20"
-            min="0" />
+            :max="max"
+            :min="min" />
     </div>
 </template>
 
@@ -20,6 +21,10 @@ export default {
         inputText: {
             type: String,
             default: '',
+        },
+        placeholder: {
+            type: [ String, Number ],
+            default: ''
         },
         inputTextClass: {
             type: String,
@@ -31,16 +36,24 @@ export default {
         },
         inputClass: {
             type: String,
-            default: 'select-none text-fc-black font-bold',
+            default: 'select-none font-bold',
         },
         onValueChanged: {
             type: Function,
             default: () => {},
         },
         inputValue: {
-            type: [String, Number, Boolean],
+            type: [ String, Number, Boolean ],
             default: '',
         },
+        max: {
+            type: [ String, Number ],
+            default: 10
+        },
+        min: {
+            type: [ String, Number ],
+            default: 0
+        }
     },
     methods: {
         getDefaultValue() {
@@ -63,7 +76,7 @@ export default {
                 break
 
             case 'number':
-                this.defaultInputClass = ` ${this.inputClass}`
+                this.defaultInputClass = ` text-center text-fc-yellow bg-fc-black-light p-2 placeholder:text-fc-yellow-trans ${this.inputClass}`
                 break
 
             default:
