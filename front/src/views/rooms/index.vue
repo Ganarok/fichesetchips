@@ -22,7 +22,9 @@
                 <ParamInput
                     :inputText="'Niv. Min:'"
                     inputType="number"
+                    :placeholder="0"
                     :inputValue="minLevel"
+                    inputClass="outline-none"
                     :onValueChanged="(v) => updateMinLevel(v.target.value)" />
 
                 <ParamInput

@@ -6,7 +6,7 @@
         <img
             v-if="image !== undefined"
             :src="image"
-            class="w-[30px] h-[30px] ml-[5px]" />
+            class="w-8 h-8 ml-[5px]" />
     </button>
 </template>
 

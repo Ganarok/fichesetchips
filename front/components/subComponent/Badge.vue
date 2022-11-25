@@ -7,12 +7,13 @@
         style="aspect-ratio: 1/1">
 
       <div class="absolute flex items-center justify-center rounded-full left-0 w-full h-full overflow-hidden">
-        <img class="h-3/4" src="../../assets/icons/star.svg" alt="">
+        <img class="h-2/3" src="../../assets/icons/star.svg" alt="Etoile">
       </div>
         <div class="absolute rounded-full left-0 w-full h-full overflow-hidden">
             <div
-                :style="{'backdrop-filter': 'grayscale(1)',height: (100 - completion).toString() + '%',}" />
+                :style="{'backdrop-filter': 'grayscale(1)', height: (100 - completion).toString() + '%',}" />
         </div>
+
         <div
             v-if="canFav"
             :class="(displayFav ? 'bg-fc-yellow ' : 'bg-white ' ) + 'relative bottom-1 rounded-full border-[0.15em] border-fc-yellow cursor-pointer ' + badgeSize.favButton"

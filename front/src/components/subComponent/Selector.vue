@@ -3,7 +3,7 @@
         :class="selectorClass"
         @click="switchOpened()"
         v-click-outside="closeSelector">
-        <div class="flex">
+        <div class="flex space-x-2">
             <option class="font-bold" default>{{ selectedItem }}</option>
 
             <div :class="imageClass">
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div v-if="isOpened" class="absolute pt-[20%] top-4 w-32">
+        <div v-if="isOpened" class="absolute pt-[20%] top-4 w-36 z-50">
             <option
                 v-for="(item, index) in computedItems"
                 @click="
@@ -30,7 +30,7 @@
                 :class="
                     item === selectedItem
                         ? optionClass + ' text-fc-green'
-                        : optionClass
+                        : optionClass + ' text-white'
                 "
                 :key="index">
                 {{ item }}
