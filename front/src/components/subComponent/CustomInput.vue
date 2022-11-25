@@ -5,8 +5,7 @@
             :class="`w-full h-12 p-3 border placeholder-gray-700 shadow-inner ${outline ? 'outline-' + outline : 'outline-none'} placeholder-opacity-50`"
             :placeholder="placeHolder"
             :maxlength="maxLength"
-            :type="typeInput"
-            :disabled="disabled"
+            :type="type"
             v-on:focusout="onFocusOut" />
 
         <div v-if="hasError" class="absolute right-0 bg-fc-red h-full w-[2%]" />
@@ -36,10 +35,6 @@ export default {
         onFocusOut: {
             type: Function,
             default: () => {},
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
         },
         outline: {
             type: String,

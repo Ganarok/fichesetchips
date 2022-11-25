@@ -20,7 +20,7 @@
         v-else>
         <div class="flex justify-between">
             <BlackGreenDiv 
-                :title="room.title"
+                :title="room.title || ''"
                 :rightGreenDiv="false"
                 color="text-fc-yellow"
                 height="h-16"
@@ -101,7 +101,7 @@
                             <div class="bg-gray-400 border-2 border-fc-black-light rounded-full w-24 h-24" />
 
                             <p class="text-xl font-bold">
-                                {{ room.mj.username || 'MJ' }}
+                                {{ room?.mj?.username || 'MJ' }}
                             </p>
                         </div>
 
@@ -110,7 +110,7 @@
                         </p>
 
                         <p class="font-bold">
-                            {{ `${room.mj.gamePlayedAsMj} parties enregistrées` || 'Pas de partie enregistrée' }}
+                            {{ `${room?.mj?.gamePlayedAsMj} parties enregistrées` || 'Pas de partie enregistrée' }}
                         </p>
                     </div>
 

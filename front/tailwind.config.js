@@ -17,6 +17,7 @@ const parseColors = () => {
         parsedColors.push('bg-'+color)
         parsedColors.push('text-'+color)
         parsedColors.push('border-'+color)
+        parsedColors.push('outline-'+color)
     })
 
     return parsedColors
