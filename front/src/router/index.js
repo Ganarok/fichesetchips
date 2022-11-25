@@ -13,6 +13,7 @@ import RoomID from '@/views/rooms/[id]/index.vue'
 import Session from '@/views/rooms/[id]/session.vue'
 import ProfileID from '@/views/user/profile.vue'
 import NotFound from '@/views/404.vue'
+import CharacterCreate from '@/views/character/create.vue'
 
 const routes = [
     {
@@ -81,6 +82,12 @@ const routes = [
         name: '404',
         component: NotFound
     },
+    {
+        path: '/character/create',
+        name: 'CharacterCreate',
+        component: CharacterCreate,
+        requiresAuth: true
+    }
 ]
 
 const router = createRouter({
