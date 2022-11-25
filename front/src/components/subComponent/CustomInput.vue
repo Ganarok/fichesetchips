@@ -2,10 +2,10 @@
     <div class="flex flex-col relative mx-5">
         <label v-if="label" for="">{{ label }}</label>
         <input
-            class="w-full h-12 p-3 border placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
+            :class="`w-full h-12 p-3 border placeholder-gray-700 shadow-inner ${outline ? 'outline-' + outline : 'outline-none'} placeholder-opacity-50`"
             :placeholder="placeHolder"
             :maxlength="maxLength"
-            :type="typeInput"
+            :type="type"
             v-on:focusout="onFocusOut" />
 
         <div v-if="hasError" class="absolute right-0 bg-fc-red h-full w-[2%]" />
@@ -20,7 +20,7 @@ export default {
             type: String,
         },
         placeHolder: { type: String },
-        typeInput: {
+        type: {
             type: String,
             default: 'text',
         },
@@ -36,6 +36,10 @@ export default {
             type: Function,
             default: () => {},
         },
+        outline: {
+            type: String,
+            default: ''
+        }
     },
 }
 </script>
