@@ -11,6 +11,7 @@ import Dashboard from '@/views/user/dashboard.vue'
 import Admin from '@/views/user/admin.vue'
 import Rooms from '@/views/rooms/index.vue'
 import Room from '@/views/rooms/[id].vue'
+import Create_Room from '@/views/rooms/create.vue'
 import NotFound from '@/views/404.vue'
 import CharacterCreate from '@/views/character/create.vue'
 
@@ -61,6 +62,12 @@ const routes = [
         path: '/rooms',
         name: 'Rooms',
         component: Rooms,
+        requiresAuth: true
+    },
+    {
+        path: '/rooms/create',
+        name: 'Create_Room',
+        component: Create_Room,
         requiresAuth: true
     },
     {

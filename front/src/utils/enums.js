@@ -11,3 +11,14 @@ export const PLAYSTYLE = {
     SERIOUS: 'Sérieux',
     EXPERIMENTAL: 'Expérimental',
 }
+
+export const EXPERIENCE = {
+    BEGINNER: 'Débutant',
+    CASUAL: 'Quelques parties',
+    EXPERT: 'Expert'
+}
+
+export const LANGUAGES = {
+    FRENCH: 'Français',
+    ENGLISH: 'Anglais',
+}
