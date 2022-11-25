@@ -13,7 +13,6 @@ import Rooms from '@/views/rooms/index.vue'
 import Room from '@/views/rooms/[id].vue'
 import NotFound from '@/views/404.vue'
 import CharacterCreate from '@/views/character/create.vue'
-import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
 
 const routes = [
     {
@@ -86,11 +85,6 @@ const routes = [
         name: 'CharacterCreate',
         component: CharacterCreate,
         requiresAuth: true
-    },
-    {
-        path: "/tilemap/editor",
-        name: "TilemapEditr",
-        component: TilemapEditor,
     }
 ]
 
