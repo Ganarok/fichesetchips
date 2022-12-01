@@ -5,6 +5,10 @@
             badgeSize.badge
         "
         style="aspect-ratio: 1/1">
+
+      <div class="absolute flex items-center justify-center rounded-full left-0 w-full h-full overflow-hidden">
+        <img class="h-3/4" src="../../assets/icons/star.svg" alt="">
+      </div>
         <div class="absolute rounded-full left-0 w-full h-full overflow-hidden">
             <div
                 :style="{'backdrop-filter': 'grayscale(1)',height: (100 - completion).toString() + '%',}" />
@@ -23,7 +27,7 @@ export default {
         return { localFav: false }
     },
     props: {
-        background: String,
+        background: {type:String, default: '../../assets/icons/star.svg'},
         border: String,
         size: { type: String, default: null },
         canFav: Boolean,

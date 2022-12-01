@@ -9,13 +9,13 @@
         <div class="h-screen w-full md:overflow-hidden flex md:flex-row flex-col font-barlow">
             <div
                 class="md:w-1/3 h-full md:border-r-4 md:border-fc-green p-4 flex flex-col items-center mb-48">
-                <div class="flex flex-col items-center mb-8">
+                <div class="flex flex-col items-center mb-10">
                     <Avatar
                         nickname="Ganarok"
                         nick_bold
                         nick_under
-                        nick_size="5xl"
-                        class="mb-3" />
+                        nick_size="2xl"
+                        class="mb-3 h-36" />
                 </div>
                 <div class="flex flex-col w-full text-xl mb-8">
                     <EditableDiv :editMode="editMode" v-model="user.location" />
@@ -43,19 +43,19 @@
                         :class="
                             badgesPage != 0
                                 ? null
-                                : 'pointer-events-none text-gray-400'
+                                : 'pointer-events-none opacity-25'
                         "
                         class="cursor-pointer select-none"
                         @click="badgesPage > 0 ? (badgesPage -= 1) : null
                         ">
-                        {{"<"}}
+                        <img src="../../assets/icons/icons8-left-arrow-30.png"/>
                     </div>
                     <div>{{ badgesPage + 1 }} / {{ badges.length }}</div>
                     <div
                         :class="
                             badgesPage < badges.length - 1
                                 ? null
-                                : 'pointer-events-none text-gray-400'
+                                : 'pointer-events-none opacity-25'
                         "
                         class="cursor-pointer select-none"
                         @click="
@@ -63,7 +63,7 @@
                                 ? (badgesPage += 1)
                                 : null
                         ">
-                        >
+                      <img src="../../assets/icons/icons8-right-arrow-30.png"/>
                     </div>
                 </div>
                 <div class="flex space-x-10 mt-4">
@@ -77,10 +77,9 @@
                     </button>
                 </div>
             </div>
-            <div class="w-full h-3/4 flex flex-col md:px-8 md:pb-16 pt-8 space-y-4">
-                <div class="h-full flex md:flex-row flex-col pb-6 justify-center md:mb-0 mb-48">
-                    <div
-                        class="h-full flex flex-col md:w-1/2 text-center space-y-2 md:px-20">
+            <div class="w-full h-full flex flex-col md:px-8 md:pb-16 pt-8 space-y-4">
+                <div class="h-3/4 flex md:flex-row flex-col pb-6 justify-center md:mb-0 mb-48 space-y-4">
+                  <div class="h-full flex flex-col text-center space-y-2 min-w-[20em]">
                         <div
                             class="flex w-full h-20 items-center justify-center text-center font-bold bg-fc-black text-fc-green">
                             Statistiques
@@ -145,19 +144,23 @@
                         </div>
                     </div>
                   <div class="h-full flex justify-center items-center">
-                    <CharacterCard class="ml-auto w-auto md:mr-28" />
+                    <CharacterCard class="w-auto" />
                   </div>
                 </div>
-                <div class="w-full mt-auto">
+                <div class="w-full h-1/4 mt-auto">
                     <h1 class="font-bold text-3xl">Amis</h1>
                     <div class="h-1 w-full bg-fc-black" />
                     <div class="flex overflow-x-auto justify-center space-x-4">
-                        <Avatar
-                            class="mt-4"
-                            :grayed="!friend.online"
-                            :nickname="friend.username"
-                            v-for="friend in friendsList"
-                            :key="n" />
+                      <div class="flex text-center h-full items-center sm:mt-[4em] mt-[1em] mb-[1em]" v-if="friendsList.length == 0">
+                        Ajoutez des amis pour voir leur status
+                      </div>
+                      <Avatar
+                        else
+                        class="mt-4 h-32 w-32 mb-20"
+                        :grayed="!friend.online"
+                        :nickname="friend.username"
+                        v-for="friend in friendsList"
+                        :key="n" />
                     </div>
                 </div>
             </div>
@@ -241,7 +244,7 @@ export default {
         }
     },
     mounted() {
-        this.badgeGenerator(50)
+        this.badgeGenerator(3)
     },
     methods: {
         badgeGenerator(pageNbr = 3, badgeNbr = 20) {
