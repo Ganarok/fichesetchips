@@ -77,8 +77,8 @@
                     </button>
                 </div>
             </div>
-            <div class="w-full h-3/4 flex flex-col md:px-8 md:pb-16 pt-8 space-y-4">
-                <div class="h-full flex md:flex-row flex-col pb-6 justify-center md:mb-0 mb-48 space-y-4">
+            <div class="w-full h-full flex flex-col md:px-8 md:pb-16 pt-8 space-y-4">
+                <div class="h-3/4 flex md:flex-row flex-col pb-6 justify-center md:mb-0 mb-48 space-y-4">
                   <div class="h-full flex flex-col text-center space-y-2 min-w-[20em]">
                         <div
                             class="flex w-full h-20 items-center justify-center text-center font-bold bg-fc-black text-fc-green">
@@ -147,7 +147,7 @@
                     <CharacterCard class="w-auto" />
                   </div>
                 </div>
-                <div class="w-full mt-auto">
+                <div class="w-full h-1/4 mt-auto">
                     <h1 class="font-bold text-3xl">Amis</h1>
                     <div class="h-1 w-full bg-fc-black" />
                     <div class="flex overflow-x-auto justify-center space-x-4">
@@ -156,7 +156,7 @@
                       </div>
                       <Avatar
                         else
-                        class="mt-4"
+                        class="mt-4 h-32 w-32 mb-20"
                         :grayed="!friend.online"
                         :nickname="friend.username"
                         v-for="friend in friendsList"
@@ -235,7 +235,7 @@ export default {
             lastConnection: 'il y a 1 heure',
             createdAt: '',
           },
-          friendsList: [],//[{username: 'SmithMan', online: true}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}],
+          friendsList: [{username: 'SmithMan', online: true}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}, {username: 'SmithMan', online: false}],
             badges: [],
             badgesPage: 0,
             ownprofile: true,
@@ -244,7 +244,7 @@ export default {
         }
     },
     mounted() {
-        this.badgeGenerator(50)
+        this.badgeGenerator(3)
     },
     methods: {
         badgeGenerator(pageNbr = 3, badgeNbr = 20) {
