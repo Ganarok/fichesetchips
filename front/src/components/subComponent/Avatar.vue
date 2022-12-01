@@ -5,9 +5,10 @@
         >
             {{ username }}
         </h1>
-        <div
-            class="rounded-full bg-fc-green border-[0.2em] md:border-[0.3em] border-fc-black h-32 my-3"
-            style="aspect-ratio: 1/1;" :style="grayed ? 'filter: grayscale(1)' : null"></div>
+        <img
+            src="../../assets/avatar/character.png"
+            class="rounded-full bg-fc-green border-[0.2em] md:border-[0.3em] border-fc-black h-full my-3"
+            style="aspect-ratio: 1/1;" :style="grayed ? 'filter: grayscale(1)' : null">
         <h1
             v-if="username_under"
         >

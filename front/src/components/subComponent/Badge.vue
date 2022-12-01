@@ -7,7 +7,7 @@
         style="aspect-ratio: 1/1">
 
       <div class="absolute flex items-center justify-center rounded-full left-0 w-full h-full overflow-hidden">
-        <img class="h-2/3" src="../../assets/icons/star.svg" alt="Etoile">
+        <img class="h-3/4" src="../../assets/icons/star.svg" alt="">
       </div>
         <div class="absolute rounded-full left-0 w-full h-full overflow-hidden">
             <div
