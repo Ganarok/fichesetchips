@@ -5,9 +5,8 @@
     "author": "Fiches&Chips <fichesetchips@gmail.com>",
     "scripts": {
         "dev": "NODE_ENV=development HOST=0.0.0.0 vue-cli-service serve",
-        "build": "vue-cli-service build",
-        "start": "NODE_ENV=production vue-cli-service serve --port 8000",
-        "dev:prod": "http-server dist --port=8000"
+        "build": "NODE_ENV=production vue-cli-service build --mode production",
+        "dev:prod": "serve -s dist"
     },
     "dependencies": {
         "core-js": "^3.24.1",

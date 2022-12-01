@@ -10,9 +10,12 @@ import ForgotPassword from '@/views/forgot-password.vue'
 import Dashboard from '@/views/user/dashboard.vue'
 import Admin from '@/views/user/admin.vue'
 import Rooms from '@/views/rooms/index.vue'
+import Room from '@/views/rooms/[id].vue'
+import Create_Room from '@/views/rooms/create.vue'
 import NotFound from '@/views/404.vue'
 import Profile from '@/views/user/profile.vue'
 import ProfileID from '@/views/user/profileID.vue'
+import CharacterCreate from '@/views/character/create.vue'
 
 const routes = [
     {
@@ -76,10 +79,28 @@ const routes = [
         requiresAuth: true
     },
     {
+        path: '/rooms/create',
+        name: 'Create_Room',
+        component: Create_Room,
+        requiresAuth: true
+    },
+    {
+        path: '/rooms/:id',
+        name: 'Room',
+        component: Room,
+        requiresAuth: true
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: '404',
         component: NotFound
     },
+    {
+        path: '/character/create',
+        name: 'CharacterCreate',
+        component: CharacterCreate,
+        requiresAuth: true
+    }
 ]
 
 const router = createRouter({

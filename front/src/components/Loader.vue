@@ -11,8 +11,6 @@
                 width: `${(size / 16) * 0.4}rem`,
                 height: `${(size / 16) * 0.4}rem`,
             }" />
-        <!-- <div class="bg-fc-yellow" :style="{ 'width': `${(size / 16) * 0.1}rem`, 'height': `${(size / 16) * 0.1}rem` }" />
-        </div> -->
     </div>
 </template>
 
