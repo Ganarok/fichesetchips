@@ -13,6 +13,8 @@ import Rooms from '@/views/rooms/index.vue'
 import Room from '@/views/rooms/[id].vue'
 import Create_Room from '@/views/rooms/create.vue'
 import NotFound from '@/views/404.vue'
+import Profile from '@/views/user/profile.vue'
+import ProfileID from '@/views/user/profileID.vue'
 import CharacterCreate from '@/views/character/create.vue'
 
 const routes = [
@@ -56,6 +58,18 @@ const routes = [
         path: '/user/admin',
         name: 'Admin',
         component: Admin,
+        requiresAuth: true
+    },
+    {
+        path: '/user/profile',
+        name: 'Profile',
+        component: Profile,
+        requiresAuth: true
+    },
+    {
+        path: '/user/profile/:id',
+        name: 'ProfileID',
+        component: ProfileID,
         requiresAuth: true
     },
     {
