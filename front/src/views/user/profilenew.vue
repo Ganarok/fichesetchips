@@ -1,10 +1,8 @@
 <template>
     <SidebarLayout>
-      <div class="h-screen w-full overflow-hidden flex flex-col font-barlow">
-        <div class="flex h-[60%] p-12">
-          <div
-              class="h-full rounded-full border-8 bg-fc-green border-fc-black"
-              style="aspect-ratio: 1/1" />
+      <div class="h-screen w-full md:overflow-hidden flex flex-col font-barlow">
+        <div class="flex md:flex-row flex-col md:h-[60%] p-12">
+          <Avatar/>
           <div class="flex flex-col h-full ml-8">
             <h1 class="text-3xl font-bold text-fc-green">
               {{ user.username }}
@@ -39,7 +37,7 @@
           </div>
         </div>
         <div
-            class="flex w-full h-60 mt-auto mb-20 items-center justify-evenly space-x-2 bg-fc-yellow overflow-hidden">
+            class="flex w-full md:h-60 h-40 items-center justify-evenly space-x-2 bg-fc-yellow overflow-hidden">
           <Badge
               size="l"
               :completion="badge.completion"
