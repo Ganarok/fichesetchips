@@ -1,3 +1,5 @@
+# This document answers to technical questions about tilemap usage and format
+
 green_circle: - mieux définir la donnée properties
     --> à voir dans le map_legende.json
 
