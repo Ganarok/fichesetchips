@@ -16,9 +16,9 @@ import NotFound from '@/views/404.vue'
 import Profile from '@/views/user/profile.vue'
 import ProfileID from '@/views/user/profileID.vue'
 import CharacterCreate from '@/views/character/create.vue'
+import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         name: 'Home',
         component: Home
@@ -100,6 +100,11 @@ const routes = [
         name: 'CharacterCreate',
         component: CharacterCreate,
         requiresAuth: true
+    },
+    {
+        path: "/tilemap/editor",
+        name: "TilemapEditr",
+        component: TilemapEditor,
     }
 ]
 
