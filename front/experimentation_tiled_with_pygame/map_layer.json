@@ -1,0 +1,287 @@
+{
+    "height": 10,
+    "layers": [{
+        "data": [
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33",
+            "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33", "33"
+        ],
+        "height": 10,
+        "name": "background",
+        "opacity": 1,
+        "type": "tilelayer",
+        "visible": true,
+        "width": 20,
+        "x": 0,
+        "y": 0
+    }, {
+        "data": ["4", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "first floor",
+        "visible": false,
+        "width": 3,
+        "x": 10,
+        "y": 9
+    }, {
+        "data": ["4", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "second floor",
+        "visible": false,
+        "width": 3,
+        "x": 10,
+        "y": 8
+    }, {
+        "data": ["4", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "third floor",
+        "visible": false,
+        "width": 3,
+        "x": 10,
+        "y": 7
+    }, {
+        "data": ["4", "10", "22", "17"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "fourth floor",
+        "visible": false,
+        "width": 4,
+        "x": 10,
+        "y": 6
+    }, {
+        "data": ["4", "10", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "fifth floor",
+        "visible": false,
+        "width": 4,
+        "x": 10,
+        "y": 5
+    }, {
+        "data": ["3", "29", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "sixth floor",
+        "visible": false,
+        "width": 4,
+        "x": 10,
+        "y": 4
+    }, {
+        "data": ["4", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "seventh floor",
+        "visible": false,
+        "width": 3,
+        "x": 11,
+        "y": 3
+    }, {
+        "data": ["4", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "eighth floor",
+        "visible": false,
+        "width": 3,
+        "x": 11,
+        "y": 2
+    }, {
+        "data": ["4", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "ninth floor",
+        "visible": false,
+        "width": 3,
+        "x": 11,
+        "y": 1
+    }, {
+        "data": ["5", "28", "10", "16"],
+        "height": 1,
+        "name": "way",
+        "opacity": 1,
+        "type": "tenth floor",
+        "visible": false,
+        "width": 4,
+        "x": 10,
+        "y": 0
+    }, {
+        "data": ["39"],
+        "height": 1,
+        "name": "cactus",
+        "opacity": 1,
+        "type": "popping",
+        "visible": false,
+        "width": 1,
+        "x": 1,
+        "y": 1
+    }],
+    "orientation": "orthogonal",
+    "properties": {
+    },
+    "tileheight": 32,
+    "tilesets": [{
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }, {
+        "firstgid": 1,
+        "image": "/home/clanghade/Pictures/tilemap_ESP/desert_tiles.png",
+        "imageheight": 199,
+        "imagewidth": 265,
+        "margin": 1,
+        "name": "Desert",
+        "properties": {
+        },
+        "spacing": 1,
+        "tileheight": 32,
+        "tilewidth": 32
+    }],
+    "tilewidth": 32,
+    "version": 1,
+    "width": 20
+}

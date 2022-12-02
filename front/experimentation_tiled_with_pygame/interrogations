@@ -1,0 +1,17 @@
+green_circle: - mieux définir la donnée properties
+    --> à voir dans le map_legende.json
+
+green_circle:
+    - un layer par objet (montres, objets, pnj puis personnages de joueurs à ajouter à l'initialisation de la campagne => interaction "à la volée") ?
+        --> On peut faire un regroupement d'objet par layer.
+            --> Exemple : si on veut linké tous les ennemis ensemble pour les afficher en même temps, c'est possible.
+            --> Exemple : si on rendre visible quelque chose en même temps qu'un autre (style chemin + boutique a côté), on peut les link
+    - comment faire un regroupement d'objets ?
+        --> par son name
+    - est-il possible de mettre un vide dans l'array data ?
+        --> Oui. Cependant, dans mon exemple, il est necessaire de garder dans ma map du coup une valeur du background en dessous sur la map générale.
+    - type de layer ? 
+        --> à voir dans le map_legend.json
+
+green_circle: - comment associer un layer à un tileset ? CLEMENT
+  --> quand on parcours tous les layers, du style ```for i in range(len(layers))```, il faut garder en tête que tileset[i] est le tileset correspondant au layer[i].
