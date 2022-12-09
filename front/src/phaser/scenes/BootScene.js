@@ -5,6 +5,10 @@ export default class BootScene extends Scene {
         super({ key: 'BootScene' })
     }
 
+    init() {
+        // TODO: Faire les calls API en DB pour récupérer les assets avec les tilemaps
+    }
+
     preload() {
         // this.load.image('sky', sky)
         // this.load.image('bomb', bomb)
@@ -12,6 +16,8 @@ export default class BootScene extends Scene {
     }
 
     create() {
+        // TODO: dans le .start() en deuxième argument l'object avec les assets
+
         this.scene.start('WorkshopTilemap')
     }
 }

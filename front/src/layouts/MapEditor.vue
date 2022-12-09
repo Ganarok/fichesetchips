@@ -2,19 +2,18 @@
     <div
         name="MapEditor"
     >
-        <header class="flex w-full h-12 bg-fc-black-light z-50">
-            salam
-        </header>
+        <Topbar />
 
-        <!-- <slot /> -->
+        <slot />
     </div>
 </template>
 
 <script>
+import Topbar from '@/components/phaser/Topbar.vue'
 
 export default {
     name: 'MapEditor',
     props: {},
-    components: {},
+    components: { Topbar },
 }
 </script>

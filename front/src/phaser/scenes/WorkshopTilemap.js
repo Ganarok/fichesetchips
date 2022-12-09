@@ -1,5 +1,5 @@
 import { Scene } from 'phaser'
-import tiles from "@/phaser/assets/desert_tiles.png"
+import ground_tiles from "@/phaser/assets/desert_tiles.png"
 import map_tiled from "@/phaser/assets/desert.json"
 import red_chest from "@/phaser/assets/bomb.png"
 import tile_icon from "@/phaser/assets/bomb.png"
@@ -10,15 +10,18 @@ const COLOR_PRIMARY = 0x1E1E1E;
 const COLOR_LIGHT = 0x7a7a7a;
 const COLOR_DARK = 0xFFDB57;
 
-let controls;
+let controls
 let marker;
 let map;
+const layers = {
+    ground: null,
+    items: null,
+}
 let shiftKey;
 let selectedTile;
 
-const tiles_size = 32
-const mapsize = tiles_size * 20
-
+let tiles_size = 32
+let mapsize = tiles_size * 20
 
 const Random = Phaser.Math.Between;
 
@@ -27,9 +30,16 @@ export default class WorkshopTilemap extends Scene {
         super({ key: 'WorkshopTilemap' })
     }
 
+    init(data) {
+        // TODO : La data envoyée depuis BootScene arrive ici, dans l'object data
+
+        console.log(data)
+    }
+
     preload() {
+
         // tilemap
-        this.load.image('tiles', tiles);
+        this.load.image('ground_tiles', ground_tiles);
         this.load.tilemapTiledJSON('map', map_tiled);
 
         //menu icon
@@ -41,13 +51,26 @@ export default class WorkshopTilemap extends Scene {
 
     create() {
         this._draw_map()
-        // this.cameras.main.setPosition(window.innerWidth / 2 - mapsize, 0)
+        this.cameras.main.setPosition(window.innerWidth / 2 - mapsize, 0)
         // this._draw_interface(300, 500)
         this._draw_cursor()
+        this._initListeners()
     }
 
     update(time, delta) {
         this.handle_event()
+    }
+
+    _initListeners() {
+        this.input.on('wheel', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
+            this.cameras.main._x -= (deltaX / 5)
+            this.cameras.main._y -= (deltaY / 5)
+        })
+
+        // this.input.on('scroll', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
+        //     this.cameras.main._x -= (deltaX / 5)
+        //     this.cameras.main._y -= (deltaY / 5)
+        // })
     }
 
     _draw_cursor() {
@@ -71,14 +94,11 @@ export default class WorkshopTilemap extends Scene {
         shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
     }
 
-
-
     // draw tilemap, add tileset to map object, set position of layer(s)
     _draw_map() {
         map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage('Desert', 'tiles');
-        var layer = map.createLayer('Ground', tileset, 0, 0);
-        layer.setPosition(window.innerWidth / 2 - mapsize, 0)
+        layers['ground'] = map.createLayer('Ground', map.addTilesetImage('Desert', 'ground_tiles'), 0, 0)
+        layers['ground'].setPosition(window.innerWidth / 2 - mapsize, 0)
     }
 
     // draw elements of interface such as menu, buttons....
@@ -144,7 +164,6 @@ export default class WorkshopTilemap extends Scene {
                 header: 10,
                 footer: 10,
             },
-
             //  cell content
             createCellContainerCallback: function(cell, cellContainer) {
                 var scene = cell.scene,
@@ -183,9 +202,6 @@ export default class WorkshopTilemap extends Scene {
             items: CreateItems(100)
             })
             .layout()
-
-
-        gridTable
             .on('cell.down', function(cellContainer, cellIndex, pointer) {
                 console.log('pointer-down ' + cellIndex + ': ' + cellContainer.text + '\n');
             }, this)
@@ -238,12 +254,6 @@ export default class WorkshopTilemap extends Scene {
             .on('cell.swipedown', function(cellContainer, cellIndex, pointer) {
                 console.log('swipe-down (' + cellIndex + ': ' + cellContainer.text + ')\n');
             }, this)
-
-
-
-
-
-
 
         // left-middle menu creation
         var gridTable = this.rexUI.add.gridTable({
@@ -499,9 +509,6 @@ export default class WorkshopTilemap extends Scene {
             }
         }
     }
-
-
-
 }
 
 const CreateItems = function(count) {
@@ -523,21 +530,21 @@ const CreateItems = function(count) {
 
 function getImages() {}
 
-const createButton = function(scene, text) {
-    return scene.rexUI.add.label({
-        width: 60,
-        height: 60,
-        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_LIGHT),
-        text: scene.add.text(0, 0, text, {
-            fontSize: 18
-        }),
-        align: 'center',
-        space: {
-            left: 10,
-            right: 10,
-        }
-    });
-}
+// const createButton = function(scene, text) {
+//     return scene.rexUI.add.label({
+//         width: 60,
+//         height: 60,
+//         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_LIGHT),
+//         text: scene.add.text(0, 0, text, {
+//             fontSize: 18
+//         }),
+//         align: 'center',
+//         space: {
+//             left: 10,
+//             right: 10,
+//         }
+//     });
+// }
 
 // 1) Definir un array d'image ainsi que leur nom/index dans une style
 // 2) Afficher dans le composant les images
