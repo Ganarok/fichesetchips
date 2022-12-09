@@ -3,8 +3,7 @@ import BootScene from '@/phaser/scenes/BootScene'
 import WorkshopTilemap from '@/phaser/scenes/WorkshopTilemap'
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 
-
-function launch(containerId) {
+const launch = (containerId) => {
     return new Phaser.Game({
         type: Phaser.AUTO,
         width: window.innerWidth,
@@ -30,5 +29,6 @@ function launch(containerId) {
     })
 }
 
-export default launch
-export { launch }
+export {
+    launch
+}

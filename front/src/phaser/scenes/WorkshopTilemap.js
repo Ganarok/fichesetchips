@@ -6,8 +6,6 @@ import tile_icon from "@/phaser/assets/bomb.png"
 import monster_icon from "@/phaser/assets/bomb.png"
 import object_icon from "@/phaser/assets/bomb.png"
 
-
-
 const COLOR_PRIMARY = 0x1E1E1E;
 const COLOR_LIGHT = 0x7a7a7a;
 const COLOR_DARK = 0xFFDB57;
@@ -42,10 +40,9 @@ export default class WorkshopTilemap extends Scene {
     }
 
     create() {
-
         this._draw_map()
-            // this.cameras.main.setPosition(window.innerWidth / 2 - mapsize, 0)
-        this._draw_interface(300, 500)
+        // this.cameras.main.setPosition(window.innerWidth / 2 - mapsize, 0)
+        // this._draw_interface(300, 500)
         this._draw_cursor()
     }
 
@@ -94,96 +91,96 @@ export default class WorkshopTilemap extends Scene {
 
         // left-top menu creation
         var gridTable = this.rexUI.add.gridTable({
-                x: width / 2 + padding.left,
-                y: height / 2 + padding.top,
-                width: width,
-                height: height / 2,
-                scrollMode: 0, // vertical
+            x: width / 2 + padding.left,
+            y: height / 2 + padding.top,
+            width: width,
+            height: height / 2,
+            scrollMode: 0, // vertical
 
-                // left menu background
-                background: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_PRIMARY),
+            // left menu background
+            background: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_PRIMARY),
 
-                // table menu 
-                table: {
-                    cellWidth: (scrollMode === 0) ? undefined : 60,
-                    cellHeight: (scrollMode === 0) ? 60 : undefined,
+            // table menu 
+            table: {
+                cellWidth: (scrollMode === 0) ? undefined : 60,
+                cellHeight: (scrollMode === 0) ? 60 : undefined,
 
-                    columns: 3,
+                columns: 3,
 
-                    mask: {
-                        padding: 2,
-                    },
-
-                    reuseCellContainer: true,
+                mask: {
+                    padding: 2,
                 },
 
-                slider: {
-                    track: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_DARK),
-                    thumb: this.rexUI.add.roundRectangle(0, 0, 0, 0, 13, COLOR_LIGHT),
-                },
+                reuseCellContainer: true,
+            },
 
-                mouseWheelScroller: {
-                    focus: false,
-                    speed: 0.1
-                },
+            slider: {
+                track: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_DARK),
+                thumb: this.rexUI.add.roundRectangle(0, 0, 0, 0, 13, COLOR_LIGHT),
+            },
 
-                header: this.rexUI.add.label({
-                    width: (scrollMode === 0) ? undefined : 30,
-                    height: (scrollMode === 0) ? 30 : undefined,
+            mouseWheelScroller: {
+                focus: false,
+                speed: 0.1
+            },
 
-                    orientation: scrollMode,
-                    background: this.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                    text: this.add.text(0, 0, 'Tile textures', { fontSize: 20, color: COLOR_PRIMARY, padding: { left: 10 } }),
-                    icon: this.add.image(0, 0, 'tile_icon'),
-                }),
+            header: this.rexUI.add.label({
+                width: (scrollMode === 0) ? undefined : 30,
+                height: (scrollMode === 0) ? 30 : undefined,
 
-                space: {
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                    bottom: 20,
+                orientation: scrollMode,
+                background: this.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
+                text: this.add.text(0, 0, 'Tile textures', { fontSize: 20, color: COLOR_PRIMARY, padding: { left: 10 } }),
+                icon: this.add.image(0, 0, 'tile_icon'),
+            }),
 
-                    table: 10,
-                    header: 10,
-                    footer: 10,
-                },
+            space: {
+                left: 20,
+                right: 20,
+                top: 20,
+                bottom: 20,
 
-                //  cell content
-                createCellContainerCallback: function(cell, cellContainer) {
-                    var scene = cell.scene,
-                        width = cell.width,
-                        height = cell.height,
-                        item = cell.item,
-                        index = cell.index;
-                    if (cellContainer === null) {
-                        cellContainer = scene.rexUI.add.label({
-                            width: width,
-                            height: height,
+                table: 10,
+                header: 10,
+                footer: 10,
+            },
 
-                            orientation: scrollMode,
-                            background: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 0).setStrokeStyle(2, COLOR_DARK),
-                            icon: scene.add.image(0, 0, "red_chest"),
-                            text: scene.add.text(0, 0, 'chest'),
+            //  cell content
+            createCellContainerCallback: function(cell, cellContainer) {
+                var scene = cell.scene,
+                    width = cell.width,
+                    height = cell.height,
+                    item = cell.item,
+                    index = cell.index;
+                if (cellContainer === null) {
+                    cellContainer = scene.rexUI.add.label({
+                        width: width,
+                        height: height,
 
-                            space: {
-                                icon: 10,
-                                left: (scrollMode === 0) ? 15 : 0,
-                                top: (scrollMode === 0) ? 0 : 15,
-                            }
-                        });
-                        console.log(cell.index + ': create new cell-container');
-                    } else {
-                        console.log(cell.index + ': reuse cell-container');
-                    }
+                        orientation: scrollMode,
+                        background: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 0).setStrokeStyle(2, COLOR_DARK),
+                        icon: scene.add.image(0, 0, "red_chest"),
+                        text: scene.add.text(0, 0, 'chest'),
 
-                    // Set properties from item value
-                    cellContainer.setMinSize(width, height); // Size might changed in this demo
-                    cellContainer.getElement('text').setText(item.id); // Set text of text object
-                    // cellContainer.getElement('icon').setFillStyle(item.color); // Set fill color of round rectangle object
-                    cellContainer.getElement('background').setStrokeStyle(2, COLOR_DARK).setDepth(0);
-                    return cellContainer;
-                },
-                items: CreateItems(100)
+                        space: {
+                            icon: 10,
+                            left: (scrollMode === 0) ? 15 : 0,
+                            top: (scrollMode === 0) ? 0 : 15,
+                        }
+                    });
+                    console.log(cell.index + ': create new cell-container');
+                } else {
+                    console.log(cell.index + ': reuse cell-container');
+                }
+
+                // Set properties from item value
+                cellContainer.setMinSize(width, height); // Size might changed in this demo
+                cellContainer.getElement('text').setText(item.id); // Set text of text object
+                // cellContainer.getElement('icon').setFillStyle(item.color); // Set fill color of round rectangle object
+                cellContainer.getElement('background').setStrokeStyle(2, COLOR_DARK).setDepth(0);
+                return cellContainer;
+            },
+            items: CreateItems(100)
             })
             .layout()
 
@@ -526,10 +523,7 @@ const CreateItems = function(count) {
 
 function getImages() {}
 
-
-
-
-var createButton = function(scene, text) {
+const createButton = function(scene, text) {
     return scene.rexUI.add.label({
         width: 60,
         height: 60,
@@ -544,9 +538,6 @@ var createButton = function(scene, text) {
         }
     });
 }
-
-
-
 
 // 1) Definir un array d'image ainsi que leur nom/index dans une style
 // 2) Afficher dans le composant les images
