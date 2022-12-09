@@ -1,17 +1,15 @@
 import Phaser from 'phaser'
 import BootScene from '@/phaser/scenes/BootScene'
 import WorkshopTilemap from '@/phaser/scenes/WorkshopTilemap'
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 
-
-function launch(containerId) {
+const launch = (containerId) => {
     return new Phaser.Game({
         type: Phaser.AUTO,
         width: window.innerWidth,
         height: window.innerHeight,
         parent: containerId,
         pixelArt: true,
-        backgroundColor: "00000",
+        backgroundColor: "#1E1E1E",
         physics: {
             default: 'arcade',
             arcade: {
@@ -19,16 +17,11 @@ function launch(containerId) {
                 debug: false
             }
         },
-        plugins: {
-            scene: [{
-                key: "rexUI",
-                plugin: RexUIPlugin,
-                mapping: "rexUI"
-            }]
-        },
+        plugins: {},
         scene: [BootScene, WorkshopTilemap]
     })
 }
 
-export default launch
-export { launch }
+export {
+    launch
+}
