@@ -13,22 +13,23 @@ export default {
         ],
         selectedLayer: 0,
         selectedTile: null,
-        shiftKey: null,
         tilesSize: 32,
-        mapSize: 32 * 20,
-        title: 'titre pas cool'
+        mapSize: 32 * 20
     },
     mutations: {
-        addTilesSize(state) {
-            state.tilesSize += 1
-        },
-        setSelectedTile(state, tile) {
-            state.selectedTile = tile
+        updateState(state, payload) {
+            const { property, newState } = payload
+
+            state[property] = newState
         },
         initLayers(state, layers) {
             state.layers = layers
         }
     },
     actions: {},
-    getters: {}
+    getters: {
+        getSelectedTile(state) {
+            return state.selectedTile
+        }
+    }
 }
