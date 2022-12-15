@@ -20,7 +20,7 @@ const launch = (containerId) => {
         },
         plugins: {
             scene: [{
-                key: "rexUI",
+                key: "rexuiplugin",
                 plugin: RexUIPlugin,
                 mapping: "rexUI"
             }]
