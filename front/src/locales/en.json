@@ -48,5 +48,11 @@
     "La confirmation doit correspondre au mot de passe": "Password must match with confirmation",
     "Finalement non": "I don't think so",
     "Statut": "Status",
-    "Expérience": "Experience"
+    "Expérience": "Experience",
+    "Page introuvable": "Page not found",
+    "Retour": "Back",
+    "Cette room n'existe pas": "This room does not exist",
+    "Langue": "Language",
+    "Niv. Min": "Min. Lvl",
+    "Niv. Max": "Max. Lvl"
 }

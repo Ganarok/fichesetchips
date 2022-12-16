@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router"
 import { nextTick } from "vue"
 
 import Home from '@/views/index.vue'
+import About from "@/views/about.vue"
 import Login from '@/views/login.vue'
 import Register from '@/views/register.vue'
 import Glossaire from '@/views/glossaire.vue'
@@ -11,13 +12,27 @@ import Admin from '@/views/user/admin.vue'
 import Rooms from '@/views/rooms/index.vue'
 import RoomID from '@/views/rooms/[id]/index.vue'
 import Session from '@/views/rooms/[id]/session.vue'
+import Profile from '@/views/user/profile.vue'
+import ProfileID from '@/views/user/profileID.vue'
+import Create_Room from '@/views/rooms/create.vue'
 import NotFound from '@/views/404.vue'
+import CharacterCreate from '@/views/character/create.vue'
+import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/about',
+        name: 'About',
+        component: About
+    },
+    {
+        path: '/glossaire',
+        name: 'Glossaire',
+        component: Glossaire
     },
     {
         path: '/login',
@@ -28,11 +43,6 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register
-    },
-    {
-        path: '/glossaire',
-        name: 'Glossaire',
-        component: Glossaire
     },
     {
         path: '/forgot-password',
@@ -52,20 +62,38 @@ const routes = [
         requiresAuth: true
     },
     {
+        path: '/user/profile',
+        name: 'Profile',
+        component: Profile,
+        requiresAuth: true
+    },
+    {
+        path: '/user/profile/:id',
+        name: 'ProfileID',
+        component: ProfileID,
+        requiresAuth: true
+    },
+    {
         path: '/rooms',
         name: 'Rooms',
         component: Rooms,
         requiresAuth: true
     },
     {
+        path: '/rooms/create',
+        name: 'Create_Room',
+        component: Create_Room,
+        requiresAuth: true
+    },
+    {
         path: '/rooms/:id',
-        name: 'Rooms',
+        name: 'RoomsID',
         component: RoomID,
         requiresAuth: true
     },
     {
         path: '/rooms/:id/session',
-        name: 'Rooms',
+        name: 'Session',
         component: Session,
         requiresAuth: true
     },
@@ -74,6 +102,17 @@ const routes = [
         name: '404',
         component: NotFound
     },
+    {
+        path: '/character/create',
+        name: 'CharacterCreate',
+        component: CharacterCreate,
+        requiresAuth: true
+    },
+    {
+        path: "/tilemap/editor",
+        name: "TilemapEditr",
+        component: TilemapEditor,
+    }
 ]
 
 const router = createRouter({

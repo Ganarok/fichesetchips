@@ -2,7 +2,7 @@
     <div class="flex flex-col relative mx-5">
         <label v-if="label" for="">{{ label }}</label>
         <input
-            class="w-full h-12 p-3 border placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
+            :class="`w-full h-12 p-3 border placeholder-gray-700 shadow-inner ${outline ? 'outline-' + outline : 'outline-none'} placeholder-opacity-50`"
             :placeholder="placeHolder"
             :maxlength="maxLength"
             :type="typeInput"
@@ -21,7 +21,7 @@ export default {
             type: String,
         },
         placeHolder: { type: String },
-        typeInput: {
+        type: {
             type: String,
             default: 'text',
         },
@@ -41,6 +41,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        outline: {
+            type: String,
+            default: ''
+        }
     },
 }
 </script>

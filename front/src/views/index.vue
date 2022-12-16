@@ -13,10 +13,13 @@
                             Notre site il est trop bien alors tu t’inscris et tu
                             kiffes ! Sinon je te retrouve et je te pète les genoux !
                         </p>
-                        <button
+
+                        <router-link
+                            to="/login"
                             class="flex flex-row justify-center w-20 lg:w-24 xl:w-28 border-[3px] self-end rounded-full text-3xl font-bold text-white tablet:text-xl">
-                            <router-link to="/login"> GO -> </router-link>
-                        </button>
+                            GO ->
+                        </router-link>
+
                         <div
                             class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px] mobile:hidden"></div>
                     </div>
@@ -95,6 +98,7 @@ export default {
 .tashas {
     background-image: url('../assets/index/background.jpg');
     background-size: cover;
+    object-fit: cover;
 }
 
 .background {
