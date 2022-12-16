@@ -157,11 +157,11 @@
                         </div>
                     </div>
     
-                    <CharacterCard
+                    <!-- <CharacterCard
                         name="Ganarok"
                         image="@/assets/dragon.svg"
                         :level="12"
-                    />
+                    /> -->
                 </div>
 
                 <div class="flex flex-col w-full h-full">

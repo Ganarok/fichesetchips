@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import SidebarLayout from '~/layouts/Sidebar.vue'
+import SidebarLayout from '@/layouts/Sidebar.vue'
 
 export default {
     name: 'About',

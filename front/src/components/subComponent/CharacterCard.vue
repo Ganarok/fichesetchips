@@ -19,10 +19,10 @@
             class="relative bg-fc-yellow w-full my-2"
             v-if="image"
         >
-            <img
+            <!-- <img
                 src="../../assets/dragon.svg"
                 class="object-contain"
-                :style="grayed ? 'filter: grayscale(1)' : null" />
+                :style="grayed ? 'filter: grayscale(1)' : null" /> -->
         </div>
 
         <div class="bg-fc-yellow h-80 w-full m-2" v-else/>
