@@ -4,15 +4,18 @@ import cors from "cors"
 import { routing } from "./routes/routes"
 import { configSwagger } from "./utils/swagger/config"
 import * as dotenv from 'dotenv'
-import { databaseConnection } from "./database/connection";
+import { databaseConnection } from "./database/connection"
+import { Server } from 'socket.io'
+import { createServer } from 'http'
+import initSockets from "./sockets/index"
+
 dotenv.config();
 const app = express();
 app.set("db_connexion", false)
 databaseConnection()
     .then(() => {
-        app.emit("dbConnected")
+        httpServer.emit("dbConnected")
     })
-        
 
 const port = parseInt(process.env.PORT || "9000")
 const host = process.env.HOST || "localhost"
@@ -21,11 +24,23 @@ app.use(cors())
 app.use(bodyParser.json());
 
 configSwagger(app)
-
 routing(app);
-app.on('dbConnected', () => {
-    app.listen(port, host, () => {
+
+const httpServer = createServer(app)
+const io = new Server(httpServer, {
+    cors: {
+        origin: '*',
+        methods: ["GET", "POST"]
+    }
+})
+const ioRooms = io.of('/rooms')
+
+httpServer.on('dbConnected', () => {
+    httpServer.listen(port, host, () => {
         console.log(`App is running here : http://${host}:${port} \nYou can find the doc here : http://${host}:${port}/docs`);
-    });
-});
-export default app
+    })
+    
+    initSockets(ioRooms)
+})
+
+export default httpServer
