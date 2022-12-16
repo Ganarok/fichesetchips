@@ -25,29 +25,25 @@
                         {{ layers[selectedLayer].name }}
                     </p>    
                 </p>
-
-                <div class="flex flex-col p-2 bg-fc-black">
-                    <p>Tiles disponibles</p>
-                </div>
-
-                <div class="flex flex-col p-2 bg-fc-black">
-                    <p>Items disponibles</p>
-                </div>
             </div>
         </div>
 
-        <slot />
+        <div class="absolute w-full z-50 bottom-0">
+            <Layers />
+        </div>
 
+        <slot />
     </div>
 </template>
 
 <script>
 import Topbar from '@/components/phaser/Topbar.vue'
+import Layers from '@/components/phaser/Layers.vue'
 // TODO: Ajouter le onclick pour changer le layer sélectionné enregistré dans le store
 export default {
     name: 'MapEditor',
     props: {},
-    components: { Topbar },
+    components: { Topbar, Layers },
     methods: {
         updateSelectedLayer() {
             const newValue = this.selectedLayer < (this.layers.length - 1) ? 
