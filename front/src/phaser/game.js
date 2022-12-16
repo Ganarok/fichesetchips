@@ -6,7 +6,7 @@ const launch = (containerId) => {
     return new Phaser.Game({
         type: Phaser.AUTO,
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight - 48,
         parent: containerId,
         pixelArt: true,
         backgroundColor: "#1E1E1E",

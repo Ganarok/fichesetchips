@@ -1,23 +1,29 @@
-import { Scene } from 'phaser'
+import { Scene, Tilemaps } from 'phaser'
 import { COLORS } from '@/utils/enums'
 import store from '@/store'
-import ground_tiles from "@/phaser/assets/desert_tiles.png"
-import items_tiles from "@/phaser/assets/desert_plants.png"
+import desert_grounds from "@/phaser/assets/desert_grounds.png"
+import desert_items from "@/phaser/assets/desert_items.png"
 import map_tiled from "@/phaser/maps/desert.json"
+import template from "@/phaser/maps/template.json"
 
 export default class WorkshopTilemap extends Scene {
     constructor() {
         super({ key: 'WorkshopTilemap' })
 
         this.layers = []
+        this.tiles = []
         this.map = null
         this.selectedTile = null
         this.controls = null
         this.marker = null
         this.shiftKey = null
+        this.eKey = null
+        this.iKey = null
+        this.tabKey = null
         this.tiles_size = 32
         this.mapsize = 32 * 20
         this.selectedLayer = 0
+        this.tileSelector = null
     }
 
     init(data) {
@@ -28,14 +34,15 @@ export default class WorkshopTilemap extends Scene {
 
     preload() {
         // tilemap
-        this.load.image('ground_tiles', ground_tiles);
-        this.load.image('items_tiles', items_tiles);
-        this.load.tilemapTiledJSON('map', map_tiled);
+        this.load.spritesheet('grounds', desert_grounds, { frameWidth: 32, frameHeight: 32})
+        this.load.spritesheet('items', desert_items, { frameWidth: 32, frameHeight: 32})
+        this.load.tilemapTiledJSON('map', template)
     }
 
     create() {
         this._draw_map()
         this._draw_cursor()
+        this._initKeys()
         this._initListeners()
     }
 
@@ -44,19 +51,66 @@ export default class WorkshopTilemap extends Scene {
     }
 
     _initListeners() {
+        store.watch(() => store.state.phaser.selectedTile, (newValue, oldValue) => {
+            this.selectedTile = newValue
+        })
+
+        store.watch(() => store.state.phaser.selectedTileIndex, (index, oldValue) => {
+            this.selectedTile = new Tilemaps.Tile(this.selectedLayer, index, 5, 5, 32, 32, 32, 32)
+        })
+
+        store.watch(() => store.state.phaser.selectedLayer, (newValue, oldValue) => {
+            this.selectedLayer = newValue
+
+            if (store.state.phaser.isolateLayer) {
+                this.layers[oldValue].setVisible(false)
+                this.layers[newValue].setVisible(true)
+            }
+        })
+
+        store.watch(() => store.state.phaser.isolateLayer, (isIsolated, oldValue) => {
+            if (isIsolated) {
+                this.layers.forEach((layer, index) => {
+                    if (index !== this.selectedLayer) {
+                        this.layers[index].setVisible(false)
+                    }
+                })
+            } else {
+                this.layers.forEach((layer, index) => this.layers[index].setVisible(true))
+            }
+        })
+    }
+
+    _initKeys() {
+        this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)
+        this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
+        this.iKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I)
+        this.tabKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB)
+
         this.input.on('wheel', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
             this.cameras.main._x -= (deltaX / 5)
             this.cameras.main._y -= (deltaY / 5)
         })
 
-        store.watch(() => store.state.phaser.selectedTile, (newValue, oldValue) => {
-            console.log('NOUVELLE TILE OMG', newValue)
-            this.selectedTile = newValue
+        this.eKey.on('down',() => {
+            store.commit('updateState', {
+                property: 'eraser',
+                newState: !store.state.phaser.eraser
+            })
         })
 
-        store.watch(() => store.state.phaser.selectedLayer, (newValue, oldValue) => {
-            console.log('NOUVEAU LAYER OMG', newValue)
-            this.selectedLayer = newValue
+        this.iKey.on('down',() => {
+            store.commit('updateState', {
+                property: 'isolateLayer',
+                newState: !store.state.phaser.isolateLayer
+            })
+        })
+
+        this.tabKey.on('down',() => {
+            store.commit('updateState', {
+                property: 'layerTab',
+                newState: !store.state.phaser.layerTab
+            })
         })
     }
 
@@ -67,23 +121,34 @@ export default class WorkshopTilemap extends Scene {
         this.map = this.make.tilemap({ key: 'map' });
 
         layers.forEach((layer, index) => {
-            this.layers[index] = this.map.createLayer(layer.name, this.map.addTilesetImage(layer.name, layer.asset), 0, 0)
+            this.tiles[index] = this.map.addTilesetImage(layer.name)
+            this.layers[index] = this.map.createBlankLayer(`${layer.name}_layer`, this.tiles[index], 0, 0)
+
+            if (index === 0) {
+                this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29])
+                this.selectedTile = this.layers[0].getTileAt(0, 0)
+                store.commit('updateState', {
+                    property: 'selectedTile',
+                    newState: this.selectedTile
+                })
+            }
+
+            if (index === 1) {
+                this.layers[1].randomize(0, 0, this.map.width, this.map.height, [1])
+            }
         })
 
-        this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
+        store.commit('updateState', {
+            property: 'tileSets',
+            newState: this.tiles
+        })
+
+        // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
     }
 
     _draw_cursor() {
-        const { layers } = store.state.phaser
-
-        this.selectedTile = this.map.getTileAt(0, 0, false, layers[this.selectedLayer].name)
-        store.commit('updateState', {
-            property: 'selectedTile',
-            newState: this.selectedTile
-        })
-
         this.marker = this.add.graphics()
-        this.marker.lineStyle(2, 0xff0000, 1)
+        this.marker.lineStyle(2, 0xF04E4E, 1)
         this.marker.strokeRect(0, 0, this.map.tileWidth, this.map.tileHeight)
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
@@ -98,12 +163,11 @@ export default class WorkshopTilemap extends Scene {
             down: cursors.down,
             speed: 0.5
         })
-        this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT)
     }
 
     // handle selection of tiles
     handle_event() {
-        const { layers } = store.state.phaser
+        const { layers, eraser } = store.state.phaser
         const layerName = layers[this.selectedLayer].name
         const worldPoint = this.input.activePointer.positionToCamera(this.cameras.main)
 
@@ -117,24 +181,16 @@ export default class WorkshopTilemap extends Scene {
 
         if (this.input.manager.activePointer.isDown) {
             if (this.shiftKey.isDown) {
-                this.selectedTile = this.map.getTileAt(pointerTileX, pointerTileY, false, layerName)
+                this.selectedTile = this.layers[this.selectedLayer].getTileAt(pointerTileX, pointerTileY, false, layerName)
                 store.commit('updateState', {
                     property: 'selectedTile',
                     newState: this.selectedTile
                 })
+            } else if (eraser) {
+                this.layers[this.selectedLayer].removeTileAt(pointerTileX, pointerTileY, true, true)
             } else {
-                this.map.putTileAt(this.selectedTile, pointerTileX, pointerTileY, false, layerName)
+                this.layers[this.selectedLayer].putTileAt(this.selectedTile, pointerTileX, pointerTileY, true, layerName)
             }
         }
     }
 }
-
-// 1) Definir un array d'image ainsi que leur nom/index dans une style
-// 2) Afficher dans le composant les images
-// 3) Afficher
-
-// methods to implement:
-// - draw interface
-// - bind element
-// - scale element
-// - getElemtexture
