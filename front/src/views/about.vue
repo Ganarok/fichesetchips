@@ -2,7 +2,7 @@
     <SidebarLayout :title="$t('À Propos')">
         <p class="text-justify sm:w-[80%] sm:ml-[10%] lg:w-[70%]">
             Fiches&Chips est un projet étudiant proposant une plateforme web
-            pour réaliser des parties de jeu de rôle.<br />
+            pour réaliser des parties de jeu de rôle en ligne.<br />
             Pour le moment basé sur D&D5, il vise à intégrer un moteur de
             création de campagne, d'univers ainsi qu'un système de création de
             personnages.
@@ -23,7 +23,7 @@
         </div>
 
         <p
-            class="text-right sm:w-[80%] sm:items-end sm:self-end sm:ml-[10%] sm:mr-[10%] lg:w-[70%]">
+            class="text-right w-full pb-4 sm:pb-12 sm:w-[80%] sm:items-end sm:self-end sm:ml-[10%] sm:mr-[10%] lg:w-[70%]">
             Vous pouvez nous contacter à <b>fichesetchips@gmail.com</b>
         </p>
     </SidebarLayout>

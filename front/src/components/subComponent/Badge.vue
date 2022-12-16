@@ -78,5 +78,3 @@ export default {
     },
 }
 </script>
-
-<!-- <Button buttonText="Exemple" color="fiche-green" v-on:click="test()" filled="chips-yellow" :image="require('../assets/icon.png')"/> -->
