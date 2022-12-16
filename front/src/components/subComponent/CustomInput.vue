@@ -6,6 +6,7 @@
             :placeholder="placeHolder"
             :maxlength="maxLength"
             :type="typeInput"
+            :disabled="disabled"
             v-on:focusout="onFocusOut" />
 
         <div v-if="hasError" class="absolute right-0 bg-fc-red h-full w-[2%]" />
@@ -35,6 +36,10 @@ export default {
         onFocusOut: {
             type: Function,
             default: () => {},
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
         },
     },
 }

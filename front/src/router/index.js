@@ -9,6 +9,8 @@ import ForgotPassword from '@/views/forgot-password.vue'
 import Dashboard from '@/views/user/dashboard.vue'
 import Admin from '@/views/user/admin.vue'
 import Rooms from '@/views/rooms/index.vue'
+import RoomID from '@/views/rooms/[id]/index.vue'
+import Session from '@/views/rooms/[id]/session.vue'
 import NotFound from '@/views/404.vue'
 
 const routes = [
@@ -53,6 +55,18 @@ const routes = [
         path: '/rooms',
         name: 'Rooms',
         component: Rooms,
+        requiresAuth: true
+    },
+    {
+        path: '/rooms/:id',
+        name: 'Rooms',
+        component: RoomID,
+        requiresAuth: true
+    },
+    {
+        path: '/rooms/:id/session',
+        name: 'Rooms',
+        component: Session,
         requiresAuth: true
     },
     {
