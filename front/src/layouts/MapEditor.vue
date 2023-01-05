@@ -4,15 +4,15 @@
     >
         <Topbar />
 
-        <div class="absolute right-4 my-4 z-50 p-2 bg-fc-black-light">
+        <div class="absolute right-4 my-4 z-50 p-2 bg-fc-black-light transition opacity-50 hover:opacity-100">
             <div class="flex flex-col space-y-2">
                 <div class="h-8 w-8 border-fc-green border-2" />
 
                 <img
                     src="@/phaser/assets/layer.svg"
-                    class="h-8 w-8 transition ease-in-out hover:scale-110 hover:opacity-80 hover:cursor-pointer"
+                    :class="`h-8 w-8 transition ease-in-out hover:scale-110 ${$store.state.phaser.isolateLayer ? 'grayscale-0' : 'grayscale' } hover:cursor-pointer`"
                     alt="ChangeLayer"
-                    @click="() => this.updateSelectedLayer()"
+                    @click="() => this.UpdateIsolateLayer()"
                 />
             </div>
         </div>
@@ -22,7 +22,7 @@
                 <p>
                     Layer selectionné :<br>
                     <p class="text-fc-yellow">
-                        {{ layers[selectedLayer].name }}
+                        {{ $store.state.phaser.layers[$store.state.phaser.selectedLayer].name }}
                     </p>    
                 </p>
             </div>
@@ -45,15 +45,15 @@ export default {
     props: {},
     components: { Topbar, Layers },
     methods: {
-        updateSelectedLayer() {
-            const newValue = this.selectedLayer < (this.layers.length - 1) ? 
-                this.selectedLayer + 1
-                : 0
-            
+        UpdateIsolateLayer() {      
+            const newState = !this.$store.state.phaser.isolateLayer
+      
             this.$store.commit('updateState', {
-                property: 'selectedLayer',
-                newState: 0
+                property: 'isolateLayer',
+                newState
             })
+
+            this.isolateLayer = newState
         }
     },
     data() {

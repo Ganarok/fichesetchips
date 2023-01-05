@@ -3,16 +3,18 @@ export default {
         controls: null,
         layers: [
             {
-                name: 'ground',
-                asset: 'ground_tiles'
+                name: 'grounds',
+                asset: 'desert_grounds'
             },
             {
                 name: 'items',
-                asset: 'items_tiles'
+                asset: 'desert_items'
             }
         ],
         selectedLayer: 0,
         selectedTile: null,
+        isolateLayer: false,
+        tileSets: [],
         tilesSize: 32,
         mapSize: 32 * 20
     },

@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="flex px-2 py-1 bg-fc-black-light text-xs hover:cursor-pointer hover:opacity-80"
+        class="flex px-2 py-1 bg-fc-black-light text-xs hover:cursor-pointer hover:opacity-80 hover:scale-105"
         :class="isSelected ? 'text-fc-yellow' : 'text-fc-green'"
     >
         <p>

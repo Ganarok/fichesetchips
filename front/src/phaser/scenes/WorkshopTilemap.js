@@ -1,15 +1,17 @@
-import { Scene } from 'phaser'
+import { Scene, Textures } from 'phaser'
 import { COLORS } from '@/utils/enums'
 import store from '@/store'
-import ground_tiles from "@/phaser/assets/desert_tiles.png"
-import items_tiles from "@/phaser/assets/desert_plants.png"
+import desert_grounds from "@/phaser/assets/desert_grounds.png"
+import desert_items from "@/phaser/assets/desert_items.png"
 import map_tiled from "@/phaser/maps/desert.json"
+import template from "@/phaser/maps/template.json"
 
 export default class WorkshopTilemap extends Scene {
     constructor() {
         super({ key: 'WorkshopTilemap' })
 
         this.layers = []
+        this.tiles = []
         this.map = null
         this.selectedTile = null
         this.controls = null
@@ -18,6 +20,7 @@ export default class WorkshopTilemap extends Scene {
         this.tiles_size = 32
         this.mapsize = 32 * 20
         this.selectedLayer = 0
+        this.tileSelector = null
     }
 
     init(data) {
@@ -28,9 +31,9 @@ export default class WorkshopTilemap extends Scene {
 
     preload() {
         // tilemap
-        this.load.image('ground_tiles', ground_tiles);
-        this.load.image('items_tiles', items_tiles);
-        this.load.tilemapTiledJSON('map', map_tiled);
+        this.load.image('grounds', desert_grounds);
+        this.load.image('items', desert_items);
+        this.load.tilemapTiledJSON('map', template);
     }
 
     create() {
@@ -50,13 +53,30 @@ export default class WorkshopTilemap extends Scene {
         })
 
         store.watch(() => store.state.phaser.selectedTile, (newValue, oldValue) => {
-            console.log('NOUVELLE TILE OMG', newValue)
             this.selectedTile = newValue
         })
 
         store.watch(() => store.state.phaser.selectedLayer, (newValue, oldValue) => {
-            console.log('NOUVEAU LAYER OMG', newValue)
             this.selectedLayer = newValue
+
+            if (store.state.phaser.isolateLayer) {
+                this.layers[oldValue].setVisible(false)
+                this.layers[newValue].setVisible(true)
+            }
+        })
+
+        store.watch(() => store.state.phaser.isolateLayer, (isIsolated, oldValue) => {
+            console.log('update isolated', this.layers[this.selectedLayer]);
+            if (isIsolated) {
+                this.layers.forEach((layer, index) => {
+                    if (index !== this.selectedLayer) {
+                        console.log(`set inative ${this.selectedLayer}`);
+                        this.layers[index].setVisible(false)
+                    }
+                })
+            } else {
+                this.layers.forEach((layer, index) => this.layers[index].setVisible(true))
+            }
         })
     }
 
@@ -67,20 +87,28 @@ export default class WorkshopTilemap extends Scene {
         this.map = this.make.tilemap({ key: 'map' });
 
         layers.forEach((layer, index) => {
-            this.layers[index] = this.map.createLayer(layer.name, this.map.addTilesetImage(layer.name, layer.asset), 0, 0)
+            this.tiles[index] = this.map.addTilesetImage(layer.name)
+            this.layers[index] = this.map.createBlankLayer(`${layer.name}_layer`, this.tiles[index], 0, 0)
+
+            if (index === 0) {
+                this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29])
+                this.selectedTile = this.layers[0].getTileAt(0, 0)
+            }
+
+            if (index === 1) {
+                this.layers[1].randomize(0, 0, this.map.width, this.map.height, [1])
+            }
         })
 
-        this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
+        store.commit('updateState', {
+            property: 'tileSets',
+            newState: this.tiles
+        })
+        // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
     }
 
     _draw_cursor() {
         const { layers } = store.state.phaser
-
-        this.selectedTile = this.map.getTileAt(0, 0, false, layers[this.selectedLayer].name)
-        store.commit('updateState', {
-            property: 'selectedTile',
-            newState: this.selectedTile
-        })
 
         this.marker = this.add.graphics()
         this.marker.lineStyle(2, 0xff0000, 1)
@@ -117,24 +145,14 @@ export default class WorkshopTilemap extends Scene {
 
         if (this.input.manager.activePointer.isDown) {
             if (this.shiftKey.isDown) {
-                this.selectedTile = this.map.getTileAt(pointerTileX, pointerTileY, false, layerName)
+                this.selectedTile = this.layers[this.selectedLayer].getTileAt(pointerTileX, pointerTileY, false, layerName)
                 store.commit('updateState', {
                     property: 'selectedTile',
                     newState: this.selectedTile
                 })
             } else {
-                this.map.putTileAt(this.selectedTile, pointerTileX, pointerTileY, false, layerName)
+                this.layers[this.selectedLayer].putTileAt(this.selectedTile, pointerTileX, pointerTileY, true, layerName)
             }
         }
     }
 }
-
-// 1) Definir un array d'image ainsi que leur nom/index dans une style
-// 2) Afficher dans le composant les images
-// 3) Afficher
-
-// methods to implement:
-// - draw interface
-// - bind element
-// - scale element
-// - getElemtexture
