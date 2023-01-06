@@ -12,9 +12,13 @@ export default {
             }
         ],
         selectedLayer: 0,
-        selectedTile: null,
+        eraser: false,
+        selectedTile: undefined,
+        selectedTileIndex: undefined,
         isolateLayer: false,
+        layerTab: true,
         tileSets: [],
+        tilesPics: {},
         tilesSize: 32,
         mapSize: 32 * 20
     },
