@@ -1,22 +1,24 @@
 <template>
     <SidebarLayout :title=currentTitle>
-        <div class='h-full flex flex-col justify-between'>
-            <Universe :is="currentStep"></Universe>
-            <CompletionBar :size=size :completed=completed class="mx-auto mt-[10px] mobile:hidden"></CompletionBar>
+        <div class="flex flex-col items-center">
+            <component :is="currentStep"></component>
+            <CompletionBar :size=size :completed=completed class="mx-auto mt-[10px]  mobile:hidden tablet:pb-2"></CompletionBar>
         </div>
+   
     </SidebarLayout>
 </template>
 
 <script>
 import SidebarLayout from '@/layouts/Sidebar.vue'
 import CompletionBar from '@/components/subComponent/completionBar.vue';
-// import Universe from '@components/characterCreation/universe.vue'
+import Universe from '@/components/subComponent/UniversesSelection.vue'
 
 export default {
     name: 'CharacterCreate',
     components: {
     SidebarLayout,
-    CompletionBar
+    CompletionBar,
+    Universe
 },
     data() {
         return {

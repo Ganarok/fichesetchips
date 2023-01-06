@@ -35,6 +35,7 @@ module.exports = {
             },
             screens: {
                 tablet: { max: '1414px' },
+                grid1Col: { max: '957px' },
                 mobile: { max: '600px' },
                 mobileSup: { min: '601px' },
             },
