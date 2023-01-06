@@ -32,7 +32,7 @@
             <img class="max-h-[192px] w-full" :src="universe.image">
             <div class="p-3 bg-fc-white h-full max-h-[109px] mobile:max-h-[119px]">
                 <h3 class="text-fc-green font-bold">{{universe.name}}</h3>
-                <p class="p-1 text-s">{{universe.description}}</p>
+                <p class="p-1 text-sm">{{universe.description}}</p>
             </div>
         </div>
     </div>
