@@ -6,9 +6,9 @@ import 'mocha'
 import { Payload } from '../../utils/types/auth';
 import defaultUsers from "../../database/fixtures/users"
 import defaultPreferences from "../../database/fixtures/preferences"
-import { User } from '../../database/entities/User';
+import { User } from '../../database/entities/public/User';
 import * as jwt from "jsonwebtoken"
-import { Friend } from '../../database/entities/Friend';
+import { Friend } from '../../database/entities/public/Friend';
 const jwtSecret = process.env.JWTSECRET || "SECRET"
 const user = defaultUsers.defaultUser as User
 const user1 = defaultUsers.defaultUser1 as User

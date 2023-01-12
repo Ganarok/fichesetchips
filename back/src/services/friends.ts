@@ -1,9 +1,9 @@
-import { AppDataSource } from "../database/data-source"
-import { Friend } from "../database/entities/Friend"
-import { User } from "../database/entities/User"
+import { PublicDataSource } from "../database/init/datasources/public-data-source";
+import { Friend } from "../database/entities/public/Friend"
+import { User } from "../database/entities/public/User"
 
-const FriendRepository = AppDataSource.getRepository(Friend)
-const UserRepository = AppDataSource.getRepository(User)
+const FriendRepository = PublicDataSource.getRepository(Friend)
+const UserRepository = PublicDataSource.getRepository(User)
 
 export async function findMyFriends(username: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })

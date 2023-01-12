@@ -1,17 +1,17 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
-import { AppDataSource } from "../data-source";
-import { Preference } from "../entities/Preference";
-import { User } from "../entities/User";
+import { getRepository, MigrationInterface, QueryRunner, Repository } from "typeorm";
+import { PublicDataSource } from "../../init/datasources/public-data-source";
+import { Preference } from "../../entities/public/Preference";
+import { User } from "../../entities/public/User";
 
-import defaultPreferences from "../fixtures/preferences"
-import defaultUsers from "../fixtures/users"
+import defaultPreferences from "../../fixtures/preferences"
+import defaultUsers from "../../fixtures/users"
 
 export class SeedPrefrencesAndUsers1665927924682 implements MigrationInterface {
     name = 'SeedPrefrencesAndUsers1665927924682'
 
     public async up(_: QueryRunner): Promise<any> {
-        const UserRepository = AppDataSource.getRepository(User)
-        const PreferenceRepository = AppDataSource.getRepository(Preference)
+        const UserRepository = PublicDataSource.getRepository(User)
+        const PreferenceRepository = PublicDataSource.getRepository(Preference)
 
         const defaultPreference = defaultPreferences.defaultPreference as Preference
         const darkPreference = defaultPreferences.darkPreference as Preference
@@ -25,12 +25,11 @@ export class SeedPrefrencesAndUsers1665927924682 implements MigrationInterface {
         const admin = defaultUsers.defaultAdmin as User
         const superAdmin = defaultUsers.defaultSuperAdmin as User
         await UserRepository.save([user, user1, user2, user3, admin, superAdmin])
-
     }
 
     public async down(_: QueryRunner): Promise<any> {
-        const UserRepository = AppDataSource.getRepository(User)
-        const PreferenceRepository = AppDataSource.getRepository(Preference)
+        const UserRepository = PublicDataSource.getRepository(User)
+        const PreferenceRepository = PublicDataSource.getRepository(Preference)
         await UserRepository.delete({})
         await PreferenceRepository.delete({})
     }

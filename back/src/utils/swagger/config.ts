@@ -52,7 +52,11 @@ const swaggerDefinition = {
         },
         {
             name: "Users",
-            description: "Everything about the users"
+            description: "Everything about the Users"
+        },
+        {
+            name: "Workshop",
+            description: "Everything about the Workshop"
         }
     ],
     definitions: definitions
@@ -61,7 +65,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ["src/routes/*.ts"],
+    apis: ["src/routes/*.ts", "src/routes/cem/*.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options)
