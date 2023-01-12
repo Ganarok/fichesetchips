@@ -14,6 +14,7 @@ import RoomID from '@/views/rooms/[id]/index.vue'
 import Session from '@/views/rooms/[id]/session.vue'
 import Profile from '@/views/user/profile.vue'
 import ProfileID from '@/views/user/profileID.vue'
+import Maps from '@/views/user/maps.vue'
 import Create_Room from '@/views/rooms/create.vue'
 import NotFound from '@/views/404.vue'
 import CharacterCreate from '@/views/character/create.vue'
@@ -71,6 +72,12 @@ const routes = [{
         path: '/user/profile/:id',
         name: 'ProfileID',
         component: ProfileID,
+        requiresAuth: true
+    },
+    {
+        path: '/user/maps/',
+        name: 'Maps',
+        component: Maps,
         requiresAuth: true
     },
     {
