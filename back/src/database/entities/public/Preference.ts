@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm"
-import defaultPreferences from "../fixtures/preferences"
-import { LANGUAGES, THEMES } from "../../utils/types/preferences";
+import defaultPreferences from "../../fixtures/preferences"
+import { LANGUAGES, THEMES } from "../../../utils/types/preferences";
 
 const defaultPreference = defaultPreferences.defaultPreference
 

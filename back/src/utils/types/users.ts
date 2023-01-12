@@ -1,4 +1,4 @@
-import { User } from "../../database/entities/User";
+import { User } from "../../database/entities/public/User";
 
 export class PublicProfile {
     constructor(user: User) {

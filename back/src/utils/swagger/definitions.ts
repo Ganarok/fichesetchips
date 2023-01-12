@@ -1,4 +1,4 @@
-import { loginRequest, registerRequest, updateRequest } from "./defaultValues";
+import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacterResponse, loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
 export const definitions = {
     loginRequest: {
@@ -260,4 +260,48 @@ export const definitions = {
             }
         }
     },
+    characterWorkshopResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Steps successfully found"
+            },
+            data: {
+                type: "object",
+                default: characterWorkshopCreationResponse
+            },
+        }
+    },
+    getCharactersResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Characters successfully found"
+            },
+            data: {
+                type: "array",
+                default: [GetCharacterResponse]
+            }
+        }
+    },
+    getCharacterResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Character successfully created"
+            },
+            data: {
+                type: "object",
+                default: GetCharacterResponse
+            }
+        }
+    },
+    createCharacterRequest: {
+        properties: {
+            data: {
+                type: "object",
+                default: createCharacterRequest
+            }
+        }
+    }
 }
