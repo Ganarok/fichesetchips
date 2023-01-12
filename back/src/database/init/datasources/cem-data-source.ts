@@ -3,9 +3,9 @@ import { DataSource } from "typeorm"
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-export const AppDataSource = new DataSource({
+export const CEMDataSource = new DataSource({
     type: "postgres",
-    schema: "public",
+    schema: "cem",
     host: process.env.DB_HOST || "localhost",
     port: parseInt(process.env.DB_PORT || "5432"),
     username: process.env.DB_USER || "postgres",
@@ -13,7 +13,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME || "fichesetchips",
     synchronize: true,
     logging: false,
-    entities: ["src/database/entities/*.ts"],
+    entities: ["src/database/entities/workshop/characters/*.ts"],
     migrations: [process.env.DB_MIGRATION_DIR || "src/database/migrations/*.ts"],
-    subscribers: ["src/database/subscribers/*.ts"]
+    subscribers: ["src/database/subscribers/cem/*.ts"]
 })

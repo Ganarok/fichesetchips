@@ -1,10 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, OneToMany, JoinTable } from "typeorm"
-import { ROLE } from "../../utils/types/users";
-import defaultUsers from "../fixtures/users"
-import defaultPreferences from "../fixtures/preferences"
+import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad } from "typeorm"
+import { ROLE } from "../../../utils/types/users";
+import defaultUsers from "../../fixtures/users"
+import defaultPreferences from "../../fixtures/preferences"
 import { Preference } from "./Preference";
 import { OnDeleteType } from "typeorm/metadata/types/OnDeleteType";
-import { Friend } from "./Friend";
 
 const defaultUser = defaultUsers.defaultUser
 const defaultPreference = defaultPreferences.defaultPreference
