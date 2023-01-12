@@ -65,9 +65,9 @@
 </template>
 <script lang="js">
 import Vue from 'vue'
-import MapVue from '~/components/svg/Map.vue'
-import AmisVue from '~/components/svg/Amis.vue'
-import PersoVue from '~/components/svg/Perso.vue'
+import MapVue from '@/components/svg/Map.vue'
+import AmisVue from '@/components/svg/Amis.vue'
+import PersoVue from '@/components/svg/Perso.vue'
 import SidebarLayout from '../layouts/Sidebar.vue'
 
 export default {
@@ -91,7 +91,7 @@ export default {
         }
     },
     components: { MapVue, AmisVue, PersoVue, SidebarLayout },
-})
+}
 </script>
 
 <style>
