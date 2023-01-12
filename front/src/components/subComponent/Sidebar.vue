@@ -11,61 +11,84 @@
                     <img src="@/assets/fetc.png" alt="Fiche&Chips" />
                 </router-link>
             </div>
-            
-            <div
-                class="flex flex-col items-center justify-center text-white space-y-8"
-                v-if="connected()"
-            >
-                <router-link
-                    to="/user/dashboard"
-                    class="font-bold text-xl"
-                    active-class="underline"
-                    >Dashboard</router-link
-                >
-                <router-link
-                    to="/user/profile"
-                    class="font-bold text-xl"
-                    active-class="underline"
-                    >Profile</router-link
-                >
+            <!-- Navbar content when conected-->
+            <div class="content text-white" v-if="connected()">
+                <div class="bloc">
+
+                    <router-link
+                        to="/user/dashboard"
+                        class="font-bold text-xl"
+                    >
+                        {{$t('Dashboard')}} 
+                    </router-link>
+
+                    <router-link
+                        to="/user/profile"
+                        class="font-bold text-xl"
+                    >
+                        {{$t('Profile')}} 
+                    </router-link>
+                </div>
+
+                <div class="bloc">
+                    <div class="categorie" v-bind:class="{active: personnageIsShow}">
+                        <span @click="() => this.personnageIsShow = !this.personnageIsShow">Personnage</span>
+                        <ul v-if="personnageIsShow">
+                            <li>
+                                <router-link to="/user/characters/create">
+                                    {{$t('Créer')}} 
+                                    
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/user/characters">
+                                    {{$t('Liste')}} 
+                                    
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="categorie" v-bind:class="{active: roomIsShow}">
+                        <span @click="() => this.roomIsShow = !this.roomIsShow" >Rooms</span>
+                        <ul v-if="roomIsShow">
+                            <li>
+                                <router-link to="/rooms/create">
+                                    {{$t('Créer')}}  
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/rooms">
+                                    {{$t('Rejoindre')}} 
+                                </router-link>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
             </div>
-            <div
-                class="flex flex-col items-center justify-center text-white space-y-8"
-                v-else>
-                <router-link
-                    to="/"
-                    exact
-                    class="font-bold text-xl"
-                    active-class="underline"
-                    >Accueil</router-link
-                >
-                <router-link
-                    to="/about"
-                    class="font-bold text-xl"
-                    active-class="underline"
-                    >A propos</router-link
-                >
-                <router-link
-                    to="/glossaire"
-                    class="font-bold text-xl"
-                    active-class="underline"
-                    >Glossaire</router-link
-                >
+            <!-- Navbar content when not conected (guest)-->
+            <div class="content disconected text-white " v-else>
+                <div class="bloc">
+
+                    <router-link to="/" exact class="font-bold text-xl" >
+                        {{$t('Accueil')}}
+                    </router-link>
+
+                    <router-link to="/about" class="font-bold text-xl"> 
+                        {{$t('A propos')}}
+                    </router-link>
+                    
+                    <router-link to="/glossaire" class="font-bold text-xl">
+                        {{$t('Glossaire')}}
+                    </router-link>
+                </div>
             </div>
+
     
-            <div
-                class="flex flex-col w-full justify-center items-center relative">
-                <router-link
-                    exact
-                    to="/"
-                    class="font-bold text-xl w-[80%]"
-                    @click.native="logout()"
-                    v-if="connected()"
-                    ><Button
-                        buttonText="Logout"
-                        class="text-fc-yellow"
-                        color="fc-yellow"
-                /></router-link>
+            <div class="flex flex-col w-full justify-center items-center relative">
+                <router-link exact to="/" class="button" @click.native="logout()" v-if="connected()">
+                    {{$t('Déconnexion')}}
+                </router-link>
                 <img src="@/assets/icon.png" class="w-2/4" alt="F&C logo" />
                 <p class="text-white text-[10px]">Made with love by fiches&chips</p>
             </div>
@@ -78,6 +101,12 @@ import Button from '@/components/subComponent/Button.vue'
 export default {
     name: 'Sidebar',
     components: { Button },
+    data() {
+        return {
+            personnageIsShow: true,
+            roomIsShow: true
+        }
+    },
     methods: {
         connected: function () {
             return this.$store.getters.connected
@@ -89,8 +118,103 @@ export default {
             let sidebar = document.querySelector('.sidebar')
             sidebar.classList.toggle('-translate-x-full')
         },
+        toggle: function (e) {
+            this.e = !e
+        },
     },
 }
 </script>
 
-<style></style>
+<style>
+.sidebar .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    height: 100%;
+    padding-left: 1rem;
+}
+
+.sidebar .content.disconected{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sidebar .content.disconected .bloc{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30%;  
+}
+
+.sidebar .content .bloc{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+}
+.sidebar .content .bloc .categorie{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.sidebar .content .bloc .categorie span{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.sidebar .content .bloc .categorie span::after{
+    content: url(../../assets/selector.svg);
+    margin-left: .5rem;
+    display: inline-flex;
+    transition: all .25s ease;
+}
+
+.sidebar .content .bloc .categorie.active span::after{
+    content: url(../../assets/selector.svg);
+    transition: all .25s ease;
+    display: inline-flex;
+    transform: rotate(180deg);
+
+}
+.sidebar .content .bloc .categorie ul{
+    visibility: visible;
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    list-style: none;
+    color: #FFFFFF;
+    opacity: 0.5;
+    padding-left: .5rem;
+
+}
+.sidebar .content .bloc .categorie ul li{
+    line-height: 1.8rem;
+}
+.sidebar .content .bloc .categorie ul li::before{
+    content: "■";
+    font-size: .8rem;
+    color: #FFDB57;
+    margin-right: .5rem;
+    position: relative;
+    display: inline-block;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-10%);
+}
+
+.button{
+    color: #FFDB57;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 1px solid #FFDB57;
+    padding: .5rem 1rem;
+    border-radius: 100px;
+    transition: all .2s ease-in-out;
+}
+.button:hover{
+    background-color: #FFDB57;
+    color: #1E1E1E;
+}
+</style>
