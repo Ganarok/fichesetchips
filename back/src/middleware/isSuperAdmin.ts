@@ -2,7 +2,7 @@ import { Response, NextFunction, Request } from "express";
 import * as usersService from "../services/users";
 import { JwtPayload } from "jsonwebtoken";
 import { CustomRequest } from "../middleware/authJwt";
-import { User } from "../database/entities/User";
+import { User } from "../database/entities/public/User";
 
 export const isSuperAdmin = async (
   req: Request,

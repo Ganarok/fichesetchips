@@ -1,12 +1,12 @@
 import { JwtPayload } from "jsonwebtoken";
-import { AppDataSource } from "../database/data-source";
-import { User } from "../database/entities/User";
+import { PublicDataSource } from "../database/init/datasources/public-data-source";
+import { User } from "../database/entities/public/User";
 import { Payload } from "../utils/types/auth";
 import { CreateUser, PublicProfile, UpdateUser } from "../utils/types/users";
 import * as jwt from "jsonwebtoken"
 
 const jwtSecret = process.env.JWTSECRET || "SECRET"
-const UserRepository = AppDataSource.getRepository(User)
+const UserRepository = PublicDataSource.getRepository(User)
 
 export async function create(user: CreateUser) {
     const new_user = await UserRepository.save(user)

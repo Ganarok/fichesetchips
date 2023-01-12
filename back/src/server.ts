@@ -4,11 +4,10 @@ import cors from "cors"
 import { routing } from "./routes/routes"
 import { configSwagger } from "./utils/swagger/config"
 import * as dotenv from 'dotenv'
-import { databaseConnection } from "./database/connection"
 import { Server } from 'socket.io'
 import { createServer } from 'http'
 import initSockets from "./sockets/index"
-
+import { databaseConnection } from "./database/init/connection";
 dotenv.config();
 const app = express();
 app.set("db_connexion", false)

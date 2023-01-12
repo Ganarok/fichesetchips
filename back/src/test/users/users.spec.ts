@@ -7,7 +7,7 @@ import { Payload } from '../../utils/types/auth';
 import defaultUsers from "../../database/fixtures/users"
 import defaultAvatar from "../../database/fixtures/avatar"
 import defaultPreferences from "../../database/fixtures/preferences"
-import { User } from '../../database/entities/User';
+import { User } from '../../database/entities/public/User';
 import * as jwt from "jsonwebtoken"
 import { PrivateProfileWhithoutDate, PublicProfileWhithoutDate } from '../../utils/types/users';
 
