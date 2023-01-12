@@ -34,11 +34,11 @@ export async function deleteReport(id: string) {
   return { reports: reports };
 }
 
-export async function patchReport(id: string, reason: string) {
-    const report = await ReportsRepository.findOneOrFail({ where: { id: id } });
-    if(report != undefined) {
+export async function patchReport(id: string, reason: string) {  
+    const report = await ReportsRepository.findOneOrFail({ where: { id: id } });    
+    // if(report != undefined) {
         report.reason = reason;
         ReportsRepository.save(report);
-    }
+    // }
     return { report: report };
   }
