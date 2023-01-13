@@ -1,3 +1,5 @@
+import store from "../store/index"
+
 export async function apiCall({
     route,
     method = "GET",
