@@ -1,8 +1,8 @@
 <template>
     <div
+        v-click-outside="closeSelector"
         :class="selectorClass"
-        @click="switchOpened()"
-        v-click-outside="closeSelector">
+        @click="switchOpened()">
         <div class="flex space-x-2">
             <option class="font-bold" default>{{ selectedItem }}</option>
 
@@ -21,18 +21,18 @@
         <div v-if="isOpened" class="absolute pt-[20%] top-4 w-36 z-50">
             <option
                 v-for="(item, index) in computedItems"
-                @click="
-                    (v) => {
-                        selectedItem = v.target.value
-                        onSelectItem(v.target.value)
-                    }
-                "
+                :key="index"
                 :class="
                     item === selectedItem
                         ? optionClass + ' text-fc-green'
                         : optionClass + ' text-white'
                 "
-                :key="index">
+                @click="
+                    (v) => {
+                        selectedItem = v.target.value
+                        onSelectItem(v.target.value)
+                    }
+                ">
                 {{ item }}
             </option>
 
@@ -46,10 +46,7 @@
 <script>
 export default {
     props: {
-        items: {
-            type: [Array, Object],
-            default: [],
-        },
+        items: Array,
         onSelectItem: {
             type: Function,
             default: () => {},

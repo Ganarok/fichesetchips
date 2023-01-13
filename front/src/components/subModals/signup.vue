@@ -13,21 +13,21 @@
             </div>
             <div class="flex flex-col justify-evenly m-auto p-[14%] h-[70%]">
                 <CustomInput
-                    :maxLength="36"
-                    @input="(v) => this.handleId(v)"
-                    placeHolder="Identifiant" />
+                    :max-length="36"
+                    place-holder="Identifiant"
+                    @input="(v) => handleId(v)" />
                 <CustomInput
-                    :maxLength="254"
-                    @input="(v) => this.handleMail(v)"
-                    placeHolder="Adresse Mail" />
+                    :max-length="254"
+                    place-holder="Adresse Mail"
+                    @input="(v) => handleMail(v)" />
                 <CustomInput
-                    :maxLength="64"
-                    @input="(v) => this.handlePassword(v)"
-                    placeHolder="Mot de passe" />
+                    :max-length="64"
+                    place-holder="Mot de passe"
+                    @input="(v) => handlePassword(v)" />
             </div>
             <div class="header h-[15%]">
                 <img src="@/assets/littlegreenpixels.svg" alt="" />
-                <button @click="handleGo" class="mr-[5%]">
+                <button class="mr-[5%]" @click="handleGo">
                     <h2 class="text-5xl">Go</h2>
                 </button>
             </div>

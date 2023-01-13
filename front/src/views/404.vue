@@ -12,8 +12,8 @@
             <Button 
                 :filled="true"
                 class="w-1/2 self-center"
-                :buttonText="$t('Retour')"
-                @click="() => this.handleBack()"
+                :button-text="$t('Retour')"
+                @click="() => handleBack()"
             />
         </div>
     </div>

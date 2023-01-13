@@ -20,12 +20,12 @@
 
 <script>
 import Loader from '@/components/Loader.vue'
-import Button from '@/components/subComponent/Button.vue'
+// import Button from '@/components/subComponent/Button.vue'
 
 export default {
     components: {
         Loader,
-        Button,
+        // Button,
     },
     data() {
         return {

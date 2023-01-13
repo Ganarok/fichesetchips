@@ -8,10 +8,10 @@
             :type="inputType"
             :value="inputValue"
             :placeholder="placeholder"
-            v-on:focusout="onValueChanged"
             :class="defaultInputClass"
             :max="max"
-            :min="min" />
+            :min="min"
+            @focusout="onValueChanged" />
     </div>
 </template>
 
@@ -55,19 +55,10 @@ export default {
             default: 0
         }
     },
-    methods: {
-        getDefaultValue() {
-            switch (this.inputType) {
-                case 'checkbox':
-                    return false
-
-                case 'number':
-                    return 0
-
-                default:
-                    return false
-            }
-        },
+    data() {
+        return {
+            defaultInputClass: '',
+        }
     },
     beforeMount() {
         switch (this.inputType) {
@@ -83,10 +74,19 @@ export default {
                 break
         }
     },
-    data() {
-        return {
-            defaultInputClass: '',
-        }
+    methods: {
+        getDefaultValue() {
+            switch (this.inputType) {
+                case 'checkbox':
+                    return false
+
+                case 'number':
+                    return 0
+
+                default:
+                    return false
+            }
+        },
     },
 }
 </script>

@@ -31,15 +31,15 @@
 
             <div v-if="!loading" class="space-y-1">
                 <CustomInput
-                    :maxLength="256"
-                    @input="(v) => this.handleEmail(v.target.value)"
-                    placeHolder="Email"
-                    :hasError="emailError"
-                    :onFocusOut="() => this.handleEmailFocusOut()" />
+                    :max-length="256"
+                    place-holder="Email"
+                    :has-error="emailError"
+                    :on-focus-out="() => handleEmailFocusOut()"
+                    @input="(v) => handleEmail(v.target.value)" />
             </div>
 
-            <div class="self-center my-12" v-else>
-                <Loader cubeColor="fc-yellow" />
+            <div v-else class="self-center my-12">
+                <Loader cube-color="fc-yellow" />
             </div>
 
             <div v-if="!loading" class="flex justify-between items-start mt-4">
@@ -49,8 +49,8 @@
                 </p>
 
                 <button
-                    @click="handleEmail"
-                    class="mr-5 self-end text-5xl font-bold">
+                    class="mr-5 self-end text-5xl font-bold"
+                    @click="handleEmail">
                     Go
                 </button>
             </div>
@@ -60,15 +60,17 @@
 
 <script>
 import CustomInput from '@/components/subComponent/CustomInput.vue'
-import subModalSignup from '@/components/subModals/signup.vue'
+// import subModalSignup from '@/components/subModals/signup.vue'
 import Loader from '@/components/Loader.vue'
-import { apiCall } from '@/utils/apiCall'
 import { isEmailValid } from '@/utils/validations'
 import { useToast } from 'vue-toastification'
 
 export default {
 name: 'Login',
-    components: { subModalSignup, CustomInput, Loader },
+    components: { 
+        // subModalSignup, 
+        CustomInput, 
+        Loader },
     props: {
         loading: {
             type: Boolean,

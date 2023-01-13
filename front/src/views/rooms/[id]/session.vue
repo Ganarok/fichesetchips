@@ -1,17 +1,17 @@
 <template>
     <SidebarLayout>
         <div 
-            class="flex w-full h-full items-center justify-center"
             v-if="loading"
+            class="flex w-full h-full items-center justify-center"
         >
             <Loader />
         </div>
 
         <Chat 
+            v-else
             :connected="connected"
             :messages="messages"
-            :sendMessage="sendMessage"
-            v-else
+            :send-message="sendMessage"
         />
     </SidebarLayout>
 </template>

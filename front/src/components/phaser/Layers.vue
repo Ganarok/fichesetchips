@@ -1,7 +1,7 @@
 <template>
     <div
         class="flex relative w-full px-4 items-center text-white font-bold select-none bg-fc-black border-t border-fc-green transition duration-250 ease-in-out z-50"
-        :class="this.$store.state.phaser.layerTab
+        :class="$store.state.phaser.layerTab
             ? 'h-12'
             : 'h-1'
         "
@@ -13,14 +13,14 @@
             <div class="flex w-full space-x-4">
                 <div
                     class="flex items-center justify-center bg-fc-black-light p-2"
-                    @click="() => this.$store.commit('updateState', { property: 'layerTab', newState: !this.$store.state.phaser.layerTab })"
+                    @click="() => $store.commit('updateState', { property: 'layerTab', newState: !$store.state.phaser.layerTab })"
                 >
                     <img
                         src="@/assets/selector.svg"
                         class="object-contain"
                         alt="Arrow"
                         :class="
-                        this.$store.state.phaser.layerTab
+                        $store.state.phaser.layerTab
                             ? 'transition duration-250'
                             : 'transition duration-250 rotate-180'
                         "
@@ -30,34 +30,36 @@
                 <Layer
                     v-for="(layer, index) in layers"
                     :layer="layer"
+                    :key="index"
                     :index="index"
-                    :isSelected="selectedLayer === index"
-                    @click="this.updateLayer(index)"
+                    :is-selected="selectedLayer === index"
+                    @click="updateLayer(index)"
                 />
             </div>
         </div>
 
         <div
-            class="flex w-full self-center justify-center"
-            v-if="loadingAssets">
+            v-if="loadingAssets"
+            class="flex w-full self-center justify-center">
             <Loader
                 :size=15
             />
         </div>
 
         <div
-            class="flex w-full items-center space-x-2 overflow-x-scroll py-2 scrollbar-hide"
-            id="canvasContainer"
-            :class="this.$store.state.phaser.layerTab ? '' : 'hidden'"
             v-else
+            id="canvasContainer"
+            class="flex w-full items-center space-x-2 overflow-x-scroll py-2 scrollbar-hide"
+            :class="$store.state.phaser.layerTab ? '' : 'hidden'"
         >
             <img
-                class="flex w-8 h-8 items-center cursor-pointer object-contain border border-fc-green"
-                v-for="img, index in this.$store.state.phaser.tilesPics[selectedLayer]"
+                v-for="img, index in $store.state.phaser.tilesPics[selectedLayer]"
                 :id="`canvas_${index}`"
+                :key="index"
+                class="flex w-8 h-8 items-center cursor-pointer object-contain border border-fc-green"
                 :src="img.src"
                 :alt="img.alt"
-                @click="() => this.updateSelectedTile(index)"
+                @click="() => updateSelectedTile(index)"
             />
         </div>
     </div>
@@ -70,6 +72,21 @@ import Loader from '@/components/Loader.vue';
 export default {
     name: 'Layers',
     components: { Layer, Loader },
+    data() {
+        setTimeout(() => {
+            this.initLayers()
+            this.loadingAssets = false
+
+            // console.log(Object.values(tileSets[selectedLayer].image.frames))
+            // console.log(this.$store.state.phaser.tileSets[1]);
+        }, 1000)
+
+        return {
+            ...this.$store.state.phaser,
+            loadingAssets: true,
+            gl: null
+        }
+    },
     methods: {
         createCanvas(id, gl, texture, x = 0, y = 0) {
             // Create a framebuffer backed by the texture
@@ -170,21 +187,6 @@ export default {
                 })
             })
         },
-    },
-    data() {
-        setTimeout(() => {
-            this.initLayers()
-            this.loadingAssets = false
-
-            // console.log(Object.values(tileSets[selectedLayer].image.frames))
-            // console.log(this.$store.state.phaser.tileSets[1]);
-        }, 1000)
-
-        return {
-            ...this.$store.state.phaser,
-            loadingAssets: true,
-            gl: null
-        }
     }
 }
 </script>

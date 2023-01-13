@@ -24,9 +24,6 @@
 
 <script>
 export default {
-    data() {
-        return { localFav: false }
-    },
     props: {
         background: {type:String, default: '../../assets/icons/star.svg'},
         border: String,
@@ -34,6 +31,27 @@ export default {
         canFav: Boolean,
         isFav: { type: Boolean, default: null },
         completion: { type: Number, default: 0 },
+    },
+    data() {
+        return { localFav: false }
+    },
+    computed: {
+        displayFav: function () {
+            if (this.isFav === null) return this.localFav
+            else return this.isFav
+        },
+        badgeSize() {
+            switch (this.size) {
+                case 's':
+                    return {badge:'h-10 md:h-10',favButton:'h-4 left-6'}
+                case 'm':
+                    return {badge:'h-10 md:h-10',favButton:'h-4 left-6'}
+                case 'l':
+                    return {badge:'h-4/5',favButton:'h-4 left-6'}
+                default:
+                    return null
+            }
+        },
     },
     methods: {
         callback: function (e) {
@@ -56,24 +74,6 @@ export default {
         handleFav() {
             this.localFav = !this.localFav
             this.$emit('favorite', this.displayFav)
-        },
-    },
-    computed: {
-        displayFav: function () {
-            if (this.isFav === null) return this.localFav
-            else return this.isFav
-        },
-        badgeSize() {
-            switch (this.size) {
-                case 's':
-                    return {badge:'h-10 md:h-10',favButton:'h-4 left-6'}
-                case 'm':
-                    return {badge:'h-10 md:h-10',favButton:'h-4 left-6'}
-                case 'l':
-                    return {badge:'h-4/5',favButton:'h-4 left-6'}
-                default:
-                    return null
-            }
         },
     },
 }

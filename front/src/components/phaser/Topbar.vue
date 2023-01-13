@@ -14,7 +14,7 @@
             src="@/assets/icon.svg"
             class="h-7 w-7 cursor-pointer hover:opacity-80"
             alt="logo"
-            :onclick="() => this.$router.push('/')"
+            :onclick="() => $router.push('/')"
         />
     </div>
 </template>

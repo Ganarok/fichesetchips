@@ -28,21 +28,21 @@
 
             <div v-if="!loading" class="space-y-1 mt-4">
                 <CustomInput
-                    :maxLength="36"
-                    @input="(v) => this.handleUsername(v.target.value)"
-                    :placeHolder="$t('Identifiant')"
-                    :hasError="credentialsError"
+                    :max-length="36"
+                    :place-holder="$t('Identifiant')"
+                    :has-error="credentialsError"
                     outline="fc-green"
-                    :onFocusOut="() => this.handleFocusOut()" />
+                    :on-focus-out="() => handleFocusOut()"
+                    @input="(v) => handleUsername(v.target.value)" />
 
                 <CustomInput
-                    :maxLength="64"
-                    @input="(v) => this.handlePassword(v.target.value)"
+                    :max-length="64"
                     type="password"
-                    :placeHolder="$t('Mot de passe')"
-                    :hasError="credentialsError"
+                    :place-holder="$t('Mot de passe')"
+                    :has-error="credentialsError"
                     outline="fc-green"
-                    :onFocusOut="() => this.handleFocusOut()" />
+                    :on-focus-out="() => handleFocusOut()"
+                    @input="(v) => handlePassword(v.target.value)" />
                 <p
                     class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">
                     <router-link to="/forgot-password">
@@ -51,8 +51,8 @@
                 </p>
             </div>
 
-            <div class="self-center my-16" v-else>
-                <Loader cubeColor="fc-yellow" />
+            <div v-else class="self-center my-16">
+                <Loader cube-color="fc-yellow" />
             </div>
 
             <div v-if="!loading" class="flex justify-between items-end">
@@ -61,8 +61,8 @@
                 </p>
 
                 <button
-                    @click="handleLogin"
-                    class="mr-5 self-end text-5xl font-bold">
+                    class="mr-5 self-end text-5xl font-bold"
+                    @click="handleLogin">
                     Go
                 </button>
             </div>
@@ -72,7 +72,6 @@
 
 <script>
 import CustomInput from '@/components/subComponent/CustomInput.vue'
-import subModalSignup from '@/components/subModals/signup.vue'
 import Loader from '@/components/Loader.vue'
 import { apiCall } from '@/utils/apiCall'
 import { useToast } from 'vue-toastification'
@@ -81,7 +80,7 @@ const CryptoJS = require("crypto-js");
 
 export default {
     name: 'Login',
-    components: { subModalSignup, CustomInput, Loader },
+    components: { CustomInput, Loader },
     props: {
         loading: {
             type: Boolean,

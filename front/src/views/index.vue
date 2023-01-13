@@ -1,10 +1,10 @@
 <template>
-    <SidebarLayout :topRightPixels="false" :isBorder=false>
+    <SidebarLayout :top-right-pixels="false" :is-border=false>
         <div class="flex flex-col">
             <div
-                v-on:scroll="scrollHandler"
+                id="top"
                 class="flex flex-col"
-                id="top">
+                @scroll="scrollHandler">
                 <div class="h-screen tashas font-barlow relative mobile:h-[calc(100vh-80px)]">
                     <div
                         class="flex flex-col w-[41%] bg-fc-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%] mobile:w-full">
@@ -25,9 +25,9 @@
                     </div>
                     <Transition name="fade">
                         <div
-                            class="absolute bottom-0 left-[50%] animate-bounce"
-                            v-show="isVisibleBounce">
-                            <a @scroll="scrollHandler" href="#MapVue">
+                            v-show="isVisibleBounce"
+                            class="absolute bottom-0 left-[50%] animate-bounce">
+                            <a href="#MapVue" @scroll="scrollHandler">
                                 <img
                                     class="w-[50px] h-[50px] rotate-180"
                                     src="../assets/vector.svg"
@@ -36,7 +36,7 @@
                         </div>
                     </Transition>
                 </div>
-                <div class="flex flex-col overflow-x-hidden background" id="MapVue">
+                <div id="MapVue" class="flex flex-col overflow-x-hidden background">
                     <div
                         class="w-full pl-0 translate-x-[-10px] sm:translate-x-[-25px]">
                         <MapVue />
@@ -53,10 +53,10 @@
             </div>
             <Transition name="fade">
                 <a
-                    @scroll="scrollHandler"
+                    v-show="isVisible"
                     href="#top"
                     class="fixed transition-opacity bottom-0 right-0 w-[50px] h-[50px] m-[2%] z-50"
-                    v-show="isVisible">
+                    @scroll="scrollHandler">
                     <img src="../assets/vector.svg" alt="vector" />
                 </a>
             </Transition>
@@ -72,14 +72,15 @@ import SidebarLayout from '@/layouts/Sidebar.vue'
 
 export default {
     name: "IndexPage",
+    components: { MapVue, AmisVue, PersoVue, SidebarLayout },
+    data: function () {
+        return { isVisible: false, isVisibleBounce: true };
+    },
     mounted() {
         window.addEventListener('scroll', this.scrollHandler)        
     },
-    destroyed() {
+    unmounted() {
         window.removeEventListener('scroll', this.scrollHandler)
-    },
-    data: function () {
-        return { isVisible: false, isVisibleBounce: true };
     },
     methods: {
         scrollHandler: function scrollHandler(e) {
@@ -90,7 +91,6 @@ export default {
             console.log('this', this);
         }
     },
-    components: { MapVue, AmisVue, PersoVue, SidebarLayout },
 }
 </script>
 
