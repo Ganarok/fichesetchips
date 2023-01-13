@@ -4,6 +4,7 @@
             src="@/assets/option.svg"
             class="h-6 w-6 cursor-pointer transition ease-in-out hover:opacity-80 hover:rotate-90"
             alt="option"
+            v-bind:on-click="() => this.options = true"
         />
 
         <h1>
@@ -23,6 +24,11 @@
 
 export default {
     name: 'Topbar',
+    data() {
+        return {
+            options: false
+        }
+    }
 }
 
 </script>
