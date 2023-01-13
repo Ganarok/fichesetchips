@@ -48,25 +48,23 @@
 </template>
 
 <script>
-
 export default {
-    name: 'Chat',
-    props: {
-        connected: {
-            type: Boolean,
-            required: true
-        },
-        // messages: Array,
-        sendMessage: {
-            type: Function,
-            required: true,
-        }
+  name: "Chat",
+  props: {
+    connected: {
+      type: Boolean,
+      required: true,
     },
-    data() {
-        return {
-            message: ''
-        }
+    // messages: Array,
+    sendMessage: {
+      type: Function,
+      required: true,
     },
-}
-
+  },
+  data() {
+    return {
+      message: "",
+    };
+  },
+};
 </script>
