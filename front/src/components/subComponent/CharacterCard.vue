@@ -3,21 +3,21 @@
         class="flex flex-col items-center max-w-xs max-h-[550px] border-2 border-fc-green p-2"
     >
         <div
-            class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold"
             v-if="level || name"
+            class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold"
         >
             <p>
                 {{ name }}
             </p>
 
-            <p class="text-fc-black opacity-60" v-if="level">
+            <p v-if="level" class="text-fc-black opacity-60">
                 Lvl. {{ level }}
             </p>
         </div>
 
         <div
-            class="relative bg-fc-yellow w-full my-2"
             v-if="image"
+            class="relative bg-fc-yellow w-full my-2"
         >
             <img
                 src="../../assets/dragon.svg"
@@ -25,7 +25,7 @@
                 :style="grayed ? 'filter: grayscale(1)' : null" />
         </div>
 
-        <div class="bg-fc-yellow h-80 w-full m-2" v-else/>
+        <div v-else class="bg-fc-yellow h-80 w-full m-2"/>
 
         <div class="w-full h-24 bg-fc-green p-2">
             <p class="text-sm text-ellipsis text-justify overflow-y-scroll pr-3 break-words h-3/4">
@@ -36,8 +36,8 @@
             </p>
 
             <div
-                class="flex flex-row items-center justify-end text-sm space-x-4 w-full h-1/4"
                 v-if="owner || location"
+                class="flex flex-row items-center justify-end text-sm space-x-4 w-full h-1/4"
             >
                 <p>
                     {{ owner }}

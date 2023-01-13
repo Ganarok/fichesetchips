@@ -1,5 +1,5 @@
 <template>
-    <SidebarLayout :isBorder="false">
+    <SidebarLayout :is-border="false">
         <div class="h-screen w-full flex flex-col font-barlow">
             <div class="flex md:flex-row flex-col md:h-[60%] p-12">
 
@@ -53,10 +53,10 @@
             <div
                 class="flex w-full md:h-60 h-40 items-center justify-evenly space-x-2 bg-fc-yellow overflow-auto">
                 <Badge
-                    size="l"
-                    :completion="badge.completion"
                     v-for="badge in badges"
-                    :key="badge.id" />
+                    :key="badge.id"
+                    size="l"
+                    :completion="badge.completion" />
             </div>
         </div>
     </SidebarLayout>
@@ -72,9 +72,6 @@ import { apiCall } from '@/utils/apiCall'
 
 export default {
     components: { CustomTable, EditableDiv, SidebarLayout, Avatar, Badge },
-  mounted() {
-    this.badgeGenerator()
-  },
   data() {
         return {
           user: {
@@ -91,6 +88,9 @@ export default {
           badges: [],
         }
     },
+  mounted() {
+    this.badgeGenerator()
+  },
   methods:{
     badgeGenerator(badgeNbr = 5) {
       for (let index = 0; index < badgeNbr; index++) {

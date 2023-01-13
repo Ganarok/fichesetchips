@@ -11,33 +11,33 @@
             <div class="flex flex-row items-center pl-6 space-x-6">
                 <Selector
                     :items="ROOMSTATUS"
-                    :defaultSelectedItem="$t('Statut')"
-                    :onSelectItem="(v) => this.updateRoomStatus(v)" />
+                    :default-selected-item="$t('Statut')"
+                    :on-select-item="(v) => updateRoomStatus(v)" />
 
                 <Selector
                     :items="PLAYSTYLE"
-                    :defaultSelectedItem="$t('Expérience')"
-                    :onSelectItem="(v) => this.updatePlayStyle(v)" />
+                    :default-selected-item="$t('Expérience')"
+                    :on-select-item="(v) => updatePlayStyle(v)" />
 
                 <ParamInput
-                    :inputText="'Niv. Min:'"
-                    inputType="number"
+                    :input-text="'Niv. Min:'"
+                    input-type="number"
                     :placeholder="0"
-                    :inputValue="minLevel"
-                    inputClass="outline-none"
-                    :onValueChanged="(v) => updateMinLevel(v.target.value)" />
+                    :input-value="minLevel"
+                    input-class="outline-none"
+                    :on-value-changed="(v) => updateMinLevel(v.target.value)" />
 
                 <ParamInput
-                    :inputText="'Salles pleines'"
-                    inputType="checkbox"
-                    :inputValue="roomfull"
-                    :onValueChanged="(v) => updateRoomFull(v.target.value)" />
+                    :input-text="'Salles pleines'"
+                    input-type="checkbox"
+                    :input-value="roomfull"
+                    :on-value-changed="(v) => updateRoomFull(v.target.value)" />
 
                 <ParamInput
-                    :inputText="'Salles privées'"
-                    inputType="checkbox"
-                    :inputValue="roomprivate"
-                    :onValueChanged="
+                    :input-text="'Salles privées'"
+                    input-type="checkbox"
+                    :input-value="roomprivate"
+                    :on-value-changed="
                         (v) => updateRoomPrivate(v.target.value)
                     " />
             </div>
@@ -46,9 +46,9 @@
                 class="w-[20%] px-2 h-full bg-fc-black-light font-bold outline-none"
                 :class="search.length > 0 ? 'text-fc-yellow' : ''"
                 :value="search"
-                @input="(v) => (this.search = v.target.value)"
                 placeholder="Rechercher..."
-                type="text" />
+                type="text"
+                @input="(v) => (search = v.target.value)" />
         </div>
 
         <Sheet :route="apiRoute" :search="query" />
@@ -68,6 +68,20 @@ export default {
         Sheet,
         Selector,
         ParamInput,
+    },
+    data() {
+        return {
+            ROOMSTATUS,
+            PLAYSTYLE,
+            query: '?',
+            search: '',
+            selectedRoomStatus: '',
+            selectedPlayStyle: '',
+            apiRoute: 'rooms',
+            minLevel: 0,
+            roomfull: false,
+            roomprivate: false,
+        }
     },
     methods: {
         updateRoomStatus(status) {
@@ -108,20 +122,6 @@ export default {
             }
         },
         getRooms() {},
-    },
-    data() {
-        return {
-            ROOMSTATUS,
-            PLAYSTYLE,
-            query: '?',
-            search: '',
-            selectedRoomStatus: '',
-            selectedPlayStyle: '',
-            apiRoute: 'rooms',
-            minLevel: 0,
-            roomfull: false,
-            roomprivate: false,
-        }
     },
 }
 </script>

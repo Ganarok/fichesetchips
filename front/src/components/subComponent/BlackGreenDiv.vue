@@ -2,25 +2,25 @@
     <div 
         :class="`flex w-full relative ${maxWidth} items-center justify-center bg-fc-black py-4 ${height}`"
     >
-        <div class="absolute left-0 bg-fc-green h-full w-3 sm:w-8" v-if="leftGreenDiv" />
+        <div v-if="leftGreenDiv" class="absolute left-0 bg-fc-green h-full w-3 sm:w-8" />
 
         <p 
-            :class="`flex text-ellipsis text-xl font-bold ${color} sm:${this.getTextSize()}`"
             v-if="!canEdit"
+            :class="`flex text-ellipsis text-xl font-bold ${color} sm:${getTextSize()}`"
         >
             {{ title }}
         </p>
 
         <input
+            v-else
             :class="`flex text-center self-center sm:w-1/2 w-full bg-transparent outline-none font-bold placeholder:font-normal placeholder:text-fc-yellow placeholder:italic ${color} ${maxWidth} ${height}`"
             type="text"
-            :value="this.title"
+            :value="title"
             :placeholder="placeholder"
             @change="onChange"
-            v-else
         />
 
-        <div class="absolute right-0 bg-fc-green h-full w-3 sm:w-8" v-if="rightGreenDiv" />
+        <div v-if="rightGreenDiv" class="absolute right-0 bg-fc-green h-full w-3 sm:w-8" />
     </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-    <SidebarLayout :isBorder="false">
+    <SidebarLayout :is-border="false">
         <div class="flex flex-col h-screen w-full md:flex-row">
             <div
                 class="flex flex-col relative items-center justify-between h-full w-full md:w-1/2 md:max-w-sm space-y-4 p-4 md:border-fc-green md:border-r-4"
@@ -18,24 +18,24 @@
                 </div>
 
                 <div class="flex flex-col items-center space-y-1 text-xl">
-                    <EditableDiv :editMode="editMode" v-model="user.location" />
-                    <EditableDiv :editMode="editMode" v-model="user.email" />
+                    <EditableDiv v-model="user.location" :edit-mode="editMode" />
+                    <EditableDiv v-model="user.email" :edit-mode="editMode" />
                 </div>
 
                 <p class="flex text-center font-bold italic text-xl">
-                    <EditableDiv v-model="user.description" :editMode="editMode"/>
+                    <EditableDiv v-model="user.description" :edit-mode="editMode"/>
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center ">
                     <Badge
-                        size="s"
-                        canFav
-                        class="m-1"
-                        :isFav="badges[badgesPage][idx].isFav"
-                        :completion="badge.completion"
-                        @favorite="handleFavorite(badge.id)"
                         v-for="(badge, idx) in badges[badgesPage]"
-                        :key="badge.id" />
+                        :key="badge.id"
+                        size="s"
+                        can-fav
+                        class="m-1"
+                        :is-fav="badges[badgesPage][idx].isFav"
+                        :completion="badge.completion"
+                        @favorite="handleFavorite(badge.id)" />
                 </div>
 
                 <div class="flex items-center justify-evenly mt-4">
@@ -172,15 +172,15 @@
                     <div class="h-1 w-full bg-fc-black" />
     
                     <div class="flex self-center overflow-x-auto space-x-2 justify-center items-center h-full w-full md:w-[50vw] my-4">
-                        <div class="flex font-bold text-center h-full items-center" v-if="friendsList.length < 1">
+                        <div v-if="friendsList.length < 1" class="flex font-bold text-center h-full items-center">
                             Ajoutez des amis pour voir leur status
                         </div>
     
                         <Avatar
                             v-for="friend in friendsList"
+                            :key="friend.username"
                             :grayed="!friend.online"
                             :username="friend.username"
-                            :key="friend.username"
                         />
                     </div>
                 </div>
@@ -223,7 +223,6 @@
 </template>
 
 <script>
-import CustomTable from '@/components/subComponent/CustomTable.vue'
 import Modal from '@/components/Modal.vue'
 import EditableDiv from '@/components/subComponent/EditableDiv.vue'
 import Avatar from '@/components/subComponent/Avatar.vue'
@@ -235,7 +234,6 @@ import { apiCall } from '@/utils/apiCall'
 export default {
     components: {
         Modal,
-        CustomTable,
         EditableDiv,
         Avatar,
         Badge,
@@ -268,6 +266,17 @@ export default {
             preview: false,
             editMode: false,
         }
+    },
+    computed: {
+        badgesToDisplayWhenPublic() {
+            let toDisplay = []
+            this.badges.forEach((badgeList) =>
+                badgeList.forEach((badge) =>
+                    badge.isFav ? toDisplay.push(badge) : null
+                )
+            )
+            return toDisplay
+        },
     },
     mounted() {
         this.badgeGenerator(3)
@@ -362,17 +371,6 @@ export default {
                 .catch((err) => {
                     console.log('err', err)
                 })
-        },
-    },
-    computed: {
-        badgesToDisplayWhenPublic() {
-            let toDisplay = []
-            this.badges.forEach((badgeList) =>
-                badgeList.forEach((badge) =>
-                    badge.isFav ? toDisplay.push(badge) : null
-                )
-            )
-            return toDisplay
         },
     },
 }

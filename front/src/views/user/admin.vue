@@ -11,11 +11,11 @@
             <div class="flex flex-row pl-6 space-x-6">
                 <p
                     v-for="(categorie, index) in categories"
+                    :id="categorie.name"
                     :key="index"
                     class="relative text-lg font-bold p-2 select-none hover:cursor-pointer xl:text-xl"
-                    @click="updateSelected(categorie.name)"
-                    :id="categorie.name"
-                    v-bind:class="isSelected(categorie.name)">
+                    :class="isSelected(categorie.name)"
+                    @click="updateSelected(categorie.name)">
                     {{ categorie.name }}
                 </p>
             </div>
@@ -24,9 +24,9 @@
                 class="w-[20%] px-2 h-full bg-fc-black-light font-bold outline-none"
                 :class="query.length > 0 ? 'text-fc-yellow' : ''"
                 :value="query"
-                @input="(v) => (this.query = v.target.value)"
                 placeholder="Rechercher..."
-                type="text" />
+                type="text"
+                @input="(v) => (query = v.target.value)" />
         </div>
 
         <Sheet :route="selectedCategorie.route" :search="query" />
@@ -41,18 +41,6 @@ export default {
     components: {
         SidebarLayout,
         Sheet,
-    },
-    methods: {
-        isSelected(name) {
-            return this.selectedCategorie.name === name
-                ? 'text-fc-green'
-                : 'text-fc-yellow-trans'
-        },
-        updateSelected(name) {
-            this.selectedCategorie = this.categories.find(
-                (categorie) => categorie.name === name
-            )
-        },
     },
     data() {
         return {
@@ -69,6 +57,18 @@ export default {
             selectedCategorie: { name: 'Reports', route: '/admin/reports' },
             query: '',
         }
+    },
+    methods: {
+        isSelected(name) {
+            return this.selectedCategorie.name === name
+                ? 'text-fc-green'
+                : 'text-fc-yellow-trans'
+        },
+        updateSelected(name) {
+            this.selectedCategorie = this.categories.find(
+                (categorie) => categorie.name === name
+            )
+        },
     },
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
     <SidebarLayout>
         <div
-            class="flex w-full h-full items-center justify-center" 
-            v-if="loading"
+            v-if="loading" 
+            class="flex w-full h-full items-center justify-center"
         >
             <Loader />
         </div>
@@ -23,32 +23,6 @@ export default {
         SidebarLayout,
         Loader,
         Room
-    },
-    methods: {
-        async getRoomData() {
-            const { id } = this.$route.params
-
-            console.log(this.$route);
-
-            try {
-                const res = await apiCall({
-                    route: `/rooms/${id}`,
-                    method: 'GET'
-                })
-
-                this.room = res
-            } catch (error) {
-                const toast = useToast()
-
-                console.log(error)
-                toast.error(typeof error === 'object' ? error.message : error)
-            } finally {
-                this.loading = false
-            }
-        }
-    },
-    mounted() {
-        this.getRoomData()
     },
     data() {
         const { id } = this.$route.params
@@ -89,6 +63,32 @@ export default {
                 ],
                 vocal: 'Discord',
                 isPrivate: false
+            }
+        }
+    },
+    mounted() {
+        this.getRoomData()
+    },
+    methods: {
+        async getRoomData() {
+            const { id } = this.$route.params
+
+            console.log(this.$route);
+
+            try {
+                const res = await apiCall({
+                    route: `/rooms/${id}`,
+                    method: 'GET'
+                })
+
+                this.room = res
+            } catch (error) {
+                const toast = useToast()
+
+                console.log(error)
+                toast.error(typeof error === 'object' ? error.message : error)
+            } finally {
+                this.loading = false
             }
         }
     }

@@ -12,11 +12,11 @@
             </thead>
 
             <tbody class="font-extralight space-y-10">
-                <tr class="" v-for="(row, index) in rows" :key="index">
+                <tr v-for="(row, index) in rows" :key="index" class="">
                     <th
-                        class="font-light p-5"
                         v-for="(rowItem, index) in row"
-                        :key="index">
+                        :key="index"
+                        class="font-light p-5">
                         {{ rowItem }}
                     </th>
                 </tr>

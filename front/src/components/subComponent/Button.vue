@@ -1,6 +1,6 @@
 <template>
     <button
-        :class="`flex justify-center items-center border-4 ${backgroundColor ? 'bg-' + backgroundColor : 'bg-' + this.color } border-${this.color} ${rounded && 'rounded-full'} p-4 font-bold ${this.textColor} select-none hover:opacity-80 ${customClass}`"
+        :class="`flex justify-center items-center border-4 ${backgroundColor ? 'bg-' + backgroundColor : 'bg-' + color } border-${color} ${rounded && 'rounded-full'} p-4 font-bold ${textColor} select-none hover:opacity-80 ${customClass}`"
         @click="callback($event)">
         {{ buttonText }}
         <img

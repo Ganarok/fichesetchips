@@ -31,36 +31,36 @@
             <div v-if="!loading" class="space-y-1">
                 <CustomInput
                     outline="fc-yellow-trans"
-                    :maxLength="36"
-                    @input="(v) => this.handleUsername(v.target.value)"
-                    :placeHolder="$t('Identifiant')"
-                    :hasError="usernameError" />
+                    :max-length="36"
+                    :place-holder="$t('Identifiant')"
+                    :has-error="usernameError"
+                    @input="(v) => handleUsername(v.target.value)" />
                 <CustomInput
                     outline="fc-yellow-trans"
-                    :maxLength="256"
-                    @input="(v) => this.handleEmail(v.target.value)"
-                    placeHolder="Email"
-                    :hasError="emailError"
-                    :onFocusOut="() => this.handleEmailFocusOut()" />
+                    :max-length="256"
+                    place-holder="Email"
+                    :has-error="emailError"
+                    :on-focus-out="() => handleEmailFocusOut()"
+                    @input="(v) => handleEmail(v.target.value)" />
                 <CustomInput
                     outline="fc-yellow-trans"
-                    :maxLength="64"
-                    @input="(v) => this.handlePassword(v.target.value)"
-                    :placeHolder="$t('Mot de passe')"
-                    :hasError="passwordError"
-                    :onFocusOut="() => this.handlePasswordFocusOut()"
-                    type="password" />
+                    :max-length="64"
+                    :place-holder="$t('Mot de passe')"
+                    :has-error="passwordError"
+                    :on-focus-out="() => handlePasswordFocusOut()"
+                    type="password"
+                    @input="(v) => handlePassword(v.target.value)" />
                 <CustomInput
                     outline="fc-yellow-trans"
-                    :maxLength="64"
-                    @input="(v) => this.handlePasswordConfirm(v.target.value)"
-                    :placeHolder="$t('Mot de passe')"
-                    :hasError="passwordConfirmError"
-                    :onFocusOut="() => this.handleConfirmFocusOut()"
-                    type="password" />
+                    :max-length="64"
+                    :place-holder="$t('Mot de passe')"
+                    :has-error="passwordConfirmError"
+                    :on-focus-out="() => handleConfirmFocusOut()"
+                    type="password"
+                    @input="(v) => handlePasswordConfirm(v.target.value)" />
             </div>
 
-            <div class="self-center my-16" v-else>
+            <div v-else class="self-center my-16">
                 <Loader />
             </div>
 
@@ -71,8 +71,8 @@
 
                 <button
                     v-if="!loading"
-                    @click="handleGo"
-                    class="mr-5 self-end text-5xl font-bold">
+                    class="mr-5 self-end text-5xl font-bold"
+                    @click="handleGo">
                     Go
                 </button>
             </div>
@@ -82,7 +82,6 @@
 
 <script>
 import CustomInput from '@/components/subComponent/CustomInput.vue'
-import subModalSignup from '@/components/subModals/signup.vue'
 import { apiCall } from '@/utils/apiCall'
 import Loader from '@/components/Loader.vue'
 import { isEmailValid, isPasswordValid } from '@/utils/validations'
@@ -91,7 +90,7 @@ const CryptoJS = require("crypto-js");
 
 export default {
     name: 'Login',
-    components: { subModalSignup, CustomInput, Loader },
+    components: { CustomInput, Loader },
     props: {
         loading: {
             type: Boolean,

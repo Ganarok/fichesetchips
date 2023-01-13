@@ -16,9 +16,9 @@
         </div>
 
         <div class="flex space-x-4">
-            <Button buttonText="Rejoindre" filled="true" color="fc-black" />
+            <Button button-text="Rejoindre" filled="true" color="fc-black" />
 
-            <Button buttonText="Créer" filled="true" color="fc-black" />
+            <Button button-text="Créer" filled="true" color="fc-black" />
         </div>
     </div>
 </template>

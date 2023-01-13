@@ -1,7 +1,7 @@
 <template>
     <div class="bg-[#1E1E1E]">
         <div class="mobile:flex mobile:justify-between mobile:px-6 h-[80px] w-[100vw] mobileSup:hidden">
-            <img src="../../assets/menuIcon.svg" class="w-1/7 my-auto" alt="F&C logo" v-on:click="mobileMenu()"  />
+            <img src="../../assets/menuIcon.svg" class="w-1/7 my-auto" alt="F&C logo" @click="mobileMenu()"  />
             <img src="../../assets/icon.svg" class="w-1/7 my-4" alt="F&C logo" />
         </div>
 
@@ -13,8 +13,8 @@
             </div>
             
             <div
-                class="flex flex-col items-center justify-center text-white space-y-8"
                 v-if="connected()"
+                class="flex flex-col items-center justify-center text-white space-y-8"
             >
                 <router-link
                     to="/user/dashboard"
@@ -30,8 +30,8 @@
                 >
             </div>
             <div
-                class="flex flex-col items-center justify-center text-white space-y-8"
-                v-else>
+                v-else
+                class="flex flex-col items-center justify-center text-white space-y-8">
                 <router-link
                     to="/"
                     exact
@@ -56,13 +56,13 @@
             <div
                 class="flex flex-col w-full justify-center items-center relative">
                 <router-link
+                    v-if="connected()"
                     exact
                     to="/"
                     class="font-bold text-xl w-[80%]"
                     @click.native="logout()"
-                    v-if="connected()"
                     ><Button
-                        buttonText="Logout"
+                        button-text="Logout"
                         class="text-fc-yellow"
                         color="fc-yellow"
                 /></router-link>

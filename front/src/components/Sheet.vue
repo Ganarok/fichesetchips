@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import { apiCall } from '@/utils/apiCall'
 import Loader from './Loader.vue'
-import { useToast } from 'vue-toastification'
+// import { useToast } from 'vue-toastification'
 
 export default {
+    components: { Loader },
     props: {
         route: String,
         search: String,
@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         async fetchRoute(route) {
-            const toast = useToast()
+            // const toast = useToast()
 
             if (route) {
                 setTimeout(() => {
@@ -72,6 +72,5 @@ export default {
             }
         },
     },
-    components: { Loader },
 }
 </script>

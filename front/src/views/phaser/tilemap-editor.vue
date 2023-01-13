@@ -22,6 +22,6 @@ import MapEditorLayout from "@/layouts/MapEditor.vue"
 
 <script>
     export default {
-        name: "tilemapEditor",
+        name: "TilemapEditor",
     }
 </script>

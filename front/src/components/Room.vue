@@ -1,37 +1,37 @@
 <template>
     <div
-        class="flex flex-col h-full items-center justify-center font-bold text-xl"
-        v-if="!room">
+        v-if="!room"
+        class="flex flex-col h-full items-center justify-center font-bold text-xl">
 
         {{$t("Cette room n'existe pas")}}
 
         <div class="my-4">
             <Button 
-                :buttonText="$t('Retour')" 
+                :button-text="$t('Retour')" 
                 class="px-6 py-2"
                 color="fc-green"
-                @click="() => this.$router.push('/rooms')"
+                @click="() => $router.push('/rooms')"
             />
         </div>
     </div>
 
     <div
-        class="flex flex-col h-full space-y-4 sm:space-y-8" 
-        v-else>
+        v-else 
+        class="flex flex-col h-full space-y-4 sm:space-y-8">
         <div class="flex justify-between">
             <BlackGreenDiv 
                 :title="room.title || ''"
-                :rightGreenDiv="false"
+                :right-green-div="false"
                 color="text-fc-yellow"
                 height="h-16"
             />
 
             <Button 
                 class="ml-4 sm:mx-12"
-                buttonText="Rejoindre"
+                button-text="Rejoindre"
                 color="fc-green"
                 :rounded="false"
-                backgroundColor="fc-black"
+                background-color="fc-black"
             />
         </div>
 
@@ -39,7 +39,7 @@
             <div class="flex flex-col relative h-full w-full pb-4 sm:w-3/4">
                 <BlackGreenDiv 
                     title="Description"
-                    :rightGreenDiv="false"
+                    :right-green-div="false"
                     color="text-white"
                 />
 
@@ -92,7 +92,7 @@
                 <div class="flex flex-col h-full">
                     <BlackGreenDiv 
                         title="Maitre de jeu"
-                        :rightGreenDiv="false"
+                        :right-green-div="false"
                         color="text-white"
                     />
 
@@ -116,15 +116,15 @@
 
                     <BlackGreenDiv 
                         title="Liste des joueurs"
-                        :rightGreenDiv="false"
+                        :right-green-div="false"
                         color="text-white"
                     />
 
                     <div class="flex flex-wrap items-center justify-center p-4">
                         <div 
-                            class="flex text-xl font-bold items-center p-2"
-                            :key="index"
                             v-for="(player, index) in room.players"
+                            :key="index"
+                            class="flex text-xl font-bold items-center p-2"
                         >
                             <div class="bg-gray-400 border-2 border-fc-black-light rounded-full mr-4 w-20 h-20" />
 

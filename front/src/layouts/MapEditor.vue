@@ -10,20 +10,20 @@
                 <div 
                     id="selectedTile"
                     class="relative items-center justify-center h-8 w-8 border-fc-green border-2"
-                />
+                > </div>
 
                 <img
                     src="@/phaser/assets/layer.svg"
                     :class="`h-8 w-8 transition ease-in-out hover:scale-110 ${$store.state.phaser.isolateLayer ? 'grayscale-0' : 'grayscale' } hover:cursor-pointer`"
                     alt="ChangeLayer"
-                    @click="() => this.$store.commit('updateState', { property: 'isolateLayer', newState: !this.$store.state.phaser.isolateLayer })"
+                    @click="() => $store.commit('updateState', { property: 'isolateLayer', newState: !$store.state.phaser.isolateLayer })"
                 />
 
                 <img
                     src="@/phaser/assets/eraser.svg"
                     :class="`h-8 w-8 transition ease-in-out hover:scale-110 ${$store.state.phaser.eraser ? 'grayscale-0' : 'grayscale' } hover:cursor-pointer`"
                     alt="Eraser"
-                    @click="() => this.$store.commit('updateState', { property: 'eraser', newState: !this.$store.state.phaser.eraser })"
+                    @click="() => $store.commit('updateState', { property: 'eraser', newState: !$store.state.phaser.eraser })"
                 />
             </div>
         </div>
@@ -32,9 +32,9 @@
             <div class="flex flex-col space-y-4 p-4 font-bold text-fc-green text-center transition bg-fc-black-light opacity-50 hover:opacity-100 delay-200 hover:delay-75">
                 <p>
                     Layer selectionné :<br>
-                    <p class="text-fc-yellow">
+                    <span class="text-fc-yellow">
                         {{ $store.state.phaser.layers[$store.state.phaser.selectedLayer].name }}
-                    </p>    
+                    </span>    
                 </p>
             </div>
         </div>
@@ -53,8 +53,13 @@ import Layers from '@/components/phaser/Layers.vue'
 // TODO: Ajouter le onclick pour changer le layer sélectionné enregistré dans le store
 export default {
     name: 'MapEditor',
-    props: {},
     components: { Topbar, Layers },
+    props: {},
+    data() {
+        return {
+            ...this.$store.state.phaser
+        }
+    },
     methods: {
         createCanvas(id, gl, texture) {
             // Create a framebuffer backed by the texture
@@ -90,11 +95,6 @@ export default {
             
             return img
         },
-    },
-    data() {
-        return {
-            ...this.$store.state.phaser
-        }
     },
 }
 </script>
