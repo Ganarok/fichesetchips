@@ -10,7 +10,7 @@
             } placeholder-opacity-50`"
             :placeholder="placeHolder"
             :maxlength="maxLength"
-            :type="typeInput"
+            :type="typeinput"
             :disabled="disabled"
             @focusout="onFocusOut"
         >
@@ -52,6 +52,8 @@ export default {
             type: String,
             default: "",
         },
+        typeinput: String,
     },
 }
+
 </script>

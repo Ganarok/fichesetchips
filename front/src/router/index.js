@@ -20,107 +20,106 @@ import NotFound from "@/views/404.vue"
 import CharacterCreate from "@/views/character/create.vue"
 import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
 
-const routes = [
-    {
-        path: "/",
-        name: "Home",
-        component: Home,
-    },
-    {
-        path: "/about",
-        name: "About",
-        component: About,
-    },
-    {
-        path: "/glossaire",
-        name: "Glossaire",
-        component: Glossaire,
-    },
-    {
-        path: "/login",
-        name: "Login",
-        component: Login,
-    },
-    {
-        path: "/register",
-        name: "Register",
-        component: Register,
-    },
-    {
-        path: "/forgot-password",
-        name: "ForgotPassword",
-        component: ForgotPassword,
-    },
-    {
-        path: "/user/dashboard",
-        name: "Dashboard",
-        component: Dashboard,
-        requiresAuth: true,
-    },
-    {
-        path: "/user/admin",
-        name: "Admin",
-        component: Admin,
-        requiresAuth: true,
-    },
-    {
-        path: "/user/profile",
-        name: "Profile",
-        component: Profile,
-        requiresAuth: true,
-    },
-    {
-        path: "/user/profile/:id",
-        name: "ProfileID",
-        component: ProfileID,
-        requiresAuth: true,
-    },
-    {
-        path: "/user/maps/",
-        name: "Maps",
-        component: Maps,
-        requiresAuth: true,
-    },
-    {
-        path: "/rooms",
-        name: "Rooms",
-        component: Rooms,
-        requiresAuth: true,
-    },
-    {
-        path: "/rooms/create",
-        name: "Create_Room",
-        component: Create_Room,
-        requiresAuth: true,
-    },
-    {
-        path: "/rooms/:id",
-        name: "RoomsID",
-        component: RoomID,
-        requiresAuth: true,
-    },
-    {
-        path: "/rooms/:id/session",
-        name: "Session",
-        component: Session,
-        requiresAuth: true,
-    },
-    {
-        path: "/:pathMatch(.*)*",
-        name: "404",
-        component: NotFound,
-    },
-    {
-        path: "/character/create",
-        name: "CharacterCreate",
-        component: CharacterCreate,
-        requiresAuth: true,
-    },
-    {
-        path: "/tilemap/editor",
-        name: "TilemapEditr",
-        component: TilemapEditor,
-    },
+const routes = [{
+    path: "/",
+    name: "Home",
+    component: Home,
+},
+{
+    path: "/about",
+    name: "About",
+    component: About,
+},
+{
+    path: "/glossaire",
+    name: "Glossaire",
+    component: Glossaire,
+},
+{
+    path: "/login",
+    name: "Login",
+    component: Login,
+},
+{
+    path: "/register",
+    name: "Register",
+    component: Register,
+},
+{
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+},
+{
+    path: "/user/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+    requiresAuth: true,
+},
+{
+    path: "/user/admin",
+    name: "Admin",
+    component: Admin,
+    requiresAuth: true,
+},
+{
+    path: "/user/profile",
+    name: "Profile",
+    component: Profile,
+    requiresAuth: true,
+},
+{
+    path: "/user/profile/:username",
+    name: "ProfileID",
+    component: ProfileID,
+    requiresAuth: true,
+},
+{
+    path: "/user/maps/",
+    name: "Maps",
+    component: Maps,
+    requiresAuth: true,
+},
+{
+    path: "/rooms",
+    name: "Rooms",
+    component: Rooms,
+    requiresAuth: true,
+},
+{
+    path: "/rooms/create",
+    name: "Create_Room",
+    component: Create_Room,
+    requiresAuth: true,
+},
+{
+    path: "/rooms/:id",
+    name: "RoomsID",
+    component: RoomID,
+    requiresAuth: true,
+},
+{
+    path: "/rooms/:id/session",
+    name: "Session",
+    component: Session,
+    requiresAuth: true,
+},
+{
+    path: "/:pathMatch(.*)*",
+    name: "404",
+    component: NotFound,
+},
+{
+    path: "/character/create",
+    name: "CharacterCreate",
+    component: CharacterCreate,
+    requiresAuth: true,
+},
+{
+    path: "/tilemap/editor",
+    name: "TilemapEditr",
+    component: TilemapEditor,
+},
 ]
 
 const router = createRouter({

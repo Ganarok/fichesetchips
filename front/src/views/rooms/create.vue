@@ -92,7 +92,7 @@
                                 <CustomInput
                                     :max-length="64"
                                     :place-holder="$t('Mot de passe')"
-                                    type="password"
+                                    :typeinput="'password'"
                                     outline="fc-green"
                                     @input="(v) => (room.password = v.target.value)"
                                 />
@@ -204,7 +204,7 @@ import ParamInput from "@/components/subComponent/ParamInput.vue"
 import Loader from "@/components/Loader.vue"
 import { useToast } from "vue-toastification"
 import { PLAYSTYLE, EXPERIENCE, LANGUAGES } from "@/utils/enums"
-import { apiCall } from "@/utils/apiCall"
+import { mapState, mapActions } from "vuex"
 
 export default {
     name: "CreateRoom",
@@ -241,7 +241,19 @@ export default {
             LANGUAGES,
         }
     },
+    computed: {
+        ...mapState("errors", {
+            errors: (state) => state.errors,
+        }),
+        ...mapState("room", {
+            room: (state) => state.room,
+        }),
+    },
     methods: {
+        ...mapActions({
+            create_room: "room/create_room",
+            update_error: "errors/update_error",
+        }),
         handleTitleChange(v) {
             this.room.title = v.target.value
         },
@@ -286,22 +298,14 @@ export default {
         },
         async submitRoom() {
             const toast = useToast()
-
-            try {
-                await apiCall({
-                    route: "/rooms",
-                    method: "POST",
-                    body: JSON.stringify(this.room),
-                })
-
-                //TODO: this.$router.push(`/rooms/${res.id}`).then(() => toast.success(this.$t('Création de la room réalisée avec succès')))
-            } catch (error) {
-                console.log(error)
-                toast.error(typeof error === "object" ? error.message : error)
-            } finally {
-                this.loading = false
+            await this.create_room(this.room)
+            if (this.errors.message) {
+                toast.error(this.errors.message)
+                this.update_error({ message: null })
             }
+            //TODO: this.$router.push(`/rooms/${res.id}`).then(() => toast.success(this.$t('Création de la room réalisée avec succès')))
+
+            this.loading = false
         },
-    },
-}
+    }}
 </script>

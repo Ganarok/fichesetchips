@@ -18,13 +18,14 @@ export class SeedPrefrencesAndUsers1665927924682 implements MigrationInterface {
 
         await PreferenceRepository.save([defaultPreference, darkPreference])
 
+        const test = defaultUsers.test as User
         const user = defaultUsers.defaultUser as User
         const user1 = defaultUsers.defaultUser1 as User
         const user2 = defaultUsers.defaultUser2 as User
         const user3 = defaultUsers.defaultUser3 as User
         const admin = defaultUsers.defaultAdmin as User
         const superAdmin = defaultUsers.defaultSuperAdmin as User
-        await UserRepository.save([user, user1, user2, user3, admin, superAdmin])
+        await UserRepository.save([test, user, user1, user2, user3, admin, superAdmin])
     }
 
     public async down(_: QueryRunner): Promise<any> {

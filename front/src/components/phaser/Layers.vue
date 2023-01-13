@@ -12,7 +12,7 @@
                     class="flex items-center justify-center bg-fc-black-light p-2"
                     @click="
                         () =>
-                            $store.commit('updateState', {
+                            $store.commit('phaser/updateState', {
                                 property: 'layerTab',
                                 newState: !$store.state.phaser.layerTab,
                             })
@@ -81,7 +81,7 @@ export default {
 
             // console.log(Object.values(tileSets[selectedLayer].image.frames))
             // console.log(this.$store.state.phaser.tileSets[1])
-        }, 3000)
+        }, 5000)
 
         return {
             ...this.$store.state.phaser,
@@ -139,13 +139,13 @@ export default {
             else
                 selectedTileContainer.appendChild(img)
 
-            this.$store.commit('updateState', {
+            this.$store.commit('phaser/updateState', {
                 property: 'selectedTileIndex',
                 newState: index + selectedLayer
             })
         },
         updateLayer(index) {
-            this.$store.commit('updateState', {
+            this.$store.commit('phaser/updateState', {
                 property: 'selectedLayer',
                 newState: index
             })
@@ -184,7 +184,7 @@ export default {
                     pictures[layerIndex] = pics
                 })
                 
-                this.$store.commit('updateState', {
+                this.$store.commit('phaser/updateState', {
                     property: 'tilesPics',
                     newState: pictures
                 })
