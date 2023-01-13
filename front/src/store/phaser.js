@@ -17,10 +17,10 @@ export default {
         selectedTileIndex: undefined,
         isolateLayer: false,
         layerTab: true,
-        tileSets: [],
+        tileSetsInfos: [],
         tilesPics: {},
         tilesSize: 32,
-        mapSize: 32 * 20
+        mapSize: 32 * 20 
     },
     mutations: {
         updateState(state, payload) {

@@ -135,25 +135,26 @@ export default {
         },
         initLayers() {
             setTimeout(() => {
-                const { tileSets, layers } = this.$store.state.phaser
+                const { tileSetsInfos, layers } = this.$store.state.phaser
+                const map = document.getElementsByTagName('canvas')[0]
+                const gl = map.getContext('webgl')
                 let pictures = {}
 
                 // Pour chaque layers, on définit ses tiles en fonctin du tileset
                 layers.map((layers, layerIndex) => {
-                    const coords = tileSets[layerIndex].texCoordinates
-                    const pics = []
+                    const pics = [] 
 
                     //Pour chaque frame du tileset, on crée une image
-                    Object.values(tileSets[layerIndex].image.frames).map((frame, index) => {
+                    tileSetsInfos[layerIndex].texCoordinates.forEach((coords, index) => {
                         if (index === coords.length) // Out of Index
                             return
     
                         var img = this.createCanvas(
                             index,
-                            frame.source.renderer.gl,
-                            frame.glTexture,
-                            coords[index].x,
-                            coords[index].y
+                            gl,
+                            tileSetsInfos[layerIndex].glTexture,
+                            coords.x,
+                            coords.y
                         ) 
                         // const canvasContainer = document.getElementById(`canvasContainer`)
                         // canvasContainer?.appendChild(img)
@@ -168,6 +169,8 @@ export default {
                     property: 'tilesPics',
                     newState: pictures
                 })
+
+                this.updateSelectedTile(0)
             })
         },
     },

@@ -11,6 +11,8 @@ export default class WorkshopTilemap extends Scene {
         super({ key: 'WorkshopTilemap' })
 
         this.layers = []
+        this.tileSets = []
+        this.tileSetsInfos = []
         this.tiles = []
         this.map = null
         this.selectedTile = null
@@ -23,7 +25,6 @@ export default class WorkshopTilemap extends Scene {
         this.tiles_size = 32
         this.mapsize = 32 * 20
         this.selectedLayer = 0
-        this.tileSelector = null
     }
 
     init(data) {
@@ -121,15 +122,19 @@ export default class WorkshopTilemap extends Scene {
         this.map = this.make.tilemap({ key: 'map' });
 
         layers.forEach((layer, index) => {
-            this.tiles[index] = this.map.addTilesetImage(layer.name)
-            this.layers[index] = this.map.createBlankLayer(`${layer.name}_layer`, this.tiles[index], 0, 0)
+            this.tileSets[index] = this.map.addTilesetImage(layer.name)
+            this.layers[index] = this.map.createBlankLayer(`${layer.name}_layer`, this.tileSets[index], 0, 0)
+            this.tileSetsInfos[index] = {
+                texCoordinates: this.tileSets[index].texCoordinates,
+                glTexture: this.tileSets[index].glTexture,
+            }  
 
             if (index === 0) {
                 this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29])
                 this.selectedTile = this.layers[0].getTileAt(0, 0)
                 store.commit('updateState', {
                     property: 'selectedTile',
-                    newState: this.selectedTile
+                    newState: 0
                 })
             }
 
@@ -138,9 +143,11 @@ export default class WorkshopTilemap extends Scene {
             }
         })
 
+        console.log('tilesets', this.tileSetsInfos);
+
         store.commit('updateState', {
-            property: 'tileSets',
-            newState: this.tiles
+            property: 'tileSetsInfos',
+            newState: this.tileSetsInfos
         })
 
         // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
