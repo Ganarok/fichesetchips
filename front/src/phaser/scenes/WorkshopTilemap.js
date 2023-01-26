@@ -29,12 +29,12 @@ export default class WorkshopTilemap extends Scene {
     }
 
     init(data) {
-    // TODO : La data envoyée depuis BootScene arrive ici, dans l'object data
-    // console.log(data)
+        // TODO : La data envoyée depuis BootScene arrive ici, dans l'object data
+        // console.log(data)
     }
 
     preload() {
-    // tilemap
+        // tilemap
         this.load.spritesheet("grounds", desert_grounds, {
             frameWidth: 32,
             frameHeight: 32,
@@ -86,7 +86,7 @@ export default class WorkshopTilemap extends Scene {
             (newValue, oldValue) => {
                 this.selectedLayer = newValue
 
-                if (store.state.phaser.isolateLayer) {
+                if(store.state.phaser.isolateLayer) {
                     this.layers[oldValue].setVisible(false)
                     this.layers[newValue].setVisible(true)
                 }
@@ -96,9 +96,9 @@ export default class WorkshopTilemap extends Scene {
         store.watch(
             () => store.state.phaser.isolateLayer,
             (isIsolated, oldValue) => {
-                if (isIsolated) {
+                if(isIsolated) {
                     this.layers.forEach((layer, index) => {
-                        if (index !== this.selectedLayer) {
+                        if(index !== this.selectedLayer) {
                             this.layers[index].setVisible(false)
                         }
                     })
@@ -123,7 +123,7 @@ export default class WorkshopTilemap extends Scene {
 
         this.input.on(
             "wheel",
-            function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
+            function(pointer, gameObjects, deltaX, deltaY, deltaZ) {
                 this.cameras.main._x -= deltaX / 5
                 this.cameras.main._y -= deltaY / 5
             }
@@ -191,7 +191,7 @@ export default class WorkshopTilemap extends Scene {
             newState: this.tileSetsInfos,
         })
 
-    // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
+        // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
     }
 
     _draw_cursor() {
@@ -252,8 +252,8 @@ export default class WorkshopTilemap extends Scene {
             layerName
         )
 
-        if (this.input.manager.activePointer.isDown) {
-            if (this.shiftKey.isDown) {
+        if(this.input.manager.activePointer.isDown) {
+            if(this.shiftKey.isDown) {
                 this.selectedTile = this.layers[this.selectedLayer].getTileAt(
                     pointerTileX,
                     pointerTileY,
@@ -264,7 +264,7 @@ export default class WorkshopTilemap extends Scene {
                     property: "selectedTile",
                     newState: this.selectedTile,
                 })
-            } else if (eraser) {
+            } else if(eraser) {
                 this.layers[this.selectedLayer].removeTileAt(
                     pointerTileX,
                     pointerTileY,
@@ -287,169 +287,4 @@ export default class WorkshopTilemap extends Scene {
         }
     }
 
-    _initKeys() {
-        this.shiftKey = this.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.SHIFT
-        )
-        this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
-        this.iKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I)
-        this.tabKey = this.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.TAB
-        )
-
-        this.input.on(
-            "wheel",
-            function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
-                this.cameras.main._x -= deltaX / 5
-                this.cameras.main._y -= deltaY / 5
-            }
-        )
-
-        this.eKey.on("down", () => {
-            store.commit("updateState", {
-                property: "eraser",
-                newState: !store.state.phaser.eraser,
-            })
-        })
-
-        this.iKey.on("down", () => {
-            store.commit("updateState", {
-                property: "isolateLayer",
-                newState: !store.state.phaser.isolateLayer,
-            })
-        })
-
-        this.tabKey.on("down", () => {
-            store.commit("updateState", {
-                property: "layerTab",
-                newState: !store.state.phaser.layerTab,
-            })
-        })
-    }
-
-    // draw tilemap, add tileset to map object, set position of layer(s)
-    _draw_map() {
-        let { layers } = store.state.phaser
-
-        this.map = this.make.tilemap({ key: "map" })
-
-        layers.forEach((layer, index) => {
-            this.tiles[index] = this.map.addTilesetImage(layer.name)
-            this.layers[index] = this.map.createBlankLayer(
-                `${layer.name}_layer`,
-                this.tiles[index],
-                0,
-                0
-            )
-
-            if (index === 0) {
-                this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29])
-                this.selectedTile = this.layers[0].getTileAt(0, 0)
-                store.commit("updateState", {
-                    property: "selectedTile",
-                    newState: this.selectedTile,
-                })
-            }
-
-            if (index === 1) {
-                this.layers[1].randomize(0, 0, this.map.width, this.map.height, [1])
-            }
-        })
-
-        store.commit("updateState", {
-            property: "tileSets",
-            newState: this.tiles,
-        })
-
-    // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
-    }
-
-    _draw_cursor() {
-        this.marker = this.add.graphics()
-        this.marker.lineStyle(2, 0xf04e4e, 1)
-        this.marker.strokeRect(0, 0, this.map.tileWidth, this.map.tileHeight)
-
-        this.cameras.main.setBounds(
-            0,
-            0,
-            this.map.widthInPixels,
-            this.map.heightInPixels
-        )
-
-        const cursors = this.input.keyboard.createCursorKeys()
-
-        this.controls = new Phaser.Cameras.Controls.FixedKeyControl({
-            camera: this.cameras.main,
-            left: cursors.left,
-            right: cursors.right,
-            up: cursors.up,
-            down: cursors.down,
-            speed: 0.5,
-        })
-    }
-
-    // handle selection of tiles
-    handle_event() {
-        const { layers, eraser } = store.state.phaser
-        const layerName = layers[this.selectedLayer].name
-        const worldPoint = this.input.activePointer.positionToCamera(
-            this.cameras.main
-        )
-
-        // Rounds down to nearest tile
-        var pointerTileX = this.map.worldToTileX(
-            worldPoint.x,
-            true,
-            this.cameras.main,
-            layerName
-        )
-        var pointerTileY = this.map.worldToTileY(
-            worldPoint.y,
-            true,
-            this.cameras.main,
-            layerName
-        )
-
-        // Snap to tile coordinates, but in world space
-        this.marker.x = this.map.tileToWorldX(
-            pointerTileX,
-            this.cameras.main,
-            layerName
-        )
-        this.marker.y = this.map.tileToWorldY(
-            pointerTileY,
-            this.cameras.main,
-            layerName
-        )
-
-        if (this.input.manager.activePointer.isDown) {
-            if (this.shiftKey.isDown) {
-                this.selectedTile = this.layers[this.selectedLayer].getTileAt(
-                    pointerTileX,
-                    pointerTileY,
-                    false,
-                    layerName
-                )
-                store.commit("updateState", {
-                    property: "selectedTile",
-                    newState: this.selectedTile,
-                })
-            } else if (eraser) {
-                this.layers[this.selectedLayer].removeTileAt(
-                    pointerTileX,
-                    pointerTileY,
-                    true,
-                    true
-                )
-            } else {
-                this.layers[this.selectedLayer].putTileAt(
-                    this.selectedTile,
-                    pointerTileX,
-                    pointerTileY,
-                    true,
-                    layerName
-                )
-            }
-        }
-    }
 }

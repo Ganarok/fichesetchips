@@ -1,72 +1,75 @@
 <template>
-  <div
-    class="flex relative w-full px-4 items-center text-white font-bold select-none bg-fc-black border-t border-fc-green transition duration-250 ease-in-out z-50"
-    :class="$store.state.phaser.layerTab ? 'h-12' : 'h-1'"
-  >
     <div
-      v-if="layers && layers.length > 0"
-      class="absolute w-full -top-6 left-0 z-0"
+        class="flex relative w-full px-4 items-center text-white font-bold select-none bg-fc-black border-t border-fc-green transition duration-250 ease-in-out z-50"
+        :class="$store.state.phaser.layerTab ? 'h-12' : 'h-1'"
     >
-      <div class="flex w-full space-x-4">
         <div
-          class="flex items-center justify-center bg-fc-black-light p-2"
-          @click="
-            () =>
-              $store.commit('updateState', {
-                property: 'layerTab',
-                newState: !$store.state.phaser.layerTab,
-              })
-          "
+            v-if="layers && layers.length > 0"
+            class="absolute w-full -top-6 left-0 z-0"
         >
-          <img
-            src="@/assets/selector.svg"
-            class="object-contain"
-            alt="Arrow"
-            :class="
-              $store.state.phaser.layerTab
-                ? 'transition duration-250'
-                : 'transition duration-250 rotate-180'
-            "
-          />
+            <div class="flex w-full space-x-4">
+                <div
+                    class="flex items-center justify-center bg-fc-black-light p-2"
+                    @click="
+                        () =>
+                            $store.commit('updateState', {
+                                property: 'layerTab',
+                                newState: !$store.state.phaser.layerTab,
+                            })
+                    "
+                >
+                    <img
+                        src="@/assets/selector.svg"
+                        class="object-contain"
+                        alt="Arrow"
+                        :class="
+                            $store.state.phaser.layerTab
+                                ? 'transition duration-250'
+                                : 'transition duration-250 rotate-180'
+                        "
+                    >
+                </div>
+
+                <Layer
+                    v-for="(layer, index) in layers"
+                    :key="index"
+                    :layer="layer"
+                    :index="index"
+                    :is-selected="selectedLayer === index"
+                    @click="updateLayer(index)"
+                />
+            </div>
         </div>
 
-        <Layer
-          v-for="(layer, index) in layers"
-          :key="index"
-          :layer="layer"
-          :index="index"
-          :is-selected="selectedLayer === index"
-          @click="updateLayer(index)"
-        />
-      </div>
-    </div>
+        <div
+            v-if="loadingAssets"
+            class="flex w-full self-center justify-center"
+        >
+            <Loader :size="15" />
+        </div>
 
-    <div v-if="loadingAssets" class="flex w-full self-center justify-center">
-      <Loader :size="15" />
+        <div
+            v-else
+            id="canvasContainer"
+            class="flex w-full items-center space-x-2 overflow-x-scroll py-2 scrollbar-hide"
+            :class="$store.state.phaser.layerTab ? '' : 'hidden'"
+        >
+            <img
+                v-for="(img, index) in $store.state.phaser.tilesPics[selectedLayer]"
+                :id="`canvas_${index}`"
+                :key="index"
+                class="flex w-8 h-8 items-center cursor-pointer object-contain border border-fc-green"
+                :src="img.src"
+                :alt="img.alt"
+                @click="() => updateSelectedTile(index)"
+            >
+        </div>
     </div>
-
-    <div
-      v-else
-      id="canvasContainer"
-      class="flex w-full items-center space-x-2 overflow-x-scroll py-2 scrollbar-hide"
-      :class="$store.state.phaser.layerTab ? '' : 'hidden'"
-    >
-      <img
-        v-for="(img, index) in $store.state.phaser.tilesPics[selectedLayer]"
-        :id="`canvas_${index}`"
-        :key="index"
-        class="flex w-8 h-8 items-center cursor-pointer object-contain border border-fc-green"
-        :src="img.src"
-        :alt="img.alt"
-        @click="() => updateSelectedTile(index)"
-      />
-    </div>
-  </div>
 </template>
 
 <script>
-import Layer from "@/components/phaser/Layer.vue";
-import Loader from "@/components/Loader.vue";
+import Layer from "@/components/phaser/Layer.vue"
+import Loader from "@/components/Loader.vue"
 
 export default {
     name: 'Layers',
@@ -74,35 +77,35 @@ export default {
     methods: {
         createCanvas(id, gl, texture, x = 0, y = 0) {
             // Create a framebuffer backed by the texture
-            var framebuffer = gl.createFramebuffer();
-            gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
-            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+            var framebuffer = gl.createFramebuffer()
+            gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer)
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0)
 
             // Read the contents of the framebuffer
-            var data = new Uint8Array(32 * 32 * 4);
-            gl.readPixels(x, y, 32, 32, gl.RGBA, gl.UNSIGNED_BYTE, data);
+            var data = new Uint8Array(32 * 32 * 4)
+            gl.readPixels(x, y, 32, 32, gl.RGBA, gl.UNSIGNED_BYTE, data)
 
-            gl.deleteFramebuffer(framebuffer);
+            gl.deleteFramebuffer(framebuffer)
 
             // Create a 2D canvas to store the result 
-            var canvas = document.createElement('canvas');
-            canvas.width = 32;
-            canvas.height = 32;
+            var canvas = document.createElement('canvas')
+            canvas.width = 32
+            canvas.height = 32
             canvas.id = id
-            var context = canvas.getContext('2d');
+            var context = canvas.getContext('2d')
 
             // Copy the pixels to a 2D canvas
-            var imageData = context.createImageData(32, 32);
-            imageData.data.set(data);
-            context.putImageData(imageData, 0, 0);
+            var imageData = context.createImageData(32, 32)
+            imageData.data.set(data)
+            context.putImageData(imageData, 0, 0)
 
-            var img = new Image();
+            var img = new Image()
             img.src = canvas.toDataURL()
             img.width = 32
             img.height = 32
             img.id = id
             img.style = 'cursor: pointer;'
-            img.onclick = (e) => this.updateSelectedTile(id);
+            img.onclick = (e) => this.updateSelectedTile(id)
             
             return img
         },
@@ -175,5 +178,5 @@ export default {
             })
         },
     },
-  }
+}
 </script>
