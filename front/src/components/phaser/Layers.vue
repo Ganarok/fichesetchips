@@ -69,130 +69,111 @@ import Layer from "@/components/phaser/Layer.vue";
 import Loader from "@/components/Loader.vue";
 
 export default {
-  name: "Layers",
-  components: { Layer, Loader },
-  data() {
-    setTimeout(() => {
-      this.initLayers();
-      this.loadingAssets = false;
+    name: 'Layers',
+    components: { Layer, Loader },
+    methods: {
+        createCanvas(id, gl, texture, x = 0, y = 0) {
+            // Create a framebuffer backed by the texture
+            var framebuffer = gl.createFramebuffer();
+            gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
 
-      // console.log(Object.values(tileSets[selectedLayer].image.frames))
-      // console.log(this.$store.state.phaser.tileSets[1]);
-    }, 1000);
+            // Read the contents of the framebuffer
+            var data = new Uint8Array(32 * 32 * 4);
+            gl.readPixels(x, y, 32, 32, gl.RGBA, gl.UNSIGNED_BYTE, data);
 
-    return {
-      ...this.$store.state.phaser,
-      loadingAssets: true,
-      gl: null,
-    };
-  },
-  methods: {
-    createCanvas(id, gl, texture, x = 0, y = 0) {
-      // Create a framebuffer backed by the texture
-      var framebuffer = gl.createFramebuffer();
-      gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
-      gl.framebufferTexture2D(
-        gl.FRAMEBUFFER,
-        gl.COLOR_ATTACHMENT0,
-        gl.TEXTURE_2D,
-        texture,
-        0
-      );
+            gl.deleteFramebuffer(framebuffer);
 
-      // Read the contents of the framebuffer
-      var data = new Uint8Array(32 * 32 * 4);
-      gl.readPixels(x, y, 32, 32, gl.RGBA, gl.UNSIGNED_BYTE, data);
+            // Create a 2D canvas to store the result 
+            var canvas = document.createElement('canvas');
+            canvas.width = 32;
+            canvas.height = 32;
+            canvas.id = id
+            var context = canvas.getContext('2d');
 
-      gl.deleteFramebuffer(framebuffer);
+            // Copy the pixels to a 2D canvas
+            var imageData = context.createImageData(32, 32);
+            imageData.data.set(data);
+            context.putImageData(imageData, 0, 0);
 
-      // Create a 2D canvas to store the result
-      var canvas = document.createElement("canvas");
-      canvas.width = 32;
-      canvas.height = 32;
-      canvas.id = id;
-      var context = canvas.getContext("2d");
+            var img = new Image();
+            img.src = canvas.toDataURL()
+            img.width = 32
+            img.height = 32
+            img.id = id
+            img.style = 'cursor: pointer;'
+            img.onclick = (e) => this.updateSelectedTile(id);
+            
+            return img
+        },
+        updateSelectedTile(index) {
+            const { selectedLayer, tilesPics } = this.$store.state.phaser
 
-      // Copy the pixels to a 2D canvas
-      var imageData = context.createImageData(32, 32);
-      imageData.data.set(data);
-      context.putImageData(imageData, 0, 0);
+            const selectedTileContainer = document.getElementById('selectedTile')
+            const img = tilesPics[selectedLayer][index]
 
-      var img = new Image();
-      img.src = canvas.toDataURL();
-      img.width = 32;
-      img.height = 32;
-      img.id = id;
-      img.style = "cursor: pointer;";
-      img.onclick = (e) => this.updateSelectedTile(id);
+            img.onClick = () => {}
+            img.style = ''
+            img.id = 'selectedTileImg'
 
-      return img;
-    },
-    updateSelectedTile(index) {
-      const { selectedLayer, tilesPics } = this.$store.state.phaser;
+            if (selectedTileContainer.children.length)
+                selectedTileContainer.replaceChildren(img)
+            else
+                selectedTileContainer.appendChild(img)
 
-      const selectedTileContainer = document.getElementById("selectedTile");
-      const img = tilesPics[selectedLayer][index];
+            this.$store.commit('updateState', {
+                property: 'selectedTileIndex',
+                newState: index + selectedLayer
+            })
+        },
+        updateLayer(index) {
+            this.$store.commit('updateState', {
+                property: 'selectedLayer',
+                newState: index
+            })
 
-      img.onClick = () => {};
-      img.style = "";
-      img.id = "selectedTileImg";
+            this.selectedLayer = index
+        },
+        initLayers() {
+            setTimeout(() => {
+                const { tileSetsInfos, layers } = this.$store.state.phaser
+                const map = document.getElementsByTagName('canvas')[0]
+                const gl = map.getContext('webgl')
+                let pictures = {}
 
-      if (selectedTileContainer.children.length)
-        selectedTileContainer.replaceChildren(img);
-      else selectedTileContainer.appendChild(img);
+                // Pour chaque layers, on définit ses tiles en fonctin du tileset
+                layers.map((layers, layerIndex) => {
+                    const pics = [] 
 
-      this.$store.commit("updateState", {
-        property: "selectedTileIndex",
-        newState: index + selectedLayer,
-      });
-    },
-    updateLayer(index) {
-      this.$store.commit("updateState", {
-        property: "selectedLayer",
-        newState: index,
-      });
+                    //Pour chaque frame du tileset, on crée une image
+                    tileSetsInfos[layerIndex].texCoordinates.forEach((coords, index) => {
+                        if (index === coords.length) // Out of Index
+                            return
+    
+                        var img = this.createCanvas(
+                            index,
+                            gl,
+                            tileSetsInfos[layerIndex].glTexture,
+                            coords.x,
+                            coords.y
+                        ) 
+                        // const canvasContainer = document.getElementById(`canvasContainer`)
+                        // canvasContainer?.appendChild(img)
 
-      this.selectedLayer = index;
-    },
-    initLayers() {
-      setTimeout(() => {
-        const { tileSets, layers } = this.$store.state.phaser;
-        let pictures = {};
+                        pics.push(img)
+                    })
 
-        // Pour chaque layers, on définit ses tiles en fonctin du tileset
-        layers.map((layers, layerIndex) => {
-          const coords = tileSets[layerIndex].texCoordinates;
-          const pics = [];
+                    pictures[layerIndex] = pics
+                })
+                
+                this.$store.commit('updateState', {
+                    property: 'tilesPics',
+                    newState: pictures
+                })
 
-          //Pour chaque frame du tileset, on crée une image
-          Object.values(tileSets[layerIndex].image.frames).map(
-            (frame, index) => {
-              if (index === coords.length)
-                // Out of Index
-                return;
-
-              var img = this.createCanvas(
-                index,
-                frame.source.renderer.gl,
-                frame.glTexture,
-                coords[index].x,
-                coords[index].y
-              );
-              // const canvasContainer = document.getElementById(`canvasContainer`)
-              // canvasContainer?.appendChild(img)
-
-              pics.push(img);
-            }
-          );
-
-          pictures[layerIndex] = pics;
-        });
-
-        this.$store.commit("updateState", {
-          property: "tilesPics",
-          newState: pictures,
-        });
-      });
+                this.updateSelectedTile(0)
+            })
+        },
     },
   },
 };

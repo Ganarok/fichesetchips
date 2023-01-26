@@ -23,6 +23,14 @@ export const LANGUAGES = {
   ENGLISH: "Anglais",
 };
 
+export const FILTERUNIVERSES = {
+
+}
+
+export const TYPEUNIVERSES = {
+    
+}
+
 export const COLORS = {
   "fc-green": "#4FEA74",
   "fc-yellow": "#FFDB57",
