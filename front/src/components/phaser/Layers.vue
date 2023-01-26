@@ -81,7 +81,7 @@ export default {
 
             // console.log(Object.values(tileSets[selectedLayer].image.frames))
             // console.log(this.$store.state.phaser.tileSets[1])
-        }, 1000)
+        }, 3000)
 
         return {
             ...this.$store.state.phaser,
