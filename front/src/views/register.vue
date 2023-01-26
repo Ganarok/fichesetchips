@@ -61,7 +61,7 @@
                     :place-holder="$t('Mot de passe')"
                     :has-error="passwordError"
                     :on-focus-out="() => handlePasswordFocusOut()"
-                    type="password"
+                    :typeinput="'password'"
                     @input="(v) => handlePassword(v.target.value)"
                 />
                 <CustomInput
@@ -70,7 +70,7 @@
                     :place-holder="$t('Mot de passe')"
                     :has-error="passwordConfirmError"
                     :on-focus-out="() => handleConfirmFocusOut()"
-                    type="password"
+                    :typeinput="'password'"
                     @input="(v) => handlePasswordConfirm(v.target.value)"
                 />
             </div>
@@ -101,7 +101,7 @@
 
 <script>
 import CustomInput from "@/components/subComponent/CustomInput.vue"
-import { apiCall } from "@/utils/apiCall"
+import { mapState, mapActions } from "vuex"
 import Loader from "@/components/Loader.vue"
 import { isEmailValid, isPasswordValid } from "@/utils/validations"
 import { useToast } from "vue-toastification"
@@ -129,7 +129,16 @@ export default {
             errorText: "",
         }
     },
+    computed: {
+        ...mapState("errors", {
+            errors: (state) => state.errors,
+        }),
+    },
     methods: {
+        ...mapActions({
+            register_user: "user/register_user",
+            update_error: "errors/update_error",
+        }),
         handleUsername(v) {
             this.username = v
         },
@@ -196,38 +205,29 @@ export default {
         handlePasswordConfirm(v) {
             this.passwordConfirm = v
         },
-        handleGo() {
+        async handleGo() {
             if (this.handleErrors()) {
-                const { username, email } = this
                 const toast = useToast()
 
-                const password = CryptoJS.SHA256(this.password).toString(
-                    CryptoJS.enc.Hex
-                )
-
-                if (username && email && password) {
-                    apiCall({
-                        method: "POST",
-                        route: "/auth/register",
-                        body: JSON.stringify({
-                            username,
-                            password,
-                            email,
-                            avatar: "",
-                        }),
+                if (this.username && this.password && this.email) {
+                    const hashed_password = CryptoJS.SHA256(this.password).toString(
+                        CryptoJS.enc.Hex
+                    )
+                    const res = await this.register_user({
+                        username: this.username,
+                        password: hashed_password,
+                        email: this.email,
                     })
-                        .then(() => {
-                            toast.success(this.$t("Inscription réalisée avec succès"))
+                    if (this.errors.message) {
+                        toast.error(this.errors.message)
+                        await this.update_error({ message: null })
+                    } else {
+                        toast.success(this.$t("Inscription réalisée avec succès"))
 
-                            this.$router.push("/login")
-                        })
-                        .catch((err) => {
-                            toast.error(typeof err === "object" ? err.message : err)
-                            console.log("err", err)
-                        })
+                        this.$router.push("/user/dashboard")
+                    }
                 }
             }
         },
-    },
-}
+    }}
 </script>

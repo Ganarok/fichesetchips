@@ -51,7 +51,7 @@
 
                 <CustomInput
                     :max-length="64"
-                    type="password"
+                    :typeinput="'password'"
                     :place-holder="$t('Mot de passe')"
                     :has-error="credentialsError"
                     outline="fc-green"
@@ -94,8 +94,9 @@
 <script>
 import CustomInput from "@/components/subComponent/CustomInput.vue"
 import Loader from "@/components/Loader.vue"
-import { apiCall } from "@/utils/apiCall"
 import { useToast } from "vue-toastification"
+import { mapState, mapActions } from "vuex"
+
 const CryptoJS = require("crypto-js")
 
 export default {
@@ -115,55 +116,54 @@ export default {
             errorText: "",
         }
     },
+    computed: {
+        ...mapState("errors", {
+            errors: (state) => state.errors,
+        }),
+        ...mapState("user", {
+            user: (state) => state.user,
+        }),
+    },
     methods: {
+        ...mapActions({
+            log_user: "user/log_user",
+            update_error: "errors/update_error",
+        }),
         handleUsername(v) {
             this.username = v
         },
         handlePassword(v) {
             this.password = v
         },
-        handleFocusOut() {
+        async handleFocusOut() {
             this.errorText = ""
             this.credentialsError = false
+            await this.update_error({ message: null })
         },
-        handleLogin() {
-            const { username } = this
-            let { password } = this
+        async handleLogin() {
             const toast = useToast()
-            password = CryptoJS.SHA256(this.password).toString(CryptoJS.enc.Hex)
-
-            if (username && password) {
-                apiCall({
-                    method: "POST",
-                    route: "/auth/login",
-                    body: JSON.stringify({
-                        username,
-                        password: password,
-                    }),
+            if (this.username && this.password) {
+                const hashed_password = CryptoJS.SHA256(this.password).toString(
+                    CryptoJS.enc.Hex
+                )
+                const res = await this.log_user({
+                    username: this.username,
+                    password: hashed_password,
                 })
-                    .then(async (res) => {
-                        this.$store.commit("setUser", {
-                            ...res.user,
-                            access_token: res.access_token,
-                        })
-
-                        await this.$router.push("/user/dashboard")
-
-                        setTimeout(
-                            () =>
-                                toast.success(`${this.$t("Bienvenue")} ${res.user.username} !`),
-                            400
-                        )
-                    })
-                    .catch((err) => {
-                        toast.error(typeof err === "object" ? err.message : err)
-                        console.log("err", err)
-
-                        this.credentialsError = true
-                        this.errorText = this.$t("Les identifiants ne sont pas valides")
-                    })
+                if (this.errors.message) {
+                    toast.error(this.errors.message)
+                    this.credentialsError = true
+                    this.errorText = this.$t("Les identifiants ne sont pas valides")
+                    await this.update_error({ message: null })
+                } else {
+                    await this.$router.push("/user/dashboard")
+                    setTimeout(
+                        () =>
+                            toast.success(`${this.$t("Bienvenue")} ${this.user.username} !`),
+                        400
+                    )
+                }
             }
         },
-    },
-}
+    }}
 </script>

@@ -20,7 +20,7 @@
                     alt="ChangeLayer"
                     @click="
                         () =>
-                            $store.commit('updateState', {
+                            $store.commit('phaser/updateState', {
                                 property: 'isolateLayer',
                                 newState: !$store.state.phaser.isolateLayer,
                             })
@@ -35,7 +35,7 @@
                     alt="Eraser"
                     @click="
                         () =>
-                            $store.commit('updateState', {
+                            $store.commit('phaser/updateState', {
                                 property: 'eraser',
                                 newState: !$store.state.phaser.eraser,
                             })

@@ -1,15 +1,15 @@
 export default {
+    namespaced: true,
     state: {
         controls: null,
-        layers: [
-            {
-                name: "grounds",
-                asset: "desert_grounds",
-            },
-            {
-                name: "items",
-                asset: "desert_items",
-            },
+        layers: [{
+            name: "grounds",
+            asset: "desert_grounds",
+        },
+        {
+            name: "items",
+            asset: "desert_items",
+        },
         ],
         selectedLayer: 0,
         eraser: false,

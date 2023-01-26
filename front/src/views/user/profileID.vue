@@ -6,22 +6,22 @@
 
                 <div class="flex flex-col h-full ml-8">
                     <h1 class="text-3xl font-bold text-fc-green">
-                        {{ user.username }}
+                        {{ visited_user.username }}
                     </h1>
 
                     <h1 class="text-fc-yellow">
                         Dernière connexion:
 
-                        <span class="font-bold">{{ user.lastConnection }}</span>
+                        <span class="font-bold">{{
+                            getDateSince(visited_user.last_connection)
+                        }}</span>
                     </h1>
 
                     <p class="font-bold italic">
-                        {{ user.description }}
+                        {{ visited_user.description }}
                     </p>
 
-                    <h1 class="mt-auto">
-                        {{ user.location }}
-                    </h1>
+                    <!-- <h1 class="mt-auto">{{ visited_user.location }}</h1> -->
 
                     <h1>Privé</h1>
                 </div>
@@ -79,30 +79,36 @@
 import Avatar from "@/components/subComponent/Avatar.vue"
 import Badge from "@/components/subComponent/Badge.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import { apiCall } from "@/utils/apiCall"
+import { mapState, mapActions } from "vuex"
+import moment from "moment"
 
 export default {
     components: { SidebarLayout, Avatar, Badge },
     data() {
         return {
-            user: {
-                id: 0,
-                username: "John Doe",
-                email: "JohnDoe@mail.com",
-                location: "FarFarAway Kingdom, Farlands",
-                avatar: "",
-                description: "“Jeune elfe recherche un mage mortel ...”",
-                lastConnection: "il y a 1 heure",
-                createdAt: "",
-            },
             stats: {},
             badges: [],
         }
     },
-    mounted() {
+    async mounted() {
         this.badgeGenerator()
+        await this.fetch_user(this.$route.params.username)
+    },
+    computed: {
+        ...mapState("errors", {
+            errors: (state) => state.errors,
+        }),
+        ...mapState("user", {
+            visited_user: (state) => state.visited_user,
+        }),
     },
     methods: {
+        ...mapActions({
+            fetch_user: "user/fetch_user",
+        }),
+        getDateSince(date) {
+            return moment(date).fromNow()
+        },
         badgeGenerator(badgeNbr = 5) {
             for (let index = 0; index < badgeNbr; index++) {
                 this.badges.push({
@@ -115,25 +121,6 @@ export default {
         randomIntFromInterval(min, max) {
             // min and max included
             return Math.floor(Math.random() * (max - min + 1) + min)
-        },
-        setupUserInfos() {
-            this.user = this.getUser()
-
-            // if (this.user) {
-
-            // }
-        },
-        getUser(username) {
-            apiCall({
-                method: "GET",
-                route: "/user/" + username,
-            })
-                .then((res) => {
-                    this.friends = res.friends
-                })
-                .catch((err) => {
-                    console.log("err", err)
-                })
         },
     },
 }

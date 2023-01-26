@@ -11,8 +11,8 @@
 
                 <div class="relative text-2xl w-52 sm:w-40 xl:w-52">
                     <Avatar
-                        username="Ganarok"
-                        usernameUnder
+                        :username="user.username"
+                        username_under
                         class="text-3xl xl:text-4xl"
                     />
                 </div>
@@ -142,7 +142,7 @@
                             </div>
                             <div class="flex w-full h-16">
                                 <div class="w-2/5 flex items-center justify-center">
-                                    01-01-01
+                                    {{ getDate(user.created_at) }}
                                 </div>
                                 <div
                                     class="relative w-3/5 flex items-center justify-center text-white bg-fc-black"
@@ -193,59 +193,78 @@
                         class="flex self-center overflow-x-auto space-x-2 justify-center items-center h-full w-full md:w-[50vw] my-4"
                     >
                         <div
-                            v-if="friendsList.length < 1"
+                            v-if="friends.length < 1"
                             class="flex font-bold text-center h-full items-center"
                         >
                             Ajoutez des amis pour voir leur status
                         </div>
 
                         <Avatar
-                            v-for="friend in friendsList"
-                            :key="friend.username"
-                            :grayed="!friend.online"
-                            :username="friend.username"
+                            v-for="friendship in friends"
+                            :key="friendship.id"
+                            :grayed="false"
+                            :username="getFriendUsername(friendship)"
                         />
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <div v-if="pending_approval.length > 0">
+                            <p>Ils veulent être ton ami !</p>
+                            <Avatar
+                                v-for="friendship in pending_approval"
+                                :key="friendship.id"
+                                :grayed="false"
+                                :username="friendship.user_asked.username"
+                            />
+                        </div>
 
-        <Modal
-            v-show="showModal"
-            @close-modal="showModal = false"
-        >
-            <div
-                class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-fc-yellow-trans"
-            >
-                <div
-                    class="bg-white h-1/3 w-1/3 flex flex-col justify-center items-center text-red-500 font-bold text-xl space-y-10"
-                >
-                    <div class="text-center">
-                        <div>Voulez-vous vraiment supprimer votre profil ?</div>
-                        <div class="text-sm">
-                            Attention, cette action est irreversible et toute vos donnée
-                            serons perdues définitivement
+                        <div v-if="pending_request.length > 0">
+                            <p>Vouys attendez toujours leur retour</p>
+                            <Avatar
+                                v-for="friendship in pending_request"
+                                :key="friendship.id"
+                                :grayed="false"
+                                :username="friendship.user_answered.username"
+                            />
                         </div>
                     </div>
-                    <div class="flex justify-center items-center w-full space-x-16">
-                        <button
-                            class="bg-red-500 text-white h-[2.5em] p-1"
-                            style="aspect-ratio: 1/1"
-                            @click="deleteProfile"
-                        >
-                            Oui
-                        </button>
-                        <button
-                            class="bg-fc-green text-white h-[2.5em] p-1"
-                            style="aspect-ratio: 1/1"
-                            @click="showModal = false"
-                        >
-                            Non
-                        </button>
-                    </div>
                 </div>
+
+                <Modal
+                    v-show="showModal"
+                    @close-modal="showModal = false"
+                >
+                    <div
+                        class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-fc-yellow-trans"
+                    >
+                        <div
+                            class="bg-white h-1/3 w-1/3 flex flex-col justify-center items-center text-red-500 font-bold text-xl space-y-10"
+                        >
+                            <div class="text-center">
+                                <div>Voulez-vous vraiment supprimer votre profil ?</div>
+                                <div class="text-sm">
+                                    Attention, cette action est irreversible et toute vos donnée
+                                    serons perdues définitivement
+                                </div>
+                            </div>
+                            <div class="flex justify-center items-center w-full space-x-16">
+                                <button
+                                    class="bg-red-500 text-white h-[2.5em] p-1"
+                                    style="aspect-ratio: 1/1"
+                                    @click="deleteProfile"
+                                >
+                                    Oui
+                                </button>
+                                <button
+                                    class="bg-fc-green text-white h-[2.5em] p-1"
+                                    style="aspect-ratio: 1/1"
+                                    @click="showModal = false"
+                                >
+                                    Non
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
             </div>
-        </Modal>
+        </div>
     </SidebarLayout>
 </template>
 
@@ -256,7 +275,8 @@ import Avatar from "@/components/subComponent/Avatar.vue"
 import Badge from "@/components/subComponent/Badge.vue"
 import CharacterCard from "@/components/subComponent/CharacterCard.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import { apiCall } from "@/utils/apiCall"
+import { mapState, mapActions } from "vuex"
+import moment from "moment"
 
 export default {
     components: {
@@ -271,23 +291,6 @@ export default {
     data() {
         return {
             showModal: false,
-            user: {
-                id: 0,
-                username: "John Doe",
-                email: "JohnDoe@mail.com",
-                location: "FarFarAway Kingdom, Farlands",
-                avatar: "",
-                description: "Jeune elfe recherche un mage mortel ...",
-                lastConnection: "il y a 1 heure",
-                createdAt: "",
-            },
-            friendsList: [
-                { username: "SmithMan", online: true },
-                { username: "SmithMan", online: false },
-                { username: "SmithMan", online: false },
-                { username: "SmithMan", online: false },
-                { username: "SmithMan", online: false },
-            ],
             badges: [],
             badgesPage: 0,
             preview: false,
@@ -295,6 +298,17 @@ export default {
         }
     },
     computed: {
+        ...mapState("errors", {
+            errors: (state) => state.errors,
+        }),
+        ...mapState("user", {
+            user: (state) => state.user,
+        }),
+        ...mapState("friends", {
+            friends: (state) => state.my_friends,
+            pending_approval: (state) => state.pending_approval,
+            pending_request: (state) => state.pending_request,
+        }),
         badgesToDisplayWhenPublic() {
             let toDisplay = []
             this.badges.forEach((badgeList) =>
@@ -305,10 +319,19 @@ export default {
             return toDisplay
         },
     },
-    mounted() {
+    async mounted() {
         this.badgeGenerator(3)
+        await this.fetch_my_friends()
     },
     methods: {
+        ...mapActions({
+            fetch_my_friends: "friends/fetch_my_friends",
+            patch_user: "user/patch_user",
+            delete_user: "user/delete_user",
+        }),
+        getDate(date) {
+            return moment(date).format("ll")
+        },
         badgeGenerator(pageNbr = 3, badgeNbr = 20) {
             for (let i = 0; i < pageNbr; i++) {
                 let tempBadges = []
@@ -328,7 +351,7 @@ export default {
                 console.log(badgeID, badgeIndex)
                 if (badgeIndex != -1) {
                     this.badges[page][badgeIndex].isFav =
-                        !this.badges[page][badgeIndex].isFav
+            !this.badges[page][badgeIndex].isFav
                 }
             })
         },
@@ -336,67 +359,25 @@ export default {
             // min and max included
             return Math.floor(Math.random() * (max - min + 1) + min)
         },
-        setupUserInfos() {
-            this.user = this.$store.state.user.user
-
-            if (this.user) {
-                this.getFriends()
+        async updateProfile() {
+            const body = {
+                username: this.user.username,
+                email: this.user.email,
+                location: this.user.location,
+                avatar: this.user.avatar,
+            }
+            await this.patch_user(body)
+        },
+        async deleteProfile() {
+            await this.delete_user()
+            await this.$router.push("/login")
+        },
+        getFriendUsername(friendship) {
+            if (this.user.username == friendship.user_asked.username) {
+                return friendship.user_answered.username
+            } else {
+                return friendship.user_asked.username
             }
         },
-        getFriends(username = this.user.username) {
-            apiCall({
-                method: "GET",
-                route: "/friends/" + username,
-            })
-                .then((res) => {
-                    this.friends = res.friends
-                })
-                .catch((err) => {
-                    console.log("err", err)
-                })
-        },
-        getBadges(username = this.user.username) {
-            apiCall({
-                method: "GET",
-                route: "/badges/" + username,
-            })
-                .then((res) => {
-                    this.badges = res.badges
-                })
-                .catch((err) => {
-                    console.log("err", err)
-                })
-        },
-        updateProfile() {
-            apiCall({
-                method: "PATCH",
-                route: "/users",
-                body: {
-                    username: this.user.username,
-                    email: this.user.email,
-                    location: this.user.location,
-                    avatar: this.user.avatar,
-                },
-            })
-                .then((res) => {
-                    this.badges = res.badges
-                })
-                .catch((err) => {
-                    console.log("err", err)
-                })
-        },
-        deleteProfile() {
-            apiCall({
-                method: "DELETE",
-                route: "/users",
-            })
-                .then(() => {
-                    this.$router.push("/")
-                })
-                .catch((err) => {
-                    console.log("err", err)
-                })
-        },
-    },
-}
+    }}
 </script>

@@ -4,6 +4,18 @@ import defaultPreferences from "./preferences"
 const defaultPreference = defaultPreferences.defaultPreference
 
 export default  {
+    test: {
+        id: "e0676065-f9f2-4f18-8f65-dcecbb8b58dc",
+        username: "test",
+        email: "test@email.com",
+        password: "$2b$10$sXhesAHmGahQZV04rDfSl.4371W/ADZ50tNrSu4N55ybTnTYorABC", // password_hashed
+        avatar: defaultAvatar,
+        role: "USER",
+        preference_id: defaultPreference.id,
+        last_connection: "2022-06-24T11:29:59.619Z",
+        created_at: "2022-06-24T11:29:59.619Z",
+        updated_at: "2022-06-24T11:29:59.619Z"
+    },
     defaultUser: {
         id: "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
         username: "user",

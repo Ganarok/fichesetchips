@@ -1,3 +1,5 @@
+import store from "../store/index"
+
 export async function apiCall({
     route,
     method = "GET",
@@ -8,22 +10,25 @@ export async function apiCall({
     body,
 }) {
     const baseUrl =
-    process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : `//${process.env.BACK_HOST}:${process.env.BACK_PORT}`
+        process.env.NODE_ENV === "development" ?
+            "http://localhost:3000" :
+            `http://${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`
 
-    const res = body
-        ? await fetch(`${baseUrl}${route}`, {
+    if(store.state.user.access_token != "") {
+        headers["Authorization"] = `Bearer ${store.state.user.access_token}`
+    }
+    const res = body ?
+        await fetch(`${baseUrl}${route}`, {
             method,
             headers,
-            body,
-        })
-        : await fetch(`${baseUrl}${route}`, {
+            body: JSON.stringify(body),
+        }) :
+        await fetch(`${baseUrl}${route}`, {
             method,
             headers,
         })
 
-    if (!res.ok) throw new Error(res.statusText)
+    if(!res.ok) throw new Error(res.statusText)
 
     return await res.json()
 }

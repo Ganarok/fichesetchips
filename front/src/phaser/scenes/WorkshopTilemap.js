@@ -128,21 +128,21 @@ export default class WorkshopTilemap extends Scene {
         )
 
         this.eKey.on("down", () => {
-            store.commit("updateState", {
+            store.commit("phaser/updateState", {
                 property: "eraser",
                 newState: !store.state.phaser.eraser,
             })
         })
 
         this.iKey.on("down", () => {
-            store.commit("updateState", {
+            store.commit("phaser/updateState", {
                 property: "isolateLayer",
                 newState: !store.state.phaser.isolateLayer,
             })
         })
 
         this.tabKey.on("down", () => {
-            store.commit("updateState", {
+            store.commit("phaser/updateState", {
                 property: "layerTab",
                 newState: !store.state.phaser.layerTab,
             })
@@ -171,7 +171,7 @@ export default class WorkshopTilemap extends Scene {
             if(index === 0) {
                 this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29])
                 this.selectedTile = this.layers[0].getTileAt(0, 0)
-                store.commit("updateState", {
+                store.commit("phaser/updateState", {
                     property: "selectedTile",
                     newState: 0,
                 })
@@ -184,7 +184,7 @@ export default class WorkshopTilemap extends Scene {
 
         console.log("tilesets", this.tileSetsInfos)
 
-        store.commit("updateState", {
+        store.commit("phaser/updateState", {
             property: "tileSetsInfos",
             newState: this.tileSetsInfos,
         })
@@ -258,7 +258,7 @@ export default class WorkshopTilemap extends Scene {
                     false,
                     layerName
                 )
-                store.commit("updateState", {
+                store.commit("phaser/updateState", {
                     property: "selectedTile",
                     newState: this.selectedTile,
                 })
