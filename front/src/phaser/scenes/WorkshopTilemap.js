@@ -170,7 +170,7 @@ export default class WorkshopTilemap extends Scene {
                 glTexture: this.tileSets[index].glTexture,
             }
 
-            if (index === 0) {
+            if(index === 0) {
                 this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29])
                 this.selectedTile = this.layers[0].getTileAt(0, 0)
                 store.commit("updateState", {
@@ -179,7 +179,7 @@ export default class WorkshopTilemap extends Scene {
                 })
             }
 
-            if (index === 1) {
+            if(index === 1) {
                 this.layers[1].randomize(0, 0, this.map.width, this.map.height, [1])
             }
         })
