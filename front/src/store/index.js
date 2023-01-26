@@ -1,6 +1,6 @@
 import { createStore } from "vuex"
-import user from "./user"
-import phaser from "./phaser"
+import user from "./modules/user"
+import phaser from "./modules/phaser"
 import VuexPersistence from "vuex-persist"
 
 const vuexLocal = new VuexPersistence({
