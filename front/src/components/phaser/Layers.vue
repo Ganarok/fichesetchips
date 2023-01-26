@@ -120,7 +120,7 @@ export default {
             img.height = 32
             img.id = id
             img.style = 'cursor: pointer;'
-            img.onclick = (e) => this.updateSelectedTile(id)
+            img.onclick = () => this.updateSelectedTile(id)
             
             return img
         },

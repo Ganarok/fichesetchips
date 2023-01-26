@@ -18,6 +18,7 @@ module.exports = {
     },
     plugins: ["vue"],
     rules: {
+        "vue/attribute-hyphenation": ["off"],
         "vue/multi-word-component-names": "off",
         "vue/no-reserved-component-names": "off",
         "no-unused-vars": "warn",

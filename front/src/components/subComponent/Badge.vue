@@ -41,7 +41,10 @@
 export default {
     props: {
         background: { type: String, default: "../../assets/icons/star.svg" },
-        border: String,
+        border: {
+            type: String,
+            default: ''
+        },
         size: { type: String, default: null },
         canFav: Boolean,
         isFav: { type: Boolean, default: null },
@@ -69,9 +72,6 @@ export default {
         },
     },
     methods: {
-        callback: function (e) {
-            this.$emit("click", e)
-        },
         backgroundColor: function () {
             if (this.filled == undefined) {
                 return ""
@@ -88,7 +88,7 @@ export default {
         },
         handleFav() {
             this.localFav = !this.localFav
-            this.$emit("favorite", this.displayFav)
+            // this.$emit("favorite", this.displayFav)
         },
     },
 }

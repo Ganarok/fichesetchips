@@ -128,7 +128,7 @@ const router = createRouter({
     routes,
 })
 
-router.afterEach((to, from) => {
+router.afterEach((to) => {
     nextTick(() => {
         document.title = `${
             to.name !== undefined ? to.name + " - " : ""

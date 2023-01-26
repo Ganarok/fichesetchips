@@ -5,11 +5,10 @@
         } border-${color} ${
             rounded && 'rounded-full'
         } p-4 font-bold ${textColor} select-none hover:opacity-80 ${customClass}`"
-        @click="callback($event)"
     >
         {{ buttonText }}
         <img
-            v-if="image !== undefined"
+            v-if="image !== ''"
             :src="image"
             class="w-8 h-8 ml-[5px]"
         >
@@ -19,7 +18,10 @@
 <script>
 export default {
     props: {
-        buttonText: String,
+        buttonText: {
+            type: String,
+            default: ''
+        },
         color: {
             type: String,
             default: "fc-green",
@@ -40,11 +42,9 @@ export default {
             type: String,
             default: "",
         },
-        image: String,
-    },
-    methods: {
-        callback: function (e) {
-            this.$emit("click", e)
+        image: {
+            type: String,
+            default: ''
         },
     },
 }

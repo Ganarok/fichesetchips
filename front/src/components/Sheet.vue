@@ -18,8 +18,14 @@ import Loader from "./Loader.vue"
 export default {
     components: { Loader },
     props: {
-        route: String,
-        search: String,
+        route: {
+            type: String,
+            default: ''
+        },
+        search: {
+            type: String,
+            default: ''
+        },
     },
     data() {
         return {

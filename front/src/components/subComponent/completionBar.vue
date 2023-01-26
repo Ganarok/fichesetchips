@@ -15,7 +15,10 @@
 <script>
 export default {
     props: {
-        size: Number,
+        size: {
+            type: Number,
+            default: 1
+        },
         completed: {
             type: Number,
             default: 1,

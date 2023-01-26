@@ -1,9 +1,7 @@
 import { Scene, Tilemaps } from "phaser"
-import { COLORS } from "@/utils/enums"
 import store from "@/store"
 import desert_grounds from "@/phaser/assets/desert_grounds.png"
 import desert_items from "@/phaser/assets/desert_items.png"
-import map_tiled from "@/phaser/maps/desert.json"
 import template from "@/phaser/maps/template.json"
 import Phaser from "phaser"
 
@@ -28,7 +26,7 @@ export default class WorkshopTilemap extends Scene {
         this.selectedLayer = 0
     }
 
-    init(data) {
+    init() { // props : (data)
         // TODO : La data envoyée depuis BootScene arrive ici, dans l'object data
         // console.log(data)
     }
@@ -53,21 +51,21 @@ export default class WorkshopTilemap extends Scene {
         this._initListeners()
     }
 
-    update(time, delta) {
+    update() { // props: (time, delta)
         this.handle_event()
     }
 
     _initListeners() {
         store.watch(
             () => store.state.phaser.selectedTile,
-            (newValue, oldValue) => {
+            (newValue) => {
                 this.selectedTile = newValue
             }
         )
 
         store.watch(
             () => store.state.phaser.selectedTileIndex,
-            (index, oldValue) => {
+            (index) => {
                 this.selectedTile = new Tilemaps.Tile(
                     this.selectedLayer,
                     index,
@@ -95,7 +93,7 @@ export default class WorkshopTilemap extends Scene {
 
         store.watch(
             () => store.state.phaser.isolateLayer,
-            (isIsolated, oldValue) => {
+            (isIsolated) => {
                 if(isIsolated) {
                     this.layers.forEach((layer, index) => {
                         if(index !== this.selectedLayer) {
@@ -123,7 +121,7 @@ export default class WorkshopTilemap extends Scene {
 
         this.input.on(
             "wheel",
-            function(pointer, gameObjects, deltaX, deltaY, deltaZ) {
+            function(pointer, gameObjects, deltaX, deltaY) {
                 this.cameras.main._x -= deltaX / 5
                 this.cameras.main._y -= deltaY / 5
             }

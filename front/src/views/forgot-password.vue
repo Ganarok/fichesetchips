@@ -77,15 +77,12 @@
 
 <script>
 import CustomInput from "@/components/subComponent/CustomInput.vue"
-// import subModalSignup from '@/components/subModals/signup.vue'
 import Loader from "@/components/Loader.vue"
 import { isEmailValid } from "@/utils/validations"
-import { useToast } from "vue-toastification"
 
 export default {
     name: "Login",
     components: {
-        // subModalSignup,
         CustomInput,
         Loader,
     },
@@ -122,44 +119,9 @@ export default {
         },
         handleSend() {
             const { email } = this
-            const toast = useToast()
 
             if (email) {
                 //TODO : Send a mail for updating password
-                // apiCall({
-                //     method: 'POST',
-                //     route: // TODO: ENDPOINT MAIL,
-                //     body: JSON.stringify({
-                //         username,
-                //         password,
-                //     }),
-                // })
-                //     .then(async (res) => {
-                //         this.$store.commit('setUser', {
-                //             ...res.user,
-                //             access_token: res.access_token,
-                //         })
-                //         await this.$router.push('/user/dashboard')
-                //         setTimeout(
-                //             () =>
-                //                 toast.success(
-                //                     `${this.$t('Bienvenue')} ${
-                //                         res.user.username
-                //                     } !`),
-                //             400
-                //         )
-                //     })
-                //     .catch((err) => {
-                //     toast.error(err, {
-                //         theme: 'toasted-primary',
-                //         position: 'top-right',
-                //         duration: 4000,
-                //     })
-                //
-                //     this.emailError = true
-                //     this.errorText = this.$t('Une erreur est survenue')
-                //     console.log('err', err)
-                // })
             }
         },
     },
