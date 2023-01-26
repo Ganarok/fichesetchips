@@ -74,6 +74,21 @@ import Loader from "@/components/Loader.vue"
 export default {
     name: 'Layers',
     components: { Layer, Loader },
+    data() {
+        setTimeout(() => {
+            this.initLayers()
+            this.loadingAssets = false
+
+            // console.log(Object.values(tileSets[selectedLayer].image.frames))
+            // console.log(this.$store.state.phaser.tileSets[1])
+        }, 1000)
+
+        return {
+            ...this.$store.state.phaser,
+            loadingAssets: true,
+            gl: null
+        }
+    },
     methods: {
         createCanvas(id, gl, texture, x = 0, y = 0) {
             // Create a framebuffer backed by the texture
