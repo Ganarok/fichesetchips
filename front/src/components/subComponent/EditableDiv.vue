@@ -13,7 +13,6 @@
             :placeholder="displayValue"
             :type="password ? 'password' : 'text'"
             @keyup.enter="toggleEdit"
-            @input="onInput()"
         >
         <div
             v-show="!isEditMode"
@@ -29,14 +28,11 @@
 export default {
     name: "EditableDiv",
     props: {
-        label: { type: String },
-        modelValue: { type: String },
-        password: { type: Boolean },
-        editMode: { type: Boolean },
-        canEdit: { type: Boolean },
-        inputClass: {},
-        placeHolderClass: {},
-        labelClass: {},
+        label: { type: String, default: '' },
+        modelValue: { type: String, default: '' },
+        password: { type: Boolean, default: false },
+        editMode: { type: Boolean, default: false },
+        canEdit: { type: Boolean, default: false },
     },
     data() {
         return {
@@ -59,9 +55,6 @@ export default {
                 this.edit = !this.edit
                 if (this.edit) this.$refs.input.focus()
             }
-        },
-        onInput() {
-            this.$emit("input", this.newValue)
         },
     },
 }

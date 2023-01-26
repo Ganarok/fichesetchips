@@ -12,7 +12,7 @@
                 <div class="relative text-2xl w-52 sm:w-40 xl:w-52">
                     <Avatar
                         username="Ganarok"
-                        username_under
+                        usernameUnder
                         class="text-3xl xl:text-4xl"
                     />
                 </div>
@@ -390,7 +390,7 @@ export default {
                 method: "DELETE",
                 route: "/users",
             })
-                .then((res) => {
+                .then(() => {
                     this.$router.push("/")
                 })
                 .catch((err) => {

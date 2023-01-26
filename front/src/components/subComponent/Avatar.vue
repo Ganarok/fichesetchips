@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center font-bold space-y-4">
-        <h1 v-if="!username_under">
+        <h1 v-if="!usernameUnder">
             {{ username }}
         </h1>
 
@@ -12,7 +12,7 @@
             >
         </div>
 
-        <h1 v-if="username_under">
+        <h1 v-if="usernameUnder">
             {{ username }}
         </h1>
     </div>
@@ -21,15 +21,15 @@
 <script>
 export default {
     props: {
-        border: String,
+        border: {
+            type: String,
+            default: ''
+        },
         username: { type: String, default: null },
-        username_under: Boolean,
+        usernameUnder: Boolean,
         grayed: Boolean,
     },
     methods: {
-        callback: function (e) {
-            this.$emit("click", e)
-        },
         borderColor: function () {
             if (this.border == undefined) {
                 return ""

@@ -268,7 +268,7 @@ export default {
                 this.room.levelGap = `${v.target.value}-${v.target.value}`
             else this.room.levelGap = `${minLvl}-${v.target.value}`
         },
-        handleSubmit(e) {
+        handleSubmit() {
             if (this.room.password) this.room.isPrivate = true
 
             if (!this.room.title)
@@ -288,7 +288,7 @@ export default {
             const toast = useToast()
 
             try {
-                const res = await apiCall({
+                await apiCall({
                     route: "/rooms",
                     method: "POST",
                     body: JSON.stringify(this.room),

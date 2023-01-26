@@ -85,6 +85,7 @@ export default {
     props: {
         description: {
             type: String,
+            default: ''
         },
         gameAsPlayer: {
             type: Number,

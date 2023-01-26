@@ -13,9 +13,12 @@
 export default {
     name: "Layer",
     props: {
-        layer: Object,
+        layer: {
+            type: Object,
+            default() {}
+        },
         isSelected: { type: Boolean, default: false },
-        index: { type: Number },
+        index: { type: Number, default: 0 },
     },
 }
 </script>

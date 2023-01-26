@@ -28,16 +28,14 @@ export default {
     props: {
         label: {
             type: String,
+            default: ''
         },
-        placeHolder: { type: String },
+        placeHolder: { type: String, default: '' },
         type: {
             type: String,
             default: "text",
         },
-        inputClass: {},
-        placeHolderClass: {},
-        labelClass: {},
-        maxLength: { type: Number },
+        maxLength: { type: Number, default: 0 },
         hasError: {
             type: Boolean,
             default: false,

@@ -58,7 +58,10 @@
 <script>
 export default {
     props: {
-        items: Array,
+        items: {
+            type: Array,
+            default() { return [] }
+        },
         onSelectItem: {
             type: Function,
             default: () => {},
@@ -100,7 +103,7 @@ export default {
         switchOpened() {
             this.isOpened = !this.isOpened
         },
-        closeSelector(value) {
+        closeSelector() {
             this.isOpened = false
         },
         handleFocus() {

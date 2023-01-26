@@ -63,21 +63,21 @@
 <script>
 export default {
     props: {
-        background: String,
-        border: String,
+        background: {
+            type: String,
+            default: ''
+        },
+        border: {
+            type: String,
+            default: ''
+        },
         name: { type: String, default: "" },
-        nick_under: Boolean,
-        nick_size: { type: String, default: "2xl" },
-        nick_bold: Boolean,
         image: { type: String, default: "" },
         level: { type: Number, default: null },
         owner: { type: String, default: "" },
         location: { type: String, default: "" },
     },
     methods: {
-        callback: function (e) {
-            this.$emit("click", e)
-        },
         backgroundColor: function () {
             if (this.filled == undefined) {
                 return ""

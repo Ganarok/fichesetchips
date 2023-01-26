@@ -168,7 +168,10 @@ export default {
         BlackGreenDiv,
     },
     props: {
-        room: Object,
+        room: {
+            type: Object,
+            default() { return {} }
+        }
     },
 }
 </script>

@@ -216,7 +216,7 @@ export default {
                             avatar: "",
                         }),
                     })
-                        .then((res) => {
+                        .then(() => {
                             toast.success(this.$t("Inscription réalisée avec succès"))
 
                             this.$router.push("/login")
