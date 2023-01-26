@@ -8,7 +8,7 @@
     >
         {{ buttonText }}
         <img
-            v-if="image !== undefined"
+            v-if="image !== ''"
             :src="image"
             class="w-8 h-8 ml-[5px]"
         >
