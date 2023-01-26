@@ -3,13 +3,13 @@ export default {
         controls: null,
         layers: [
             {
-                name: 'grounds',
-                asset: 'desert_grounds'
+                name: "grounds",
+                asset: "desert_grounds",
             },
             {
-                name: 'items',
-                asset: 'desert_items'
-            }
+                name: "items",
+                asset: "desert_items",
+            },
         ],
         selectedLayer: 0,
         eraser: false,
@@ -20,22 +20,22 @@ export default {
         tileSetsInfos: [],
         tilesPics: {},
         tilesSize: 32,
-        mapSize: 32 * 20 
+        mapSize: 32 * 20,
     },
     mutations: {
         updateState(state, payload) {
             const { property, newState } = payload
 
-      state[property] = newState;
+            state[property] = newState
+        },
+        initLayers(state, layers) {
+            state.layers = layers
+        },
     },
-    initLayers(state, layers) {
-      state.layers = layers;
+    actions: {},
+    getters: {
+        getSelectedTile(state) {
+            return state.selectedTile
+        },
     },
-  },
-  actions: {},
-  getters: {
-    getSelectedTile(state) {
-      return state.selectedTile;
-    },
-  },
-};
+}

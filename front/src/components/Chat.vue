@@ -49,22 +49,22 @@
 
 <script>
 export default {
-  name: "Chat",
-  props: {
-    connected: {
-      type: Boolean,
-      required: true,
+    name: "Chat",
+    props: {
+        connected: {
+            type: Boolean,
+            required: true,
+        },
+        // messages: Array,
+        sendMessage: {
+            type: Function,
+            required: true,
+        },
     },
-    // messages: Array,
-    sendMessage: {
-      type: Function,
-      required: true,
+    data() {
+        return {
+            message: "",
+        }
     },
-  },
-  data() {
-    return {
-      message: "",
-    };
-  },
-};
+}
 </script>

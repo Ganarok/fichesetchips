@@ -1,7 +1,10 @@
 <template>
-  <transition class="z-50" name="modal-fade">
-    <slot class="z-50"></slot>
-  </transition>
+    <transition
+        class="z-50"
+        name="modal-fade"
+    >
+        <slot class="z-50" />
+    </transition>
 </template>
 
 <style scoped>
