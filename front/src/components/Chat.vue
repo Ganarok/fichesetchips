@@ -1,22 +1,25 @@
+<!-- eslint-disable -->
 <template>
     <div class="flex flex-col relative w-full h-full justify-between bg-fc-black-light border-2 border-fc-black">
         <div 
             class="flex flex-col h-full w-full text-white items-start justify-end p-4"
         >
+        <div v-if="messages.length > 0">
+            
             <p 
-                v-if="messages.length > 0"
-                v-for="(message, index) in messages"
+            v-for="(message, index) in messages" :key="index"
                 class="flex space-x-2"
             >
-                <p class="font-bold">
+                <span class="font-bold">
                     {{ message.senderName }}
-                </p>
+                </span>
                 : 
-                <p>
+                <span>
                     {{ message.text }}
-                </p>
+                </span>
             </p>
 
+        </div>
             <p
                 v-else
                 class="opacity-50"
@@ -29,11 +32,11 @@
             type="text"
             :model="message"
             :value="message"
-            @input="message = $event.target.value"
             placeholder="Type your message"
-            @keyup.enter="sendMessage(message); message = ''"
             class="p-2 m-1 focus:outline-fc-green"
             autofocus
+            @input="message = $event.target.value"
+            @keyup.enter="sendMessage(message); message = ''"
         />
 
         <img 
@@ -45,28 +48,23 @@
 </template>
 
 <script>
-
 export default {
-    name: 'Chat',
-    props: {
-        connected: {
-            type: Boolean,
-            required: true
-        },
-        messages: {
-            type: Array,
-            default: []
-        },
-        sendMessage: {
-            type: Function,
-            required: true,
-        }
+  name: "Chat",
+  props: {
+    connected: {
+      type: Boolean,
+      required: true,
     },
-    data() {
-        return {
-            message: ''
-        }
+    // messages: Array,
+    sendMessage: {
+      type: Function,
+      required: true,
     },
-}
-
+  },
+  data() {
+    return {
+      message: "",
+    };
+  },
+};
 </script>

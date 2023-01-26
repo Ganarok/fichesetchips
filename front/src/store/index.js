@@ -15,4 +15,4 @@ const store = createStore({
     plugins: [ vuexLocal.plugin ]
 })
 
-export default store
+export default store;

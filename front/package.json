@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "NODE_ENV=development HOST=0.0.0.0 vue-cli-service serve",
         "build": "NODE_ENV=production vue-cli-service build --mode production",
-        "dev:prod": "serve -s dist"
+        "dev:prod": "serve -s dist",
+        "lint": "NODE_ENV=development vue-cli-service lint"
     },
     "dependencies": {
         "core-js": "^3.24.1",
@@ -22,13 +23,29 @@
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "^5.0.8",
+        "@vue/cli-plugin-eslint": "^5.0.8",
         "@vue/cli-service": "^5.0.8",
+        "@vue/eslint-config-prettier": "^7.0.0",
         "autoprefixer": "^10.4.13",
+        "babel-eslint": "^10.1.0",
+        "eslint": "^8.31.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-vue": "^9.9.0",
         "http-server": "^14.1.1",
+        "lint-staged": "^13.1.0",
         "postcss": "^8.4.18",
+        "prettier": "^2.8.2",
         "sass": "^1.54.4",
         "sass-loader": "^13.0.2",
         "tailwindcss": "^3.2.1"
+    },
+    "gitHooks": {
+        "pre-commit": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,jsx,vue}": [
+            "vue-cli-service lint"
+        ]
     },
     "keywords": [
         "vue",

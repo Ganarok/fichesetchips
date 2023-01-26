@@ -7,21 +7,18 @@
             v-bind:on-click="() => this.options = true"
         />
 
-        <h1>
-            MapMaker
-        </h1>
+    <h1>MapMaker</h1>
 
-        <img
-            src="@/assets/icon.svg"
-            class="h-7 w-7 cursor-pointer hover:opacity-80"
-            alt="logo"
-            :onclick="() => this.$router.push('/')"
-        />
-    </div>
+    <img
+      src="@/assets/icon.svg"
+      class="h-7 w-7 cursor-pointer hover:opacity-80"
+      alt="logo"
+      :onclick="() => $router.push('/')"
+    />
+  </div>
 </template>
 
 <script>
-
 export default {
     name: 'Topbar',
     data() {

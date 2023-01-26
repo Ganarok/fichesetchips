@@ -1,9 +1,9 @@
 <template>
-    <div :id="containerId" />
+  <div :id="containerId" />
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from "vue"
 
 let gameInstance = null
 const containerId = 'game-container'
@@ -18,7 +18,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    gameInstance.destroy(false)
-})
-
+  gameInstance.destroy(false);
+});
 </script>

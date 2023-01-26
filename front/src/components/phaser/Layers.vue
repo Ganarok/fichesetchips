@@ -1,71 +1,72 @@
 <template>
+  <div
+    class="flex relative w-full px-4 items-center text-white font-bold select-none bg-fc-black border-t border-fc-green transition duration-250 ease-in-out z-50"
+    :class="$store.state.phaser.layerTab ? 'h-12' : 'h-1'"
+  >
     <div
-        class="flex relative w-full px-4 items-center text-white font-bold select-none bg-fc-black border-t border-fc-green transition duration-250 ease-in-out z-50"
-        :class="this.$store.state.phaser.layerTab
-            ? 'h-12'
-            : 'h-1'
-        "
+      v-if="layers && layers.length > 0"
+      class="absolute w-full -top-6 left-0 z-0"
     >
+      <div class="flex w-full space-x-4">
         <div
-            v-if="layers && layers.length > 0"
-            class="absolute w-full -top-6 left-0 z-0"
+          class="flex items-center justify-center bg-fc-black-light p-2"
+          @click="
+            () =>
+              $store.commit('updateState', {
+                property: 'layerTab',
+                newState: !$store.state.phaser.layerTab,
+              })
+          "
         >
-            <div class="flex w-full space-x-4">
-                <div
-                    class="flex items-center justify-center bg-fc-black-light p-2"
-                    @click="() => this.$store.commit('updateState', { property: 'layerTab', newState: !this.$store.state.phaser.layerTab })"
-                >
-                    <img
-                        src="@/assets/selector.svg"
-                        class="object-contain"
-                        alt="Arrow"
-                        :class="
-                        this.$store.state.phaser.layerTab
-                            ? 'transition duration-250'
-                            : 'transition duration-250 rotate-180'
-                        "
-                    />
-                </div>
-
-                <Layer
-                    v-for="(layer, index) in layers"
-                    :layer="layer"
-                    :index="index"
-                    :isSelected="selectedLayer === index"
-                    @click="this.updateLayer(index)"
-                />
-            </div>
+          <img
+            src="@/assets/selector.svg"
+            class="object-contain"
+            alt="Arrow"
+            :class="
+              $store.state.phaser.layerTab
+                ? 'transition duration-250'
+                : 'transition duration-250 rotate-180'
+            "
+          />
         </div>
 
-        <div
-            class="flex w-full self-center justify-center"
-            v-if="loadingAssets">
-            <Loader
-                :size=15
-            />
-        </div>
-
-        <div
-            class="flex w-full items-center space-x-2 overflow-x-scroll py-2 scrollbar-hide"
-            id="canvasContainer"
-            :class="this.$store.state.phaser.layerTab ? '' : 'hidden'"
-            v-else
-        >
-            <img
-                class="flex w-8 h-8 items-center cursor-pointer object-contain border border-fc-green"
-                v-for="img, index in this.$store.state.phaser.tilesPics[selectedLayer]"
-                :id="`canvas_${index}`"
-                :src="img.src"
-                :alt="img.alt"
-                @click="() => this.updateSelectedTile(index)"
-            />
-        </div>
+        <Layer
+          v-for="(layer, index) in layers"
+          :key="index"
+          :layer="layer"
+          :index="index"
+          :is-selected="selectedLayer === index"
+          @click="updateLayer(index)"
+        />
+      </div>
     </div>
+
+    <div v-if="loadingAssets" class="flex w-full self-center justify-center">
+      <Loader :size="15" />
+    </div>
+
+    <div
+      v-else
+      id="canvasContainer"
+      class="flex w-full items-center space-x-2 overflow-x-scroll py-2 scrollbar-hide"
+      :class="$store.state.phaser.layerTab ? '' : 'hidden'"
+    >
+      <img
+        v-for="(img, index) in $store.state.phaser.tilesPics[selectedLayer]"
+        :id="`canvas_${index}`"
+        :key="index"
+        class="flex w-8 h-8 items-center cursor-pointer object-contain border border-fc-green"
+        :src="img.src"
+        :alt="img.alt"
+        @click="() => updateSelectedTile(index)"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import Layer from '@/components/phaser/Layer.vue'
-import Loader from '@/components/Loader.vue';
+import Layer from "@/components/phaser/Layer.vue";
+import Loader from "@/components/Loader.vue";
 
 export default {
     name: 'Layers',
@@ -174,20 +175,6 @@ export default {
             })
         },
     },
-    data() {
-        setTimeout(() => {
-            this.initLayers()
-            this.loadingAssets = false
-
-            // console.log(Object.values(tileSets[selectedLayer].image.frames))
-            // console.log(this.$store.state.phaser.tileSets[1]);
-        }, 1000)
-
-        return {
-            ...this.$store.state.phaser,
-            loadingAssets: true,
-            gl: null
-        }
-    }
-}
+  },
+};
 </script>

@@ -1,10 +1,11 @@
-import { Scene, Tilemaps } from 'phaser'
-import { COLORS } from '@/utils/enums'
-import store from '@/store'
-import desert_grounds from "@/phaser/assets/desert_grounds.png"
-import desert_items from "@/phaser/assets/desert_items.png"
-import map_tiled from "@/phaser/maps/desert.json"
-import template from "@/phaser/maps/template.json"
+import { Scene, Tilemaps } from "phaser";
+import { COLORS } from "@/utils/enums";
+import store from "@/store";
+import desert_grounds from "@/phaser/assets/desert_grounds.png";
+import desert_items from "@/phaser/assets/desert_items.png";
+import map_tiled from "@/phaser/maps/desert.json";
+import template from "@/phaser/maps/template.json";
+import Phaser from "phaser";
 
 export default class WorkshopTilemap extends Scene {
     constructor() {
@@ -198,6 +199,176 @@ export default class WorkshopTilemap extends Scene {
             } else {
                 this.layers[this.selectedLayer].putTileAt(this.selectedTile, pointerTileX, pointerTileY, true, layerName)
             }
+        } else {
+            this.layers.forEach((layer, index) =>
+                this.layers[index].setVisible(true)
+            )
         }
     }
+
+  _initKeys() {
+    this.shiftKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SHIFT
+    );
+    this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    this.iKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+    this.tabKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.TAB
+    );
+
+    this.input.on(
+      "wheel",
+      function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
+        this.cameras.main._x -= deltaX / 5;
+        this.cameras.main._y -= deltaY / 5;
+      }
+    );
+
+    this.eKey.on("down", () => {
+      store.commit("updateState", {
+        property: "eraser",
+        newState: !store.state.phaser.eraser,
+      });
+    });
+
+    this.iKey.on("down", () => {
+      store.commit("updateState", {
+        property: "isolateLayer",
+        newState: !store.state.phaser.isolateLayer,
+      });
+    });
+
+    this.tabKey.on("down", () => {
+      store.commit("updateState", {
+        property: "layerTab",
+        newState: !store.state.phaser.layerTab,
+      });
+    });
+  }
+
+  // draw tilemap, add tileset to map object, set position of layer(s)
+  _draw_map() {
+    let { layers } = store.state.phaser;
+
+    this.map = this.make.tilemap({ key: "map" });
+
+    layers.forEach((layer, index) => {
+      this.tiles[index] = this.map.addTilesetImage(layer.name);
+      this.layers[index] = this.map.createBlankLayer(
+        `${layer.name}_layer`,
+        this.tiles[index],
+        0,
+        0
+      );
+
+      if (index === 0) {
+        this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29]);
+        this.selectedTile = this.layers[0].getTileAt(0, 0);
+        store.commit("updateState", {
+          property: "selectedTile",
+          newState: this.selectedTile,
+        });
+      }
+
+      if (index === 1) {
+        this.layers[1].randomize(0, 0, this.map.width, this.map.height, [1]);
+      }
+    });
+
+    store.commit("updateState", {
+      property: "tileSets",
+      newState: this.tiles,
+    });
+
+    // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
+  }
+
+  _draw_cursor() {
+    this.marker = this.add.graphics();
+    this.marker.lineStyle(2, 0xf04e4e, 1);
+    this.marker.strokeRect(0, 0, this.map.tileWidth, this.map.tileHeight);
+
+    this.cameras.main.setBounds(
+      0,
+      0,
+      this.map.widthInPixels,
+      this.map.heightInPixels
+    );
+
+    const cursors = this.input.keyboard.createCursorKeys();
+
+    this.controls = new Phaser.Cameras.Controls.FixedKeyControl({
+      camera: this.cameras.main,
+      left: cursors.left,
+      right: cursors.right,
+      up: cursors.up,
+      down: cursors.down,
+      speed: 0.5,
+    });
+  }
+
+  // handle selection of tiles
+  handle_event() {
+    const { layers, eraser } = store.state.phaser;
+    const layerName = layers[this.selectedLayer].name;
+    const worldPoint = this.input.activePointer.positionToCamera(
+      this.cameras.main
+    );
+
+    // Rounds down to nearest tile
+    var pointerTileX = this.map.worldToTileX(
+      worldPoint.x,
+      true,
+      this.cameras.main,
+      layerName
+    );
+    var pointerTileY = this.map.worldToTileY(
+      worldPoint.y,
+      true,
+      this.cameras.main,
+      layerName
+    );
+
+    // Snap to tile coordinates, but in world space
+    this.marker.x = this.map.tileToWorldX(
+      pointerTileX,
+      this.cameras.main,
+      layerName
+    );
+    this.marker.y = this.map.tileToWorldY(
+      pointerTileY,
+      this.cameras.main,
+      layerName
+    );
+
+    if (this.input.manager.activePointer.isDown) {
+      if (this.shiftKey.isDown) {
+        this.selectedTile = this.layers[this.selectedLayer].getTileAt(
+          pointerTileX,
+          pointerTileY,
+          false,
+          layerName
+        );
+        store.commit("updateState", {
+          property: "selectedTile",
+          newState: this.selectedTile,
+        });
+      } else if (eraser) {
+        this.layers[this.selectedLayer].removeTileAt(
+          pointerTileX,
+          pointerTileY,
+          true,
+          true
+        );
+      } else {
+        this.layers[this.selectedLayer].putTileAt(
+          this.selectedTile,
+          pointerTileX,
+          pointerTileY,
+          true,
+          layerName
+        );
+      }
+    }
+  }
 }

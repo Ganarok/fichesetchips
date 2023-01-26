@@ -26,16 +26,16 @@ export default {
         updateState(state, payload) {
             const { property, newState } = payload
 
-            state[property] = newState
-        },
-        initLayers(state, layers) {
-            state.layers = layers
-        }
+      state[property] = newState;
     },
-    actions: {},
-    getters: {
-        getSelectedTile(state) {
-            return state.selectedTile
-        }
-    }
-}
+    initLayers(state, layers) {
+      state.layers = layers;
+    },
+  },
+  actions: {},
+  getters: {
+    getSelectedTile(state) {
+      return state.selectedTile;
+    },
+  },
+};
