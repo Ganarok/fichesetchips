@@ -1,5 +1,9 @@
 <template>
-    <SidebarLayout :title="character_creation_steps[currentStep] ? character_creation_steps[currentStep].title : 'Choix de l\'Univers'">
+    <SidebarLayout 
+        :title="character_creation_steps[currentStep] ?
+            character_creation_steps[currentStep].title
+            : 'Choix de l\'Univers'"
+    >
         <p v-if="character_creation_steps[currentStep]">
             {{ character_creation_steps[currentStep].message }}
         </p>
