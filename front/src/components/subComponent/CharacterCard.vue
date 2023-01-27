@@ -36,7 +36,8 @@
 
         <div class="w-full h-24 bg-fc-green p-2">
             <p
-                class="text-sm text-ellipsis text-justify overflow-y-scroll pr-3 break-words h-3/4"
+                class="text-sm text-ellipsis text-justify overflow-y-scroll pr-3 break-words"
+                :class="owner || location ? 'h-3/4' : 'h-full'"
             >
                 Didier est née dans la valée des saucisses. Grand mage de l’école du Hot
                 Dog 100% Pur Porc et maître de la cuisson vapeur, Dider est à quitter sa
@@ -76,6 +77,7 @@ export default {
         level: { type: Number, default: null },
         owner: { type: String, default: "" },
         location: { type: String, default: "" },
+        grayed: { type: Boolean, default: false }
     },
     methods: {
         backgroundColor: function () {
@@ -92,6 +94,6 @@ export default {
                 return " bg-" + this.color
             }
         },
-    },
+    }
 }
 </script>
