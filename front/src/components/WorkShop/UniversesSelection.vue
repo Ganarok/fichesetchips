@@ -13,13 +13,13 @@
             <div class="flex flex-row py-3 items-center pl-6 space-x-6">
                 <Selector
                     :items="FILTERUNIVERSES"
-                    :default-selected-item="$t('Filter')"
+                    :default-selected-item="$t('Filtre')"
                     :on-select-item="(v) => updateFilter(v)"
                 />
 
                 <Selector
                     :items="TYPEUNIVERSES"
-                    :default-selected-item="$t('Type')"
+                    :default-selected-item="'Type'"
                     :on-select-item="(v) => updateType(v)"
                 />
             </div>
