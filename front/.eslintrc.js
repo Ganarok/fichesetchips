@@ -24,8 +24,9 @@ module.exports = {
         "no-unused-vars": "warn",
         "vue/no-unused-components": "warn",
         "vue/no-deprecated-v-on-native-modifier": "off",
-        "indent": ["error", 4],
-        "semi": ["error", "never"],
-        "vue/html-indent": ["error", 4]
+        "indent": ["warn", 4],
+        "semi": ["warn", "never"],
+        "vue/html-indent": ["warn", 4],
+        "vue/prop-name-casing": "off"
     },
 }

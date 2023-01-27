@@ -303,5 +303,17 @@ export const definitions = {
                 default: createCharacterRequest
             }
         }
-    }
+    },
+    getUniversesResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Universes successfully found"
+            },
+            data: {
+                type: "array",
+                default: [{id: "cem", name: "Caves Et Monstres", image: "https://jolstatic.fr/www/captures/5405/7/148557.jpg", description: "Pas du tout Dungeon et Dragon"}]
+            }
+        }
+    },
 }

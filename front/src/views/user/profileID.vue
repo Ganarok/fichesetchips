@@ -91,9 +91,6 @@ export default {
         }
     },
     computed: {
-        ...mapState("errors", {
-            errors: (state) => state.errors,
-        }),
         ...mapState("user", {
             visited_user: (state) => state.visited_user,
         }),

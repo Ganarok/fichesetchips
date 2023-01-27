@@ -37,10 +37,10 @@
             class="px-20 py-10 grid grid-cols-3 gap-6 items-center tablet:grid-cols-2 tablet:px-10 tablet:py-5 grid1Col:grid-cols-1"
         >
             <div
-                v-for="universe in universes.universes"
+                v-for="universe in universes"
                 :key="universe.id"
-                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px]"
-                @click="getUniverseData(universe.id)"
+                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer"
+                @click="chooseUnivers(universe.id)"
             >
                 <img
                     class="max-h-[192px] w-full"
@@ -61,13 +61,12 @@
 
 <script>
 import Selector from "@/components/subComponent/Selector.vue"
-// import ParamInput from '@/components/subComponent/ParamInput.vue'
 import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
+import { mapState, mapActions, mapMutations } from "vuex"
 
 export default {
     components: {
         Selector,
-        // ParamInput,
     },
     data() {
         return {
@@ -77,56 +76,23 @@ export default {
             search: "",
             selectedFilter: "",
             selectedType: "",
-            apiRoute: "universes",
-            universes: {
-                universes: [
-                    {
-                        image:
-                            "https://images.newscientist.com/wp-content/uploads/2019/06/14161814/jgn6kd1.jpg",
-                        name: "Backroom",
-                        description:
-                            "Lorem ipsum dolor  amet, consectetur adipiscing elit. In aliquet nulla amet nibh amet in.",
-                    },
-                    {
-                        image:
-                            "https://images.newscientist.com/wp-content/uploads/2019/06/14161814/jgn6kd1.jpg",
-                        name: "Backroom",
-                        description:
-                            "Lorem ipsum dolor  amet, consectetur adipiscing elit. In aliquet nulla amet nibh amet in.",
-                    },
-                    {
-                        image:
-                            "https://images.newscientist.com/wp-content/uploads/2019/06/14161814/jgn6kd1.jpg",
-                        name: "Backroom",
-                        description:
-                            "Lorem ipsum dolor  amet, consectetur adipiscing elit. In aliquet nulla amet nibh amet in.",
-                    },
-                    {
-                        image:
-                            "https://images.newscientist.com/wp-content/uploads/2019/06/14161814/jgn6kd1.jpg",
-                        name: "Backroom",
-                        description:
-                            "Lorem ipsum dolor  amet, consectetur adipiscing elit. In aliquet nulla amet nibh amet in.",
-                    },
-                    {
-                        image:
-                            "https://images.newscientist.com/wp-content/uploads/2019/06/14161814/jgn6kd1.jpg",
-                        name: "Backroom",
-                        description:
-                            "Lorem ipsum dolor  amet, consectetur adipiscing elit. In aliquet nulla amet nibh amet in.",
-                    },
-                    {
-                        image:
-                            "https://images.newscientist.com/wp-content/uploads/2019/06/14161814/jgn6kd1.jpg",
-                        name: "Backroom",
-                        description:
-                            "Lorem ipsum dolor  amet, consectetur adipiscing elit. In aliquet nulla amet nibh amet in.",
-                    },
-                ],
-            },
         }
     },
+    computed: {
+        ...mapState("universes", {
+            universes: (state) => state.universes,
+        }),
+    },
+    async mounted() {
+        await this.fetch_universes()
+    },
     methods: {
+        ...mapActions({
+            fetch_universes: "universes/fetch_universes",
+        }),
+        ...mapMutations({
+            set_universe: "universes/set_universe",
+        }),
         updateFilter(filter) {
             this.selectedFilter = filter
             this.parseQueries("filter", filter)
@@ -152,10 +118,11 @@ export default {
                 console.log(cuttedQuery)
             }
         },
-        getRooms() {},
-        getUniverseData(id) {
-            console.log(id)
+        async chooseUnivers(id) {
+            this.set_universe(id)
+            await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Race' }})
         },
-    },
+    }
 }
+
 </script>

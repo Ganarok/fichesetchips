@@ -37,7 +37,7 @@
                 class="flex text-center text-2xl font-bold w-24 outline-none"
                 max="99"
                 min="1"
-            />
+            >
     
             <img
                 class="absolute h-2 bottom-0 left-0 -rotate-180"
