@@ -90,10 +90,6 @@ export default {
             badges: [],
         }
     },
-    async mounted() {
-        this.badgeGenerator()
-        await this.fetch_user(this.$route.params.username)
-    },
     computed: {
         ...mapState("errors", {
             errors: (state) => state.errors,
@@ -101,6 +97,10 @@ export default {
         ...mapState("user", {
             visited_user: (state) => state.visited_user,
         }),
+    },
+    async mounted() {
+        this.badgeGenerator()
+        await this.fetch_user(this.$route.params.username)
     },
     methods: {
         ...mapActions({
