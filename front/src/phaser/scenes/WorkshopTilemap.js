@@ -33,6 +33,9 @@ export default class WorkshopTilemap extends Scene {
 
     preload() {
         // tilemap
+        this.load.spritesheet('grounds', desert_grounds, { frameWidth: 32, frameHeight: 32 })
+        this.load.spritesheet('items', desert_items, { frameWidth: 32, frameHeight: 32 })
+        this.load.tilemapTiledJSON('map', template)
         this.load.spritesheet("grounds", desert_grounds, {
             frameWidth: 32,
             frameHeight: 32,

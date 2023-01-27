@@ -146,7 +146,7 @@ export default {
                 const hashed_password = CryptoJS.SHA256(this.password).toString(
                     CryptoJS.enc.Hex
                 )
-                const res = await this.log_user({
+                await this.log_user({
                     username: this.username,
                     password: hashed_password,
                 })

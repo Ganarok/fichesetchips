@@ -78,13 +78,11 @@
 <script>
 import Avatar from "@/components/subComponent/Avatar.vue"
 import Badge from "@/components/subComponent/Badge.vue"
-import CustomTable from "@/components/subComponent/CustomTable.vue"
-import EditableDiv from "@/components/subComponent/EditableDiv.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import { apiCall } from "@/utils/apiCall"
 
 export default {
-    components: { CustomTable, EditableDiv, SidebarLayout, Avatar, Badge },
+    components: { SidebarLayout, Avatar, Badge },
     data() {
         return {
             user: {

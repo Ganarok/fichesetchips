@@ -52,7 +52,10 @@ export default {
             type: String,
             default: "",
         },
-        typeinput: String,
+        typeinput: {
+            type: String,
+            default: "",
+        },
     },
 }
 

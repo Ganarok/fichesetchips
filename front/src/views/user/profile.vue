@@ -176,9 +176,9 @@
                     </div>
 
                     <CharacterCard
-                        name="Ganarok"
-                        image="@/assets/dragon.svg"
-                        :level="12"
+                        v-for="character in characters"
+                        :key="character.id"
+                        :character="character"
                     />
                 </div>
 
@@ -273,7 +273,7 @@ import Modal from "@/components/Modal.vue"
 import EditableDiv from "@/components/subComponent/EditableDiv.vue"
 import Avatar from "@/components/subComponent/Avatar.vue"
 import Badge from "@/components/subComponent/Badge.vue"
-import CharacterCard from "@/components/subComponent/CharacterCard.vue"
+import CharacterCard from "@/components/subComponent/Cards/CharacterCard.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import { mapState, mapActions } from "vuex"
 import moment from "moment"
@@ -298,6 +298,9 @@ export default {
         }
     },
     computed: {
+        ...mapState("characters", {
+            characters: (state) => state.characters,
+        }),
         ...mapState("errors", {
             errors: (state) => state.errors,
         }),
@@ -322,12 +325,15 @@ export default {
     async mounted() {
         this.badgeGenerator(3)
         await this.fetch_my_friends()
+        await this.fetch_characters()
     },
     methods: {
         ...mapActions({
             fetch_my_friends: "friends/fetch_my_friends",
             patch_user: "user/patch_user",
             delete_user: "user/delete_user",
+            fetch_characters: "characters/fetch_characters",
+    
         }),
         getDate(date) {
             return moment(date).format("ll")

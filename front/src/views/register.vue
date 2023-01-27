@@ -213,7 +213,7 @@ export default {
                     const hashed_password = CryptoJS.SHA256(this.password).toString(
                         CryptoJS.enc.Hex
                     )
-                    const res = await this.register_user({
+                    await this.register_user({
                         username: this.username,
                         password: hashed_password,
                         email: this.email,

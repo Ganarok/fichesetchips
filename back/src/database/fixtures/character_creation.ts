@@ -1502,6 +1502,24 @@ export default {
       "item_id": "9BA5DB89-CEE5-BDB4-4514-2CBEF031E5B5",
       "equiped": "TRUE",
       "character_id": "c565b74d-eace-4d66-b995-13d748845427"
+    },
+    {
+      "id": "03321c19-667a-4d9a-b5c0-5922b35160b4",
+      "item_id": "ca1093d1-a1d9-4b0a-a556-76d6e92cabfe",
+      "equiped": "TRUE",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653"
+    },
+    {
+      "id": "8fffd9a1-97a6-4061-aba1-5ac0ae12045d",
+      "item_id": "84604dd6-5388-4103-9615-b2bf5f9d2a60",
+      "equiped": "TRUE",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653"
+    },
+    {
+      "id": "096ddee5-ae94-49ed-bf0d-d97783a26142",
+      "item_id": "9BA5DB89-CEE5-BDB4-4514-2CBEF031E5B5",
+      "equiped": "TRUE",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653"
     }
   ],
   "items": [
@@ -1815,6 +1833,54 @@ export default {
       "french_name": "ARC LONG",
       "name": "LONGBOW",
       "cost": "50",
+      "piece": "gp"
+    },
+    {
+      "id": "90afa28f-f53a-4d36-a18b-d203952d2c9d",
+      "type": "AMMUNITION",
+      "french_name": "FLÈCHES (20)",
+      "name": "ARROWS (20)",
+      "cost": "1",
+      "piece": "gp"
+    },
+    {
+      "id": "31ee9942-9bed-47a9-8597-af944a1652fb",
+      "type": "AMMUNITION",
+      "french_name": "CARREAUX D'ARBALÈTE (20)",
+      "name": "CROSSBOW BOLTS (20)",
+      "cost": "1",
+      "piece": "gp"
+    },
+    {
+      "id": "934b1f37-c07d-421e-b59a-f88e04ae681e",
+      "type": "AMMUNITION",
+      "french_name": "BILLES DE FRONDE (20)",
+      "name": "SLING BULLETS (20)",
+      "cost": "4",
+      "piece": "cp"
+    },
+    {
+      "id": "d942812a-660e-43db-b05a-a606626587d7",
+      "type": "ADVENTURING GEAR",
+      "french_name": "ÉTUI À CARREAUX",
+      "name": "CROSSBOW BOLT",
+      "cost": "1",
+      "piece": "gp"
+    },
+    {
+      "id": "e67c5f26-7616-4738-bffa-5589a0421deb",
+      "type": "ADVENTURING GEAR",
+      "french_name": "CARQUOIS",
+      "name": "QUIVER",
+      "cost": "1",
+      "piece": "gp"
+    },
+    {
+      "id": "2d952f1b-f271-4e5b-998a-52fb2c269452",
+      "type": "ADVENTURING GEAR",
+      "french_name": "SAC A BILLES DE FRONDE",
+      "name": "SLING BULLETS BAG",
+      "cost": "1",
       "piece": "gp"
     }
   ],
@@ -2347,12 +2413,19 @@ export default {
       "silver": "0",
       "copper": "0",
       "character_id": "c565b74d-eace-4d66-b995-13d748845427"
+    },
+    {
+      "id": "db424805-ced3-4048-b1c2-c8a1a4b4c1ec",
+      "gold": "50",
+      "silver": "0",
+      "copper": "0",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653"
     }
   ],
   "characters": [
     {
       "id": "c565b74d-eace-4d66-b995-13d748845427",
-      "user_id": "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
+      "user_id": "e0676065-f9f2-4f18-8f65-dcecbb8b58dc",
       "firstname": "firstname",
       "lastname": "lastname",
       "sex": "FEMALE",
@@ -2374,6 +2447,31 @@ export default {
       "alignment": "NEUTRAL GOOD",
       "ideals": "I love cheese",
       "flaws": "I'm used to fart too loud"
+    },
+    {
+      "id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "user_id": "e0676065-f9f2-4f18-8f65-dcecbb8b58dc",
+      "firstname": "Monsieur",
+      "lastname": "Didier",
+      "sex": "MALE",
+      "eye_color": "BLUE",
+      "hair_color": "BLACK",
+      "skin_color": "BROWN",
+      "age": "25",
+      "weight": "80",
+      "height": "170",
+      "race_id": "4d6889bb-bfd7-4934-9625-7c250c7fcafc",
+      "class_id": "fcfd78b9-161c-4ac4-9035-7a8189242d24",
+      "experience_points": "0",
+      "level_id": "1",
+      "next_level_experience_points": "300",
+      "hp": "20",
+      "bio": "Didier est née dans la valée des saucisses. Grand mage de l’école du Hot Dog 100% Pur Porc et maître de la cuisson vapeur, Dider a quitté sa terre natale pour diversifier son enseignement et peut-être un jour devenir Archimage du BBQ.",
+      "clothing_color_1": "RED",
+      "clothing_color_2": "BLACK",
+      "alignment": "NEUTRAL GOOD",
+      "ideals": "J'aime le hot dog",
+      "flaws": "Pas encore Archimage du bbq"
     }
   ],
   "character_skill": [
@@ -2385,6 +2483,16 @@ export default {
     {
       "id": "2a59bc46-d1a5-4664-a844-58b38becb27e",
       "character_id": "c565b74d-eace-4d66-b995-13d748845427",
+      "skill_id": "2815d102-15a6-a91c-692f-73c1cf77e191"
+    },
+    {
+      "id": "fd8bdedc-c95b-443a-9636-50a341b0c4e3",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "skill_id": "ff9e11ff-cc57-9e6b-1937-04cae9a988d4"
+    },
+    {
+      "id": "b0125d60-93d4-4312-a829-c5924088ef5b",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
       "skill_id": "2815d102-15a6-a91c-692f-73c1cf77e191"
     }
   ],
@@ -2808,6 +2916,42 @@ export default {
       "character_id": "c565b74d-eace-4d66-b995-13d748845427",
       "characteristic_id": "cc26aaee-d4ed-4a21-b053-857b60f5be99",
       "value": "10"
+    },
+    {
+      "id": "fde8feda-f413-4362-a01a-488380c27492",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "characteristic_id": "50b45739-7fa1-42be-b724-0ba393d27ecb",
+      "value": "15"
+    },
+    {
+      "id": "0d5eae6d-e431-4a63-b672-b88e7ef0866a",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "characteristic_id": "a1f55d3a-31cc-4363-aa77-e4570baef0db",
+      "value": "14"
+    },
+    {
+      "id": "628e87b7-9531-4df8-ba86-f1cf697826ac",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "characteristic_id": "28b7a4ec-71c4-4ac7-a462-27030fca2ecb",
+      "value": "13"
+    },
+    {
+      "id": "dcaaf673-7c4b-44c0-936e-903519b2f6d8",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "characteristic_id": "72f58fac-5d27-4a99-85d0-3615ce3f8cb1",
+      "value": "12"
+    },
+    {
+      "id": "31e4ce81-e4b3-4665-a66a-885e31e999fa",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "characteristic_id": "1114e70f-da29-4f03-86bb-0a4cfbe168e8",
+      "value": "8"
+    },
+    {
+      "id": "bf5ee313-d11f-4f23-b433-1a235bbfacb8",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "characteristic_id": "cc26aaee-d4ed-4a21-b053-857b60f5be99",
+      "value": "10"
     }
   ],
   "characters_languages": [
@@ -2819,6 +2963,16 @@ export default {
     {
       "id": "55E6BD85-AB0C-2779-3810-13F4D913B609",
       "character_id": "c565b74d-eace-4d66-b995-13d748845427",
+      "language_id": "a75bd88f-e499-46ab-bb56-6349294169c0"
+    },
+    {
+      "id": "a54a6515-416c-4ab2-ba13-53e0759f9b96",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
+      "language_id": "cbd6d175-1e1e-45bc-af19-af9fcb069188"
+    },
+    {
+      "id": "e86f587e-8576-43d2-9534-16b7f97e5b07",
+      "character_id": "21e2e286-2ec6-442c-b7d9-b47163696653",
       "language_id": "a75bd88f-e499-46ab-bb56-6349294169c0"
     }
   ],
@@ -3020,6 +3174,636 @@ export default {
       "id": "20",
       "experience_points": "355000",
       "proficiency_bonus": "6"
+    }
+  ],
+  "abilities_classes": [
+    {
+      "class_id": "fcfd78b9-161c-4ac4-9035-7a8189242d24",
+      "level": "1",
+      "name": "Rage",
+      "french_name": "Rage",
+      "description": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. While raging, you gain the following benefits if you aren’t wearing heavy armor: - You have advantage on Strength checks and Strength saving throws. - When you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases as you gain levels as a barbarian. - You have resistance to bludgeoning, piercing, and slashing damage. If you are able to cast spells, you can’t cast them or concentrate on them while raging. Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven’t attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action. Once you have raged the number of times shown for your barbarian level in the Rages column of the Barbarian table, you must finish a long rest before you can rage again.",
+      "french_description": "En combat, vous vous battez avec une férocité bestiale. Durant votre tour, vous pouvez entrer en rage en utilisant une action bonus. En rage, vous gagnez les bénéfices suivants si vous ne portez pas d'armure lourde : - Vous avez un avantage aux jets de Force et aux jets de sauvegarde de Force. - Quand vous effectuez une attaque au corps à corps avec une arme utilisant la Force, vous gagnez un bonus aux jets de dégâts qui dépend de votre niveau de barbare. - Vous avez la résistance aux dégâts contondants, perforants et tranchants. - Si vous êtes capable de lancer des sorts, vous ne pouvez les lancer ou vous concentrer sur eux pour toute la durée de la rage. Votre rage dure 1 minute. Elle finit prématurément si vous devenez inconscient, ou si votre tour se termine et que vous n'avez ni attaqué une créature hostile, ni subi des dégâts, depuis votre précédent tour. Vous pouvez également mettre fin à votre rage durant votre tour par une action bonus. Vous récupérez les utilisations de rage dépensées après avoir terminé un repos long."
+    },
+    {
+      "class_id": "fcfd78b9-161c-4ac4-9035-7a8189242d24",
+      "level": "1",
+      "name": "Unarmored Defense        ",
+      "french_name": "Défense sans armure",
+      "description": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit.",
+      "french_description": "Tant que vous ne portez pas d'armure, votre classe d'armure est égale à 10 + votre modificateur de Dextérité + votre modificateur de Constitution. Vous pouvez utiliser un bouclier et continuer de profiter de cette capacité."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "level": "1",
+      "name": "Spellcasting",
+      "french_name": "Incantation",
+      "description": "You have learned to untangle and reshape the fabric of reality in harmony with your wishes and music. Your spells are part of your vast repertoire, magic that you can tune to different situations",
+      "french_description": "Vous avez appris à démêler et remodeler le tissu de la réalité en harmonie avec vos souhaits et vos rêves. Vos sorts font partie intégrante de votre vaste répertoire, une magie que vous pouvez accorder à différentes situations."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "level": "1",
+      "name": "Bardic Inspiration (d6)",
+      "french_name": "Inspiration bardique",
+      "description": "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time. You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.",
+      "french_description": "Vous pouvez inspirer les autres en maniant les mots ou la musique. Pour ce faire, utilisez une action bonus à votre tour pour choisir une créature autre que vous-même dans un rayon de 18 mètres autour de vous et qui peut vous entendre. Cette créature gagne un dé d'Inspiration bardique (d6). Une fois dans les 10 minutes suivantes, la créature peut lancer le dé et ajouter le nombre obtenu à un jet de caractéristique, d'attaque ou de sauvegarde qu'elle vient de faire. La créature peut attendre de voir le résultat de jet de caractéristique, d'attaque ou de sauvegarde avant de décider d'appliquer le dé d'Inspiration bardique, mais elle doit se décider avant que le MD ne dise si le jet est un succès ou un échec. Une fois le dé d'Inspiration bardique lancé, il est consommé. Une créature ne peut avoir qu'un seul dé d'Inspiration bardique à la fois. Vous pouvez utiliser cette capacité un nombre de fois égal à votre modificateur de Charisme (minimum 1). Vous regagnez vos dés d'Inspiration bardique après avoir terminé un repos long. Votre dé d'Inspiration bardique change lorsque vous atteignez certains niveaux dans cette classe. Le dé passe à un d8 au niveau 5, un d10 au niveau 10, et un d12 au niveau 15."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "level": "1",
+      "name": "Spellcasting",
+      "french_name": "Incantation",
+      "description": "As a conduit for divine power, you can cast cleric spells.",
+      "french_description": "En tant que conduit de la puissance divine, vous pouvez lancer des sorts de clerc."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "level": "1",
+      "name": "Divine Domain",
+      "french_name": "Domaine divin",
+      "description": "Choose one domain related to your deity, such as Life. Each domain is detailed at the end of the class description, and each one provides examples of gods associated with it. Your choice grants you domain spells and other features when you choose it at 1st level. It also grants you additional ways to use Channel Divinity when you gain that feature at 2nd level, and additional benefits at 6th, 8th, and 17th levels.",
+      "french_description": "Choisissez un domaine lié à votre divinité : duperie, guerre, lumière, nature, savoir, tempête ou vie. Votre choix vous accorde des sorts de domaine et des capacités spéciales dès le niveau 1, puis de nouvelles aux niveaux 6, 8 et 17. Il vous octroie également des manières supplémentaires pour utiliser le Conduit divin du niveau 2."
+    }
+  ],
+  "domains_classes": [
+    {
+      "class_id": "fcfd78b9-161c-4ac4-9035-7a8189242d24",
+      "french_name": "Voies primitives",
+      "french_domain_name": "Voie du berserker"
+    },
+    {
+      "class_id": "fcfd78b9-161c-4ac4-9035-7a8189242d24",
+      "french_name": "Voies primitives",
+      "french_domain_name": "Voie du guerrier totem"
+    },
+    {
+      "class_id": "fcfd78b9-161c-4ac4-9035-7a8189242d24",
+      "french_name": "Voies primitives",
+      "french_domain_name": "Voie de la magie sauvage"
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "french_name": "Collèges bardiques",
+      "french_domain_name": "Collège du savoir"
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "french_name": "Collèges bardiques",
+      "french_domain_name": "Collège de la vaillance"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine de la duperie"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine de la guerre"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine de la lumière"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine de la nature"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine du savoir"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine de la tempête"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine de la vie"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "french_name": "Domaines divins",
+      "french_domain_name": "Domaine de la forge"
+    }
+  ],
+  "spells": [
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Animal Friendship",
+      "french_name": "Amitié avec les animaux",
+      "level": "1",
+      "description": "A beast with Intelligence 3 or less must succeed on a Wis. save or be charmed (+1 beast/lvl).",
+      "french_description": "Une bête d'Intelligence 3 ou moins doit réussir un JdS de Sag. ou être charmée (+1 bête/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Bane",
+      "french_name": "Fléau",
+      "level": "1",
+      "description": "Up to 3 targets must succeed on a Cha. save or subtract 1d4 from their attack roll or saving throw (+1 creature/lvl).",
+      "french_description": "Jusqu'à 3 cibles doivent réussir un JdS de Cha. ou soustraire 1d4 à l'attaque ou à la sauvegarde (+1 créature/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Blade Ward",
+      "french_name": "Protection contre les armes",
+      "level": "0",
+      "description": "The caster gets resistance against bludgeoning, piercing, and slashing damage dealt by weapon attacks.",
+      "french_description": "Le lanceur obtient la résistance contre les dégâts contondants, tranchants et perforants infligés par des attaques avec arme."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Charm Person",
+      "french_name": "Charme-personne",
+      "level": "1",
+      "description": "The humanoid target must succeed on a Wis. save or be charmed by the caster (+1 creature/lvl).",
+      "french_description": "La cible humanoïde doit réussir un JdS de Sag. ou être charmée par le lanceur (+1 créature/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Comprehend Languages",
+      "french_name": "Compréhension des langues",
+      "level": "1",
+      "description": "The caster understands any spoken and written (1 min/page) language. Doesn't decode secret messages.",
+      "french_description": "Le lanceur comprend toutes les langues parlées ou écrites (1 min/page). Ne décode pas les messages secrets."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Cure Wounds",
+      "french_name": "Soins",
+      "level": "1",
+      "description": "1 creature regains 1d8+Ability.Mod (+1d8 hp/lvl).",
+      "french_description": "1 créature récupère 1d8+Mod.Carac pv (+1d8 pv/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Dancing Lights",
+      "french_name": "Lumières dansantes",
+      "level": "0",
+      "description": "Create up to 4 torch-sized lights that shed dim light in a 10-ft radius and can be moved later up to 60 ft.",
+      "french_description": "Crée jusqu'à 4 lumières de la taille d'une torche qui émettent une lumière faible sur 3 m et qu'on peut déplacer jusqu'à 18 m."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Detect Magic",
+      "french_name": "Détection de la magie",
+      "level": "1",
+      "description": "The caster senses the presence of magic in a 30-ft radius and learns its school of magic.",
+      "french_description": "Le lanceur détecte toutes émanations magiques dans un rayon de 9 m et en détermine l'école."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Disguise Self",
+      "french_name": "Déguisement",
+      "level": "1",
+      "description": "Modify the appearance of the caster (its physical and its equipment) thanks to an illusion.",
+      "french_description": "Modifie l'apparence du lanceur (son physique et son équipement) grâce à une illusion."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Dissonant Whispers",
+      "french_name": "Murmures dissonants",
+      "level": "1",
+      "description": "The target must succeed on a Wis. save or take 3d6 psychic damage and move away (damage/lvl).",
+      "french_description": "La cible doit réussir un JdS de Sag. ou subir 3d6 dégâts psychiques et s'éloigner (dégâts/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Faerie Fire",
+      "french_name": "Lueurs féeriques",
+      "level": "1",
+      "description": "Creatures in a 20-ft cube must succeed on a Dex. save or grant advantage against them to attackers.",
+      "french_description": "Les créatures dans un cube de 6 m doivent réussir un JdS de Dex. ou octroyer l'avantage contre elles à l'attaque."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Feather Fall",
+      "french_name": "Feuille morte",
+      "level": "1",
+      "description": "Up to 5 creatures fall at 60 feet per round and take no falling damage before the spell ends.",
+      "french_description": "Jusqu'à 5 créatures tombent à une vitesse de 18 mètres par round et ne subissent pas de dégâts de chute si le sort est actif."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Friends",
+      "french_name": "Amis",
+      "level": "0",
+      "description": "The casters gets advantage on all Charisma checks directed at one chosen creature that isn't hostile toward him.",
+      "french_description": "Le lanceur obtient l'avantage aux jets de Charisme contre une créature choisie qui ne lui est pas hostile."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Healing Word",
+      "french_name": "Mot de guérison",
+      "level": "1",
+      "description": "1 creature regains 1d4+Ability.Mod (+1d4 hp/lvl).",
+      "french_description": "1 créature récupère 1d4+Mod.Carac pv (+1d4 pv/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Heroism",
+      "french_name": "Héroïsme",
+      "level": "1",
+      "description": "The target is immune to being frightened and gains temporary hp equal to its Ability.Mod each turns (+1 creature/lvl).",
+      "french_description": "La cible est immunisée contre l'état effrayé et gagne Mod.Carac.Inc pv temporaires/round (+1 créatures/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Identify",
+      "french_name": "Identification",
+      "level": "1",
+      "description": "The caster obtains properties of a magic item (attunement, charges) or knows if an item or a creature is affected by a spell.",
+      "french_description": "Le lanceur obtient les propriétés d'un objet magique (lien, charges) ou est informé si un sort affecte un objet ou une créature."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Illusory Script",
+      "french_name": "Texte illusoire",
+      "level": "1",
+      "description": "Write a secret message that can only be read by a designated target or a creature with truesight.",
+      "french_description": "Rédige un message secret qui ne peut être lu que par une cible désignée ou une créature qui possède vision véritable."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Light",
+      "french_name": "Lumière",
+      "level": "0",
+      "description": "Make an object to shed bright light in a 20-ft radius and dim light in an additional 20-ft radius.",
+      "french_description": "Fait qu'un objet émette une lumière vive sur 6 m et une lumière faible sur 6 m supplémentaires."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Longstrider",
+      "french_name": "Grande foulée",
+      "level": "1",
+      "description": "The target gets a speed increased by 10 ft (+1 creature/lvl).",
+      "french_description": "La cible obtient une vitesse augmentée de 3 m (+1 créature/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Mage Hand",
+      "french_name": "Main de mage",
+      "level": "0",
+      "description": "Create a spectral hand that can in a 30-ft radius manipulate an object, open a door, stow an item, etc.",
+      "french_description": "Crée une main spectrale qui peut dans un rayon de 9 m manipuler un objet, ouvrir une porte, saisir un objet, etc."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Mending",
+      "french_name": "Réparation",
+      "level": "0",
+      "description": "Repair break or tear in an object (broken chain link, two halves of a broken key, torn cloak, leaking wineskin, etc).",
+      "french_description": "Répare fissure, déchirure, fêlure d'un objet (maillon de chaîne cassé, clé brisée, accroc sur un manteau, fuite d'une gourde)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Message",
+      "french_name": "Message",
+      "level": "0",
+      "description": "The caster whispers a message to a creature within 120 ft who will be the only one to hear it. It can reply the same way.",
+      "french_description": "Le lanceur murmure un message à une créature à 36 m qui sera la seule à l'entendre. Elle pourra répondre de la même façon."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Minor Illusion",
+      "french_name": "Illusion mineure",
+      "level": "0",
+      "description": "Create a sound or an immobile image of an object no larger than a 5-ft cube.",
+      "french_description": "Crée l'illusion d'un son ou d'une image immobile pas plus grande qu'un cube de 1,50 m."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Prestidigitation",
+      "french_name": "Prestidigitation",
+      "level": "0",
+      "description": "Minor magical trick (sensory effect, light a torch, clean an object, warm, make a symbol appear, create a trinket, etc).",
+      "french_description": "Tour de magie (effet sensoriel, allume une torche, nettoie un objet, réchauffe, fait apparaître un symbole, crée une babiole)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Silent Image",
+      "french_name": "Image silencieuse",
+      "level": "1",
+      "description": "Create the image of an object or a creature (without sound and no larger than a 15-ft cube) and lets it move.",
+      "french_description": "Crée l'image d'un objet ou d'une créature (sans son et de la taille d'un cube de 4,50 m max) et permet de la faire bouger."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Sleep",
+      "french_name": "Sommeil",
+      "level": "1",
+      "description": "5d8 hp of creatures fall unconscious, starting with the creature with the lowest current hp (+2d8 hp/lvl).",
+      "french_description": "5d8 pv de créatures s'endorment, par ordre croissant de leurs pv actuels (+2d8 pv/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Speak with Animals",
+      "french_name": "Communication avec les animaux",
+      "level": "1",
+      "description": "The caster communicates with beats that can share information or help.",
+      "french_description": "Le lanceur communique avec des bêtes qui peuvent ainsi partager des informations ou aider."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Tasha's Hideous Laughter",
+      "french_name": "Fou rire de Tasha",
+      "level": "1",
+      "description": "The target must succeed on a Wis. save or falls into fits of laughter, fall prone and becoming incapacitated.",
+      "french_description": "La cible doit réussir un JdS de Sag. ou être prise d'une intense crise de fou rire, tomber à terre et être incapable d'agir."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Thunderwave",
+      "french_name": "Vague tonnante",
+      "level": "1",
+      "description": "Creatures in a 15-ft cube must succeed on a Con. save or take 2d8 thunder damage (damage/lvl).",
+      "french_description": "Les créatures dans un cube de 4,50 m doivent réussir un JdS de Con. ou subir 2d8 dégâts de tonnerre (dégâts/niv)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "True Strike",
+      "french_name": "Coup au but",
+      "level": "0",
+      "description": "The caster gains advantage on his first attack roll against a target.",
+      "french_description": "Le lanceur obtient l'avantage à son prochain jet d'attaque contre une cible."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "SPELL",
+      "name": "Unseen Servant",
+      "french_name": "Serviteur invisible",
+      "level": "1",
+      "description": "Create an invisible servant who performs simple tasks (bring something back, clean up, maintain a fire, serve at table, etc).",
+      "french_description": "Crée un serviteur invisible qui exécute des tâches simples (rapporter qq chose, nettoyer, entretenir un feu, servir, etc)."
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "type": "CANTRIP",
+      "name": "Vicious Mockery",
+      "french_name": "Moquerie cruelle",
+      "level": "0",
+      "description": "The target must succeed on a Wis. save or take 1d4 psychic damage and have disadvantage on its attack roll (damage/lvl).",
+      "french_description": "La cible doit réussir un JdS de Sag. ou subir 1d4 dégâts psychiques et avoir un désavantage à sa prochaine attaque (dégâts/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Bane",
+      "french_name": "Fléau",
+      "level": "1",
+      "description": "Up to 3 targets must succeed on a Cha. save or subtract 1d4 from their attack roll or saving throw (+1 creature/lvl).",
+      "french_description": "Jusqu'à 3 cibles doivent réussir un JdS de Cha. ou soustraire 1d4 à l'attaque ou à la sauvegarde (+1 créature/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Bless",
+      "french_name": "Bénédiction",
+      "level": "1",
+      "description": "Up to 3 targets can add 1d4 to their attack roll or saving throw (+1 creature/lvl).",
+      "french_description": "Jusqu'à 3 cibles peuvent ajouter 1d4 à leur jet d'attaque ou de sauvegarde (+1 créature/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Command",
+      "french_name": "Injonction",
+      "level": "1",
+      "description": "The target must succeed on a Wis. save or follow your order as Approach, Drop, Flee, Fall, Halt, etc (+1 creature/lvl).",
+      "french_description": "La cible doit réussir un JdS de Sag. ou suivre votre ordre comme Approche, Lâche, Fuis, Tombe, Halte, etc (+1 créature/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Create or Destroy Water",
+      "french_name": "Création ou destruction d'eau",
+      "level": "1",
+      "description": "Create or destroy up to 10 gallons of water (+10 gallons/lvl).",
+      "french_description": "Crée ou détruit jusqu'à 40 litres d'eau (+40 litres/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Cure Wounds",
+      "french_name": "Soins",
+      "level": "1",
+      "description": "1 creature regains 1d8+Ability.Mod (+1d8 hp/lvl).",
+      "french_description": "1 créature récupère 1d8+Mod.Carac pv (+1d8 pv/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Detect Evil and Good",
+      "french_name": "Détection du mal et du bien",
+      "level": "1",
+      "description": "The caster senses and locates aberration, celestial, elemental, fey, fiend, or undead within 30 ft.",
+      "french_description": "Le lanceur détecte et localise aberration, céleste, élémentaire, fée, fiélon ou mort-vivant dans un rayon de 9 m."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Detect Magic",
+      "french_name": "Détection de la magie",
+      "level": "1",
+      "description": "The caster senses the presence of magic in a 30-ft radius and learns its school of magic.",
+      "french_description": "Le lanceur détecte toutes émanations magiques dans un rayon de 9 m et en détermine l'école."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Detect Poison and Disease",
+      "french_name": "Détection du poison et des maladies",
+      "level": "1",
+      "description": "The caster senses and identifies poison, poisonous creature, or disease within 30 ft.",
+      "french_description": "Le lanceur détecte et identifie poisons, créatures venimeuses et maladies à 9 mètres."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "CANTRIP",
+      "name": "Guidance",
+      "french_name": "Assistance",
+      "level": "0",
+      "description": "The target can add 1d4 to one ability check of its choice.",
+      "french_description": "La cible peut ajouter 1d4 à un jet de caractéristique de son choix."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Guiding Bolt",
+      "french_name": "Éclair traçant",
+      "level": "1",
+      "description": "If the spell attack hits, deals 4d6 radiant damage (damage/lvl) and the next attack roll will have advantage.",
+      "french_description": "Si l'attaque avec un sort touche, inflige 4d6 dégâts radiants (dégâts/niv) et le prochain jet d'attaque aura l'avantage."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Healing Word",
+      "french_name": "Mot de guérison",
+      "level": "1",
+      "description": "1 creature regains 1d4+Ability.Mod (+1d4 hp/lvl).",
+      "french_description": "1 créature récupère 1d4+Mod.Carac pv (+1d4 pv/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Inflict Wounds",
+      "french_name": "Blessure",
+      "level": "1",
+      "description": "If the spell attack hits, deals 3d10 necrotic damage (damage/lvl).",
+      "french_description": "Si l'attaque touche, inflige subit 3d10 dégâts nécrotiques (dégâts/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "CANTRIP",
+      "name": "Light",
+      "french_name": "Lumière",
+      "level": "0",
+      "description": "Make an object to shed bright light in a 20-ft radius and dim light in an additional 20-ft radius.",
+      "french_description": "Fait qu'un objet émette une lumière vive sur 6 m et une lumière faible sur 6 m supplémentaires."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "CANTRIP",
+      "name": "Mending",
+      "french_name": "Réparation",
+      "level": "0",
+      "description": "Repair break or tear in an object (broken chain link, two halves of a broken key, torn cloak, leaking wineskin, etc).",
+      "french_description": "Répare fissure, déchirure, fêlure d'un objet (maillon de chaîne cassé, clé brisée, accroc sur un manteau, fuite d'une gourde)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Protection from Evil and Good",
+      "french_name": "Protection contre le mal et le bien",
+      "level": "1",
+      "description": "The target is protected (disadvantage on attack rolls) against aberrations, celestials, elementals, fey, fiends, and undead.",
+      "french_description": "La cible est protégée (désavantage à l'attaque) des aberrations, célestes, élémentaires, fées, fiélons et morts-vivants."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Purify Food and Drink",
+      "french_name": "Purification de nourriture et d'eau",
+      "level": "1",
+      "description": "Purified and rendered free of poison and disease nonmagical food and drink in a 5-ft-radius sphere.",
+      "french_description": "Purifie et enlève tous poisons et maladies de nourriture et boissons non magiques dans une sphère de 1,50 m de rayon."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "CANTRIP",
+      "name": "Resistance",
+      "french_name": "Résistance",
+      "level": "0",
+      "description": "The target can add 1d4 to one saving throw of its choice.",
+      "french_description": "La cible peut ajouter 1d4 à un jet de sauvegarde de son choix."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "CANTRIP",
+      "name": "Sacred Flame",
+      "french_name": "Flamme sacrée",
+      "level": "0",
+      "description": "The target must succeed on a Dex. save or take 1d8 radiant damage (damage/lvl).",
+      "french_description": "La cible doit réussir un JdS de Dex. ou subir 1d8 dégâts radiant (dégâts/niv)."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Sanctuary",
+      "french_name": "Sanctuaire",
+      "level": "1",
+      "description": "The protected creature forces a Wis. save to his aggressor in case of attack or offensive spell to no longer be the target.",
+      "french_description": "La créature protégée impose un JdS de Sag. à son agresseur en cas d'attaque ou de sort offensif pour ne plus en être la cible."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "SPELL",
+      "name": "Shield of Faith",
+      "french_name": "Bouclier de la foi",
+      "level": "1",
+      "description": "The target gets a +2 bonus to AC.",
+      "french_description": "La cible obtient un bonus de +2 de CA."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "CANTRIP",
+      "name": "Spare the Dying",
+      "french_name": "Stabilisation",
+      "level": "0",
+      "description": "1 living creature with 0 hit points becomes stable.",
+      "french_description": "1 créature vivante à 0 point de vie est immédiatement stabilisée."
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "type": "CANTRIP",
+      "name": "Thaumaturgy",
+      "french_name": "Thaumaturgie",
+      "level": "0",
+      "description": "Create various minor effects to impress or distract creatures.",
+      "french_description": "Crée divers effets mineurs visant à impressionner ou distraire des créatures."
+    }
+  ],
+  "class_spells": [],
+  "domain_spells": [],
+  "abilities_campaign": [
+    {
+      "class_id": "fcfd78b9-161c-4ac4-9035-7a8189242d24",
+      "Lvl": "1",
+      "rages_number": "2",
+      "rage_amage": "2"
+    },
+    {
+      "class_id": "ceed685d-6a9d-441b-9986-c3b7ac3cdb65",
+      "Lvl": "1",
+      "cantrips_known": "2",
+      "spells_known": "4",
+      "slot_level_1": "2"
+    },
+    {
+      "class_id": "32be3f37-3e10-4650-b81e-1a43e3ec3a48",
+      "Lvl": "1",
+      "rages_number": "2",
+      "cantrips_known": "3",
+      "spells_known": "0",
+      "slot_level_1": "2"
     }
   ]
 }

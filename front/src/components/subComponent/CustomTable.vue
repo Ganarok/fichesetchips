@@ -25,8 +25,8 @@
                     class=""
                 >
                     <th
-                        v-for="(rowItem, index) in row"
-                        :key="index"
+                        v-for="(rowItem, index_) in row"
+                        :key="index_"
                         class="font-light p-5"
                     >
                         {{ rowItem }}
@@ -53,8 +53,8 @@ export default {
         },
         borderColor: { type: String, default: "border-black" },
         textColor: { type: String, default: "text-black" },
-        width: { type: Number },
-        height: { type: Number },
+        width: { type: Number, default: 0 },
+        height: { type: Number, default: 0 },
     },
 }
 </script>

@@ -102,4 +102,40 @@ router.post("/creation", async (req: Request, res) => {
   }
 })
 
+router.get("/:id", async (req: Request, res) => {
+  /**
+   * @swagger
+   * /cem/characters/{id}:
+   *   get:
+   *     description: Get one character by his id.
+   *     tags: 
+   *       - Workshop
+   *     parameters:
+   *     - in: "path"
+   *       name: "id"
+   *       schema: { type: "string" }
+   *       required: true
+   *       description: "id of the character to get"
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Characters found.
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/getCharacterResponse' }
+   *       401:
+   *         description: UnAuthorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   */
+  try {
+    const response = await charactersService.findById(((req as CustomRequest).jwtPayload as JwtPayload).id, req.params.id);
+    res.status(200).send({ data: response, message: 'Character successfully found' });
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
+})
+
 export default router;

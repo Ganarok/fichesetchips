@@ -31,7 +31,7 @@ export default {
                 commit("set_my_friends", response.friends)
                 commit("set_pending_approval", response.pending_approval)
                 commit("set_pending_request", response.pending_request)
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }
@@ -43,20 +43,20 @@ export default {
                     route: `/friends/${username}`,
                 })
                 commit("set_friends", response.friends)
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }
         },
         async ask_a_friend({ commit, dispatch }, body) {
             try {
-                const response = await apiCall({
+                await apiCall({
                     method: "POST",
                     route: "/friends",
                     body: body,
                 })
                 dispatch("fetch_my_friends")
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }
@@ -69,7 +69,7 @@ export default {
                     body: { accepted: true },
                 })
                 dispatch("fetch_my_friends")
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }
@@ -81,7 +81,7 @@ export default {
                     route: `/friends/${username}`,
                 })
                 dispatch("fetch_my_friends")
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }
@@ -89,7 +89,7 @@ export default {
     },
     getters: {
         connected(state) {
-            if (state.user.access_token !== null) return true
+            if(state.user.access_token !== null) return true
             else return false
         },
     },

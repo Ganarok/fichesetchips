@@ -10,6 +10,7 @@ import { CharacteristicModificator } from "../../database/entities/workshop/char
 import { Level } from "../../database/entities/workshop/characters/Level";
 import { Profile } from "../../database/entities/workshop/characters/Profile";
 import { Item } from "../../database/entities/workshop/characters/Item";
+import { use } from "chai";
 
 const CharacterRepository = CEMDataSource.getRepository(Character)
 const RaceRepository = CEMDataSource.getRepository(Race)
@@ -22,6 +23,7 @@ const ProfileRepository = CEMDataSource.getRepository(Profile)
 const ItemRepository = CEMDataSource.getRepository(Item)
 
 export async function findAll(user_id: string) {
+    console.log(user_id)
     const characters = await CharacterRepository
         .createQueryBuilder("character")
         .leftJoinAndSelect('character.race', 'race')
@@ -91,24 +93,40 @@ export async function characterCreation() {
     const ammunitions = await ItemRepository.find({ where: { type: "AMMUNITION" } })
     const gears = await ItemRepository.find({ where: { type: "ADVENTURING GEAR" } })
     const object = {
-        step11: {
-            message: "Choose your Race, calculate your weight and height, choose your age between min and max age of the race",
+        "Universe": {
+            title: "Choix de l'Univers",
+            message: null,
+            message_english: null,
+            data: "cem"
+        },
+        "Race": {
+            title: "Choix de la Race",
+            message: "Choisissez votre race, calculez votre poids et votre taille, choisissez votre âge entre l'âge min et max de la race",
+            message_english: "Choose your race, calculate your weight and height, choose your age between min and max age of the race",
             data: races
         },
-        step12: {
-            message: "If you have free language with your race, choose your language",
+        "Language": {
+            title: "Choix de la Langue de Race",
+            message: "Vous avez une langue au choix avec votre race ! Choisissez votre langue",
+            message_english: "You have free language with your race ! Choose your language",
             data: languages
         },
-        step2: {
-            message: "Choose your class, skills depends on the number of possible skill your class can have. A skill represents a specific aspect of a characteristic value. Proficiency in a skill means that an individual can add their proficiency bonus to ability checks that involve that skill. and calculate your initial money",
+        "Class": {
+            title: "Choix de la Classe",
+            message: "Choisissez votre classe, les compétences dépendent du nombre de compétences possibles que votre classe peut avoir. Une compétence représente un aspect spécifique d'une valeur de caractéristique. La maîtrise d'une compétence signifie qu'un individu peut ajouter son bonus de compétence aux tests de capacité qui impliquent cette compétence. Calculez également votre argent initial",
+            message_english: "Choose your class, skills depends on the number of possible skill your class can have. A skill represents a specific aspect of a characteristic value. Proficiency in a skill means that an individual can add their proficiency bonus to ability checks that involve that skill. Calculate also your initial money",
             data: classes
         },
-        step3: {
-            message: "Calculate the six characteristics values. You generate your character’s six ability scores randomly. Roll four 6-sided dice and record the total of the highest three dice on a piece of scratch paper. Do this five more times, so that you have six numbers.",
+        "Characteristics": {
+            title: "Calcul des Caractéristiques",
+            message: "Calculez les six valeurs de caractéristiques. Vous générez aléatoirement les six scores de capacité de votre personnage. Lancez quatre dés à 6 faces et notez le total des trois dés les plus élevés sur une feuille de papier brouillon. Faites cela cinq fois de plus, de sorte que vous ayez six numéros.",
+            message_english: "Calculate the six characteristics values. You generate your character’s six ability scores randomly. Roll four 6-sided dice and record the total of the highest three dice on a piece of scratch paper. Do this five more times, so that you have six numbers.",
             data: characteristics
         },
-        step4: {
-            message: "Describe your character",
+        "Description": {
+            title: "Description du Personnage",
+            message: "Décrivez votre personnage !",
+            message_english: "Describe your character",
             data: {
                 "firstname": "",
                 "lastname": "",
@@ -124,12 +142,16 @@ export async function characterCreation() {
                 "flaws": ""
             },
         },
-        step5: {
-            message: "Calculate your hit points : HP level 1 = max dice + constitution mod. HP following levels = 1dv at each level + constitution mod. Each time you level up, you add one Hit Die to your total. Roll this die, add your Constitution bonus to it, and add the total rolled (minimum 1) to your maximum hit points. When your Constitution modifier increases by 1, your hit point maximum increases by 1 for each level you have reached.",
+        "HP": {
+            title: "Calcul des points de vie",
+            message: "Calculez vos points de vie : HP niveau 1 = max dés + mod constitution. HP niveaux suivants = 1dv à chaque niveau + mod de constitution. Chaque fois que vous montez de niveau, vous ajoutez un dé de vie à votre total. Lancez ce dé, ajoutez-y votre bonus de Constitution et ajoutez le total obtenu (minimum 1) à vos points de vie maximum. Lorsque votre modificateur de Constitution augmente de 1, votre maximum de points de vie augmente de 1 pour chaque niveau que vous avez atteint.",
+            message_english: "Calculate your hit points : HP level 1 = max dice + constitution mod. HP following levels = 1dv at each level + constitution mod. Each time you level up, you add one Hit Die to your total. Roll this die, add your Constitution bonus to it, and add the total rolled (minimum 1) to your maximum hit points. When your Constitution modifier increases by 1, your hit point maximum increases by 1 for each level you have reached.",
             data: mods
         },
-        step6: {
-            message: "Choose your equipment : buy your weapons, armors and or shield if your class allows you to use them. Choose which weapon and armor you want to equip. If you need ammunitions for your weapon, buy some too with the good adventuring gear",
+        "Equipment": {
+            title: "Choix de l'équipement",
+            message: "Choisissez votre équipement : achetez vos armes, armures et/ou bouclier si votre classe vous permet de les utiliser. Choisissez l'arme et l'armure que vous souhaitez équiper. Si vous avez besoin de munitions pour votre arme, achetez-en aussi avec le bon équipement d'aventurier",
+            message_english: "Choose your equipment : buy your weapons, armors and/or shield if your class allows you to use them. Choose which weapon and armor you want to equip. If you need ammunitions for your weapon, buy some too with the good adventuring gear",
             data: { weapons: profiles, armors: armors, ammunitions: ammunitions, gears: gears }
         }
     }
