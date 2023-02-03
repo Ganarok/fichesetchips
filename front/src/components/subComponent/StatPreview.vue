@@ -15,17 +15,27 @@
                         {{ base }}
                     </p>
                 </div>
-    
-                <div 
-                    v-if="racial"
+
+                <div
+                    v-if="bonus"
                     class="flex justify-between"
                 >
                     <p>
-                        Racial Bonus
+                        Bonus
                     </p>
     
-                    <p class="mr-6">
-                        +{{ racial }}
+                    <p class="mr-6 text-fc-green">
+                        {{ bonus }}
+                    </p>
+                </div>
+    
+                <div class="flex justify-between">
+                    <p>
+                        Racial
+                    </p>
+    
+                    <p class="text-fc-yellow mr-6">
+                        {{ racial }}
                     </p>
                 </div>
             </div>
@@ -36,7 +46,7 @@
                 </p>
 
                 <p class="mr-6">
-                    {{ base + racial }}
+                    {{ base + racial + bonus }}
                 </p>
             </div>
         </div>
@@ -60,7 +70,11 @@ export default {
         },
         base: {
             type: Number,
-            default: 10
+            default: 0
+        },
+        bonus: {
+            type: Number,
+            default: 0
         },
         racial: {
             type: Number,

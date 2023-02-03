@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="`flex w-full relative ${maxWidth} items-center justify-center bg-fc-black py-4 ${height}`"
+        :class="`flex w-full relative ${maxWidth} items-center justify-center bg-fc-black py-4 ${className} ${height}`"
     >
         <div
             v-if="leftGreenDiv"
@@ -21,6 +21,7 @@
             :value="title"
             :placeholder="placeholder"
             @change="onChange"
+            :autofocus="autofocus"
         >
 
         <div
@@ -34,6 +35,10 @@
 export default {
     name: "BlackGreenDiv",
     props: {
+        autofocus: {
+            type: Boolean,
+            default: false
+        },
         title: {
             type: String,
             default: "",
@@ -58,7 +63,7 @@ export default {
             type: [Boolean, String],
             default: true,
         },
-        class: {
+        className: {
             type: String,
             default: "",
         },
