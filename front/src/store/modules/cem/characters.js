@@ -1,8 +1,11 @@
 import { apiCall } from '@/utils/apiCall'
+import { useToast } from 'vue-toastification'
 
 export default {
     namespaced: true,
     state: {
+        loading: false,
+        completed: 0,
         characters: [],
         character: {},
         character_creation: {
@@ -40,6 +43,8 @@ export default {
         character_creation_steps: {}
     },
     mutations: {
+        set_loading: (state, data) => (state.loading = data),
+        set_completed: (state, data) => (state.completed === 0 ? 1 : state.completed += 1),
         set_characters: (state, data) => (state.characters = data),
         set_character: (state, data) => (state.character = data),
         set_character_creation: (state, data) => (state.character_creation = data),
@@ -64,11 +69,21 @@ export default {
             commit("set_character", data)
         },
         async fetch_character_creation_steps({ commit, rootState }) {
+            commit("set_loading", true)
+
             const { data } = await apiCall({
                 route: `/${rootState.universes.universe}/characters/creation`,
                 method: 'GET',
             })
-                .catch((error) => console.log(JSON.stringify(error.message)))
+
+            if (!data) {
+                const toast = useToast()
+                const error = 'Error when fetching characters/creation data'
+                
+                console.log(error)
+                toast.error(error)
+            }
+
             commit("set_character_creation_steps", data)
         },
     },

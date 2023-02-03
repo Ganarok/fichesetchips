@@ -11,7 +11,6 @@
         </div>
 
         <div
-            v-if="!image"
             class="relative bg-fc-yellow w-full my-2"
         >
             <img
@@ -20,11 +19,6 @@
                 :style="grayed ? 'filter: grayscale(1)' : null"
             >
         </div>
-
-        <div
-            v-else
-            class="bg-fc-yellow h-80 w-full m-2"
-        />
 
         <div class="w-full h-24 bg-fc-green p-2">
             <p
@@ -52,7 +46,9 @@ export default {
         grayed: { type: Boolean, default: false }
     },
     data() {
-        return {}
+        return {
+            ...this.class_
+        }
     },
     methods: {
         backgroundColor: function () {

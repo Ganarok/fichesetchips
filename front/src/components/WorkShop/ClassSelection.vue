@@ -1,20 +1,36 @@
 <template>
-    <div class="flex flex-wrap self-center justify-center items-center gap-2">
-        <div
-            v-for="class_ in stepInfo.data"
-            :key="class_.id"
-        >
-            <ClassCard
-                :class_="class_"
-                :image="true"
-                class="hover:opacity-80 hover:cursor-pointer"
-                @click="chooseClass(class_.id)"
-            />
-            <div v-if="class_id == class_.id">
-                <select
-                    v-for="skill_nb in class_.skill_nb"
+    <div>
+        <div class="flex flex-wrap self-center justify-center items-center gap-2">
+            <div
+                v-for="class_ in stepInfo.data"
+                :key="class_.id"
+            >
+                <ClassCard
+                    :class_="class_"
+                    :image="true"
+                    class="hover:opacity-80 hover:cursor-pointer"
+                    @click="chooseClass(class_)"
+                />
+            </div>
+
+            <Modal
+                v-show="showModal"
+                @close-modal="showModal = false"
+                title="Choisissez vos compétences"
+                :class="'py-16'"
+            >
+                <div class="flex flex-col py-4 space-y-4">
+                    <Selector
+                        v-for="skill_nb, index in selectedClass.skill_nb"
+                        :key="skill_nb"
+                        selectorClass='flex flex-col relative text-white cursor-pointer select-none bg-fc-black-light'
+                        :on-select-item="(v) => skills[index] = v"
+                        :items="parseSkills(selectedClass.skills)"
+                    />
+                </div>
+                <!-- <select
                     :key="skill_nb"
-                    v-model="skills[`${class_id}_${skill_nb}`]"
+                    v-model="skills[`${selectedClassid}_${skill_nb}`]"
                 >
                     <option
                         disabled
@@ -23,38 +39,48 @@
                         Choisissez une compétence
                     </option>
                     <option
-                        v-for="skill in class_.skills"
+                        v-for="skill in selectedClass.skills"
                         :key="skill.id"
                         :value="skill.id"
                     >
                         {{ skill.name }}
                     </option>
-                </select>
+                </select> -->
 
                 <button
-                    class="mr-5 self-end text-5xl font-bold cursor-pointer"
-                    @click="submitClass(class_.id)"
+                    class="self-end text-5xl font-bold cursor-pointer"
+                    @click="submitClass(selectedClass.id)"
                 >
                     Go
                 </button>
-            </div>
+            </Modal>
         </div>
     </div>
 </template>
 
 <script>
-import ClassCard from '@/components/subComponent/Cards/ClassCard.vue'
+
 import { mapState, mapMutations } from "vuex"
+import { useToast } from "vue-toastification"
+
+import Selector from '@/components/subComponent/Selector.vue'
+import ClassCard from '@/components/subComponent/Cards/ClassCard.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
-    components: { ClassCard },
+    components: {
+    ClassCard,
+    Modal,
+    Selector
+},
     props: {
         stepInfo: {type: Object, default: new Object()}
     },
     data() {
         return {
-            skills: {},
-            class_id: null
+            skills: [],
+            selectedClass: {},
+            showModal: false
         }
     },
     computed: {
@@ -68,22 +94,37 @@ export default {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
         }),
-        async chooseClass(id) {
-            this.class_id = id
+        parseSkills(skills) {
+            var parsedSkills = []
+
+            skills.forEach(skill => parsedSkills.push({
+                    name: skill.name,
+                    value: skill.id
+                })
+            )
+
+            return parsedSkills
+        },
+        async chooseClass(selectedClass) {
+            console.log(selectedClass);
+            this.selectedClass = selectedClass
+            this.showModal = true
         },
         async submitClass(id) {
-            this.character_creation.skills = []   
+            const toast = useToast()
+
+            if (Object.keys(this.skills).length !== this.selectedClass.skill_nb) {
+                toast.error('Veuillez sélectionner toutes vos compétences.')
+
+                return
+            }
+
+            console.log(this.skills);
+
+            this.character_creation.skills = this.skills
             this.character_creation.character.class_id = id
-            Object.keys(this.skills).map(value => {
-                const class_id = value.split("_")[0]
-                const skill_nb = value.split("_")[1]
-                if (class_id == id) {
-                    this.character_creation.skills.push(this.skills[`${class_id}_${skill_nb}`])
-                }
-            })
             this.set_character_creation(this.character_creation)
             this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Characteristics' }})
-        
         }
     }
 }

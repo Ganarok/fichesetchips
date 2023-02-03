@@ -1,27 +1,66 @@
-export const ROOMSTATUS = {
-    OPENED: "Ouverte",
-    PRIVATE: "Privée",
-    FULL: "Complète",
-    RUNNING: "Lancée",
-    CLOSED: "Fermée",
-}
+export const ROOMSTATUS = [
+    {
+        name: "Ouverte",
+        value: "opened"
+    },
+    {
+        name: "Privée",
+        value: "private"
+    },
+    {
+        name: "Complète",
+        value: "full"
+    },
+    {
+        name: "Lancée",
+        value: "running"
+    },
+    {
+        name: "Fermée",
+        value: "closed"
+    }
+]
 
-export const PLAYSTYLE = {
-    FUN: "Fun",
-    SERIOUS: "Sérieux",
-    EXPERIMENTAL: "Expérimental",
-}
+export const PLAYSTYLE = [
+    {
+        name: "Fun",
+        value: "fun"
+    },
+    {
+        name: "Sérieux",
+        value: "serious"
+    },
+    {
+        name: "Expérimental",
+        value: "experimental"
+    },
+]
 
-export const EXPERIENCE = {
-    BEGINNER: "Débutant",
-    CASUAL: "Quelques parties",
-    EXPERT: "Expert",
-}
+export const EXPERIENCE = [
+    {
+        name: "Débutant",
+        value: "beginner"
+    },
+    {
+        name: "Quelques parties",
+        value: "casual"
+    },
+    {
+        name: "Expert",
+        value: "expert"
+    },
+]
 
-export const LANGUAGES = {
-    FRENCH: "Français",
-    ENGLISH: "Anglais",
-}
+export const LANGUAGES = [
+    {
+        name: "Français",
+        value: "french"
+    },
+    {
+        name: "Anglais",
+        value: "english"
+    }
+]
 
 export const FILTERUNIVERSES = {}
 
