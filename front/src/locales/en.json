@@ -55,5 +55,8 @@
     "Langue": "Language",
     "Niv. Min": "Min. Lvl",
     "Niv. Max": "Max. Lvl",
-    "Filtre": "Filter"
+    "Filtre": "Filter",
+    "Prénom": "Firstname",
+    "Nom": "Lastname",
+    "Alignement": "Alignment"
 }

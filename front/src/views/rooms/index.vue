@@ -13,13 +13,19 @@
             <div class="flex flex-row items-center pl-6 space-x-6">
                 <Selector
                     :items="ROOMSTATUS"
-                    :default-selected-item="$t('Statut')"
+                    :default-selected-item="{
+                        name: $t('Statut'),
+                        value: ''
+                    }"
                     :on-select-item="(v) => updateRoomStatus(v)"
                 />
 
                 <Selector
                     :items="PLAYSTYLE"
-                    :default-selected-item="$t('Expérience')"
+                    :default-selected-item="{
+                        name:$t('Expérience'),
+                        value: ''
+                    }"
                     :on-select-item="(v) => updatePlayStyle(v)"
                 />
 
