@@ -69,6 +69,49 @@ export const FILTERUNIVERSES = [
     }
 ]
 
+export const ALIGNMENT = [
+    {
+        name: "Lawful Good",
+        value: "lawful_good"
+    },
+    {
+        name: "Lawful Neutral",
+        value: "lawful_neutral"
+    },
+    {
+        name: "Lawful Evil",
+        value: "lawful_evil"
+    },
+    {
+        name: "Neutral Good",
+        value: "neutral_good"
+    },
+    {
+        name: "Neutral",
+        value: "neutral"
+    },
+    {
+        name: "Neutral Evil",
+        value: "neutral_evil"
+    },
+    {
+        name: "Chaotic Good",
+        value: "chaotic_good"
+    },
+    {
+        name: "Chaotic Neutral",
+        value: "Chaotic_neutral"
+    },
+    {
+        name: "Chaotic Evil",
+        value: "chaotic_evil"
+    },
+    {
+        name: "Unaligned",
+        value: "unaligned"
+    }
+]
+
 export const TYPEUNIVERSES = []
 
 export const COLORS = {

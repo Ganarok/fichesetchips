@@ -119,8 +119,6 @@ export default {
                 return
             }
 
-            console.log(this.skills);
-
             this.character_creation.skills = this.skills
             this.character_creation.character.class_id = id
             this.set_character_creation(this.character_creation)

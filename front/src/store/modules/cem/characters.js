@@ -7,6 +7,9 @@ export default {
         loading: false,
         completed: 0,
         characters: [],
+        stats: {
+            racial: [] // { name: String, value: Number }
+        },
         character: {},
         character_creation: {
             "character": {
@@ -47,6 +50,8 @@ export default {
         set_completed: (state, data) => (state.completed === 0 ? 1 : state.completed += 1),
         set_characters: (state, data) => (state.characters = data),
         set_character: (state, data) => (state.character = data),
+        set_stats: (state, data) => (state.stats = {...state.stats, ...data}),
+        set_racial: (state, data) => (state.stats.racial = data),
         set_character_creation: (state, data) => (state.character_creation = data),
         set_character_creation_steps: (state, data) => (state.character_creation_steps = data),
     },
@@ -83,6 +88,8 @@ export default {
                 console.log(error)
                 toast.error(error)
             }
+
+            console.log(data);
 
             commit("set_character_creation_steps", data)
         },

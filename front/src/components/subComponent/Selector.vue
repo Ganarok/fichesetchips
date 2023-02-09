@@ -36,7 +36,7 @@
                 v-for="(item, index) in computedItems"
                 :key="index"
                 :class="
-                    item === selectedItem
+                    item.name === selectedItem
                         ? optionClass + ' text-fc-green'
                         : optionClass + ' text-white'
                 "
@@ -128,8 +128,6 @@ export default {
         },
         handleHeight() {
             this.openedStyles.marginTop = this.$refs.openedBox.clientHeight + 'px';
-
-            console.log(this.$refs.openedBox.clientHeight + 'px');
         }
     },
     mounted() {

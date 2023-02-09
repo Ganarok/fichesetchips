@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex flex-col">
         <div
             class="flex flex-row w-[90%] items-center justify-between self-center bg-fc-black"
         >
@@ -18,15 +18,6 @@
                         value: ''
                     }"
                     :on-select-item="(v) => this.selectedFilter = v"
-                />
-
-                <Selector
-                    :items="TYPEUNIVERSES"
-                    :default-selected-item="{
-                        name: 'Type',
-                        value: ''
-                    }"
-                    :on-select-item="(v) => this.selectedType = v"
                 />
             </div>
 

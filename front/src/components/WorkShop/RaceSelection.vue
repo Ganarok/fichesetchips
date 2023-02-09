@@ -6,7 +6,7 @@
             <RaceCard
                 v-for="race in stepInfo.data"
                 :key="race.id"
-                @click="chooseRace(race.id, race.languages, race.nb_free_standard_language)"
+                @click="chooseRace(race.id, race.languages, race.nb_free_standard_language, race.racial_bonus)"
                 :character="{
                     ...race,
                     name: race.french_name,
@@ -50,13 +50,13 @@ export default {
             character_creation: (state) => state.character_creation,
         }),
     },
-    async mounted() {
-    },
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
+            set_racial: "characters/set_racial",
         }),
-        async chooseRace(id, languages, nb_free_standard_language) {
+        async chooseRace(id, languages, nb_free_standard_language, racial_bonus) {
+            this.set_racial(racial_bonus)
             this.character_creation.character.race_id = id
             this.character_creation.character.race_id
             this.character_creation.languages = []

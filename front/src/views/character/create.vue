@@ -12,7 +12,6 @@
             <component
                 :is="currentStep"
                 :stepInfo="character_creation_steps[currentStep]"
-                class="flex flex-col w-full"
             />
 
             <CompletionBar
@@ -42,6 +41,7 @@ import Race from '@/components/WorkShop/RaceSelection.vue'
 import Language from '@/components/WorkShop/LanguageSelection.vue'
 import Class from '@/components/WorkShop/ClassSelection.vue'
 import Characteristics from "@/components/WorkShop/CharacteristicsSelection.vue"
+import Description from "@/components/WorkShop/Description.vue"
 import Loader from '@/components/Loader.vue'
 
 export default {
@@ -54,7 +54,8 @@ export default {
         Language,
         Loader,
         Class,
-        Characteristics
+        Characteristics,
+        Description
     },
     props: {
         currentStep: {

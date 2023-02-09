@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col px-4">
+    <div class="flex flex-col w-full px-4">
         <p>
             Vos langues déjà apprises :
         </p>
@@ -23,7 +23,7 @@
         <div
             class="px-20 py-10 grid grid-cols-3 gap-6 items-center tablet:grid-cols-2 tablet:px-10 tablet:py-5 grid1Col:grid-cols-1"
         >
-s            <div
+            <div
                 v-for="language in languages"
                 :key="language.id"
                 @click="chooseLanguage(language.id)"

@@ -21,6 +21,7 @@
             :value="title"
             :placeholder="placeholder"
             @change="onChange"
+            :autofocus="autofocus"
         >
 
         <div
@@ -34,6 +35,10 @@
 export default {
     name: "BlackGreenDiv",
     props: {
+        autofocus: {
+            type: Boolean,
+            default: false
+        },
         title: {
             type: String,
             default: "",
