@@ -62,9 +62,14 @@ export const LANGUAGES = [
     }
 ]
 
-export const FILTERUNIVERSES = {}
+export const FILTERUNIVERSES = [
+    {
+        name: "Caves & Monstres",
+        value: "caves&monstres"
+    }
+]
 
-export const TYPEUNIVERSES = {}
+export const TYPEUNIVERSES = []
 
 export const COLORS = {
     "fc-green": "#4FEA74",

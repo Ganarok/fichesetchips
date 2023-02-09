@@ -102,12 +102,10 @@ export default {
         },
     },
     data() {
-        console.log(this.defaultSelectedItem);
-        const test = [ this.defaultSelectedItem, ...this.items ]
-
+        const allItems = [ this.defaultSelectedItem, ...this.items ]
 
         return {
-            computedItems: test,
+            computedItems: allItems,
             isOpened: this.opened,
             selectedItem: this.defaultSelectedItem.name,
             openedStyles: {}

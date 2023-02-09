@@ -41,6 +41,7 @@ import CompletionBar from '@/components/subComponent/completionBar.vue'
 import Race from '@/components/WorkShop/RaceSelection.vue'
 import Language from '@/components/WorkShop/LanguageSelection.vue'
 import Class from '@/components/WorkShop/ClassSelection.vue'
+import Characteristics from "@/components/WorkShop/CharacteristicsSelection.vue"
 import Loader from '@/components/Loader.vue'
 
 export default {
@@ -52,7 +53,8 @@ export default {
         Race,
         Language,
         Loader,
-        Class
+        Class,
+        Characteristics
     },
     props: {
         currentStep: {
