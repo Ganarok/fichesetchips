@@ -57,6 +57,9 @@ export default {
         }),
         async chooseRace(id, languages, nb_free_standard_language, racial_bonus) {
             this.set_racial(racial_bonus)
+
+            console.log(this.character_creation.stats);
+
             this.character_creation.character.race_id = id
             this.character_creation.character.race_id
             this.character_creation.languages = []

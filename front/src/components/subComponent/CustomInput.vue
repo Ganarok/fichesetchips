@@ -54,7 +54,7 @@ export default {
         },
         typeinput: {
             type: String,
-            default: "",
+            default: "text",
         },
     },
 }

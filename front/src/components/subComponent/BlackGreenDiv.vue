@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="`flex w-full relative ${maxWidth} items-center justify-center bg-fc-black py-4 ${height}`"
+        :class="`flex w-full relative ${maxWidth} items-center justify-center bg-fc-black py-4 ${className} ${height}`"
     >
         <div
             v-if="leftGreenDiv"
@@ -63,7 +63,7 @@ export default {
             type: [Boolean, String],
             default: true,
         },
-        class: {
+        className: {
             type: String,
             default: "",
         },

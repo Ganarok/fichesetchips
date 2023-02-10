@@ -28,24 +28,6 @@
                         :items="parseSkills(selectedClass.skills)"
                     />
                 </div>
-                <!-- <select
-                    :key="skill_nb"
-                    v-model="skills[`${selectedClassid}_${skill_nb}`]"
-                >
-                    <option
-                        disabled
-                        :value="`Choisissez votre compétence n°${skill_nb}`"
-                    >
-                        Choisissez une compétence
-                    </option>
-                    <option
-                        v-for="skill in selectedClass.skills"
-                        :key="skill.id"
-                        :value="skill.id"
-                    >
-                        {{ skill.name }}
-                    </option>
-                </select> -->
 
                 <button
                     class="self-end text-5xl font-bold cursor-pointer"
@@ -88,8 +70,6 @@ export default {
             character_creation: (state) => state.character_creation,
         }),
     },
-    async mounted() {
-    },
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
@@ -106,7 +86,6 @@ export default {
             return parsedSkills
         },
         async chooseClass(selectedClass) {
-            console.log(selectedClass);
             this.selectedClass = selectedClass
             this.showModal = true
         },

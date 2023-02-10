@@ -2,7 +2,7 @@
     <SidebarLayout 
         :title="character_creation_steps[currentStep] ?
             character_creation_steps[currentStep].title
-            : 'Choix de l\'Univers'"
+            : 'Es-tu sûr de toi ?'"
         :description="character_creation_steps[currentStep]?.message"
     >
         <div 
@@ -15,7 +15,7 @@
             />
 
             <CompletionBar
-                :size="size"
+                :size="Object.keys(character_creation_steps).length"
                 :completed="completed"
                 class="flex mx-auto mt-[10px] my-4 py-4 mobile:hidden tablet:pb-2"
             />
@@ -42,6 +42,7 @@ import Language from '@/components/WorkShop/LanguageSelection.vue'
 import Class from '@/components/WorkShop/ClassSelection.vue'
 import Characteristics from "@/components/WorkShop/CharacteristicsSelection.vue"
 import Description from "@/components/WorkShop/Description.vue"
+import Validation from "@/components/WorkShop/Validation.vue"
 import Loader from '@/components/Loader.vue'
 
 export default {
@@ -55,17 +56,13 @@ export default {
         Loader,
         Class,
         Characteristics,
-        Description
+        Description,
+        Validation
     },
     props: {
         currentStep: {
             type: String,
             default: "Universe"
-        }
-    },
-    data() {
-        return {
-            size: 5
         }
     },
     computed: {
@@ -78,6 +75,8 @@ export default {
     },
     async mounted() {
         await this.fetch_character_creation_steps()
+
+        console.log('steps', this.character_creation_steps);
     },
     methods: {
         ...mapActions({

@@ -112,6 +112,21 @@ export const ALIGNMENT = [
     }
 ]
 
+export const SEXTYPE = [
+    {
+        name: "Homme",
+        value: "men"
+    },
+    {
+        name: "Femme",
+        value: "women"
+    },
+    {
+        name: "Autres",
+        value: "others"
+    }
+]
+
 export const TYPEUNIVERSES = []
 
 export const COLORS = {

@@ -5,8 +5,8 @@
                 v-for="characteristic in stepInfo.data"
                 :key="characteristic.id"
                 :name="characteristic.name"
-                :onChange="(v) => characterStats[characteristic.name] = parseInt(v.target.value)"
-                :value="characterStats[characteristic.name]"
+                :onChange="(v) => this.character_creation.stats[characteristic.name] = parseInt(v.target.value)"
+                :value="this.character_creation.stats[characteristic.name]"
                 :handleRandomize="() => handleRandomize(characteristic.name)"
             />
         </div>
@@ -17,7 +17,7 @@
                     v-for="characteristic in stepInfo.data"
                     :key="characteristic.id"
                     :name="characteristic.name"
-                    :base="characterStats[characteristic.name]"
+                    :base="this.character_creation.stats[characteristic.name]"
                     :racial="stats.racial.find(race => race.characteristic.name === characteristic.name)?.racial_bonus || 0"
                 />
             </div>
@@ -50,15 +50,10 @@ export default {
     props: {
         stepInfo: {type: Object, default: new Object()}
     },
-    data() {
-        return  {
-            characterStats: {}
-        }
-    },
     computed: {
         ...mapState("characters", {
             character_creation: (state) => state.character_creation,
-            stats: (state) => state.stats
+            stats: (state) => state.character_creation.stats
         }),
     },
     mounted() {
@@ -96,18 +91,19 @@ export default {
 
             console.log('result', result)
 
-            this.characterStats[name] = result
+            this.character_creation.stats[name] = result
         },
         async chooseCharacteristics() {
             const toast = useToast()
             
-            if (Object.keys(this.characterStats).length !== this.stepInfo.data.length) {
+            if (Object.keys(this.character_creation.stats).length <= this.stepInfo.data.length) {
                 toast.error('Veuillez définir toutes vos caractéristiques')
 
                 return
             }
             
-            this.set_stats(this.characterStats)
+            this.set_stats(this.character_creation.stats)
+
             await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Description' }})
         },
     },
