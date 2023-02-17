@@ -13,7 +13,7 @@
             </div>
             <!-- Navbar content when conected-->
             <div class="content text-white" v-if="connected()">
-                <div class="bloc">
+                <div class="bloc flex flex-col mb-12">
 
                     <router-link
                         to="/user/dashboard"
@@ -30,17 +30,17 @@
                     </router-link>
                 </div>
 
-                <div class="bloc">
-                    <div class="categorie" v-bind:class="{active: personnageIsShow}">
-                        <span @click="() => this.personnageIsShow = !this.personnageIsShow">Personnage</span>
-                        <ul v-if="personnageIsShow">
-                            <li>
+                <div class="bloc flex flex-col mb-12">
+                    <div class="categorie flex flex-col mb-4" v-bind:class="{active: personnageIsShow}">
+                        <span class="text-xl font-bold" @click="() => this.personnageIsShow = !this.personnageIsShow">Personnage</span>
+                        <ul class="visible block text-xl font-bold text-white pl-2 list-none opacity-50" v-if="personnageIsShow">
+                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
                                 <router-link to="/user/characters/create">
                                     {{$t('Créer')}} 
                                     
                                 </router-link>
                             </li>
-                            <li>
+                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
                                 <router-link to="/user/characters">
                                     {{$t('Liste')}} 
                                     
@@ -48,15 +48,15 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="categorie" v-bind:class="{active: roomIsShow}">
-                        <span @click="() => this.roomIsShow = !this.roomIsShow" >Rooms</span>
-                        <ul v-if="roomIsShow">
-                            <li>
+                    <div class="categorie flex flex-col mb-4" v-bind:class="{active: roomIsShow}">
+                        <span class="text-xl font-bold" @click="() => this.roomIsShow = !this.roomIsShow" >Rooms</span>
+                        <ul class="visible block text-xl font-bold text-white pl-2 list-none opacity-50" v-if="roomIsShow">
+                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
                                 <router-link to="/rooms/create">
                                     {{$t('Créer')}}  
                                 </router-link>
                             </li>
-                            <li>
+                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
                                 <router-link to="/rooms">
                                     {{$t('Rejoindre')}} 
                                 </router-link>
@@ -68,7 +68,7 @@
             </div>
             <!-- Navbar content when not conected (guest)-->
             <div class="content disconected text-white " v-else>
-                <div class="bloc">
+                <div class="flex flex-col justify-between h-1/3">
 
                     <router-link to="/" exact class="font-bold text-xl" >
                         {{$t('Accueil')}}
@@ -86,11 +86,11 @@
 
     
             <div class="flex flex-col w-full justify-center items-center relative">
-                <router-link exact to="/" class="button" @click.native="logout()" v-if="connected()">
+                <router-link exact to="/" class="text-yellow-400 border-yellow-400 border font-bold text-xl py-2 px-4 rounded-lg transition-all ease-in-out duration-200 hover:bg-yellow-400 hover:text-gray-900" @click.native="logout()" v-if="connected()">
                     {{$t('Déconnexion')}}
                 </router-link>
                 <img src="@/assets/icon.png" class="w-2/4" alt="F&C logo" />
-                <p class="text-white text-[10px]">Made with love by fiches&chips</p>
+                <p class="text-white text-[10px]">Made with ❤️ by fiches&chips</p>
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@ export default {
     },
     methods: {
         connected: function () {
-            return this.$store.getters.connected
+            return true
         },
         logout: function () {
             this.$store.commit('logout')
@@ -140,27 +140,6 @@ export default {
     flex-direction: column;
     justify-content: center;
 }
-.sidebar .content.disconected .bloc{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 30%;  
-}
-
-.sidebar .content .bloc{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 3rem;
-}
-.sidebar .content .bloc .categorie{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-}
-.sidebar .content .bloc .categorie span{
-    font-size: 1.2rem;
-    font-weight: bold;
-}
 
 .sidebar .content .bloc .categorie span::after{
     content: url(../../assets/selector.svg);
@@ -174,22 +153,8 @@ export default {
     transition: all .25s ease;
     display: inline-flex;
     transform: rotate(180deg);
+}
 
-}
-.sidebar .content .bloc .categorie ul{
-    visibility: visible;
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    list-style: none;
-    color: #FFFFFF;
-    opacity: 0.5;
-    padding-left: .5rem;
-
-}
-.sidebar .content .bloc .categorie ul li{
-    line-height: 1.8rem;
-}
 .sidebar .content .bloc .categorie ul li::before{
     content: "■";
     font-size: .8rem;
@@ -204,17 +169,4 @@ export default {
     transform: translateY(-10%);
 }
 
-.button{
-    color: #FFDB57;
-    font-weight: bold;
-    font-size: 1.2rem;
-    border: 1px solid #FFDB57;
-    padding: .5rem 1rem;
-    border-radius: 100px;
-    transition: all .2s ease-in-out;
-}
-.button:hover{
-    background-color: #FFDB57;
-    color: #1E1E1E;
-}
 </style>
