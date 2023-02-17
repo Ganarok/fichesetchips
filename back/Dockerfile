@@ -12,4 +12,4 @@ ENV WAIT_VERSION 2.7.2
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
 RUN chmod +x /wait
 
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run db:refresh && npm run start"]
