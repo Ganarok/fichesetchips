@@ -228,3 +228,9 @@ You have to specify the road itself, the parameters, if a bearerAuth token can b
 **Errors code**
 
 If your error isn't managed by `back/src/utils/error-handler/getErrorMessage.ts`, you have to describe it in there.
+
+
+To connect with the container postgres -> docker exec -it sleepy_banzai psql -h localhost -p 5432 -U postgres
+After create the database -> CREATE DATABASE fetc;
+After -> \c fetc;
+After -> CREATE SCHEMA cem;
