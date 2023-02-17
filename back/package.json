@@ -22,7 +22,7 @@
         "db:seed:public": "DB_MIGRATION_DIR=src/database/seeders/public/*.ts npm run -- typeorm migration:run --dataSource src/database/init/datasources/public-data-source.ts",
         "db:seed:cem": "DB_MIGRATION_DIR=src/database/seeders/cem/*.ts npm run -- typeorm migration:run --dataSource src/database/init/datasources/cem-data-source.ts",
         "db:seed": "npm run db:seed:public && npm run db:seed:cem",
-        "db:refresh": "npm run -- typeorm schema:drop --dataSource src/database/init/datasources/public-data-source.ts && npm run -- typeorm schema:drop --dataSource src/database/init/datasources/cem-data-source.ts && npm run migration:run && npm run db:seed"
+        "db:refresh": "npm run -- typeorm query 'CREATE SCHEMA IF NOT EXISTS cem;' --dataSource src/database/init/datasources/public-data-source.ts && npm run -- typeorm schema:drop --dataSource src/database/init/datasources/public-data-source.ts && npm run -- typeorm schema:drop --dataSource src/database/init/datasources/cem-data-source.ts && npm run migration:run && npm run db:seed"
     },
     "author": "",
     "license": "ISC",
