@@ -16,11 +16,8 @@
 
                         <Selector
                             :items="ALIGNMENT"
-                            :default-selected-item="{
-                                name: $t('Alignement'),
-                                value: ''
-                            }"
-                            :on-select-item="(v) => this.character_creation.character.alignment = v"
+                            :default-selected-item="getDefaultAlignment()"
+                            :on-select-item="(v) => character_creation.character.alignment = v"
                         />
                     </div>
 
@@ -28,16 +25,18 @@
                         :placeHolder="$t('Prénom')"
                         outline="fc-green"
                         :max-length="52"
-                        @input="v => this.character_creation.character.firstname = v.target.value"
+                        :value="character_creation.character.firstname"
                         class="w-full"
+                        @input="v => character_creation.character.firstname = v.target.value"
                     />
 
                     <CustomInput 
                         :placeHolder="$t('Nom')"
                         outline="fc-green"
                         :max-length="52"
-                        @input="v => this.character_creation.character.lastname = v.target.value"
+                        :value="character_creation.character.lastname"
                         class="w-full"
+                        @input="v => character_creation.character.lastname = v.target.value"
                     />
                 </div>
             </div>
@@ -45,26 +44,29 @@
             <div class="flex flex-row justify-center items-center">
                 <Selector
                     :items="SEXTYPE"
-                    :default-selected-item="{
-                        name: 'Genre',
-                        value: ''
-                    }"
+                    :default-selected-item="getDefaultGenre()"
                     selector-class="flex flex-col w-72 relative bg-fc-black text-white cursor-pointer select-none"
-                    :on-select-item="(v) => this.character_creation.character.sex = v.target.value"
+                    :on-select-item="(v) => character_creation.character.sex = v"
                 />
 
                 <CustomInput 
                     placeHolder="Poids"
                     outline="fc-green"
-                    @input="v => this.character_creation.character.weight = v.target.value"
+                    :max-length="12"
+                    type="number"
+                    :value="character_creation.character.weight"
                     class="w-full"
+                    @input="v => character_creation.character.weight = v.target.value"
                 />
 
                 <CustomInput 
                     placeHolder="Taille"
                     outline="fc-green"
-                    @input="v => this.character_creation.character.height = v.target.value"
+                    :max-length="12"
+                    type="number"
+                    :value="character_creation.character.height"
                     class="w-full"
+                    @input="v => character_creation.character.height = v.target.value"
                 />
             </div>
         </div>
@@ -78,7 +80,7 @@
                 />
     
                 <textarea
-                    v-model="this.character_creation.character.bio"
+                    v-model="character_creation.character.bio"
                     class="flex text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
                     placeholder="Entrez une description"
                 />
@@ -114,16 +116,16 @@ export default {
         BlackGreenDiv,
         Selector
     },
-    computed: {
-        ...mapState("characters", {
-            character_creation: (state) => state.character_creation,
-        }),
-    },
     data() {
         return {
             ALIGNMENT,
             SEXTYPE,
         }
+    },
+    computed: {
+        ...mapState("characters", {
+            character_creation: (state) => state.character_creation,
+        }),
     },
     methods: {
         ...mapMutations({
@@ -131,6 +133,38 @@ export default {
         }),
         chooseDescription() {
             this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Validation' }})
+        },
+        getDefaultAlignment() {
+            const defaultAlignment = this.character_creation.character.alignment
+
+            if (defaultAlignment) {
+                return {
+                    name: ALIGNMENT.find(al => al.value === defaultAlignment).name,
+                    value: defaultAlignment
+                }
+            }
+
+            return {
+                name: this.$t('Alignement'),
+                value: ''
+            }
+        },
+        getDefaultGenre() {
+            const defaultSex = this.character_creation.character.sex
+
+            console.log('sex', this.character_creation.character.sex)
+
+            if (defaultSex && defaultSex !== 'toset') {
+                return {
+                    name: SEXTYPE.find(sex => sex.value === defaultSex).name,
+                    value: defaultSex
+                }
+            }
+
+            return {
+                name: 'Genre',
+                value: ''
+            }
         }
     }
 }

@@ -17,11 +17,11 @@
         <input
             v-else
             :class="`flex text-center self-center sm:w-1/2 w-full bg-transparent outline-none font-bold placeholder:font-normal placeholder:text-fc-yellow placeholder:italic ${color} ${maxWidth} ${height}`"
+            :autofocus="autofocus"
             type="text"
             :value="title"
             :placeholder="placeholder"
             @change="onChange"
-            :autofocus="autofocus"
         >
 
         <div

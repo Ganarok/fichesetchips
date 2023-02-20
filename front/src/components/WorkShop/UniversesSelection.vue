@@ -17,7 +17,7 @@
                         name: $t('Filtre'),
                         value: ''
                     }"
-                    :on-select-item="(v) => this.selectedFilter = v"
+                    :on-select-item="(v) => selectedFilter = v"
                 />
             </div>
 

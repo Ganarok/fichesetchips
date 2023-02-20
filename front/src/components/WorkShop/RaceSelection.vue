@@ -6,11 +6,11 @@
             <RaceCard
                 v-for="race in stepInfo.data"
                 :key="race.id"
-                @click="chooseRace(race.id, race.languages, race.nb_free_standard_language, race.racial_bonus)"
                 :character="{
                     ...race,
                     name: race.french_name,
                 }"
+                @click="chooseRace(race.id, race.languages, race.nb_free_standard_language, race.racial_bonus)"
             />
         </div>
     </div>
@@ -19,19 +19,13 @@
 <script>
 import { mapState, mapMutations } from "vuex"
 
-import Selector from "@/components/subComponent/Selector.vue"
 import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
-import CharacterCard from "@/components/subComponent/Cards/CharacterCard.vue"
-import ClassCard from "../subComponent/Cards/ClassCard.vue"
 import RaceCard from "../subComponent/Cards/RaceCard.vue"
 
 export default {
     components: {
-    Selector,
-    CharacterCard,
-    ClassCard,
-    RaceCard
-},
+        RaceCard
+    },
     props: {
         stepInfo: {type: Object, default: new Object()}
     },
@@ -58,7 +52,7 @@ export default {
         async chooseRace(id, languages, nb_free_standard_language, racial_bonus) {
             this.set_racial(racial_bonus)
 
-            console.log(this.character_creation.stats);
+            console.log(this.character_creation.stats)
 
             this.character_creation.character.race_id = id
             this.character_creation.character.race_id
