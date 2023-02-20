@@ -118,7 +118,7 @@ const routes = [{
     component: NotFound,
 },
 {
-    path: "/character/create",
+    path: "/characters/create",
     name: "CharacterCreate",
     component: CharacterCreate,
     requiresAuth: true,

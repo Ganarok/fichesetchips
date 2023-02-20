@@ -48,7 +48,7 @@ export default {
     mutations: {
         reset: (state, data) => (state = data),
         set_loading: (state, data) => (state.loading = data),
-        set_completed: (state, data) => (state.completed === 0 ? 1 : state.completed += 1),
+        set_completed: (state) => (state.completed === 0 ? 1 : state.completed += 1),
         set_characters: (state, data) => (state.characters = data),
         set_character: (state, data) => (state.character = data),
         set_stats: (state, data) => (state.character_creation.stats = {...state.character_creation.stats, ...data}),
@@ -95,11 +95,7 @@ export default {
         async push_character({ commit, rootState }) {
             commit("set_loading", true)
 
-            const res = await apiCall({
-                route: '/',
-                method: 'POST',
-                body: rootState.characters.character_creation
-            })
+            console.log(rootState.characters.character_creation)
 
             commit("set_loading", false)
         }

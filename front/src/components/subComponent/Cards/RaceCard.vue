@@ -28,7 +28,7 @@
             >
                 <p 
                     v-for="bonus, index in racial_bonus"
-                    v-bind:key="index"
+                    :key="index"
                 >
                     {{ `${bonus.characteristic.name.slice(0, 3)}: +${bonus.racial_bonus}` }}
                 </p>
@@ -41,7 +41,7 @@
                 <div class="flex flex-col space-y-1 text-end">
                     <p
                         v-for="language, index in languages"
-                        v-bind:key="index"
+                        :key="index"
                     >
                         {{ language.name }}
                     </p>

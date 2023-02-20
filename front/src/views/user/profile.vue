@@ -332,8 +332,7 @@ export default {
             fetch_my_friends: "friends/fetch_my_friends",
             patch_user: "user/patch_user",
             delete_user: "user/delete_user",
-            fetch_characters: "characters/fetch_characters",
-    
+            fetch_characters: "characters/fetch_characters"
         }),
         getDate(date) {
             return moment(date).format("ll")

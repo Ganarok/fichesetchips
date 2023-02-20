@@ -5,9 +5,12 @@
                 v-for="characteristic in stepInfo.data"
                 :key="characteristic.id"
                 :name="characteristic.name"
-                :onChange="(v) => this.character_creation.stats[characteristic.name] = parseInt(v.target.value)"
-                :value="this.character_creation.stats[characteristic.name]"
-                :handleRandomize="() => handleRandomize(characteristic.name)"
+                :onChange="(v) => character_creation.stats[characteristic.name] = {
+                    value: parseInt(v.target.value),
+                    characteristic_id: characteristic.id
+                }"
+                :value="character_creation.stats[characteristic.name].value"
+                :handleRandomize="() => handleRandomize({name: characteristic.name, id: characteristic.id})"
             />
         </div>
 
@@ -17,11 +20,10 @@
                     v-for="characteristic in stepInfo.data"
                     :key="characteristic.id"
                     :name="characteristic.name"
-                    :base="this.character_creation.stats[characteristic.name]"
+                    :base="character_creation.stats[characteristic.name]?.value"
                     :racial="stats.racial.find(race => race.characteristic.name === characteristic.name)?.racial_bonus || 0"
                 />
             </div>
-
         </div>
         
         <button
@@ -36,7 +38,6 @@
 <script>
 import StatSelector from "@/components/subComponent/StatSelector.vue"
 import StatPreview from "@/components/subComponent/StatPreview.vue"
-import Button from "@/components/subComponent/Button.vue"
 
 import { useToast } from "vue-toastification"
 import { mapState, mapMutations } from "vuex"
@@ -44,8 +45,7 @@ import { mapState, mapMutations } from "vuex"
 export default {
     components: {
         StatSelector,
-        StatPreview,
-        Button
+        StatPreview
     },
     props: {
         stepInfo: {type: Object, default: new Object()}
@@ -57,14 +57,14 @@ export default {
         }),
     },
     mounted() {
-        console.log(this.stats);
+        console.log(this.stats)
     },
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_stats: "characters/set_stats",
         }),
-        handleRandomize(name = '', diceMaxValue = 6, dices = 4, valuesNb = 3) {
+        handleRandomize({name = '', id, diceMaxValue = 6, dices = 4, valuesNb = 3}) {
             let dicesResults = []
             let result = 0
 
@@ -91,7 +91,7 @@ export default {
 
             console.log('result', result)
 
-            this.character_creation.stats[name] = result
+            this.character_creation.stats[name] = {characteristic_id: id, value: result}
         },
         async chooseCharacteristics() {
             const toast = useToast()

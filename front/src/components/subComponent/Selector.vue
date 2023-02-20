@@ -1,9 +1,9 @@
 <template>
     <div
+        ref="openedBox"
         v-click-outside="closeSelector"
         :class="selectorClass"
         @click="switchOpened()"
-        ref="openedBox"
     >
         <div class="flex space-x-2 p-2">
             <option
@@ -111,6 +111,11 @@ export default {
             openedStyles: {}
         }
     },
+    mounted() {
+        this.$nextTick(() => {
+            this.handleHeight()
+        })
+    },
     methods: {
         switchOpened() {
             this.isOpened = !this.isOpened
@@ -127,13 +132,8 @@ export default {
             this.isOpened = false
         },
         handleHeight() {
-            this.openedStyles.marginTop = this.$refs.openedBox.clientHeight + 'px';
+            this.openedStyles.marginTop = this.$refs.openedBox.clientHeight + 'px'
         }
-    },
-    mounted() {
-        this.$nextTick(() => {
-            this.handleHeight()
-        })
     }
 }
 </script>
