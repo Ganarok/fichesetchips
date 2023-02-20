@@ -11,6 +11,7 @@
             :placeholder="placeHolder"
             :maxlength="maxLength"
             :type="typeinput"
+            :value="value"
             :disabled="disabled"
             @focusout="onFocusOut"
         >
@@ -51,6 +52,10 @@ export default {
         outline: {
             type: String,
             default: "",
+        },
+        value: {
+            type: [String, Number],
+            default: ''
         },
         typeinput: {
             type: String,

@@ -15,15 +15,15 @@
 
             <Modal
                 v-show="showModal"
-                @close-modal="showModal = false"
                 title="Choisissez vos compétences"
                 :class="'py-16'"
+                @close-modal="showModal = false"
             >
                 <div class="flex flex-col py-4 space-y-4">
                     <Selector
                         v-for="skill_nb, index in selectedClass.skill_nb"
                         :key="skill_nb"
-                        selectorClass='flex flex-col relative text-white cursor-pointer select-none bg-fc-black-light'
+                        selectorClass="flex flex-col relative text-white cursor-pointer select-none bg-fc-black-light"
                         :on-select-item="(v) => skills[index] = v"
                         :items="parseSkills(selectedClass.skills)"
                     />
@@ -51,10 +51,10 @@ import Modal from '@/components/Modal.vue'
 
 export default {
     components: {
-    ClassCard,
-    Modal,
-    Selector
-},
+        ClassCard,
+        Modal,
+        Selector
+    },
     props: {
         stepInfo: {type: Object, default: new Object()}
     },
@@ -78,10 +78,9 @@ export default {
             var parsedSkills = []
 
             skills.forEach(skill => parsedSkills.push({
-                    name: skill.name,
-                    value: skill.id
-                })
-            )
+                name: skill.name,
+                value: skill.id
+            }))
 
             return parsedSkills
         },

@@ -38,8 +38,8 @@
                 max="99"
                 min="1"
                 placeholder="0"
-                @change="onChange"
                 :value="value"
+                @change="onChange"
             >
     
             <img

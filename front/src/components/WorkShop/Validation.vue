@@ -3,7 +3,7 @@
         <div class="flex flex-col space-y-8 w-1/2">
             <div class="flex w-64">
                 <BlackGreenDiv
-                    :title="`${this.character_creation.character.firstname} ${this.character_creation.character.lastname}`"
+                    :title="`${character_creation.character.firstname} ${character_creation.character.lastname}`"
                     :right-green-div="false"
                     className=""
                 />
@@ -20,25 +20,25 @@
 
                 <div class="flex flex-col space-y-2">
                     <p>
-                        Classe: {{ this.character_creation_steps.Race.data.find(race => race.id === this.character_creation.character.race_id).name }}
+                        Classe: {{ character_creation_steps.Race.data.find(race => race.id === character_creation.character.race_id).name }}
                     </p>
 
                     <p>
-                        Classe: {{ this.character_creation_steps.Class.data.find(classe => classe.id === this.character_creation.character.class_id).name }}
+                        Classe: {{ character_creation_steps.Class.data.find(classe => classe.id === character_creation.character.class_id).name }}
                     </p>
 
                     <p>
-                        Sexe: {{ this.character_creation.character.sex }}
+                        Sexe: {{ character_creation.character.sex }}
                     </p>
                 </div>
             </div>
 
             <div class="flex flex-wrap self-center items-center justify-center gap-4">
                 <StatSelector 
-                    v-for="stat, index in this.character_creation_steps.Characteristics.data"
+                    v-for="stat, index in character_creation_steps.Characteristics.data"
                     :key="index"
                     :name="stat.name"
-                    :value="this.character_creation.stats[stat.name]"
+                    :value="character_creation.stats[stat.name].value"
                     :randomize="false"
                 />
             </div>
@@ -53,8 +53,8 @@
                 />
     
                 <textarea
+                    v-model="character_creation.character.bio"
                     :disabled="true"
-                    v-model="this.character_creation.character.bio"
                     class="flex text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
                     placeholder="Entrez une description"
                 />
@@ -67,7 +67,7 @@
 
             <button
                 class="self-end text-5xl font-bold cursor-pointer"
-                @click="chooseDescription()"
+                @click="validation()"
             >
                 Valider
             </button>
@@ -78,14 +78,13 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 
-import SidebarLayout from '@/layouts/Sidebar.vue'
 import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
 import StatSelector from '@/components/subComponent/StatSelector.vue'
+import { apiCall } from '@/utils/apiCall'
 
 export default {
     name: 'Validation',
     components: {
-        SidebarLayout,
         BlackGreenDiv,
         StatSelector
     },
@@ -99,6 +98,38 @@ export default {
         ...mapMutations({
             push_character: "characters/push_character",
         }),
+        parseStats() {
+            let keys = Object.keys(this.character_creation.stats)
+            keys.shift()
+
+            if (!keys)
+                return
+
+            let stats = []
+
+            keys.map(key => stats.push({
+                characteristic_id: this.character_creation.stats[key].characteristic_id,
+                value: this.character_creation.stats[key].value,
+            }))
+
+            this.character_creation.character_characteristic = stats
+        },
+        async validation() {
+            this.parseStats()
+
+            console.log(this.character_creation['character']);
+
+            const res = await apiCall({
+                route: '/cem/characters/creation',
+                method: 'POST',
+                body: this.character_creation
+            })
+
+            if (!res.ok)
+                console.log('Error', res)
+
+            // await this.$router.push('/characters')
+        }
     }
 }
 </script>

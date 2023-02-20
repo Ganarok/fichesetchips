@@ -46,6 +46,7 @@
                     :has-error="credentialsError"
                     outline="fc-green"
                     :on-focus-out="() => handleFocusOut()"
+                    :value="username"
                     @input="(v) => handleUsername(v.target.value)"
                 />
 
@@ -56,6 +57,7 @@
                     :has-error="credentialsError"
                     outline="fc-green"
                     :on-focus-out="() => handleFocusOut()"
+                    :value="password"
                     @input="(v) => handlePassword(v.target.value)"
                 />
                 <p class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">

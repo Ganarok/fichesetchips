@@ -39,13 +39,9 @@
 </template>
 
 <script>
-import Selector from "@/components/subComponent/Selector.vue"
 import { mapState, mapMutations } from "vuex"
 
 export default {
-    components: {
-        Selector,
-    },
     props: {
         stepInfo: {type: Object, default: new Object()}
     },

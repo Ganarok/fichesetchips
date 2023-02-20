@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <slot/>
+                <slot />
             </div>
         </div>
     </transition>
@@ -38,7 +38,8 @@ export default {
             type: String,
             default: ''
         }
-    }
+    },
+    emits: ['close-modal']
 }
 </script>
 
