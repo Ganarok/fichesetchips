@@ -1,10 +1,11 @@
 <template>
     <div
+        ref="openedBox"
         v-click-outside="closeSelector"
         :class="selectorClass"
         @click="switchOpened()"
     >
-        <div class="flex space-x-2">
+        <div class="flex space-x-2 p-2">
             <option
                 class="font-bold"
                 default
@@ -27,24 +28,26 @@
 
         <div
             v-if="isOpened"
-            class="absolute pt-[20%] top-4 w-36 z-50"
+            id="openedBox"
+            class="absolute w-36 z-50"
+            :style="openedStyles"
         >
             <option
                 v-for="(item, index) in computedItems"
                 :key="index"
                 :class="
-                    item === selectedItem
+                    item.name === selectedItem
                         ? optionClass + ' text-fc-green'
                         : optionClass + ' text-white'
                 "
                 @click="
-                    (v) => {
-                        selectedItem = v.target.value;
-                        onSelectItem(v.target.value);
+                    () => {
+                        selectedItem = item?.name
+                        onSelectItem(item?.value);
                     }
                 "
             >
-                {{ item }}
+                {{ item?.name }}
             </option>
 
             <img
@@ -56,19 +59,25 @@
 </template>
 
 <script>
+
 export default {
     props: {
         items: {
-            type: Array,
-            default() { return [] }
+            type: [Object, Array],
+            default() { return {} }
         },
         onSelectItem: {
             type: Function,
             default: () => {},
         },
         defaultSelectedItem: {
-            type: String,
-            default: "Selectionner",
+            type: Object,
+            default() {
+                return {
+                    name: "Selectionner",
+                    value: null
+                }
+            },
         },
         image: {
             type: String,
@@ -93,11 +102,19 @@ export default {
         },
     },
     data() {
+        const allItems = [ this.defaultSelectedItem, ...this.items ]
+
         return {
-            computedItems: { default: this.defaultSelectedItem, ...this.items },
+            computedItems: allItems,
             isOpened: this.opened,
-            selectedItem: this.defaultSelectedItem,
+            selectedItem: this.defaultSelectedItem.name,
+            openedStyles: {}
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.handleHeight()
+        })
     },
     methods: {
         switchOpened() {
@@ -114,6 +131,9 @@ export default {
 
             this.isOpened = false
         },
-    },
+        handleHeight() {
+            this.openedStyles.marginTop = this.$refs.openedBox.clientHeight + 'px'
+        }
+    }
 }
 </script>

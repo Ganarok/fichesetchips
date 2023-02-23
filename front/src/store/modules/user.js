@@ -23,6 +23,10 @@ export default {
             properties.forEach((property) => {
                 state.user[property] = null
             })
+
+            state.user = {}
+            state.access_token = ""
+            state.visited_user = {}
         },
     },
     actions: {
@@ -96,7 +100,7 @@ export default {
     },
     getters: {
         connected(state) {
-            if(state.access_token !== null) return true
+            if(state.access_token) return true
             else return false
         },
     },

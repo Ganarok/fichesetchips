@@ -16,15 +16,15 @@
                         class="flex flex-col w-[41%] bg-fc-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%] mobile:w-full"
                     >
                         <p
-                            class="text-xl sm:text-2xl lg:text-3xl text-white font-bold w-[75%] pr-[5%] tablet:text-2xl mobile:w-full"
+                            class="text-xl sm:text-2xl  text-white font-bold pr-[5%] tablet:text-2xl mobile:w-full"
                         >
-                            Notre site il est trop bien alors tu t’inscris et tu kiffes !
-                            Sinon je te retrouve et je te pète les genoux !
+                            Faites du JdR avec vos amis !
+                            Créez vos propres personnages, cartes et plus encore ... le tout, sur Fiches&Chips !
                         </p>
 
                         <router-link
                             to="/login"
-                            class="flex flex-row justify-center w-20 lg:w-24 xl:w-28 border-[3px] self-end rounded-full text-3xl font-bold text-white tablet:text-xl"
+                            class="flex flex-row justify-center w-20 px-2 py-1 bg-fc-black self-end text-3xl font-bold text-white tablet:text-xl hover:opacity-90"
                         >
                             GO ->
                         </router-link>

@@ -34,9 +34,12 @@
 
             <input 
                 type="number"
-                class="flex text-center text-2xl font-bold w-24 outline-none"
+                class="flex text-center text-fc-yellow placeholder:text-fc-yellow-trans text-2xl font-bold w-24 outline-none"
                 max="99"
                 min="1"
+                placeholder="0"
+                :value="value"
+                @change="onChange"
             >
     
             <img
@@ -67,12 +70,19 @@ export default {
             type: Boolean,
             default: true
         },
-    },
-    methods: {
-        handleRandomize() {
-            console.log('randomize')
+        handleRandomize: {
+            type: Function,
+            default: () => {}
+        },
+        onChange: {
+            type: Function,
+            default: () => {}
+        },
+        value: {
+            type: Number,
+            default: null
         }
-    }
+    },
 }
 
 </script>

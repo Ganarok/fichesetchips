@@ -45,6 +45,7 @@
                     :max-length="36"
                     :place-holder="$t('Identifiant')"
                     :has-error="usernameError"
+                    :value="username"
                     @input="(v) => handleUsername(v.target.value)"
                 />
                 <CustomInput
@@ -53,6 +54,7 @@
                     place-holder="Email"
                     :has-error="emailError"
                     :on-focus-out="() => handleEmailFocusOut()"
+                    :value="email"
                     @input="(v) => handleEmail(v.target.value)"
                 />
                 <CustomInput
@@ -62,6 +64,7 @@
                     :has-error="passwordError"
                     :on-focus-out="() => handlePasswordFocusOut()"
                     :typeinput="'password'"
+                    :value="password"
                     @input="(v) => handlePassword(v.target.value)"
                 />
                 <CustomInput
@@ -71,6 +74,7 @@
                     :has-error="passwordConfirmError"
                     :on-focus-out="() => handleConfirmFocusOut()"
                     :typeinput="'password'"
+                    :value="passwordConfirm"
                     @input="(v) => handlePasswordConfirm(v.target.value)"
                 />
             </div>

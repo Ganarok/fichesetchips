@@ -1,138 +1,110 @@
 <template>
-    <div>
-        <div
-            class="flex flex-row w-[90%] items-center justify-between self-center bg-fc-black"
-        >
-            <div class="absolute">
-                <div
-                    style="z-index: -10"
-                    class="relative -left-6 -top-6 bg-fc-green w-12 h-12"
-                />
-            </div>
-
-            <div class="flex flex-row py-3 items-center pl-6 space-x-6">
-                <Selector
-                    :items="FILTERUNIVERSES"
-                    :default-selected-item="$t('Filtre')"
-                    :on-select-item="(v) => updateFilter(v)"
-                />
-
-                <Selector
-                    :items="TYPEUNIVERSES"
-                    :default-selected-item="'Type'"
-                    :on-select-item="(v) => updateType(v)"
-                />
-            </div>
-
-            <input
-                class="grid1Col:w-[35%] w-[20%] px-2 h-full bg-fc-black-light font-bold outline-none"
-                :class="search.length > 0 ? 'text-fc-yellow' : ''"
-                :value="search"
-                placeholder="Rechercher..."
-                type="text"
-                @input="(v) => (search = v.target.value)"
-            >
-        </div>
-        <div
-            class="px-20 py-10 grid grid-cols-3 gap-6 items-center tablet:grid-cols-2 tablet:px-10 tablet:py-5 grid1Col:grid-cols-1"
-        >
-            <div
+    <div class="flex flex-col gap-8">
+        <div class="flex flex-wrap justify-center items-center gap-4">
+            <StatSelector
                 v-for="characteristic in stepInfo.data"
                 :key="characteristic.id"
-                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer"
-                @click="chooseCharacteristic(characteristic.id)"
-            >
-                <img
-                    class="max-h-[192px] w-full"
-                    :src="characteristic.image"
-                >
-                <div class="p-3 bg-fc-white h-full max-h-[109px] mobile:max-h-[119px]">
-                    <h3 class="text-fc-green font-bold">
-                        {{ characteristic.name }}
-                    </h3>
-                    <p class="p-1 text-sm">
-                        {{ characteristic }}
-                    </p>
-                </div>
+                :name="characteristic.name"
+                :onChange="(v) => character_creation.stats[characteristic.name] = {
+                    value: parseInt(v.target.value),
+                    characteristic_id: characteristic.id
+                }"
+                :value="character_creation.stats[characteristic.name].value"
+                :handleRandomize="() => handleRandomize({name: characteristic.name, id: characteristic.id})"
+            />
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex flex-wrap justify-center items-center gap-4">
+                <StatPreview
+                    v-for="characteristic in stepInfo.data"
+                    :key="characteristic.id"
+                    :name="characteristic.name"
+                    :base="character_creation.stats[characteristic.name]?.value"
+                    :racial="stats.racial.find(race => race.characteristic.name === characteristic.name)?.racial_bonus || 0"
+                />
             </div>
         </div>
+        
+        <button
+            class="relative self-end right-12 text-5xl font-bold cursor-pointer"
+            @click="chooseCharacteristics()"
+        >
+            Go
+        </button>
     </div>
 </template>
 
 <script>
-import Selector from "@/components/subComponent/Selector.vue"
-import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
+import StatSelector from "@/components/subComponent/StatSelector.vue"
+import StatPreview from "@/components/subComponent/StatPreview.vue"
+
+import { useToast } from "vue-toastification"
 import { mapState, mapMutations } from "vuex"
 
 export default {
     components: {
-        Selector,
+        StatSelector,
+        StatPreview
     },
     props: {
         stepInfo: {type: Object, default: new Object()}
     },
-    data() {
-        return {
-            FILTERUNIVERSES,
-            TYPEUNIVERSES,
-            query: "?",
-            search: "",
-            selectedFilter: "",
-            selectedType: "",
-        }
-    },
     computed: {
         ...mapState("characters", {
             character_creation: (state) => state.character_creation,
+            stats: (state) => state.character_creation.stats
         }),
     },
-    async mounted() {
+    mounted() {
+        console.log(this.stats)
     },
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
+            set_stats: "characters/set_stats",
         }),
-        updateFilter(filter) {
-            this.selectedFilter = filter
-            this.parseQueries("filter", filter)
-        },
-        updateType(type) {
-            this.selectedType = type
-            this.parseQueries("type", type)
-        },
-        parseQueries(queryType, queryToAdd) {
-            const queryRank = this.query.search(`${queryType}=`)
-            const queryNumber = (this.query.match("=") || []).length
+        handleRandomize({name = '', id, diceMaxValue = 6, dices = 4, valuesNb = 3}) {
+            let dicesResults = []
+            let result = 0
 
-            // If we don't find the query, we simply add it
-            if (queryRank === -1)
-                this.query += `${
-                    queryNumber >= 1 ? "&" : ""
-                }${queryType}=${queryToAdd}`
-            else {
-                // otherwise, we update it
-                const cuttedQuery = this.query.split("&")
-
-                // TODO: Update la query
-                console.log(cuttedQuery)
+            if (valuesNb > dices)
+                dices = valuesNb
+            
+            // Throw X random dices and push the returned value into values
+            // It randomize a value between 0 & 1, and * it with the max value.
+            // The multiplied value is rounded to minor
+            for (let i = 0; i < dices; i++) {
+                dicesResults.push(Math.floor(Math.random() * diceMaxValue) + 1)
             }
-        },
-        async chooseCharacteristic(id) {
-            console.log(id)
-            // this.character_creation.character.race_id = id
-            // this.character_creation.character.race_id
-            // this.character_creation.languages = languages
-            // // TODO calcul poid, taille, age
-            // this.character_creation.character.age = 10
-            // this.character_creation.character.weight = 10
-            // this.character_creation.character.height = 10
 
-            // this.set_character_creation(this.character_creation)
-            // if (nb_free_standard_language > 0) {
-            //     await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Language' }})
-            // } else {
-            //     await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Class' }})
-            // }
+            console.log("dicesResults", dicesResults)
+
+            // Get the "valuesNb" highest values. Adds it to a result
+            for (let i = 0; i < valuesNb; i++) {
+                let value = Math.max(...dicesResults)
+                let valueIndex = dicesResults.findIndex(v => v === value)
+                dicesResults.splice(valueIndex, 1)
+
+                result += value
+            }
+
+            console.log('result', result)
+
+            this.character_creation.stats[name] = {characteristic_id: id, value: result}
+        },
+        async chooseCharacteristics() {
+            const toast = useToast()
+            
+            if (Object.keys(this.character_creation.stats).length <= this.stepInfo.data.length) {
+                toast.error('Veuillez définir toutes vos caractéristiques')
+
+                return
+            }
+            
+            this.set_stats(this.character_creation.stats)
+
+            await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Description' }})
         },
     },
 }

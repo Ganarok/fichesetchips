@@ -45,6 +45,7 @@
                     place-holder="Email"
                     :has-error="emailError"
                     :on-focus-out="() => handleEmailFocusOut()"
+                    :value="email"
                     @input="(v) => handleEmail(v.target.value)"
                 />
             </div>

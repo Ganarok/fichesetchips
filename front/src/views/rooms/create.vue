@@ -94,6 +94,7 @@
                                     :place-holder="$t('Mot de passe')"
                                     :typeinput="'password'"
                                     outline="fc-green"
+                                    :value="room.password"
                                     @input="(v) => (room.password = v.target.value)"
                                 />
                             </div>
@@ -159,6 +160,7 @@
                                 place-holder="Contact"
                                 type="text"
                                 outline="fc-green"
+                                :value="room.contact"
                                 @input="(v) => (room.contact = v.target.value)"
                             />
                         </div>
@@ -171,6 +173,7 @@
                                 place-holder="Information"
                                 type="text"
                                 outline="fc-green"
+                                :value="room.information"
                                 @input="(v) => (room.information = v.target.value)"
                             />
                         </div>

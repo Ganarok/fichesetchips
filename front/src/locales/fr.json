@@ -1,6 +1,5 @@
 {
     "S'inscrire": "S'inscrire",
-    "Se connecter": "Se connecter",
     "Nom d'utilisateur": "Nom d'utilisateur",
     "Mot de passe": "Mot de passe",
     "Accueil": "Accueil",
@@ -35,6 +34,7 @@
     "Lancée le": "Lancée le",
     "Campagne en cours": "Campagne en cours",
     "Connexion": "Connexion",
+    "Déconnexion": "Déconnexion",
     "Pas encore inscrit ? Cliquez ici": "Pas encore inscrit ? Cliquez ici",
     "Mot de passe oublié": "Mot de passe oublié",
     "Vous avez perdu quelque chose": "Vous avez perdu quelque chose",
@@ -55,5 +55,8 @@
     "Langue": "Langue",
     "Niv. Min": "Niv. Min",
     "Niv. Max": "Niv. Max",
-    "Filtre": "Filtre"
+    "Filtre": "Filtre",
+    "Prénom": "Prénom",
+    "Nom": "Nom",
+    "Alignement": "Alignement"
 }

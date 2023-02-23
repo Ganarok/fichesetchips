@@ -21,7 +21,7 @@ export default {
         },
         completed: {
             type: Number,
-            default: 1,
+            default: 0,
         },
     },
 }

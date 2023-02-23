@@ -18,6 +18,7 @@ import Maps from "@/views/user/maps.vue"
 import Create_Room from "@/views/rooms/create.vue"
 import NotFound from "@/views/404.vue"
 import CharacterCreate from "@/views/character/create.vue"
+import Characters from "@/views/character/index.vue"
 import CharacterID from "@/views/character/characterDetails.vue"
 import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
 
@@ -117,12 +118,18 @@ const routes = [{
     component: NotFound,
 },
 {
-    path: "/character/create",
+    path: "/characters/create",
     name: "CharacterCreate",
     component: CharacterCreate,
     requiresAuth: true,
     // props: true
     props: route => ({ currentStep: route.query.currentStep })
+},
+{
+    path: "/characters",
+    name: "Personnages",
+    component: Characters,
+    requiresAuth: true
 },
 {
     path: "/tilemap/editor",

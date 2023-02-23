@@ -19,7 +19,7 @@
         </div>
 
         <div
-            class="flex flex-col space-y-4 w-full h-screen mobile:h-[calc(100vh-80px)] ml-[220px] mobile:ml-0 mobile:mt-[80px]"
+            class="flex flex-col space-y-6 w-full h-screen mobile:h-[calc(100vh-80px)] ml-[220px] mobile:ml-0 mobile:mt-[80px]"
             :class="{ 'px-4 pt-4': isBorder }"
         >
             <h1
@@ -29,13 +29,20 @@
                 {{ title }}
             </h1>
 
+            <p
+                v-if="description"
+                class="bg-gray-100 text-base text-center pb-4 self-center lg:max-w-4xl lg:p-4"
+            >
+                {{ description }}
+            </p>
+
             <slot />
         </div>
     </div>
 </template>
 
 <script>
-import Sidebar from "../components/subComponent/Sidebar.vue"
+import Sidebar from "@/components/subComponent/Sidebar.vue"
 
 export default {
     name: "SidebarLayout",
@@ -44,6 +51,10 @@ export default {
     },
     props: {
         title: {
+            type: String,
+            default: "",
+        },
+        description: {
             type: String,
             default: "",
         },
