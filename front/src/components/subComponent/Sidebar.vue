@@ -39,12 +39,29 @@
                 >
                     Dashboard
                 </router-link>
+
                 <router-link
                     to="/user/profile"
                     class="font-bold text-xl"
                     active-class="underline"
                 >
                     Profile
+                </router-link>
+
+                <router-link
+                    to="/rooms"
+                    class="font-bold text-xl"
+                    active-class="underline"
+                >
+                    Rooms
+                </router-link>
+
+                <router-link
+                    to="/characters"
+                    class="font-bold text-xl"
+                    active-class="underline"
+                >
+                    Characters
                 </router-link>
             </div>
             <div
@@ -80,20 +97,40 @@
                     v-if="connected()"
                     exact
                     to="/"
-                    class="font-bold text-xl w-[80%]"
-                    @click.native="logout()"
+                    class="flex items-center justify-center font-bold text-xl w-[80%]"
+                    @click="logout()"
                 >
                     <Button
-                        button-text="Logout"
-                        class="text-fc-yellow"
+                        :button-text="$t('Déconnexion')"
+                        class="px-4 py-2 text-base"
+                        textColor="text-fc-black"
                         color="fc-yellow"
+                        backgroundColor="fc-yellow"
+                        :rounded="false"
                     />
                 </router-link>
+
+                <router-link
+                    v-else
+                    exact
+                    to="/login"
+                    class="flex items-center justify-center font-bold text-xl w-[80%]"
+                >
+                    <Button
+                        :button-text="$t('Connexion')"
+                        class="bg-fc-green px-4 py-2 text-base"
+                        textColor="text-fc-black"
+                        color="fc-green"
+                        :rounded="false"
+                    />
+                </router-link>
+
                 <img
                     src="@/assets/icon.png"
                     class="w-2/4"
                     alt="F&C logo"
                 >
+
                 <p class="text-white text-[10px]">
                     Made with love by fiches&chips
                 </p>
@@ -104,16 +141,20 @@
 
 <script>
 import Button from "@/components/subComponent/Button.vue"
+import { mapGetters, mapMutations } from "vuex"
 export default {
     name: "Sidebar",
     components: { Button },
     methods: {
-        connected: function () {
-            return this.$store.getters.connected
-        },
-        logout: function () {
-            this.$store.commit("logout")
-        },
+        ...mapGetters({
+            connected: "user/connected"
+        }),
+        ...mapMutations({
+            logout: "user/logout"
+        }),
+        // logout: function () {
+        //     this.$store.commit("logout")
+        // },
         mobileMenu: function () {
             let sidebar = document.querySelector(".sidebar")
             sidebar.classList.toggle("-translate-x-full")
