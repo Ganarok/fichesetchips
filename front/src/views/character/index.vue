@@ -11,7 +11,7 @@
             </p>
 
             <router-link
-                to="/character/create"
+                to="/characters/create"
                 class="font-bold undeline p-2 px-4 bg-fc-green hover:opacity-80"
             >
                 Créer un personnage
