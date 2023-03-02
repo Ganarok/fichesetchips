@@ -49,15 +49,16 @@ Init db :
 
 1- Create database
 
-2- Migrate database
+Change `<DB_NAME>` by your database name
 
-```bash
-npm run migration:run
 ```
-2- Seed database
+npm run db:create 'CREATE DATABASE <DB_NAME>;' 
+```
+
+2- Migrate and seed database
 
 ```bash
-npm run db:seed
+npm run db:refresh
 ```
 
 
