@@ -2,21 +2,30 @@
     <div class="flex w-full h-full items-center justify-center">
         <Loader v-if="loading" />
 
-        <div v-else class="font-bold text-fc-black-light">
+        <div
+            v-else
+            class="font-bold text-fc-black-light"
+        >
             Pas de donnée pour le moment
         </div>
     </div>
 </template>
 
 <script>
-import { apiCall } from '@/utils/apiCall'
-import Loader from './Loader.vue'
-import { useToast } from 'vue-toastification'
+import Loader from "./Loader.vue"
+// import { useToast } from 'vue-toastification'
 
 export default {
+    components: { Loader },
     props: {
-        route: String,
-        search: String,
+        route: {
+            type: String,
+            default: ''
+        },
+        search: {
+            type: String,
+            default: ''
+        },
     },
     data() {
         return {
@@ -45,11 +54,11 @@ export default {
     },
     methods: {
         async fetchRoute(route) {
-            const toast = useToast()
+            // const toast = useToast()
 
             if (route) {
                 setTimeout(() => {
-                    console.log('Simulating ApiCall')
+                    console.log("Simulating ApiCall")
                     this.loading = false
                 }, 100)
 
@@ -68,10 +77,9 @@ export default {
                 //     this.loading = false
                 // }
             } else {
-                console.log('No route filled within props')
+                console.log("No route filled within props")
             }
         },
     },
-    components: { Loader },
 }
 </script>

@@ -1,16 +1,17 @@
 <template>
     <div
         :class="'flex items-center justify-center animate-spin bg-' + cubeColor"
-        :style="{ width: `${size / 16}rem`, height: `${size / 16}rem` }">
+        :style="{ width: `${size / 16}rem`, height: `${size / 16}rem` }"
+    >
         <div
             :class="
-                'flex items-center justify-center animate-ping bg-' +
-                miniCubeColor
+                'flex items-center justify-center animate-ping bg-' + miniCubeColor
             "
             :style="{
                 width: `${(size / 16) * 0.4}rem`,
                 height: `${(size / 16) * 0.4}rem`,
-            }" />
+            }"
+        />
     </div>
 </template>
 
@@ -23,11 +24,11 @@ export default {
         },
         cubeColor: {
             type: String,
-            default: 'fc-green',
+            default: "fc-green",
         },
         miniCubeColor: {
             type: String,
-            default: 'fc-black-light',
+            default: "fc-black-light",
         },
     },
 }

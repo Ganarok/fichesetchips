@@ -1,58 +1,61 @@
 <template>
     <div
+        v-if="!room"
         class="flex flex-col h-full items-center justify-center font-bold text-xl"
-        v-if="!room">
-
-        {{$t("Cette room n'existe pas")}}
+    >
+        {{ $t("Cette room n'existe pas") }}
 
         <div class="my-4">
-            <Button 
-                :buttonText="$t('Retour')" 
+            <Button
+                :button-text="$t('Retour')"
                 class="px-6 py-2"
                 color="fc-green"
-                @click="() => this.$router.push('/rooms')"
+                @click="() => $router.push('/rooms')"
             />
         </div>
     </div>
 
     <div
-        class="flex flex-col h-full space-y-4 sm:space-y-8" 
-        v-else>
+        v-else
+        class="flex flex-col h-full space-y-4 sm:space-y-8"
+    >
         <div class="flex justify-between">
-            <BlackGreenDiv 
+            <BlackGreenDiv
                 :title="room.title || ''"
-                :rightGreenDiv="false"
+                :right-green-div="false"
                 color="text-fc-yellow"
                 height="h-16"
             />
 
-            <Button 
+            <Button
                 class="ml-4 sm:mx-12"
-                buttonText="Rejoindre"
+                button-text="Rejoindre"
                 color="fc-green"
                 :rounded="false"
-                backgroundColor="fc-black"
+                background-color="fc-black"
             />
         </div>
 
-        <div class="flex flex-col h-full w-full sm:overflow-y-auto sm:space-x-8 sm:flex-row">
+        <div
+            class="flex flex-col h-full w-full sm:overflow-y-auto sm:space-x-8 sm:flex-row"
+        >
             <div class="flex flex-col relative h-full w-full pb-4 sm:w-3/4">
-                <BlackGreenDiv 
+                <BlackGreenDiv
                     title="Description"
-                    :rightGreenDiv="false"
+                    :right-green-div="false"
                     color="text-white"
                 />
 
                 <div class="flex h-full overflow-y-scroll">
                     <p class="flex text-justify pr-2 m-2 sm:m-3">
-                        {{ room.description || 'Pas de description' }}
+                        {{ room.description || "Pas de description" }}
                     </p>
                 </div>
 
-                <img 
+                <img
                     src="@/assets/cornerPixels.svg"
                     class="absolute bottom-4 right-0 w-12 -rotate-180 -z-10 scale-x-[-1]"
-                />
+                >
             </div>
 
             <div class="flex flex-col w-full">
@@ -62,73 +65,90 @@
 
                         <h3 class="flex font-bold">
                             Style:
-                            <p class="font-normal">{{ room.style || 'Aucun' }}</p>
+                            <p class="font-normal">
+                                {{ room.style || "Aucun" }}
+                            </p>
                         </h3>
 
                         <h3 class="flex font-bold">
-                            Vocal: 
-                            <p class="font-normal">{{ room.vocal || 'Non défini' }}</p>
+                            Vocal:
+                            <p class="font-normal">
+                                {{ room.vocal || "Non défini" }}
+                            </p>
                         </h3>
                     </div>
 
                     <div class="flex flex-col space-y-4 sm:space-y-6">
                         <h3 class="flex font-bold">
                             Experience:
-                            <p class="font-normal">{{ room.experience || 'Non défini' }}</p>
+                            <p class="font-normal">
+                                {{ room.experience || "Non défini" }}
+                            </p>
                         </h3>
 
                         <h3 class="flex font-bold">
                             Tranche de niveau:
-                            <p class="font-normal">{{ room.levelGap || 'Non défini'  }}</p>
+                            <p class="font-normal">
+                                {{ room.levelGap || "Non défini" }}
+                            </p>
                         </h3>
 
                         <h3 class="flex font-bold">
-                            Langue: 
-                            <p class="font-normal">{{ room.language || 'Non défini' }}</p>
+                            Langue:
+                            <p class="font-normal">
+                                {{ room.language || "Non défini" }}
+                            </p>
                         </h3>
                     </div>
                 </div>
 
                 <div class="flex flex-col h-full">
-                    <BlackGreenDiv 
+                    <BlackGreenDiv
                         title="Maitre de jeu"
-                        :rightGreenDiv="false"
+                        :right-green-div="false"
                         color="text-white"
                     />
 
-                    <div class="flex flex-col items-center justify-between p-4 space-x-2 sm:flex-row">
+                    <div
+                        class="flex flex-col items-center justify-between p-4 space-x-2 sm:flex-row"
+                    >
                         <div class="flex items-center space-x-4">
-                            <div class="bg-gray-400 border-2 border-fc-black-light rounded-full w-24 h-24" />
+                            <div
+                                class="bg-gray-400 border-2 border-fc-black-light rounded-full w-24 h-24"
+                            />
 
                             <p class="text-xl font-bold">
-                                {{ room?.mj?.username || 'MJ' }}
+                                {{ room?.mj?.username || "MJ" }}
                             </p>
                         </div>
 
-                        <p>
-                            Succes
-                        </p>
+                        <p>Succes</p>
 
                         <p class="font-bold">
-                            {{ `${room?.mj?.gamePlayedAsMj} parties enregistrées` || 'Pas de partie enregistrée' }}
+                            {{
+                                `${room?.mj?.gamePlayedAsMj} parties enregistrées` ||
+                                    "Pas de partie enregistrée"
+                            }}
                         </p>
                     </div>
 
-                    <BlackGreenDiv 
+                    <BlackGreenDiv
                         title="Liste des joueurs"
-                        :rightGreenDiv="false"
+                        :right-green-div="false"
                         color="text-white"
                     />
 
                     <div class="flex flex-wrap items-center justify-center p-4">
-                        <div 
-                            class="flex text-xl font-bold items-center p-2"
-                            :key="index"
+                        <div
                             v-for="(player, index) in room.players"
+                            :key="index"
+                            class="flex text-xl font-bold items-center p-2"
                         >
-                            <div class="bg-gray-400 border-2 border-fc-black-light rounded-full mr-4 w-20 h-20" />
+                            <div
+                                class="bg-gray-400 border-2 border-fc-black-light rounded-full mr-4 w-20 h-20"
+                            />
 
-                            {{ player.username || 'Utilisateur' }}
+                            {{ player.username || "Utilisateur" }}
                         </div>
                     </div>
                 </div>
@@ -138,17 +158,20 @@
 </template>
 
 <script>
-import Button from '@/components/subComponent/Button.vue'
-import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
+import Button from "@/components/subComponent/Button.vue"
+import BlackGreenDiv from "@/components/subComponent/BlackGreenDiv.vue"
 
 export default {
-    name: 'Room',
+    name: "Room",
     components: {
         Button,
-        BlackGreenDiv
+        BlackGreenDiv,
     },
     props: {
-        room: Object
+        room: {
+            type: Object,
+            default() { return {} }
+        }
     },
 }
 </script>

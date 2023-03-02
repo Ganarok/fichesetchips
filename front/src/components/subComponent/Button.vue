@@ -1,49 +1,53 @@
 <template>
     <button
-        :class="`flex justify-center items-center border-4 ${backgroundColor ? 'bg-' + backgroundColor : 'bg-' + this.color } border-${this.color} ${rounded && 'rounded-full'} p-4 font-bold ${this.textColor} select-none hover:opacity-80 ${customClass}`"
-        @click="callback($event)">
+        :class="`flex justify-center items-center border-4 ${
+            backgroundColor ? 'bg-' + backgroundColor : 'bg-' + color
+        } border-${color} ${
+            rounded && 'rounded-full'
+        } p-4 font-bold ${textColor} select-none hover:opacity-80 ${customClass}`"
+    >
         {{ buttonText }}
         <img
-            v-if="image !== undefined"
+            v-if="image !== ''"
             :src="image"
-            class="w-8 h-8 ml-[5px]" />
+            class="w-8 h-8 ml-[5px]"
+        >
     </button>
 </template>
 
 <script>
 export default {
     props: {
-        buttonText: String,
+        buttonText: {
+            type: String,
+            default: ''
+        },
         color: {
             type: String,
-            default: 'fc-green',
+            default: "fc-green",
         },
         backgroundColor: {
             type: String,
-            default: ''
+            default: "",
         },
         textColor: {
             type: String,
-            default: 'text-white'
+            default: "text-white",
         },
         rounded: {
             type: Boolean,
-            default: true
+            default: true,
         },
         customClass: {
             type: String,
-            default: ''
+            default: "",
         },
-        image: String,
-    },
-    methods: {
-        callback: function (e) {
-            this.$emit('click', e)
+        image: {
+            type: String,
+            default: ''
         },
     },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

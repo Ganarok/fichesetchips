@@ -1,105 +1,202 @@
 <template>
     <div class="bg-[#1E1E1E]">
         <div class="mobile:flex mobile:justify-between mobile:px-6 h-[80px] w-[100vw] mobileSup:hidden">
-            <img src="../../assets/menuIcon.svg" class="w-1/7 my-auto" alt="F&C logo" v-on:click="mobileMenu()"  />
-            <img src="../../assets/icon.svg" class="w-1/7 my-4" alt="F&C logo" />
+            <img
+                src="../../assets/menuIcon.svg"
+                class="w-1/7 my-auto"
+                alt="F&C logo"
+                @click="mobileMenu()"
+            >
+            <img
+                src="../../assets/icon.svg"
+                class="w-1/7 my-4"
+                alt="F&C logo"
+            >
         </div>
 
-        <div class="sidebar bg-[#1E1E1E] flex flex-col justify-between h-screen mobile:h-[calc(100vh-80px)] w-[220px] py-4 absolute left-0 transform -translate-x-full mobileSup:relative mobileSup:translate-x-0 transition duration-200 ease-in-out ">
+        <div
+            class="sidebar bg-[#1E1E1E] flex flex-col justify-between h-screen mobile:h-[calc(100vh-80px)] w-[220px] py-4 absolute left-0 transform -translate-x-full mobileSup:relative mobileSup:translate-x-0 transition duration-200 ease-in-out"
+        >
             <div class="w-full top-0 justify-center p-6">
                 <router-link to="/">
-                    <img src="@/assets/fetc.png" alt="Fiche&Chips" />
+                    <img
+                        src="@/assets/fetc.png"
+                        alt="Fiche&Chips"
+                    >
                 </router-link>
             </div>
             <!-- Navbar content when conected-->
-            <div class="content text-white" v-if="connected()">
+            <div
+                v-if="connected()"
+                class="content text-white select-none"
+            >
                 <div class="bloc flex flex-col mb-12">
-
                     <router-link
                         to="/user/dashboard"
-                        class="font-bold text-xl"
+                        class="font-bold text-xl cursor-pointer hover:opacity-70"
                     >
-                        {{$t('Dashboard')}} 
+                        {{ $t('Dashboard') }} 
                     </router-link>
 
                     <router-link
                         to="/user/profile"
-                        class="font-bold text-xl"
+                        class="font-bold text-xl cursor-pointer hover:opacity-70"
                     >
-                        {{$t('Profile')}} 
+                        {{ $t('Profile') }} 
                     </router-link>
                 </div>
 
                 <div class="bloc flex flex-col mb-12">
-                    <div class="categorie flex flex-col mb-4" v-bind:class="{active: personnageIsShow}">
-                        <span class="text-xl font-bold" @click="() => this.personnageIsShow = !this.personnageIsShow">Personnage</span>
-                        <ul class="visible block text-xl font-bold text-white pl-2 list-none opacity-50" v-if="personnageIsShow">
-                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
-                                <router-link to="/user/characters/create">
-                                    {{$t('Créer')}} 
-                                    
+                    <div
+                        class="categorie flex flex-col mb-4"
+                        :class="{active: personnageIsShow}"
+                    >
+                        <span 
+                            class="text-xl font-bold cursor-pointer hover:opacity-70"
+                            @click="() => personnageIsShow = !personnageIsShow"
+                        >
+                            Personnage
+                        </span>
+
+                        <ul 
+                            v-if="personnageIsShow"
+                            class="visible block text-xl font-bold text-white pl-2 list-none opacity-50"
+                        >
+                            <li class="leading-7 text-neutral-300 hover:opacity-70">
+                                <router-link to="/characters/create">
+                                    {{ $t('Créer') }} 
                                 </router-link>
                             </li>
-                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
-                                <router-link to="/user/characters">
-                                    {{$t('Liste')}} 
-                                    
+
+                            <li class="leading-7 text-neutral-300 hover:opacity-70">
+                                <router-link to="/characters">
+                                    {{ $t('Liste') }} 
                                 </router-link>
                             </li>
                         </ul>
                     </div>
-                    <div class="categorie flex flex-col mb-4" v-bind:class="{active: roomIsShow}">
-                        <span class="text-xl font-bold" @click="() => this.roomIsShow = !this.roomIsShow" >Rooms</span>
-                        <ul class="visible block text-xl font-bold text-white pl-2 list-none opacity-50" v-if="roomIsShow">
-                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
+
+                    <div 
+                        :class="{active: roomIsShow}"
+                        class="categorie flex flex-col mb-4"
+                    >
+                        <span 
+                            class="text-xl font-bold cursor-pointer hover:opacity-70"
+                            @click="() => roomIsShow = !roomIsShow" 
+                        >
+                            Rooms
+                        </span>
+
+                        <ul 
+                            v-if="roomIsShow"
+                            class="visible block text-xl font-bold text-white pl-2 list-none opacity-50"
+                        >
+                            <li class="leading-7 text-neutral-300 hover:opacity-70">
                                 <router-link to="/rooms/create">
-                                    {{$t('Créer')}}  
+                                    {{ $t('Créer') }}  
                                 </router-link>
                             </li>
-                            <li class="leading-7 text-neutral-300 hover:text-neutral-50">
+
+                            <li class="leading-7 text-neutral-300 hover:opacity-70">
                                 <router-link to="/rooms">
-                                    {{$t('Rejoindre')}} 
+                                    {{ $t('Rejoindre') }} 
                                 </router-link>
                             </li>
                         </ul>
-
                     </div>
                 </div>
             </div>
             <!-- Navbar content when not conected (guest)-->
-            <div class="content disconected text-white " v-else>
+            <div 
+                v-else
+                class="content disconected text-white"
+            >
                 <div class="flex flex-col justify-between h-1/3">
-
-                    <router-link to="/" exact class="font-bold text-xl" >
-                        {{$t('Accueil')}}
+                    <router-link 
+                        to="/"
+                        class="font-bold text-xl cursor-pointer hover:opacity-70"
+                        exact
+                    >
+                        {{ $t('Accueil') }}
                     </router-link>
 
-                    <router-link to="/about" class="font-bold text-xl"> 
-                        {{$t('A propos')}}
+                    <router-link
+                        to="/about"
+                        class="font-bold text-xl cursor-pointer hover:opacity-70"
+                    >
+                        {{ $t('A propos') }}
                     </router-link>
                     
-                    <router-link to="/glossaire" class="font-bold text-xl">
-                        {{$t('Glossaire')}}
+                    <router-link
+                        to="/glossaire"
+                        class="font-bold text-xl cursor-pointer hover:opacity-70"
+                    >
+                        {{ $t('Glossaire') }}
                     </router-link>
                 </div>
             </div>
 
-    
             <div class="flex flex-col w-full justify-center items-center relative">
+                <router-link
+                    v-if="connected()"
+                    exact
+                    to="/"
+                    class="flex items-center justify-center font-bold text-xl w-[80%]"
+                    @click="logout()"
+                >
+                    <Button
+                        :button-text="$t('Déconnexion')"
+                        class="px-4 py-2 text-base"
+                        textColor="text-fc-black"
+                        color="fc-yellow"
+                        backgroundColor="fc-yellow"
+                        :rounded="false"
+                    />
+                </router-link>
+
+                <router-link
+                    v-else
+                    exact
+                    to="/login"
+                    class="flex items-center justify-center font-bold text-xl w-[80%]"
+                >
+                    <Button
+                        :button-text="$t('Connexion')"
+                        class="bg-fc-green px-4 py-2 text-base"
+                        textColor="text-fc-black"
+                        color="fc-green"
+                        :rounded="false"
+                    />
+                </router-link>
+
+                <img
+                    src="@/assets/icon.png"
+                    class="w-2/4"
+                    alt="F&C logo"
+                >
+
+                <p class="text-white text-[10px]">
+                    Made with ❤️ by fiches&chips
+                </p>
+            </div>
+    
+            <!-- <div class="flex flex-col w-full justify-center items-center relative">
                 <router-link exact to="/" class="text-yellow-400 border-yellow-400 border font-bold text-xl py-2 px-4 rounded-lg transition-all ease-in-out duration-200 hover:bg-yellow-400 hover:text-gray-900" @click.native="logout()" v-if="connected()">
                     {{$t('Déconnexion')}}
                 </router-link>
                 <img src="@/assets/icon.png" class="w-2/4" alt="F&C logo" />
                 <p class="text-white text-[10px]">Made with ❤️ by fiches&chips</p>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script>
-import Button from '@/components/subComponent/Button.vue'
+import Button from "@/components/subComponent/Button.vue"
+import { mapGetters, mapMutations } from "vuex"
+
 export default {
-    name: 'Sidebar',
+    name: "Sidebar",
     components: { Button },
     data() {
         return {
@@ -108,15 +205,15 @@ export default {
         }
     },
     methods: {
-        connected: function () {
-            return true
-        },
-        logout: function () {
-            this.$store.commit('logout')
-        },
+        ...mapGetters({
+            connected: "user/connected"
+        }),
+        ...mapMutations({
+            logout: "user/logout"
+        }),
         mobileMenu: function () {
-            let sidebar = document.querySelector('.sidebar')
-            sidebar.classList.toggle('-translate-x-full')
+            let sidebar = document.querySelector(".sidebar")
+            sidebar.classList.toggle("-translate-x-full")
         },
         toggle: function (e) {
             this.e = !e
@@ -129,8 +226,7 @@ export default {
 .sidebar .content{
     display: flex;
     flex-direction: column;
-    justify-content: start;
-
+    justify-content: flex-start;
     height: 100%;
     padding-left: 1rem;
 }

@@ -5,7 +5,7 @@ import 'mocha'
 let token = ""
 
 import defaultUsers from "../../database/fixtures/users"
-import { User } from '../../database/entities/User';
+import { User } from '../../database/entities/public/User';
 
 const user = defaultUsers.defaultUser as User
 

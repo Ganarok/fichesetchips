@@ -1,5 +1,5 @@
 
-import { User } from "../../database/entities/User";
+import { User } from "../../database/entities/public/User";
 import { CreateUser } from "./users";
 
 export type LoginRequest = {

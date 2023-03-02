@@ -1,56 +1,74 @@
 <template>
     <div
-        class="flex flex-col relative justify-center items-center p-4 w-screen h-screen overflow-hidden lg:items-start lg:p-0 lg:justify-between">
+        class="flex flex-col relative justify-center items-center p-4 w-screen h-screen overflow-hidden lg:items-start lg:p-0 lg:justify-between"
+    >
         <img
             class="absolute hidden object-cover h-full w-full lg:flex"
             src="@/assets/index/background.jpg"
-            alt="Background" />
+            alt="Background"
+        >
 
-        <div
-            class="absolute -right-24 bottom-0 opacity-95 max-h-screen lg:right-0">
-            <img src="@/assets/greenpixels.svg" alt="Pixels" />
+        <div class="absolute -right-24 bottom-0 opacity-95 max-h-screen lg:right-0">
+            <img
+                src="@/assets/greenpixels.svg"
+                alt="Pixels"
+            >
         </div>
 
         <img
             class="z-10 w-[50%] max-w-xs lg:m-4"
             src="@/assets/logo.png"
-            alt="Fiche&Chips" />
-        <div
-            class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-96">
-            <div v-if="!loading" class="ml-5">
+            alt="Fiche&Chips"
+        >
+        <div class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-96">
+            <div
+                v-if="!loading"
+                class="ml-5"
+            >
                 <h1 class="text-5xl">
-                    {{ $t('Vous avez perdu quelque chose') }} ?
+                    {{ $t("Vous avez perdu quelque chose") }} ?
                 </h1>
 
                 <p class="my-4 underline text-xs opacity-70 cursor-pointer">
                     <router-link to="/login">
-                        {{ $t('Finalement non') }} !
+                        {{ $t("Finalement non") }} !
                     </router-link>
                 </p>
             </div>
 
-            <div v-if="!loading" class="space-y-1">
+            <div
+                v-if="!loading"
+                class="space-y-1"
+            >
                 <CustomInput
-                    :maxLength="256"
-                    @input="(v) => this.handleEmail(v.target.value)"
-                    placeHolder="Email"
-                    :hasError="emailError"
-                    :onFocusOut="() => this.handleEmailFocusOut()" />
+                    :max-length="256"
+                    place-holder="Email"
+                    :has-error="emailError"
+                    :on-focus-out="() => handleEmailFocusOut()"
+                    :value="email"
+                    @input="(v) => handleEmail(v.target.value)"
+                />
             </div>
 
-            <div class="self-center my-12" v-else>
-                <Loader cubeColor="fc-yellow" />
+            <div
+                v-else
+                class="self-center my-12"
+            >
+                <Loader cube-color="fc-yellow" />
             </div>
 
-            <div v-if="!loading" class="flex justify-between items-start mt-4">
-                <p
-                    class="flex ml-5 h-6 text-sm text-fc-red italic items-center">
+            <div
+                v-if="!loading"
+                class="flex justify-between items-start mt-4"
+            >
+                <p class="flex ml-5 h-6 text-sm text-fc-red italic items-center">
                     {{ errorText }}
                 </p>
 
                 <button
+                    class="mr-5 self-end text-5xl font-bold"
                     @click="handleEmail"
-                    class="mr-5 self-end text-5xl font-bold">
+                >
                     Go
                 </button>
             </div>
@@ -59,16 +77,16 @@
 </template>
 
 <script>
-import CustomInput from '@/components/subComponent/CustomInput.vue'
-import subModalSignup from '@/components/subModals/signup.vue'
-import Loader from '@/components/Loader.vue'
-import { apiCall } from '@/utils/apiCall'
-import { isEmailValid } from '@/utils/validations'
-import { useToast } from 'vue-toastification'
+import CustomInput from "@/components/subComponent/CustomInput.vue"
+import Loader from "@/components/Loader.vue"
+import { isEmailValid } from "@/utils/validations"
 
 export default {
-name: 'Login',
-    components: { subModalSignup, CustomInput, Loader },
+    name: "Login",
+    components: {
+        CustomInput,
+        Loader,
+    },
     props: {
         loading: {
             type: Boolean,
@@ -77,8 +95,8 @@ name: 'Login',
     },
     data() {
         return {
-            email: '',
-            errorText: '',
+            email: "",
+            errorText: "",
             emailError: false,
         }
     },
@@ -97,49 +115,14 @@ name: 'Login',
                 this.errorText = this.$t("L'email n'est pas valide")
             } else {
                 this.emailError = false
-                this.errorText = ''
+                this.errorText = ""
             }
         },
         handleSend() {
             const { email } = this
-            const toast = useToast()
 
             if (email) {
                 //TODO : Send a mail for updating password
-                // apiCall({
-                //     method: 'POST',
-                //     route: // TODO: ENDPOINT MAIL,
-                //     body: JSON.stringify({
-                //         username,
-                //         password,
-                //     }),
-                // })
-                //     .then(async (res) => {
-                //         this.$store.commit('setUser', {
-                //             ...res.user,
-                //             access_token: res.access_token,
-                //         })
-                //         await this.$router.push('/user/dashboard')
-                //         setTimeout(
-                //             () =>
-                //                 toast.success(
-                //                     `${this.$t('Bienvenue')} ${
-                //                         res.user.username
-                //                     } !`),
-                //             400
-                //         )
-                //     })
-                //     .catch((err) => {
-                //     toast.error(err, {
-                //         theme: 'toasted-primary',
-                //         position: 'top-right',
-                //         duration: 4000,
-                //     })
-                //
-                //     this.emailError = true
-                //     this.errorText = this.$t('Une erreur est survenue')
-                //     console.log('err', err)
-                // })
             }
         },
     },

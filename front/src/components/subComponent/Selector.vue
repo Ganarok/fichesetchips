@@ -1,10 +1,17 @@
 <template>
     <div
+        ref="openedBox"
+        v-click-outside="closeSelector"
         :class="selectorClass"
         @click="switchOpened()"
-        v-click-outside="closeSelector">
-        <div class="flex space-x-2">
-            <option class="font-bold" default>{{ selectedItem }}</option>
+    >
+        <div class="flex space-x-2 p-2">
+            <option
+                class="font-bold"
+                default
+            >
+                {{ selectedItem }}
+            </option>
 
             <div :class="imageClass">
                 <img
@@ -14,67 +21,80 @@
                             ? 'transition duration-250 rotate-180'
                             : 'transition duration-250'
                     "
-                    :src="image" />
+                    :src="image"
+                >
             </div>
         </div>
 
-        <div v-if="isOpened" class="absolute pt-[20%] top-4 w-36 z-50">
+        <div
+            v-if="isOpened"
+            id="openedBox"
+            class="absolute w-36 z-50"
+            :style="openedStyles"
+        >
             <option
                 v-for="(item, index) in computedItems"
-                @click="
-                    (v) => {
-                        selectedItem = v.target.value
-                        onSelectItem(v.target.value)
-                    }
-                "
+                :key="index"
                 :class="
-                    item === selectedItem
+                    item.name === selectedItem
                         ? optionClass + ' text-fc-green'
                         : optionClass + ' text-white'
                 "
-                :key="index">
-                {{ item }}
+                @click="
+                    () => {
+                        selectedItem = item?.name
+                        onSelectItem(item?.value);
+                    }
+                "
+            >
+                {{ item?.name }}
             </option>
 
             <img
                 class="absolute -bottom-6 -right-6 rotate-180 h-12 scale-x-[-1]"
-                src="@/assets/cornerPixels.svg" />
+                src="@/assets/cornerPixels.svg"
+            >
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     props: {
         items: {
-            type: [Array, Object],
-            default: [],
+            type: [Object, Array],
+            default() { return {} }
         },
         onSelectItem: {
             type: Function,
             default: () => {},
         },
         defaultSelectedItem: {
-            type: String,
-            default: 'Selectionner',
+            type: Object,
+            default() {
+                return {
+                    name: "Selectionner",
+                    value: null
+                }
+            },
         },
         image: {
             type: String,
-            default: require('@/assets/selector.svg'),
+            default: require("@/assets/selector.svg"),
         },
         selectorClass: {
             type: String,
-            default:
-                'flex flex-col relative text-white cursor-pointer select-none',
+            default: "flex flex-col relative text-white cursor-pointer select-none",
         },
         optionClass: {
             type: String,
             default:
-                'hover:font-bold relative px-4 py-2 bg-fc-black-light hover:bg-fc-black',
+                "hover:font-bold relative px-4 py-2 bg-fc-black-light hover:bg-fc-black",
         },
         imageClass: {
             type: String,
-            default: 'self-end pb-1',
+            default: "self-end pb-1",
         },
         opened: {
             type: Boolean,
@@ -82,27 +102,38 @@ export default {
         },
     },
     data() {
+        const allItems = [ this.defaultSelectedItem, ...this.items ]
+
         return {
-            computedItems: { default: this.defaultSelectedItem, ...this.items },
+            computedItems: allItems,
             isOpened: this.opened,
-            selectedItem: this.defaultSelectedItem,
+            selectedItem: this.defaultSelectedItem.name,
+            openedStyles: {}
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.handleHeight()
+        })
     },
     methods: {
         switchOpened() {
             this.isOpened = !this.isOpened
         },
-        closeSelector(value) {
+        closeSelector() {
             this.isOpened = false
         },
         handleFocus() {
-            console.log('focus')
+            console.log("focus")
         },
         handleFocusOut() {
-            console.log('focus out')
+            console.log("focus out")
 
             this.isOpened = false
         },
-    },
+        handleHeight() {
+            this.openedStyles.marginTop = this.$refs.openedBox.clientHeight + 'px'
+        }
+    }
 }
 </script>

@@ -3,11 +3,11 @@ import { AuthResponse, LoginRequest, Payload, RegisterRequest } from "../utils/t
 import * as jwt from "jsonwebtoken"
 import * as dotenv from 'dotenv'
 import * as bcrypt from 'bcrypt'
-import { User } from "../database/entities/User";
-import { AppDataSource } from "../database/data-source";
+import { User } from "../database/entities/public/User";
+import { PublicDataSource } from "../database/init/datasources/public-data-source";
 dotenv.config()
 
-const UserRepository = AppDataSource.getRepository(User)
+const UserRepository = PublicDataSource.getRepository(User)
 const jwtSecret = process.env.JWTSECRET || "SECRET"
 
 export async function login(user: LoginRequest): Promise<AuthResponse> {

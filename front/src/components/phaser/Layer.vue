@@ -1,5 +1,5 @@
 <template>
-    <div 
+    <div
         class="flex px-2 py-1 bg-fc-black-light text-xs hover:cursor-pointer hover:opacity-80 hover:scale-105"
         :class="isSelected ? 'text-fc-yellow' : 'text-fc-green'"
     >
@@ -10,17 +10,15 @@
 </template>
 
 <script>
-
 export default {
-    name: 'Layer',
+    name: "Layer",
     props: {
         layer: {
             type: Object,
-            required: true,
-            default: {}
+            default() {}
         },
         isSelected: { type: Boolean, default: false },
-        index: { type: Number }
-    }
+        index: { type: Number, default: 0 },
+    },
 }
 </script>

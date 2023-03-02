@@ -1,51 +1,68 @@
 <template>
-    <SidebarLayout :topRightPixels="false" :isBorder=false>
+    <SidebarLayout
+        :top-right-pixels="false"
+        :is-border="false"
+    >
         <div class="flex flex-col">
             <div
-                v-on:scroll="scrollHandler"
+                id="top"
                 class="flex flex-col"
-                id="top">
-                <div class="h-screen tashas font-barlow relative mobile:h-[calc(100vh-80px)]">
+                @scroll="scrollHandler"
+            >
+                <div
+                    class="h-screen tashas font-barlow relative mobile:h-[calc(100vh-80px)]"
+                >
                     <div
-                        class="flex flex-col w-[41%] bg-fc-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%] mobile:w-full">
+                        class="flex flex-col w-[41%] bg-fc-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%] mobile:w-full"
+                    >
                         <p
-                            class="text-xl sm:text-2xl lg:text-3xl text-white font-bold w-[75%] pr-[5%] tablet:text-2xl mobile:w-full">
-                            Notre site il est trop bien alors tu t’inscris et tu
-                            kiffes ! Sinon je te retrouve et je te pète les genoux !
+                            class="text-xl sm:text-2xl  text-white font-bold pr-[5%] tablet:text-2xl mobile:w-full"
+                        >
+                            Faites du JdR avec vos amis !
+                            Créez vos propres personnages, cartes et plus encore ... le tout, sur Fiches&Chips !
                         </p>
 
                         <router-link
                             to="/login"
-                            class="flex flex-row justify-center w-20 lg:w-24 xl:w-28 border-[3px] self-end rounded-full text-3xl font-bold text-white tablet:text-xl">
+                            class="flex flex-row justify-center w-20 px-2 py-1 bg-fc-black self-end text-3xl font-bold text-white tablet:text-xl hover:opacity-90"
+                        >
                             GO ->
                         </router-link>
 
                         <div
-                            class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px] mobile:hidden"></div>
+                            class="w-[45px] h-[45px] bg-fc-green absolute bottom-0 right-0 translate-x-[45px] translate-y-[45px] mobile:hidden"
+                        />
                     </div>
                     <Transition name="fade">
                         <div
+                            v-show="isVisibleBounce"
                             class="absolute bottom-0 left-[50%] animate-bounce"
-                            v-show="isVisibleBounce">
-                            <a @scroll="scrollHandler" href="#MapVue">
+                        >
+                            <a
+                                href="#MapVue"
+                                @scroll="scrollHandler"
+                            >
                                 <img
                                     class="w-[50px] h-[50px] rotate-180"
                                     src="../assets/vector.svg"
-                                    alt="vector" />
+                                    alt="vector"
+                                >
                             </a>
                         </div>
                     </Transition>
                 </div>
-                <div class="flex flex-col overflow-x-hidden background" id="MapVue">
-                    <div
-                        class="w-full pl-0 translate-x-[-10px] sm:translate-x-[-25px]">
+                <div
+                    id="MapVue"
+                    class="flex flex-col overflow-x-hidden background"
+                >
+                    <div class="w-full pl-0 translate-x-[-10px] sm:translate-x-[-25px]">
                         <MapVue />
                     </div>
-    
+
                     <div class="w-full self-center">
                         <AmisVue />
                     </div>
-    
+
                     <div class="w-full mt-[8%] ml-[8%]">
                         <PersoVue />
                     </div>
@@ -53,11 +70,15 @@
             </div>
             <Transition name="fade">
                 <a
-                    @scroll="scrollHandler"
+                    v-show="isVisible"
                     href="#top"
                     class="fixed transition-opacity bottom-0 right-0 w-[50px] h-[50px] m-[2%] z-50"
-                    v-show="isVisible">
-                    <img src="../assets/vector.svg" alt="vector" />
+                    @scroll="scrollHandler"
+                >
+                    <img
+                        src="../assets/vector.svg"
+                        alt="vector"
+                    >
                 </a>
             </Transition>
         </div>
@@ -72,50 +93,50 @@ import SidebarLayout from '@/layouts/Sidebar.vue'
 
 export default {
     name: "IndexPage",
-    mounted() {
-        window.addEventListener('scroll', this.scrollHandler)        
-    },
-    destroyed() {
-        window.removeEventListener('scroll', this.scrollHandler)
-    },
+    components: { MapVue, AmisVue, PersoVue, SidebarLayout },
     data: function () {
-        return { isVisible: false, isVisibleBounce: true };
+        return { isVisible: false, isVisibleBounce: true }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.scrollHandler)
+    },
+    unmounted() {
+        window.removeEventListener('scroll', this.scrollHandler)
     },
     methods: {
         scrollHandler: function scrollHandler(e) {
-            this.isVisible = e.target.scrollingElement.scrollTop > window.screen.height * 0.5 ? true : false;
-            this.isVisibleBounce = e.target.scrollingElement.scrollTop > window.screen.height * 0.001 ? false : true;
+            this.isVisible = e.target.scrollingElement.scrollTop > window.screen.height * 0.5 ? true : false
+            this.isVisibleBounce = e.target.scrollingElement.scrollTop > window.screen.height * 0.001 ? false : true
         },
         showToaster() {
-            console.log('this', this);
+            console.log('this', this)
         }
     },
-    components: { MapVue, AmisVue, PersoVue, SidebarLayout },
 }
 </script>
 
 <style>
 .tashas {
-    background-image: url('../assets/index/background.jpg');
-    background-size: cover;
-    object-fit: cover;
+  background-image: url("../assets/index/background.jpg");
+  background-size: cover;
+  object-fit: cover;
 }
 
 .background {
-    background-image: url('../assets/index/pixelsBackgrounds.svg');
-    background-size: cover;
+  background-image: url("../assets/index/pixelsBackgrounds.svg");
+  background-size: cover;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s;
+  transition: opacity 0.5s;
 }
 .fade-enter,
 .fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 </style>

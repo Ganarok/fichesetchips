@@ -1,5 +1,6 @@
 import defaultUsers from "../fixtures/users"
 
+const test = defaultUsers.test
 const defaultUser = defaultUsers.defaultUser
 const defaultUser1 = defaultUsers.defaultUser1
 const defaultUser2 = defaultUsers.defaultUser2
@@ -14,6 +15,27 @@ export default [{
 }, {
     user_asked_id: defaultUser.id,
     user_answered_id: defaultUser2.id,
+    accepted: false,
+    nb_games: 0,
+    created_at: "2022-06-28T11:30:59.619Z",
+    updated_at: "2022-06-30T11:29:59.619Z"
+}, {
+    user_asked_id: test.id,
+    user_answered_id: defaultUser.id,
+    accepted: false,
+    nb_games: 0,
+    created_at: "2022-06-28T11:30:59.619Z",
+    updated_at: "2022-06-30T11:29:59.619Z"
+}, {
+    user_asked_id: defaultUser1.id,
+    user_answered_id: test.id,
+    accepted: true,
+    nb_games: 0,
+    created_at: "2022-06-28T11:30:59.619Z",
+    updated_at: "2022-06-30T11:29:59.619Z"
+}, {
+    user_asked_id: defaultUser2.id,
+    user_answered_id: test.id,
     accepted: false,
     nb_games: 0,
     created_at: "2022-06-28T11:30:59.619Z",

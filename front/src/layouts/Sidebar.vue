@@ -1,21 +1,40 @@
 <template>
-    <div name="SidebarLayout" class="flex mobile:flex-col">
+    <div
+        name="SidebarLayout"
+        class="flex mobile:flex-col"
+    >
         <div class="fixed z-50">
-            <Sidebar/>
-        </div>
-        
-        <div v-if="topRightPixels" class="absolute top-0 right-0 mobile:top-[80px] mobile:w-12 z-[-2]">
-                <img src="../assets/topRightPixels.svg" alt="pixels" class="w-full h-full -z-10 relative" />
+            <Sidebar />
         </div>
 
         <div
-            class="flex flex-col space-y-4 w-full h-screen mobile:h-[calc(100vh-80px)] ml-[220px] mobile:ml-0 mobile:mt-[80px]"
-            :class="{ 'px-4 pt-4' : isBorder}">
+            v-if="topRightPixels"
+            class="absolute top-0 right-0 mobile:top-[80px] mobile:w-12 z-[-2]"
+        >
+            <img
+                src="../assets/topRightPixels.svg"
+                alt="pixels"
+                class="w-full h-full -z-10 relative"
+            >
+        </div>
+
+        <div
+            class="flex flex-col space-y-6 w-full h-screen mobile:h-[calc(100vh-80px)] ml-[220px] mobile:ml-0 mobile:mt-[80px]"
+            :class="{ 'px-4 pt-4': isBorder }"
+        >
             <h1
+                v-if="title"
                 class="font-bold text-xl p-6 self-center sm:self-start sm:text-2xl md:px-8 lg:px-10 lg:text-3xl xl:text-5xl"
-                v-if="title">
+            >
                 {{ title }}
             </h1>
+
+            <p
+                v-if="description"
+                class="bg-gray-100 text-base text-center pb-4 self-center lg:max-w-4xl lg:p-4"
+            >
+                {{ description }}
+            </p>
 
             <slot />
         </div>
@@ -23,14 +42,21 @@
 </template>
 
 <script>
-import Sidebar from '../components/subComponent/Sidebar.vue'
+import Sidebar from "@/components/subComponent/Sidebar.vue"
 
 export default {
-    name: 'SidebarLayout',
+    name: "SidebarLayout",
+    components: {
+        Sidebar,
+    },
     props: {
         title: {
             type: String,
-            default: '',
+            default: "",
+        },
+        description: {
+            type: String,
+            default: "",
         },
         topRightPixels: {
             type: Boolean,
@@ -40,9 +66,6 @@ export default {
             type: Boolean,
             default: true,
         },
-    },
-    components: {
-        Sidebar,
     },
 }
 </script>
