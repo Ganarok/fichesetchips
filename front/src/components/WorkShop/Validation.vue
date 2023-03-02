@@ -117,7 +117,7 @@ export default {
         async validation() {
             this.parseStats()
 
-            console.log(this.character_creation['character'])
+            console.log(this.character_creation)
 
             const res = await apiCall({
                 route: '/cem/characters/creation',

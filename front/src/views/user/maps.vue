@@ -1,17 +1,6 @@
 <template>
     <SidebarLayout :title="$t('Cartes')">
         <div
-            class="flex flex-row w-[90%] items-center justify-between self-center bg-fc-black h-16"
-        >
-            <div class="absolute">
-                <div
-                    style="z-index: -10"
-                    class="relative -left-6 -top-6 bg-fc-green w-12 h-12"
-                />
-            </div>
-        </div>
-
-        <div
             :class="`flex w-[90%] h-full self-center ${
                 loading ? 'items-center justify-center' : 'justify-start'
             }`"
@@ -27,7 +16,7 @@
                 >
                     <div
                         class="flex items-center justify-around relative bg-fc-black h-48 p-4"
-                        @click="() => $router.push('/tilemap/editor')"
+                        @click="() => $router.push('/mapmaker')"
                     >
                         <img
                             src="@/assets/plus.svg"

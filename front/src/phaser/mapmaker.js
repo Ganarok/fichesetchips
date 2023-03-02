@@ -1,6 +1,6 @@
 import Phaser from "phaser"
 import BootScene from "@/phaser/scenes/BootScene"
-import WorkshopTilemap from "@/phaser/scenes/WorkshopTilemap"
+import MapMakerScene from "@/phaser/scenes/MapMakerScene"
 
 const launch = (containerId) => {
     return new Phaser.Game({
@@ -18,7 +18,7 @@ const launch = (containerId) => {
             },
         },
         plugins: {},
-        scene: [BootScene, WorkshopTilemap],
+        scene: [BootScene, MapMakerScene],
     })
 }
 

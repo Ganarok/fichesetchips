@@ -1,15 +1,17 @@
 export default {
     namespaced: true,
     state: {
+        launched: false,
         controls: null,
-        layers: [{
-            name: "grounds",
-            asset: "desert_grounds",
-        },
-        {
-            name: "items",
-            asset: "desert_items",
-        },
+        layers: [
+            {
+                name: "grounds",
+                asset: "desert_grounds",
+            },
+            {
+                name: "items",
+                asset: "desert_items",
+            }
         ],
         selectedLayer: 0,
         eraser: false,
@@ -27,6 +29,30 @@ export default {
             const { property, newState } = payload
 
             state[property] = newState
+        },
+        resetStates(state) {
+            state.launched = false
+            state.controls = null
+            state.layers = [
+                {
+                    name: "grounds",
+                    asset: "desert_grounds",
+                },
+                {
+                    name: "items",
+                    asset: "desert_items",
+                }
+            ],
+            state.selectedLayer = 0
+            state.eraser = false
+            state.selectedTile = undefined
+            state.selectedTileIndex = undefined
+            state.isolateLayer = false
+            state.layerTab = true
+            state.tileSetsInfos = []
+            state.tilesPics = {}
+            state.tilesSize = 32
+            state.mapSize = 32 * 20
         },
         initLayers(state, layers) {
             state.layers = layers

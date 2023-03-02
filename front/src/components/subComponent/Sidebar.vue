@@ -49,6 +49,14 @@
                 </router-link>
 
                 <router-link
+                    to="/user/maps"
+                    class="font-bold text-xl"
+                    active-class="underline"
+                >
+                    Maps
+                </router-link>
+
+                <router-link
                     to="/rooms"
                     class="font-bold text-xl"
                     active-class="underline"
@@ -76,6 +84,7 @@
                 >
                     Accueil
                 </router-link>
+
                 <router-link
                     to="/about"
                     class="font-bold text-xl"
@@ -83,6 +92,7 @@
                 >
                     A propos
                 </router-link>
+
                 <router-link
                     to="/glossaire"
                     class="font-bold text-xl"
@@ -152,9 +162,6 @@ export default {
         ...mapMutations({
             logout: "user/logout"
         }),
-        // logout: function () {
-        //     this.$store.commit("logout")
-        // },
         mobileMenu: function () {
             let sidebar = document.querySelector(".sidebar")
             sidebar.classList.toggle("-translate-x-full")

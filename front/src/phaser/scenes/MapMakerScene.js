@@ -5,9 +5,9 @@ import desert_items from "@/phaser/assets/desert_items.png"
 import template from "@/phaser/maps/template.json"
 import Phaser from "phaser"
 
-export default class WorkshopTilemap extends Scene {
+export default class MapMakerScene extends Scene {
     constructor() {
-        super({ key: "WorkshopTilemap" })
+        super({ key: "MapMakerScene" })
 
         this.layers = []
         this.tileSets = []
@@ -29,6 +29,7 @@ export default class WorkshopTilemap extends Scene {
     init() { // props : (data)
         // TODO : La data envoyée depuis BootScene arrive ici, dans l'object data
         // console.log(data)
+        store.commit('phaser/resetStates')
     }
 
     preload() {
@@ -87,7 +88,7 @@ export default class WorkshopTilemap extends Scene {
             (newValue, oldValue) => {
                 this.selectedLayer = newValue
 
-                if(store.state.phaser.isolateLayer) {
+                if (store.state.phaser.isolateLayer) {
                     this.layers[oldValue].setVisible(false)
                     this.layers[newValue].setVisible(true)
                 }
@@ -97,13 +98,15 @@ export default class WorkshopTilemap extends Scene {
         store.watch(
             () => store.state.phaser.isolateLayer,
             (isIsolated) => {
-                if(isIsolated) {
+                if (isIsolated) {
                     this.layers.forEach((layer, index) => {
-                        if(index !== this.selectedLayer) {
+                        if (index !== this.selectedLayer) {
+                            console.log(`Setting ${this.layers[index].layer.name} to visibilty false`)
                             this.layers[index].setVisible(false)
                         }
                     })
                 } else {
+                    console.log('on set tout à true')
                     this.layers.forEach((layer, index) =>
                         this.layers[index].setVisible(true)
                     )
@@ -171,7 +174,7 @@ export default class WorkshopTilemap extends Scene {
                 glTexture: this.tileSets[index].glTexture,
             }
 
-            if(index === 0) {
+            if (index === 0) {
                 this.layers[0].randomize(0, 0, this.map.width, this.map.height, [29])
                 this.selectedTile = this.layers[0].getTileAt(0, 0)
                 store.commit("phaser/updateState", {
@@ -180,19 +183,17 @@ export default class WorkshopTilemap extends Scene {
                 })
             }
 
-            if(index === 1) {
+            if (index === 1) {
                 this.layers[1].randomize(0, 0, this.map.width, this.map.height, [1])
             }
         })
-
-        console.log("tilesets", this.tileSetsInfos)
 
         store.commit("phaser/updateState", {
             property: "tileSetsInfos",
             newState: this.tileSetsInfos,
         })
 
-        // this.layers[this.selectedLayer].setPosition(window.innerWidth / 2 - this.mapsize, 0)
+        // this.layers.forEach(layer => layer.setPosition(window.innerWidth / 2 - this.mapsize, 0))
     }
 
     _draw_cursor() {
@@ -253,8 +254,8 @@ export default class WorkshopTilemap extends Scene {
             layerName
         )
 
-        if(this.input.manager.activePointer.isDown) {
-            if(this.shiftKey.isDown) {
+        if (this.input.manager.activePointer.isDown) {
+            if (this.shiftKey.isDown) {
                 this.selectedTile = this.layers[this.selectedLayer].getTileAt(
                     pointerTileX,
                     pointerTileY,
@@ -265,7 +266,7 @@ export default class WorkshopTilemap extends Scene {
                     property: "selectedTile",
                     newState: this.selectedTile,
                 })
-            } else if(eraser) {
+            } else if (eraser) {
                 this.layers[this.selectedLayer].removeTileAt(
                     pointerTileX,
                     pointerTileY,
