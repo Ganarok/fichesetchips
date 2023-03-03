@@ -35,14 +35,14 @@
                         to="/user/dashboard"
                         class="font-bold text-xl cursor-pointer hover:opacity-70"
                     >
-                        {{ $t('Dashboard') }} 
+                        {{ $t('Tableau de bord') }} 
                     </router-link>
 
                     <router-link
                         to="/user/profile"
                         class="font-bold text-xl cursor-pointer hover:opacity-70"
                     >
-                        {{ $t('Profile') }} 
+                        {{ $t('Profil') }} 
                     </router-link>
                 </div>
 

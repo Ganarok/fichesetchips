@@ -17,7 +17,7 @@
 
         <img
             class="z-10 w-[50%] max-w-xs lg:m-4"
-            src="@/assets/logo.png"
+            src="@/assets/fetc.png"
             alt="Fiche&Chips"
         >
         <div class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-80">
@@ -29,9 +29,10 @@
                     {{ $t("Inscription") }}
                 </h1>
 
-                <p class="mb-4 mt-2 underline text-xs opacity-70 cursor-pointer">
-                    <router-link to="/login">
-                        {{ $t("Annuler") }}
+                <p class="mb-4 mt-2 text-xs opacity-70">
+                    Vous avez déjà un compte ? 
+                    <router-link class="underline cursor-pointer" to="/login">
+                        {{ $t("Connectez-vous") }}
                     </router-link>
                 </p>
             </div>
@@ -93,7 +94,7 @@
 
                 <button
                     v-if="!loading"
-                    class="mr-5 self-end text-5xl font-bold"
+                    class="mr-5 self-end text-5xl font-bold hover:opacity-70"
                     @click="handleGo"
                 >
                     Go

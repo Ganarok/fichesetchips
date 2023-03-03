@@ -17,7 +17,7 @@
 
         <img
             class="z-10 w-[50%] max-w-xs lg:m-4"
-            src="@/assets/logo.png"
+            src="@/assets/fetc.png"
             alt="Fiche&Chips"
         >
         <div class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-80">
@@ -28,17 +28,17 @@
                 <h1 class="text-5xl">
                     {{ $t("Connexion") }}
                 </h1>
-                <router-link
-                    class="underline text-xs opacity-70 cursor-pointer"
-                    to="/register"
-                >
-                    {{ $t("Pas encore inscrit ? Cliquez ici") }}
-                </router-link>
+                <p class="mb-4 mt-2 text-xs opacity-70">
+                    Vous n'avez pas de compte ? 
+                    <router-link class="underline cursor-pointer" to="/register">
+                        {{ $t("Inscrivez-vous") }}
+                    </router-link>
+                </p>
             </div>
 
             <div
                 v-if="!loading"
-                class="space-y-1 mt-4"
+                class="space-y-1"
             >
                 <CustomInput
                     :max-length="36"
@@ -61,8 +61,8 @@
                     @input="(v) => handlePassword(v.target.value)"
                     @keyup.enter="() => handleLogin()"
                 />
-                <p class="ml-5 mb-2 underline text-xs opacity-70 cursor-pointer">
-                    <router-link to="/forgot-password">
+                <p class="ml-5 mb-2 underline text-xs opacity-70">
+                    <router-link class="cursor-pointer" to="/forgot-password">
                         {{ $t("Mot de passe oublié") }}
                     </router-link>
                 </p>
@@ -84,7 +84,7 @@
                 </p>
 
                 <button
-                    class="mr-5 self-end text-5xl font-bold"
+                    class="mr-5 self-end text-5xl font-bold hover:opacity-70"
                     @click="handleLogin"
                 >
                     Go

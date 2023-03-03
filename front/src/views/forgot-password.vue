@@ -17,7 +17,7 @@
 
         <img
             class="z-10 w-[50%] max-w-xs lg:m-4"
-            src="@/assets/logo.png"
+            src="@/assets/fetc.png"
             alt="Fiche&Chips"
         >
         <div class="flex flex-col z-10 lg:absolute lg:right-16 lg:bottom-16 w-96">
@@ -29,8 +29,8 @@
                     {{ $t("Vous avez perdu quelque chose") }} ?
                 </h1>
 
-                <p class="my-4 underline text-xs opacity-70 cursor-pointer">
-                    <router-link to="/login">
+                <p class="my-4 underline text-xs opacity-70">
+                    <router-link class="cursor-pointer" to="/login">
                         {{ $t("Finalement non") }} !
                     </router-link>
                 </p>
