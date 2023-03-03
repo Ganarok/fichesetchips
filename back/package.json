@@ -10,7 +10,6 @@
         "typeorm": "typeorm-ts-node-esm",
         "migration:generate:public": "npm run -- typeorm migration:generate --dataSource src/database/init/datasources/public-data-source.ts -p true",
         "migration:generate:cem": "npm run -- typeorm migration:generate --dataSource src/database/init/datasources/cem-data-source.ts -p true",
-        "migration:generate": "npm run migration:generate:public && npm run migration:generate:cem",
         "migration:run": "npm run -- typeorm migration:run --dataSource src/database/init/datasources/public-data-source.ts",
         "migration:create": "npm run -- typeorm migration:create",
         "migration:revert:public": "npm run -- typeorm migration:revert --dataSource src/database/init/datasources/public-data-source.ts",

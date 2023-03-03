@@ -2,7 +2,7 @@ import "reflect-metadata"
 import { DataSource } from "typeorm"
 import * as dotenv from 'dotenv'
 dotenv.config()
-
+// This datasource is used in order to create the database initially with `db:create` script
 export const EmptyDataSource = new DataSource({
     type: "postgres",
     host: process.env.DB_HOST || "localhost",

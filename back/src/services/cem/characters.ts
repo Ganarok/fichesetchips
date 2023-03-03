@@ -1,15 +1,15 @@
 import { JwtPayload } from "jsonwebtoken";
 import * as jwt from "jsonwebtoken"
 import { CEMDataSource } from "../../database/init/datasources/cem-data-source";
-import { alignmentEnum, Character, sexEnum } from "../../database/entities/workshop/characters/Character";
-import { Race } from "../../database/entities/workshop/characters/Race";
-import { Language } from "../../database/entities/workshop/characters/Language";
-import { Characteristic } from "../../database/entities/workshop/characters/Characteristic";
-import { Class } from "../../database/entities/workshop/characters/Class";
-import { CharacteristicModificator } from "../../database/entities/workshop/characters/CharacteristicModificator";
-import { Level } from "../../database/entities/workshop/characters/Level";
-import { Profile } from "../../database/entities/workshop/characters/Profile";
-import { Item } from "../../database/entities/workshop/characters/Item";
+import { alignmentEnum, Character, sexEnum } from "../../database/entities/cem/characters/Character";
+import { Race } from "../../database/entities/cem/characters/Race";
+import { Language } from "../../database/entities/cem/characters/Language";
+import { Characteristic } from "../../database/entities/cem/characters/Characteristic";
+import { Class } from "../../database/entities/cem/characters/Class";
+import { CharacteristicModificator } from "../../database/entities/cem/characters/CharacteristicModificator";
+import { Level } from "../../database/entities/cem/characters/Level";
+import { Profile } from "../../database/entities/cem/characters/Profile";
+import { Item } from "../../database/entities/cem/characters/Item";
 import { use } from "chai";
 
 const CharacterRepository = CEMDataSource.getRepository(Character)

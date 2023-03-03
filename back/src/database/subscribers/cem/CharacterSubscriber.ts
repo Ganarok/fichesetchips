@@ -1,6 +1,6 @@
 import { EventSubscriber, EntitySubscriberInterface, InsertEvent, UpdateEvent } from "typeorm"
-import { Character } from "../../entities/workshop/characters/Character";
-import { Level } from "../../entities/workshop/characters/Level";
+import { Character } from "../../entities/cem/characters/Character";
+import { Level } from "../../entities/cem/characters/Level";
 import { CEMDataSource } from "../../init/datasources/cem-data-source";
 
 
