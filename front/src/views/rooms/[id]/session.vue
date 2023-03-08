@@ -1,32 +1,23 @@
 <template>
-    <SidebarLayout>
-        <div
-            v-if="loading"
-            class="flex w-full h-full items-center justify-center"
-        >
-            <Loader />
-        </div>
-
-        <Chat
-            v-else
-            :connected="connected"
-            :messages="messages"
-            :send-message="sendMessage"
-        />
-    </SidebarLayout>
+    <GameLayout
+        :loading="loading"
+    >
+        <!-- La map -->
+    </GameLayout>
 </template>
 
 <script>
-import SidebarLayout from "@/layouts/Sidebar.vue"
+import GameLayout from "@/layouts/Game.vue"
 import Loader from "@/components/Loader.vue"
 import Chat from "@/components/Chat.vue"
 import { useSocketIO } from "@/utils/socket.io"
 import { useToast } from "vue-toastification"
+import { Ref } from "vue"
 
 export default {
     name: "Session",
     components: {
-        SidebarLayout,
+        GameLayout,
         Loader,
         Chat,
     },

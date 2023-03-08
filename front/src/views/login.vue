@@ -30,7 +30,10 @@
                 </h1>
                 <p class="mb-4 mt-2 text-xs opacity-70">
                     Vous n'avez pas de compte ? 
-                    <router-link class="underline cursor-pointer" to="/register">
+                    <router-link
+                        class="underline cursor-pointer"
+                        to="/register"
+                    >
                         {{ $t("Inscrivez-vous") }}
                     </router-link>
                 </p>
@@ -62,7 +65,10 @@
                     @keyup.enter="() => handleLogin()"
                 />
                 <p class="ml-5 mb-2 underline text-xs opacity-70">
-                    <router-link class="cursor-pointer" to="/forgot-password">
+                    <router-link
+                        class="cursor-pointer"
+                        to="/forgot-password"
+                    >
                         {{ $t("Mot de passe oublié") }}
                     </router-link>
                 </p>

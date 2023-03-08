@@ -60,6 +60,10 @@ export default {
             type: Function,
             required: true,
         },
+        messages: {
+            type: Array,
+            default: () => []
+        }
     },
     data() {
         return {

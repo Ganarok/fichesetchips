@@ -30,7 +30,10 @@
                 </h1>
 
                 <p class="my-4 underline text-xs opacity-70">
-                    <router-link class="cursor-pointer" to="/login">
+                    <router-link
+                        class="cursor-pointer"
+                        to="/login"
+                    >
                         {{ $t("Finalement non") }} !
                     </router-link>
                 </p>

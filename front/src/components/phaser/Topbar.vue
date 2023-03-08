@@ -3,7 +3,7 @@
         class="flex relative w-full h-12 px-4 justify-between items-center text-white font-bold select-none bg-fc-black border-b border-fc-green z-50"
     >
         <img
-            src="@/assets/option.svg"
+            src="@/assets/icons/option.svg"
             class="h-6 w-6 cursor-pointer transition ease-in-out hover:opacity-80 hover:rotate-90"
             alt="option"
             :on-click="() => (options = true)"

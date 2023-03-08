@@ -31,7 +31,10 @@
 
                 <p class="mb-4 mt-2 text-xs opacity-70">
                     Vous avez déjà un compte ? 
-                    <router-link class="underline cursor-pointer" to="/login">
+                    <router-link
+                        class="underline cursor-pointer"
+                        to="/login"
+                    >
                         {{ $t("Connectez-vous") }}
                     </router-link>
                 </p>

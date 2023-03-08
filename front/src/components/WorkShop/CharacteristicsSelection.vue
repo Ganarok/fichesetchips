@@ -25,7 +25,7 @@
                 />
             </div>
         </div>
-        
+
         <button
             class="relative self-end right-12 text-5xl font-bold cursor-pointer"
             @click="chooseCharacteristics()"
