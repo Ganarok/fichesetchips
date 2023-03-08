@@ -9,7 +9,7 @@
                     value: parseInt(v.target.value),
                     characteristic_id: characteristic.id
                 }"
-                :value="character_creation.stats[characteristic.name].value"
+                :value="character_creation.stats[characteristic.name]?.value"
                 :handleRandomize="() => handleRandomize({name: characteristic.name, id: characteristic.id})"
             />
         </div>
