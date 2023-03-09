@@ -1,12 +1,12 @@
 import Phaser from "phaser"
-import BootScene from "@/phaser/scenes/MapMaker/BootScene"
-import WorkshopTilemap from "@/phaser/scenes/MapMaker/WorkshopTilemap"
+import BootScene from "@/phaser/scenes/Game/BootScene"
+import WorkshopTilemap from "@/phaser/scenes/Game/WorkshopTilemap"
 
 const launch = (containerId) => {
     return new Phaser.Game({
         type: Phaser.AUTO,
         width: window.innerWidth,
-        height: window.innerHeight - 48,
+        height: window.innerHeight,
         parent: containerId,
         pixelArt: true,
         backgroundColor: "#1E1E1E",

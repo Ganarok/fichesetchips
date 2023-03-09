@@ -24,12 +24,12 @@ import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
 
 const routes = [{
     path: "/",
-    name: "Home",
+    name: "Accueil",
     component: Home,
 },
 {
     path: "/about",
-    name: "About",
+    name: "À propos",
     component: About,
 },
 {
@@ -39,22 +39,22 @@ const routes = [{
 },
 {
     path: "/login",
-    name: "Login",
+    name: "Connexion",
     component: Login,
 },
 {
     path: "/register",
-    name: "Register",
+    name: "Inscription",
     component: Register,
 },
 {
     path: "/forgot-password",
-    name: "ForgotPassword",
+    name: "Mot de passe oublié",
     component: ForgotPassword,
 },
 {
     path: "/user/dashboard",
-    name: "Dashboard",
+    name: "Tableau de bord",
     component: Dashboard,
     requiresAuth: true,
 },
@@ -66,7 +66,7 @@ const routes = [{
 },
 {
     path: "/user/profile",
-    name: "Profile",
+    name: "Profil",
     component: Profile,
     requiresAuth: true,
 },
