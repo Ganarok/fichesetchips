@@ -40,6 +40,7 @@
                 placeholder="0"
                 :value="value"
                 @change="onChange"
+                :disabled="disabled"
             >
     
             <img
@@ -65,6 +66,10 @@ export default {
         name: {
             type: String,
             default: ''
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         },
         randomize: {
             type: Boolean,
