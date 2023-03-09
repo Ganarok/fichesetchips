@@ -24,7 +24,7 @@
 
                         <router-link
                             to="/login"
-                            class="flex flex-row justify-center w-20 px-2 py-1 bg-fc-black self-end text-3xl font-bold text-white tablet:text-xl hover:opacity-90"
+                            class="flex flex-row justify-center w-20 px-2 py-1 bg-fc-black self-end text-2xl font-bold text-white whitespace-nowrap tablet:text-xl hover:opacity-90"
                         >
                             GO ->
                         </router-link>

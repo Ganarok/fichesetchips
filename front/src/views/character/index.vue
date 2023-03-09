@@ -17,7 +17,7 @@
                 Créer un personnage
             </router-link>
         </div>
-        <CharactersList v-else/>
+        <CharactersList v-else />
     </SidebarLayout>
 </template>
 
