@@ -67,8 +67,7 @@ export default {
         },
         async fetch_character({ commit, rootState }, character_id) {
             const { data } = await apiCall({
-                route: `/${rootState.universes.universe}/characters/${character_id}
-                        `,
+                route: `/${rootState.universes.universe}/characters/${character_id}`,
                 method: 'GET',
             })
                 .catch((error) => console.log(JSON.stringify(error.message)))

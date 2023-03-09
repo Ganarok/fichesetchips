@@ -83,7 +83,7 @@ const routes = [{
     requiresAuth: true,
 },
 {
-    path: '/user/character/:id',
+    path: '/characters/:id',
     name: 'CharacterID',
     component: CharacterID,
     requiresAuth: true
