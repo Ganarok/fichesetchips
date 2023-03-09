@@ -1,18 +1,19 @@
 <template>
     <GameLayout
         :loading="loading"
+        :socket="socket"
     >
         <!-- La map -->
     </GameLayout>
 </template>
 
 <script>
+import { useToast } from "vue-toastification"
+
 import GameLayout from "@/layouts/Game.vue"
 import Loader from "@/components/Loader.vue"
 import Chat from "@/components/Chat.vue"
 import { useSocketIO } from "@/utils/socket.io"
-import { useToast } from "vue-toastification"
-import { Ref } from "vue"
 
 export default {
     name: "Session",
@@ -60,22 +61,9 @@ export default {
             toast.error("You are not connected to the server")
             this.loading = false
         })
-
-        socket.on("message", (message) => {
-            this.messages.push(message)
-        })
     },
-    methods: {
-        sendMessage(text) {
-            const newMessage = {
-                text,
-                senderName: this.connectionId,
-                roomId: this.roomId,
-            }
+    beforeUnmount() {
 
-            this.socket.emit("message", newMessage)
-            this.messages.push(newMessage)
-        },
-    },
+    }
 }
 </script>

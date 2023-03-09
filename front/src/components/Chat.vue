@@ -48,27 +48,43 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
+
 export default {
     name: "Chat",
     props: {
-        connected: {
-            type: Boolean,
-            required: true,
+        socket: {
+            required: true
         },
-        // messages: Array,
-        sendMessage: {
-            type: Function,
-            required: true,
-        },
-        messages: {
-            type: Array,
-            default: () => []
-        }
     },
-    data() {
-        return {
-            message: "",
-        }
+    computed: {
+        ...mapState("user", {
+            user: (state) => state.user
+        }),
+        ...mapState("game", {
+            messages: (state) => state.messages
+        }),
+    },
+    mounted() {
+        this.socket.on("message", (message) => {
+            this.messages.push(message)
+        })
+    },
+    methods: {
+        ...mapMutations({
+            pushMessage: "game/pushMessage",
+            resetMessages: "game/resetMessages",
+        }),
+        sendMessage(text) {
+            const newMessage = {
+                text,
+                senderName: this.user.username || this.socket.id,
+                roomId: this.roomId,
+            }
+
+            this.socket.emit("message", newMessage)
+            this.pushMessage(newMessage)
+        },
     },
 }
 </script>
