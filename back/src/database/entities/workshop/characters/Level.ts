@@ -6,10 +6,10 @@ export class Level {
     @PrimaryGeneratedColumn({ type: "int" })
     id: number;
 
-    @Column()
+    @Column({ type: "int" })
     experience_points: number
 
-    @Column()
+    @Column({ type: "int" })
     proficiency_bonus: number
 
     @OneToMany(() => Character, (character) => character.id, { onDelete: "CASCADE" })

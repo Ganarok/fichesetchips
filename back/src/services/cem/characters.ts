@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import * as jwt from "jsonwebtoken"
 import { CEMDataSource } from "../../database/init/datasources/cem-data-source";
-import { alignmentEnum, Character, sexEnum } from "../../database/entities/workshop/characters/Character";
+import { Character } from "../../database/entities/workshop/characters/Character";
 import { Race } from "../../database/entities/workshop/characters/Race";
 import { Language } from "../../database/entities/workshop/characters/Language";
 import { Characteristic } from "../../database/entities/workshop/characters/Characteristic";
@@ -130,14 +130,14 @@ export async function characterCreation() {
             data: {
                 "firstname": "",
                 "lastname": "",
-                "sex": sexEnum,
+                "sex": "",
                 "eye_color": "",
                 "hair_color": "",
                 "clothing_color_1": "",
                 "clothing_color_2": "",
                 "skin_color": "",
                 "bio": "",
-                "alignment": alignmentEnum,
+                "alignment": "",
                 "ideals": "",
                 "flaws": ""
             },
@@ -163,7 +163,7 @@ export async function create(user_id: string, data: any) {
         .createQueryBuilder()
         .insert()
         .into(Character)
-        .values({ user_id: user_id, ...data.character })
+        .values({ user_id: user_id, experience_points: 0, next_level_experience_points: 300, ...data.character })
         .execute()
     const character_id = insert.identifiers[0].id
     await CEMDataSource
