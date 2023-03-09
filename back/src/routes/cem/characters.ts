@@ -95,7 +95,7 @@ router.post("/creation", async (req: Request, res) => {
    *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
    */
   try {
-    const response = await charactersService.create(((req as CustomRequest).jwtPayload as JwtPayload).id, req.body.data);
+    const response = await charactersService.create(((req as CustomRequest).jwtPayload as JwtPayload).id, req.body);
     res.status(200).send({ data: response, message: 'Character successfully created' });
   } catch (error) {
     return getErrorMessage(error, res);

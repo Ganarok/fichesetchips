@@ -28,7 +28,7 @@ export default {
                 "hp": 0,
                 "race_id": "",
                 "class_id": "",
-                "level_id": 0
+                "level_id": 1
             },
             "skills": [],
             "stats": {

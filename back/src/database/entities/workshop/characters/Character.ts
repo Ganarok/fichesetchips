@@ -12,12 +12,6 @@ import { Money } from "./Money";
 import { Race } from "./Race";
 import { Skill } from "./Skill";
 
-type SEX = "MALE" | "FEMALE" | "OTHER"
-type ALIGNMENT = "LAWFUL GOOD" | "LAWFUL NEUTRAL" | "LAWFUL EVIL" | "NEUTRAL GOOD" | "NEUTRAL" | "NEUTRAL EVIL" | "CHAOTIC GOOD" | "CHAOTIC NEUTRAL" | "CHAOTIC EVIL"
-export const sexEnum = ["MALE", "FEMALE", "OTHER"]
-export const alignmentEnum = ["LAWFUL GOOD", "LAWFUL NEUTRAL", "LAWFUL EVIL",
-"NEUTRAL GOOD", "NEUTRAL", "NEUTRAL EVIL",
-"CHAOTIC GOOD", "CHAOTIC NEUTRAL", "CHAOTIC EVIL"]
 @Entity()
 export class Character {
     @PrimaryGeneratedColumn("uuid")
@@ -32,11 +26,8 @@ export class Character {
     @Column()
     lastname: string
 
-    @Column({
-        type: "enum",
-        enum: sexEnum
-    })
-    sex: SEX;
+    @Column()
+    sex: string;
 
     @Column()
     eye_color: string;
@@ -56,11 +47,8 @@ export class Character {
     @Column({ type: "text" })
     bio: string
 
-    @Column({
-        type: "enum",
-        enum: alignmentEnum
-    })
-    alignment: ALIGNMENT
+    @Column()
+    alignment: string
 
     @Column({ type: "text" })
     ideals: string
