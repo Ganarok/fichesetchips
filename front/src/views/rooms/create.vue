@@ -24,10 +24,11 @@
                 <Button
                     class="ml-4 sm:mx-12"
                     button-text="Publier"
-                    color="fc-green"
+                    textColor="fc-black"
+                    color="fc-yellow"
                     :rounded="false"
                     :disabled="loading"
-                    background-color="fc-black"
+                    background-color="fc-yellow"
                     :onclick="handleSubmit"
                 />
             </div>

@@ -6,6 +6,7 @@ export default {
             characters: [],
             places: [],
             players: [],
+            notes: ''
         }
     },
     mutations: {

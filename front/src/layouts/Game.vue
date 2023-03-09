@@ -15,10 +15,12 @@
                 class="flex flex-col relative items-center h-screen bg-fc-black transition-all duration-200"
                 :class="sidebarOpened ? 'w-72' : 'w-0'"
             >
-                <div class="absolute items-center h-8 w-6 -right-6 top-4 rounded-r-lg bg-fc-yellow border border-fc-black z-20 cursor-pointer">
+                <div 
+                    class="absolute items-center h-8 w-6 -right-6 top-4 rounded-r-lg bg-fc-yellow border border-fc-black z-20 cursor-pointer"
+                    @click="sidebarOpened = !sidebarOpened"
+                >
                     <div 
                         class="flex items-center justify-center h-full w-full rotate-90"
-                        @click="sidebarOpened = !sidebarOpened"
                     >
                         <img
                             src="@/assets/selector_black.svg"
