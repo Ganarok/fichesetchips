@@ -4,23 +4,35 @@
         :socket="socket"
     >
         <!-- La map -->
+
+        <Suspense>
+            <GameContainer />
+
+            <template #fallback>
+                <div
+                    class="flex h-screen w-screen justify-center items-center bg-fc-black-light"
+                >
+                    <Loader />
+                </div>
+            </template>
+        </Suspense>
     </GameLayout>
 </template>
 
 <script>
 import { useToast } from "vue-toastification"
 
+import GameContainer from "@/components/phaser/GameContainer"
 import GameLayout from "@/layouts/Game.vue"
 import Loader from "@/components/Loader.vue"
-import Chat from "@/components/Chat.vue"
 import { useSocketIO } from "@/utils/socket.io"
 
 export default {
     name: "Session",
     components: {
+        GameContainer,
         GameLayout,
-        Loader,
-        Chat,
+        Loader
     },
     data() {
         return {
@@ -28,8 +40,7 @@ export default {
             loading: true,
             roomId: this.$route.params.id,
             connectionId: null,
-            messages: [],
-            socket: null,
+            socket: null
         }
     },
     mounted() {
@@ -50,7 +61,7 @@ export default {
             this.loading = false
             this.connectionId = n.connectionId
 
-            this.socket.emit("message", {
+            socket.emit("message", {
                 text: "joined the room",
                 senderName: this.$store.state.user.username || n.connectionId,
                 roomId: this.roomId,
@@ -63,7 +74,6 @@ export default {
         })
     },
     beforeUnmount() {
-
     }
 }
 </script>

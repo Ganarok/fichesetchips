@@ -1,7 +1,12 @@
 export default {
     namespaced: true,
     state: {
-        messages: []
+        messages: [],
+        diary: {
+            characters: [],
+            places: [],
+            players: [],
+        }
     },
     mutations: {
         pushMessage(state, message) {
@@ -12,9 +17,5 @@ export default {
         }
     },
     actions: {},
-    getters: {
-        getMessages(state) {
-            return state.messages
-        },
-    },
+    getters: {},
 }

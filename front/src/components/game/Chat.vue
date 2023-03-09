@@ -1,25 +1,30 @@
 <!-- eslint-disable -->
 <template>
-    <div class="flex flex-col relative w-full h-full justify-between bg-fc-black-light border-2 border-fc-black">
+    <div class="flex flex-col relative w-full justify-end bg-fc-black-light">
         <div 
-            class="flex flex-col h-full w-full text-white items-start justify-end p-4"
+            class="flex flex-col w-full text-white items-start justify-end px-4 py-2"
+            :style="{
+                height: 'calc(100vh - 114px )'
+            }"
         >
-        <div v-if="messages.length > 0">
-            
-            <p 
-            v-for="(message, index) in messages" :key="index"
-                class="flex space-x-2"
+            <div 
+                v-if="messages.length > 0"
+                class="flex flex-col space-y-4 overflow-y-auto scrollbar-hide w-full z-10"
             >
-                <span class="font-bold">
-                    {{ message.senderName }}
-                </span>
-                : 
-                <span>
-                    {{ message.text }}
-                </span>
-            </p>
+                <p 
+                v-for="(message, index) in messages" :key="index"
+                    class="flex flex-col space-y-1"
+                >
+                    <span class="w-full font-bold text-fc-yellow">
+                        {{ message.senderName }} :
+                    </span>
 
-        </div>
+                    <span>
+                        {{ message.text }}
+                    </span>
+                </p>
+            </div>
+
             <p
                 v-else
                 class="opacity-50"
@@ -33,27 +38,28 @@
             :model="message"
             :value="message"
             placeholder="Type your message"
-            class="p-2 m-1 focus:outline-fc-green"
+            class="p-2 mx-2 m-1 focus:outline-fc-green"
             autofocus
             @input="message = $event.target.value"
             @keyup.enter="sendMessage(message); message = ''"
         />
 
         <img 
-            src="../assets/cornerPixels.svg" 
+            src="@/assets/cornerPixels.svg" 
             alt="pixels" 
-            class="w-12 h-12 absolute top-0 right-0"
+            class="w-12 h-12 absolute top-1 right-1 opacity-50"
         />
     </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex'
 
 export default {
     name: "Chat",
     props: {
         socket: {
+            type: Object,
             required: true
         },
     },
@@ -67,7 +73,7 @@ export default {
     },
     mounted() {
         this.socket.on("message", (message) => {
-            this.messages.push(message)
+            this.pushMessage(message)
         })
     },
     methods: {
