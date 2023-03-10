@@ -13,7 +13,7 @@ router.get("/", async (req: Request, res) => {
      *   get:
      *     description: Get my created stories.
      *     tags: 
-     *       - Workshop
+     *       - Stories
      *     security:
      *       - bearerAuth: []
      *     responses:
@@ -43,7 +43,7 @@ router.get("/:story_id", async (req: Request, res) => {
      *   get:
      *     description: Get a story.
      *     tags: 
-     *       - Workshop
+     *       - Stories
      *     parameters:
      *     - in: "path"
      *       name: "story_id"
@@ -79,7 +79,7 @@ router.post("/", async (req: Request, res) => {
      *   post:
      *     description: Post a story.
      *     tags: 
-     *       - Workshop
+     *       - Stories
      *     requestBody:
      *       description: The story to create
      *       required: true
@@ -115,7 +115,7 @@ router.patch("/:story_id", async (req: Request, res) => {
      *   patch:
      *     description: Patch a story.
      *     tags: 
-     *       - Workshop
+     *       - Stories
      *     parameters:
      *     - in: "path"
      *       name: "story_id"
@@ -157,7 +157,7 @@ router.delete("/:story_id", async (req: Request, res) => {
      *   delete:
      *     description: Delete a story.
      *     tags: 
-     *       - Workshop
+     *       - Stories
      *     parameters:
      *     - in: "path"
      *       name: "story_id"
