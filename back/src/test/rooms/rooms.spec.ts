@@ -36,6 +36,11 @@ describe('Stories', () => {
             // - he is in
         }
     )
+    it('A user should be able to get a room',
+        async () => {
+            // GET /rooms/room_id
+        }
+    )
     it('A user should be able to enter a room that he has the password / a public room',
         async () => {
             // PATCH rooms/{room_id}

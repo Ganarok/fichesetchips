@@ -1,7 +1,11 @@
 import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacterResponse, loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
 import defaultStories from "../../database/fixtures/stories"
+<<<<<<< HEAD
 import defaultMaps from "../../database/fixtures/maps"
+=======
+import defaultRooms from "../../database/fixtures/rooms"
+>>>>>>> d033623... Rooms controllers
 
 export const definitions = {
     loginRequest: {
@@ -408,5 +412,65 @@ export const definitions = {
                 ]
             }
         }
-    }
+    },
+    getRoomsResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Rooms successfully found"
+            },
+            data: {
+                type: "array",
+                default: [defaultRooms[0]]
+            }
+        }
+    },
+    getRoomResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Room successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultRooms[0]
+            }
+        }
+    },
+    createRoomRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Room title"
+            },
+            description: {
+                type: "string",
+                default: "Room description"
+            },
+            requirements: {
+                type: "string",
+                default: "Room requirements"
+            },
+            vocal_url: {
+                type: "string",
+                default: "Room vocal url"
+            },
+            is_private: {
+                type: "boolean",
+                default: "Room privacy"
+            },
+            is_published: {
+                type: "boolean",
+                default: "Room published"
+            },
+            password: {
+                type: "string",
+                default: "Room password"
+            },
+            players_nb_max: {
+                type: "number",
+                default: "Room nb_max"
+            },
+        }
+    },
 }
