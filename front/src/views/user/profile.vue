@@ -29,16 +29,24 @@
                     <div class="flex  justify-end w-full ">
                         <span class="tabs flex flex-row w-full pt-5 justify-evenly font-bold text-xl xl:text-3xl xl:w-4/5">
                             <span v-bind:class="[isTabActive('Friends') ? 'activeTab' : 'inactiveTab']"  @click="changeTab('Friends')">
-                                Amis
+                                <RouterLink to="/user/profile?page=Friends">
+                                    {{ $t('Amis') }} 
+                                </RouterLink>
                             </span>        
                             <span v-bind:class="[isTabActive('Stats') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Stats')">
-                                Stats
+                                <RouterLink to="/user/profile?page=Stats">
+                                    {{ $t('Stats') }} 
+                                </RouterLink>
                             </span>
                             <span v-bind:class="[isTabActive('Characters') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Characters')">
-                                Personnages
+                                <RouterLink to="/user/profile?page=Characters">
+                                    {{ $t('Personnages') }} 
+                                </RouterLink>
                             </span>
-                            <span v-bind:class="[isTabActive('Partie') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Partie')">
-                                Partie
+                            <span v-bind:class="[isTabActive('Games') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Games')">
+                                <RouterLink to="/user/profile?page=Games">
+                                    {{ $t('Partie') }} 
+                                </RouterLink>
                             </span>
                         </span>
                     </div>
@@ -106,11 +114,12 @@ export default {
         },
     },
     async mounted() {
-        this.badgeGenerator(3)
-        await this.fetch_my_friends()
-        await this.fetch_characters()
-        this.changeTab(useRoute().params.tabName)
-
+        this.changeTab(this.$route.query.page)
+    },
+    watch: {
+        $route() {
+            this.changeTab(this.$route.query.page)
+        }
     },
     methods: {
         ...mapActions({
@@ -173,10 +182,11 @@ export default {
             const components = {
                 Characters,
             }
+            console.log(string)
+            console.log("aaaaaaaaaaaa")
             let newTabName = string || "Characters"
             this.tabs = components[newTabName]
             this.tabName = newTabName
-            console.log(this.tabName)
         },
         isTabActive(tabName) {
             return this.tabName == tabName
