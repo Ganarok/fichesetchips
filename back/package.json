@@ -13,7 +13,7 @@
         "migration:create": "npm run -- typeorm migration:create",
         "migration:revert": "npm run -- typeorm migration:revert --dataSource src/database/init/datasources/public-data-source.ts",
         "migration:show": "npm run -- typeorm migration:show --dataSource src/database/init/datasources/public-data-source.ts",
-        "db:seed": "cross-env DB_MIGRATION_DIR=src/database/seeders/public/*.ts npm run -- typeorm migration:run --dataSource src/database/init/datasources/public-data-source.ts && cross-env DB_MIGRATION_DIR=src/database/seeders/characters/*.ts npm run -- typeorm migration:run --dataSource src/database/init/datasources/public-data-source.ts",
+        "db:seed": "cross-env DB_MIGRATION_DIR=src/database/seeders/public/*.ts npm run -- typeorm migration:run --dataSource src/database/init/datasources/public-data-source.ts && cross-env DB_MIGRATION_DIR=src/database/seeders/public/characters/*.ts npm run -- typeorm migration:run --dataSource src/database/init/datasources/public-data-source.ts",
         "db:refresh": "npm run -- typeorm schema:drop --dataSource src/database/init/datasources/public-data-source.ts && npm run migration:run && npm run db:seed",
         "db:create": "npm run -- typeorm query $1 --dataSource src/database/init/datasources/empty-data-source.ts"
     },
