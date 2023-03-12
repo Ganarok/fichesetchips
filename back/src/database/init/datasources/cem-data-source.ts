@@ -13,7 +13,7 @@ export const CEMDataSource = new DataSource({
     database: process.env.DB_NAME || "fichesetchips",
     synchronize: true,
     logging: false,
-    entities: ["src/database/entities/workshop/characters/*.ts"],
+    entities: ["src/database/entities/cem/characters/*.ts", "src/database/entities/cem/*.ts"],
     migrations: [process.env.DB_MIGRATION_DIR || "src/database/migrations/*.ts"],
     subscribers: ["src/database/subscribers/cem/*.ts"]
 })
