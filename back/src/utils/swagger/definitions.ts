@@ -1,5 +1,7 @@
 import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacterResponse, loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
+import defaultStories from "../../database/fixtures/stories"
+
 export const definitions = {
     loginRequest: {
         properties: {
@@ -316,4 +318,40 @@ export const definitions = {
             }
         }
     },
+    getStoriesResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Stories successfully found"
+            },
+            data: {
+                type: "array",
+                default: [defaultStories[0]]
+            }
+        }
+    },
+    getStoryResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Story successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultStories[0]
+            }
+        }
+    },
+    createStoryRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Story title"
+            },
+            path: {
+                type: "string",
+                default: "story/path/file.pdf"
+            }
+        }
+    }
 }
