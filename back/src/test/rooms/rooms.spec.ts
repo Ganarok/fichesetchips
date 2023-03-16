@@ -47,10 +47,4 @@ describe('Rooms', () => {
             // body : { password: string nullable }
         }
     )
-    it('A user should be able to enter a room that he has the password / a public room',
-        async () => {
-            // PATCH /rooms/{room_id}
-            // body: { password: string nullable }
-        }
-    )
 })

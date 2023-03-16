@@ -21,7 +21,6 @@ const ProfileRepository = PublicDataSource.getRepository(Profile)
 const ItemRepository = PublicDataSource.getRepository(Item)
 
 export async function findAll(user_id: string) {
-    console.log(user_id)
     const characters = await CharacterRepository
         .createQueryBuilder("character")
         .leftJoinAndSelect('character.race', 'race')
@@ -186,7 +185,6 @@ export async function create(user_id: string, data: any) {
             }
         }))
         .execute()
-    console.log("ok")
     await PublicDataSource
         .createQueryBuilder()
         .insert()
@@ -199,7 +197,6 @@ export async function create(user_id: string, data: any) {
             }
         }))
         .execute()
-    console.log("ok")
     await PublicDataSource
         .createQueryBuilder()
         .insert()
@@ -212,7 +209,6 @@ export async function create(user_id: string, data: any) {
             }
         }))
         .execute()
-    console.log("ok")
     await PublicDataSource
         .createQueryBuilder()
         .insert()
@@ -221,9 +217,7 @@ export async function create(user_id: string, data: any) {
             character_id: character_id, ...data.money
         })
         .execute()
-    console.log("ok")
     const character = await findById(user_id, character_id)
-    console.log("ok")
     return character
 }
 
