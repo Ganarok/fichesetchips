@@ -8,6 +8,7 @@ describe('Rooms', () => {
         async () => {
             // POST /rooms/creator
             // body : { data: Room }
+            // création de l'objet game avant création de l'objet room
         }
     )
     it('A user should be able to update a room (as game master)',
@@ -20,6 +21,7 @@ describe('Rooms', () => {
         async () => {
             // PATCH /rooms/creator/{room_id}
             // body : { is_published: true }
+            // game has to be correctly set
         }
     )
     it('A user should be able to get all rooms that are published (public / private) OR that he is the creator and not published',

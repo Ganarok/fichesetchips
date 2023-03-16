@@ -457,11 +457,11 @@ export const definitions = {
             },
             is_private: {
                 type: "boolean",
-                default: "Room privacy"
+                default: false
             },
             is_published: {
                 type: "boolean",
-                default: "Room published"
+                default: false
             },
             password: {
                 type: "string",
@@ -469,7 +469,19 @@ export const definitions = {
             },
             players_nb_max: {
                 type: "number",
-                default: "Room nb_max"
+                default: 5
+            },
+            map_id: {
+                type: "string",
+                default: "Map id"
+            },
+            story_id: {
+                type: "string",
+                default: "Story id"
+            },
+            universe: {
+                type: "string",
+                default: "cem"
             },
         }
     },
