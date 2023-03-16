@@ -15,6 +15,7 @@ export default class MapMakerScene extends Scene {
         this.layers = []
         this.tileSets = []
         this.tileSetsInfos = []
+        this.brushSize = 1
         this.tiles = []
         this.map = null
         this.selectedTile = null
@@ -24,6 +25,8 @@ export default class MapMakerScene extends Scene {
         this.eKey = null
         this.iKey = null
         this.tabKey = null
+        this.minusKey = null
+        this.plusKey = null
         this.tiles_size = 32
         this.mapsize = 32 * 20
         this.selectedLayer = 0
@@ -138,6 +141,12 @@ export default class MapMakerScene extends Scene {
         this.tabKey = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.TAB
         )
+        this.minusKey = this.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.MINUS
+        )
+        this.plusKey = this.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.PLUS
+        )
 
         // Mouse Wheel / Touchpad
         this.input.on(
@@ -170,6 +179,18 @@ export default class MapMakerScene extends Scene {
                 property: "layerTab",
                 newState: !store.state.phaser.layerTab,
             })
+        })
+
+        // Minus Key (-)
+        this.minusKey.on('down', () => {
+            this.brushSize = Math.max(1, this.brushSize - 1)
+            this._draw_cursor()
+        })
+
+        // Plus Key (+)        
+        this.plusKey.on('down', () => {
+            this.brushSize = Math.min(5, this.brushSize + 1)
+            this._draw_cursor()
         })
     }
 
@@ -219,9 +240,12 @@ export default class MapMakerScene extends Scene {
     }
 
     _draw_cursor() {
+        if (this.marker)
+            this.marker.destroy()
+
         this.marker = this.add.graphics()
         this.marker.lineStyle(2, 0xf04e4e, 1)
-        this.marker.strokeRect(0, 0, this.map.tileWidth, this.map.tileHeight)
+        this.marker.strokeRect(0, 0, this.map.tileWidth * this.brushSize, this.map.tileHeight * this.brushSize)
 
         this.cameras.main.setBounds(
             0,
@@ -331,6 +355,10 @@ export default class MapMakerScene extends Scene {
             layerName
         )
 
+        const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY);
+        const startX = tile.x - Math.floor(this.brushSize / 2)
+        const startY = tile.y - Math.floor(this.brushSize / 2)
+
         if (this.input.manager.activePointer.isDown) {
             if (this.shiftKey.isDown) {
                 this.selectedTile = this.layers[this.selectedLayer].getTileAt(
@@ -344,25 +372,31 @@ export default class MapMakerScene extends Scene {
                     newState: this.selectedTile,
                 })
             } else if (eraser) {
-                this.layers[this.selectedLayer].removeTileAt(
-                    pointerTileX,
-                    pointerTileY,
-                    true,
-                    true
-                )
+                // Supprimer la ou les tiles selon la taille du brush
+                for (let x = startX; x < startX + this.brushSize; x++) {
+                    for (let y = startY; y < startY + this.brushSize; y++) {
+                        this.layers[this.selectedLayer].removeTileAt(
+                            pointerTileX + x + Math.floor(this.brushSize / 2),
+                            pointerTileY + y + Math.floor(this.brushSize / 2),
+                            true,
+                            true
+                        )
+                    }
+                }
             } else {
-                this.layers[this.selectedLayer].putTileAt(
-                    this.selectedTile,
-                    pointerTileX,
-                    pointerTileY,
-                    true,
-                    layerName
-                )
+                // Applique une texture sur toutes les tiles du brush
+                for (let x = startX; x < startX + this.brushSize; x++) {
+                    for (let y = startY; y < startY + this.brushSize; y++) {
+                        this.layers[this.selectedLayer].putTileAt(
+                            this.selectedTile,
+                            pointerTileX + x + Math.floor(this.brushSize / 2),
+                            pointerTileY + y + Math.floor(this.brushSize / 2),
+                            true,
+                            layerName
+                        )
+                    }
+                }
             }
-        } else {
-            this.layers.forEach((layer, index) =>
-                this.layers[index].setVisible(true)
-            )
         }
     }
 
