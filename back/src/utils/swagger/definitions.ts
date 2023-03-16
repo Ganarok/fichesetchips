@@ -6,6 +6,7 @@ import defaultMaps from "../../database/fixtures/maps"
 =======
 import defaultRooms from "../../database/fixtures/rooms"
 >>>>>>> d033623... Rooms controllers
+import defaultGames from "../../database/fixtures/games"
 import { GameStatus } from "../../database/entities/public/Game";
 
 export const definitions = {
@@ -435,6 +436,18 @@ export const definitions = {
             data: {
                 type: "object",
                 default: defaultRooms[0]
+            }
+        }
+    },
+    getGameResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Game successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultGames[0]
             }
         }
     },

@@ -4,17 +4,15 @@ import { agent as request } from 'supertest';
 import 'mocha'
 
 describe('Games', () => {
-    it('A user should be able to post a player to a game',
+    it('A user should be able to set his character for a game',
         async () => {
             // POST players/{game_id}
-            // body: { data: Player }
-            // update de game
+            // body: { character_id : uuid }
             // création d'un player
-        }
-    )
-    it('A user OR the gm should be able to delete a player from a game',
-        async () => {
-            // DELETE players/{player_id}
+
+            // PATCH players/{player_id}
+            // body: { character_id : uuid }
+            // update d'un player
         }
     )
 })
