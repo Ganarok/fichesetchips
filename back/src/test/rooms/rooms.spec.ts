@@ -32,6 +32,7 @@ describe('Rooms', () => {
             // - not created by me public
             // - not created by me private
             // - he is in
+            // ajouter nb de players dans la room ?
         }
     )
     it('A user should be able to get a room',
