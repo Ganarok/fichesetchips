@@ -2,6 +2,7 @@ import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacter
 
 import defaultStories from "../../database/fixtures/stories"
 import defaultRooms from "../../database/fixtures/rooms"
+import { GameStatus } from "../../database/entities/public/Game";
 
 export const definitions = {
     loginRequest: {
@@ -427,4 +428,24 @@ export const definitions = {
             },
         }
     },
+    updateGameRequest: {
+        properties: {
+            map_id: {
+                type: "string",
+                default: "Map id"
+            },
+            story_id: {
+                type: "string",
+                default: "Story id"
+            },
+            universe: {
+                type: "string",
+                default: "cem"
+            },
+            status: {
+                type: GameStatus,
+                default: GameStatus.PLANNED
+            },
+        }
+    }
 }
