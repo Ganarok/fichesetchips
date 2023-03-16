@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm"
+import { Character } from "./characters/Character";
 import { Game } from "./Game";
 import { User } from "./User";
 
@@ -9,13 +10,14 @@ export class Player {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @ManyToOne(type => User, user => user.players)
+    @ManyToOne(type => User, user => user.players, { onDelete: "CASCADE" })
     user: User;
 
-    @Column({ default: "not implemented" })
-    character: string
+    @OneToOne(type => Character, { onDelete: "CASCADE" })
+    @JoinColumn()
+    character: Character
 
-    @ManyToOne(type => Game, game => game.players)
+    @ManyToOne(type => Game, game => game.players, { onDelete: "CASCADE" })
     game: Game;
 
     @Column({ default: "not implemented" })
