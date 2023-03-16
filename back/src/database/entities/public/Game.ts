@@ -21,7 +21,7 @@ export class Game {
     })
     status: GameStatus
 
-    @ManyToOne(type => Story, story => story.games, { onDelete: "CASCADE" })
+    @ManyToOne(type => Story, story => story.games, { onDelete: "CASCADE", nullable: true })
     story: Story;
 
     @Column({ default: "not implemented" })
