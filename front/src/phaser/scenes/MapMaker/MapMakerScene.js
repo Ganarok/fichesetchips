@@ -390,7 +390,7 @@ export default class MapMakerScene extends Scene {
             layerName
         )
 
-        const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY);
+        const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY)
         const startX = tile.x - Math.floor(this.brushSize / 2)
         const startY = tile.y - Math.floor(this.brushSize / 2)
 
