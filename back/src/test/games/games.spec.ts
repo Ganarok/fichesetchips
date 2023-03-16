@@ -4,10 +4,16 @@ import { agent as request } from 'supertest';
 import 'mocha'
 
 describe('Games', () => {
-    it('A user should be able to update a game (as game master)',
+    it('A gm should be able to begin a game',
         async () => {
-            // PUT /games/{game_id}
-            // body : { data: Game }
+            // PATCH /games/creator/{game_id}
+            // body : { status: running }
+        }
+    )
+    it('A gm should be able to close / pause a game',
+        async () => {
+            // PUT /games/creator/{game_id}
+            // body : { status: closed, state: State }
         }
     )
 })
