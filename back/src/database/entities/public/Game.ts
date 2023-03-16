@@ -21,7 +21,7 @@ export class Game {
     })
     status: GameStatus
 
-    @ManyToOne(type => Story, story => story.games)
+    @ManyToOne(type => Story, story => story.games, { onDelete: "CASCADE" })
     story: Story;
 
     @Column({ default: "not implemented" })
@@ -30,6 +30,6 @@ export class Game {
     @Column({ default: "not implemented" })
     universe: string
 
-    @OneToMany(type => Player, player => player.game)
+    @OneToMany(type => Player, player => player.game, { onDelete: "CASCADE" })
     players: Player[];
 }
