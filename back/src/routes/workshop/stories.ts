@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", async (req: Request, res) => {
     /**
      * @swagger
-     * /cem/stories:
+     * /stories:
      *   get:
      *     description: Get my created stories.
      *     tags: 
@@ -39,7 +39,7 @@ router.get("/", async (req: Request, res) => {
 router.get("/:story_id", async (req: Request, res) => {
     /**
      * @swagger
-     * /cem/stories/{story_id}:
+     * /stories/{story_id}:
      *   get:
      *     description: Get a story.
      *     tags: 
@@ -75,7 +75,7 @@ router.get("/:story_id", async (req: Request, res) => {
 router.post("/", async (req: Request, res) => {
     /**
      * @swagger
-     * /cem/stories:
+     * /stories:
      *   post:
      *     description: Post a story.
      *     tags: 
@@ -111,7 +111,7 @@ router.post("/", async (req: Request, res) => {
 router.patch("/:story_id", async (req: Request, res) => {
     /**
      * @swagger
-     * /cem/stories/{story_id}:
+     * /stories/{story_id}:
      *   patch:
      *     description: Patch a story.
      *     tags: 
@@ -153,7 +153,7 @@ router.patch("/:story_id", async (req: Request, res) => {
 router.delete("/:story_id", async (req: Request, res) => {
     /**
      * @swagger
-     * /cem/stories/{story_id}:
+     * /stories/{story_id}:
      *   delete:
      *     description: Delete a story.
      *     tags: 
