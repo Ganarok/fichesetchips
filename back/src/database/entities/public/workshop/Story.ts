@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique, OneToMany } from "typeorm"
 import { User } from "../User";
+import { Game } from "../Game";
 
 @Entity()
 @Unique(['user_id', 'title'])
@@ -22,6 +23,9 @@ export class Story {
         referencedColumnName: "id"
     })
     creator: User
+
+    @OneToMany(type => Game, game => game.story)
+    games: Game[];
 
     @CreateDateColumn({ type: "timestamp" })
     created_at: string
