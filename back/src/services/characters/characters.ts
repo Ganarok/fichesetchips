@@ -1,24 +1,24 @@
-import { CEMDataSource } from "../../database/init/datasources/cem-data-source";
-import { Character } from "../../database/entities/cem/characters/Character";
-import { Race } from "../../database/entities/cem/characters/Race";
-import { Language } from "../../database/entities/cem/characters/Language";
-import { Characteristic } from "../../database/entities/cem/characters/Characteristic";
-import { Class } from "../../database/entities/cem/characters/Class";
-import { CharacteristicModificator } from "../../database/entities/cem/characters/CharacteristicModificator";
-import { Level } from "../../database/entities/cem/characters/Level";
-import { Profile } from "../../database/entities/cem/characters/Profile";
-import { Item } from "../../database/entities/cem/characters/Item";
-import { use } from "chai";
+import { PublicDataSource } from "../../database/init/datasources/public-data-source";
+import { Character } from "../../database/entities/public/characters/Character";
+import { Race } from "../../database/entities/public/characters/Race";
+import { Language } from "../../database/entities/public/characters/Language";
+import { Characteristic } from "../../database/entities/public/characters/Characteristic";
+import { Class } from "../../database/entities/public/characters/Class";
+import { CharacteristicModificator } from "../../database/entities/public/characters/CharacteristicModificator";
+import { Level } from "../../database/entities/public/characters/Level";
+import { Profile } from "../../database/entities/public/characters/Profile";
+import { Item } from "../../database/entities/public/characters/Item";
 
-const CharacterRepository = CEMDataSource.getRepository(Character)
-const RaceRepository = CEMDataSource.getRepository(Race)
-const LanguageRepository = CEMDataSource.getRepository(Language)
-const CharacteristicRepository = CEMDataSource.getRepository(Characteristic)
-const ClassRepository = CEMDataSource.getRepository(Class)
-const CharacModRepository = CEMDataSource.getRepository(CharacteristicModificator)
-const LevelRepository = CEMDataSource.getRepository(Level)
-const ProfileRepository = CEMDataSource.getRepository(Profile)
-const ItemRepository = CEMDataSource.getRepository(Item)
+
+const CharacterRepository = PublicDataSource.getRepository(Character)
+const RaceRepository = PublicDataSource.getRepository(Race)
+const LanguageRepository = PublicDataSource.getRepository(Language)
+const CharacteristicRepository = PublicDataSource.getRepository(Characteristic)
+const ClassRepository = PublicDataSource.getRepository(Class)
+const CharacModRepository = PublicDataSource.getRepository(CharacteristicModificator)
+const LevelRepository = PublicDataSource.getRepository(Level)
+const ProfileRepository = PublicDataSource.getRepository(Profile)
+const ItemRepository = PublicDataSource.getRepository(Item)
 
 export async function findAll(user_id: string) {
     console.log(user_id)
@@ -157,14 +157,14 @@ export async function characterCreation() {
 }
 
 export async function create(user_id: string, data: any) {
-    const insert = await CEMDataSource
+    const insert = await PublicDataSource
         .createQueryBuilder()
         .insert()
         .into(Character)
         .values({ user_id: user_id, experience_points: 0, next_level_experience_points: 300, ...data.character })
         .execute()
     const character_id = insert.identifiers[0].id
-    await CEMDataSource
+    await PublicDataSource
         .createQueryBuilder()
         .insert()
         .into("character_skill")
@@ -175,7 +175,7 @@ export async function create(user_id: string, data: any) {
             }
         }))
         .execute()
-    await CEMDataSource
+    await PublicDataSource
         .createQueryBuilder()
         .insert()
         .into("character_language")
@@ -187,7 +187,7 @@ export async function create(user_id: string, data: any) {
         }))
         .execute()
     console.log("ok")
-    await CEMDataSource
+    await PublicDataSource
         .createQueryBuilder()
         .insert()
         .into("character_characteristic")
@@ -200,7 +200,7 @@ export async function create(user_id: string, data: any) {
         }))
         .execute()
     console.log("ok")
-    await CEMDataSource
+    await PublicDataSource
         .createQueryBuilder()
         .insert()
         .into("equipment")
@@ -213,7 +213,7 @@ export async function create(user_id: string, data: any) {
         }))
         .execute()
     console.log("ok")
-    await CEMDataSource
+    await PublicDataSource
         .createQueryBuilder()
         .insert()
         .into("money")

@@ -13,5 +13,5 @@ export const routing = (app: Express) => {
     app.use("/auth", auth)
     app.use("/cem/characters", verifyToken, characters)
     app.use("/universes", verifyToken, universes)
-    app.use("/cem/stories", verifyToken, stories)
+    app.use("/stories", verifyToken, stories)
 }

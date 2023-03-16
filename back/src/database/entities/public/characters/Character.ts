@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm"
 import { OnDeleteType } from "typeorm/metadata/types/OnDeleteType";
-import { User } from "../../public/User";
+import { User } from "../User";
 import { CharacterCharacteristic } from "./CharacterCaracteristic";
 import { Characteristic } from "./Characteristic";
 import { Class } from "./Class";
@@ -83,13 +83,12 @@ export class Character {
     @Column()
     next_level_experience_points: number
 
-    // TOFIX : cannot do it in that way because user table is in another schema. I did it alamno inside the migration file
-    // @ManyToOne(() => User, (user) => user.id, { onDelete: "CASCADE" })
-    // @JoinColumn({
-    //     name: 'user_id',
-    //     referencedColumnName: "id"
-    // })
-    // user: User
+    @ManyToOne(() => User, (user) => user.id, { onDelete: "CASCADE" })
+    @JoinColumn({
+        name: 'user_id',
+        referencedColumnName: "id"
+    })
+    user: User
 
     @ManyToOne(() => Race, (race) => race.id, { onDelete: "CASCADE" })
     @JoinColumn({
