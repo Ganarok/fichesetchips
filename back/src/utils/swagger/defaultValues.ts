@@ -1702,9 +1702,9 @@ export const characterWorkshopCreationResponse = {
             "firstname": "",
             "lastname": "",
             "sex": [
-                "MALE",
-                "FEMALE",
-                "OTHER"
+                "Male",
+                "Female",
+                "Other"
             ],
             "eye_color": "",
             "hair_color": "",
@@ -2677,7 +2677,7 @@ export const GetCharacterResponse =
     "user_id": "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
     "firstname": "firstname",
     "lastname": "lastname",
-    "sex": "FEMALE",
+    "sex": "Female",
     "eye_color": "BLUE",
     "hair_color": "BLACK",
     "skin_color": "BROWN",
@@ -2894,7 +2894,7 @@ export const createCharacterRequest = {
     "character": {
         "firstname": "firstname",
         "lastname": "lastname",
-        "sex": "FEMALE",
+        "sex": "Female",
         "eye_color": "BLUE",
         "hair_color": "BLACK",
         "skin_color": "BROWN",

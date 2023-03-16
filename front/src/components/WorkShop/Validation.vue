@@ -77,6 +77,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { useToast } from 'vue-toastification'
 
 import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
 import StatSelector from '@/components/subComponent/StatSelector.vue'
@@ -115,20 +116,23 @@ export default {
             this.character_creation.character_characteristic = stats
         },
         async validation() {
+            const toast = useToast()
             this.parseStats()
 
             console.log(this.character_creation)
 
-            const res = await apiCall({
-                route: '/cem/characters/creation',
-                method: 'POST',
-                body: this.character_creation
-            })
+            try {
+                await apiCall({
+                    route: '/cem/characters/creation',
+                    method: 'POST',
+                    body: this.character_creation
+                })
 
-            if (!res.ok)
-                console.log('Error', res)
-
-            // await this.$router.push('/characters')
+                await this.$router.push('/characters')
+                    .then(() => toast.success('Personnage créé avec succès'))
+            } catch (error) {
+                toast.error(error)
+            }
         }
     }
 }

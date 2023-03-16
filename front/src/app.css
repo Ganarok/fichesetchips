@@ -10,6 +10,12 @@
     }
 }
 
+@layer components {
+    .hoverStyle {
+        @apply hover:opacity-80 hover:scale-105 transition duration-100 cursor-pointer
+    }
+}
+
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
