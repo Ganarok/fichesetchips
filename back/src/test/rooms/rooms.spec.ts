@@ -3,8 +3,8 @@ import { assert, expect } from 'chai';
 import { agent as request } from 'supertest';
 import 'mocha'
 
-describe('Stories', () => {
-    it('A user should be able to create a room + Game (as game master)',
+describe('Rooms', () => {
+    it('A user should be able to create a room (as game master)',
         async () => {
             // POST /games/creator
             // body : { data: Game } 
@@ -12,7 +12,7 @@ describe('Stories', () => {
             // body : { data: Room }
         }
     )
-    it('A user should be able to update a room + Game (as game master)',
+    it('A user should be able to update a room (as game master)',
         async () => {
             // PUT /rooms/creator/{room_id}
             // body : { data: Room }
@@ -39,6 +39,7 @@ describe('Stories', () => {
     it('A user should be able to get a room',
         async () => {
             // GET /rooms/room_id
+            // link with the game & players
         }
     )
     it('A user should be able to enter a room that he has the password / a public room',
