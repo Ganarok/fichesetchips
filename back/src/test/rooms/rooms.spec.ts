@@ -6,8 +6,6 @@ import 'mocha'
 describe('Rooms', () => {
     it('A user should be able to create a room (as game master)',
         async () => {
-            // POST /games/creator
-            // body : { data: Game } 
             // POST /rooms/creator
             // body : { data: Room }
         }
@@ -16,8 +14,6 @@ describe('Rooms', () => {
         async () => {
             // PUT /rooms/creator/{room_id}
             // body : { data: Room }
-            // PUT /games/creator/{room_id}
-            // body : { data: Game }
         }
     )
     it('A gm should be able to put on published one of his created rooms => only if the object game is correctly set (with story_id and map_id)',
@@ -46,10 +42,6 @@ describe('Rooms', () => {
         async () => {
             // PATCH rooms/{room_id}
             // body : { password: string nullable }
-            // POST players/{room_id}
-            // body: { password: string nullable, character_id: uuid }
-            // update de game
-            // création d'un player
         }
     )
     it('A user should be able to enter a room that he has the password / a public room',
