@@ -12,9 +12,9 @@ describe('Games', () => {
             // création d'un player
         }
     )
-    it('A user should be able to delete a player from a game',
+    it('A user OR the gm should be able to delete a player from a game',
         async () => {
-            // DELETE players/{ player_id }
+            // DELETE players/{player_id}
         }
     )
 })
