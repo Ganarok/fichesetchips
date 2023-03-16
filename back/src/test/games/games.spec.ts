@@ -12,7 +12,7 @@ describe('Games', () => {
     )
     it('A user should be able to update a game (as game master)',
         async () => {
-            // PUT /games/{room_id}/{game_id}
+            // PUT /games/{game_id}
             // body : { data: Game }
         }
     )
