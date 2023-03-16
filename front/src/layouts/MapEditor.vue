@@ -5,7 +5,7 @@
     >
         <Topbar />
 
-        <div class="absolute right-4 my-4 z-50 p-2 bg-fc-black-light transition">
+        <div class="absolute right-4 my-4 z-10 p-2 bg-fc-black-light transition">
             <div class="flex flex-col space-y-2">
                 <div
                     id="selectedTile"
@@ -44,22 +44,17 @@
             </div>
         </div>
 
-        <div class="absolute z-50 m-4">
+        <div class="absolute m-4 mt-8">
             <div
-                class="flex flex-col space-y-4 p-4 font-bold text-fc-green text-center transition bg-fc-black-light opacity-50 hover:opacity-100 delay-200 hover:delay-75"
+                class="flex flex-col space-y-4 p-4 font-bold text-fc-green text-center transition bg-fc-black-light opacity-40 hover:opacity-100 delay-200 hover:delay-75"
             >
-                <p>
-                    Layer selectionné :<br>
-                    <span class="text-fc-yellow">
-                        {{
-                            $store.state.phaser.layers[$store.state.phaser.selectedLayer].name
-                        }}
-                    </span>
+                <p class="text-fc-yellow">
+                    Outils
                 </p>
             </div>
         </div>
 
-        <div class="absolute w-full z-50 bottom-0">
+        <div class="absolute w-full z-10 bottom-0">
             <Layers />
         </div>
 

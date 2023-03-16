@@ -18,6 +18,6 @@ export default class BootScene extends Scene {
     create() {
     // TODO: dans le .start() en deuxième argument l'object avec les assets
 
-        this.scene.start("WorkshopTilemap", {})
+        this.scene.start("MapMakerScene", {})
     }
 }
