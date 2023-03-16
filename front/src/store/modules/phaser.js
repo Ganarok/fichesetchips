@@ -2,7 +2,9 @@ export default {
     namespaced: true,
     state: {
         launched: false,
+        title: 'Untitled',
         controls: null,
+        isExporting: false,
         layers: [
             {
                 name: "grounds",
@@ -33,6 +35,7 @@ export default {
         resetStates(state) {
             state.launched = false
             state.controls = null
+            state.isExporting = false
             state.layers = [
                 {
                     name: "grounds",
