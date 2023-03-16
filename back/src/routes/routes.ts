@@ -4,6 +4,8 @@ import auth from "./auth";
 import friends from "./friends";
 import characters from "./cem/characters";
 import universes from "./universes";
+import games from "./games";
+// import players from "./players";
 import stories from "./workshop/stories";
 import { verifyToken } from "../middleware/authJwt";
 
@@ -14,4 +16,6 @@ export const routing = (app: Express) => {
     app.use("/cem/characters", verifyToken, characters)
     app.use("/universes", verifyToken, universes)
     app.use("/stories", verifyToken, stories)
+    app.use("/games", verifyToken, games)
+    // app.use("/players", verifyToken, players)
 }
