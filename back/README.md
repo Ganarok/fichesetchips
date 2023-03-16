@@ -105,10 +105,8 @@ And enter your Bearer Token
 
 - Generate migration file from new entities
 
-You need to specify you schema : `cem` or `public`. Here the command for `public` schema :
-
 ```
-npm run migration:generate:public src/database/migrations/<YourEntityName>Migrations
+npm run migration:generate src/database/migrations/<YourEntityName>Migrations
 ```
 
 - Create blank migration file

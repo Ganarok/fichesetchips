@@ -13,7 +13,7 @@ export const PublicDataSource = new DataSource({
     database: process.env.DB_NAME || "fichesetchips",
     synchronize: true,
     logging: false,
-    entities: ["src/database/entities/public/workshop/*.ts", "src/database/entities/public/*.ts"],
+    entities: ["src/database/entities/public/characters/*.ts", "src/database/entities/public/workshop/*.ts", "src/database/entities/public/*.ts"],
     migrations: [process.env.DB_MIGRATION_DIR || "src/database/migrations/*.ts"],
-    subscribers: ["src/database/subscribers/*.ts"]
+    subscribers: ["src/database/subscribers/*.ts", "src/database/subscribers/characters/*.ts"]
 })
