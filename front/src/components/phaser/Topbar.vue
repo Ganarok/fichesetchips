@@ -64,26 +64,6 @@ import EditableDiv from '@/components/subComponent/EditableDiv.vue'
 export default {
     name: "Topbar",
     components: { EditableDiv },
-    computed: {
-        ...mapState("phaser", {
-            title: (state) => state.title,
-        }),
-    },
-    methods: {
-        exportMap() {
-            this.optionsOpened = false;
-            console.log("Télécharger");
-            store.commit("phaser/updateState", { property: "isExporting", newState: true });
-        },
-        saveMap() {
-            this.optionsOpened = false;
-            console.log("save");
-        },
-        loadMap() {
-            this.optionsOpened = false;
-            console.log("load");
-        },
-    },
     data() {
         return {
             optionsOpened: false,
@@ -101,7 +81,27 @@ export default {
                     action: () => this.loadMap(),
                 }
             ]
-        };
+        }
+    },
+    computed: {
+        ...mapState("phaser", {
+            title: (state) => state.title,
+        }),
+    },
+    methods: {
+        exportMap() {
+            this.optionsOpened = false
+            console.log("Télécharger")
+            store.commit("phaser/updateState", { property: "isExporting", newState: true })
+        },
+        saveMap() {
+            this.optionsOpened = false
+            console.log("save")
+        },
+        loadMap() {
+            this.optionsOpened = false
+            console.log("load")
+        },
     }
 }
 </script>
