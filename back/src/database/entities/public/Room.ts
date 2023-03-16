@@ -12,7 +12,7 @@ export class Room {
     title: string
 
     @Column({ type: "text" })
-    decription: string
+    description: string
 
     @Column({ type: "text" })
     requirements: string
@@ -32,10 +32,10 @@ export class Room {
     @Column()
     players_nb_max: number
 
-    @ManyToOne(type => User, user => user.rooms)
+    @ManyToOne(type => User, user => user.rooms, { onDelete: "CASCADE" })
     gm: User
 
-    @OneToOne(type => Game)
+    @OneToOne(type => Game, { onDelete: "CASCADE" })
     @JoinColumn()
     game: Game
 
