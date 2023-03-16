@@ -1,16 +1,17 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class RoomMigrations1678445357002 implements MigrationInterface {
-    name = 'RoomMigrations1678445357002'
+export class RoomsMigrations1678969123631 implements MigrationInterface {
+    name = 'RoomsMigrations1678969123631'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             CREATE TABLE "player" (
                 "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
-                "character" character varying NOT NULL DEFAULT 'not implemented',
                 "state_id" character varying NOT NULL DEFAULT 'not implemented',
                 "userId" uuid,
+                "characterId" uuid,
                 "gameId" uuid,
+                CONSTRAINT "REL_07d489022a5f8ed3d8e9f59506" UNIQUE ("characterId"),
                 CONSTRAINT "PK_65edadc946a7faf4b638d5e8885" PRIMARY KEY ("id")
             )
         `);
@@ -48,23 +49,27 @@ export class RoomMigrations1678445357002 implements MigrationInterface {
         `);
         await queryRunner.query(`
             ALTER TABLE "player"
-            ADD CONSTRAINT "FK_7687919bf054bf262c669d3ae21" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_7687919bf054bf262c669d3ae21" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
         await queryRunner.query(`
             ALTER TABLE "player"
-            ADD CONSTRAINT "FK_7dfdd31fcd2b5aa3b08ed15fe8a" FOREIGN KEY ("gameId") REFERENCES "game"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_07d489022a5f8ed3d8e9f59506c" FOREIGN KEY ("characterId") REFERENCES "character"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "player"
+            ADD CONSTRAINT "FK_7dfdd31fcd2b5aa3b08ed15fe8a" FOREIGN KEY ("gameId") REFERENCES "game"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
         await queryRunner.query(`
             ALTER TABLE "game"
-            ADD CONSTRAINT "FK_60aa4ec0e63a8e0de9e45cc3f00" FOREIGN KEY ("storyId") REFERENCES "story"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_60aa4ec0e63a8e0de9e45cc3f00" FOREIGN KEY ("storyId") REFERENCES "story"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
         await queryRunner.query(`
             ALTER TABLE "room"
-            ADD CONSTRAINT "FK_a800d9fa03591fc41cdd22360c5" FOREIGN KEY ("gmId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_a800d9fa03591fc41cdd22360c5" FOREIGN KEY ("gmId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
         await queryRunner.query(`
             ALTER TABLE "room"
-            ADD CONSTRAINT "FK_b6670c42fb2ea4ff502015b0efe" FOREIGN KEY ("gameId") REFERENCES "game"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_b6670c42fb2ea4ff502015b0efe" FOREIGN KEY ("gameId") REFERENCES "game"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
     }
 
@@ -80,6 +85,9 @@ export class RoomMigrations1678445357002 implements MigrationInterface {
         `);
         await queryRunner.query(`
             ALTER TABLE "player" DROP CONSTRAINT "FK_7dfdd31fcd2b5aa3b08ed15fe8a"
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "player" DROP CONSTRAINT "FK_07d489022a5f8ed3d8e9f59506c"
         `);
         await queryRunner.query(`
             ALTER TABLE "player" DROP CONSTRAINT "FK_7687919bf054bf262c669d3ae21"

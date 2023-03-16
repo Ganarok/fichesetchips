@@ -20,7 +20,7 @@ export class Story {
     @ManyToOne(type => User, user => user.stories, { onDelete: "CASCADE" })
     creator: User
 
-    @OneToMany(type => Game, game => game.story)
+    @OneToMany(type => Game, game => game.story, { onDelete: "CASCADE" })
     games: Game[];
 
     @CreateDateColumn({ type: "timestamp" })
