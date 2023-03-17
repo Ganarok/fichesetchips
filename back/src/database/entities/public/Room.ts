@@ -32,10 +32,10 @@ export class Room {
     @Column()
     players_nb_max: number
 
-    @ManyToOne(type => User, user => user.rooms, { onDelete: "CASCADE" })
+    @ManyToOne(() => User, user => user.rooms, { onDelete: "CASCADE", eager: true })
     gm: User
 
-    @OneToOne(type => Game, { onDelete: "CASCADE" })
+    @OneToOne(type => Game, { onDelete: "CASCADE", eager: true })
     @JoinColumn()
     game: Game
 

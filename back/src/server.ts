@@ -8,8 +8,11 @@ import { Server } from 'socket.io'
 import { createServer } from 'http'
 import initSockets from "./sockets/index"
 import { databaseConnection } from "./database/init/connection";
+const morgan = require('morgan')
+
 dotenv.config();
 const app = express();
+app.use(morgan('combined'))
 app.set("db_connexion", false)
 databaseConnection()
     .then(() => {
@@ -38,7 +41,7 @@ httpServer.on('dbConnected', () => {
     httpServer.listen(port, host, () => {
         console.log(`App is running here : http://${host}:${port} \nYou can find the doc here : http://${host}:${port}/docs`);
     })
-    
+
     initSockets(ioRooms)
 })
 

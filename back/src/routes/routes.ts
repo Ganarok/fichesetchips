@@ -8,6 +8,7 @@ import games from "./games";
 // import players from "./players";
 import stories from "./workshop/stories";
 import { verifyToken } from "../middleware/authJwt";
+import rooms from "./workshop/rooms";
 
 export const routing = (app: Express) => {
     app.use("/users", verifyToken, users)
@@ -16,6 +17,7 @@ export const routing = (app: Express) => {
     app.use("/cem/characters", verifyToken, characters)
     app.use("/universes", verifyToken, universes)
     app.use("/stories", verifyToken, stories)
+    app.use("/rooms", verifyToken, rooms)
     app.use("/games", verifyToken, games)
     // app.use("/players", verifyToken, players)
 }
