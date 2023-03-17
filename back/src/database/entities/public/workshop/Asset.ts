@@ -1,23 +1,25 @@
 import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique } from "typeorm"
 import { User } from "../User";
+import { CMap } from "./CMap";
 
 @Entity()
-@Unique(['creatorId', 'title'])
-export class Story {
+@Unique(['cmapId', 'name'])
+export class Asset {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ type: "uuid" })
-    creatorId: string;
-
     @Column()
-    title: string;
+    name: string;
 
-    @Column({ unique: true })
-    path: string;
+    // Here, i added cmapIp in order to add Unique constraint on ['cmapId', 'name']
+    @Column({ type: "uuid" })
+    cmapId: string;
 
-    @ManyToOne(type => User, user => user.stories, { onDelete: "CASCADE" })
-    creator: User
+    @Column({type: "bytea"})
+    image: Buffer;
+
+    @ManyToOne(type => CMap, cmap => cmap.assets, { onDelete: "CASCADE" })
+    cmap: CMap
 
     @CreateDateColumn({ type: "timestamp" })
     created_at: string
