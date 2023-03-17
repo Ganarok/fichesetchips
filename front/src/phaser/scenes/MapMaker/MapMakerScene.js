@@ -30,6 +30,7 @@ export default class MapMakerScene extends Scene {
         this.tiles_size = 32
         this.mapsize = 32 * 20
         this.selectedLayer = 0
+        this.scaleLevel = 1
     }
 
     init() { // props : (data)
@@ -147,6 +148,8 @@ export default class MapMakerScene extends Scene {
         this.plusKey = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.PLUS
         )
+        this.zKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
+        this.uKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.U)
 
         // Mouse Wheel / Touchpad
         this.input.on(
@@ -182,15 +185,47 @@ export default class MapMakerScene extends Scene {
         })
 
         // Minus Key (-)
-        this.minusKey.on('down', () => {
+        this.uKey.on('down', () => {
             this.brushSize = Math.max(1, this.brushSize - 1)
             this._draw_cursor()
         })
 
         // Plus Key (+)        
-        this.plusKey.on('down', () => {
+        this.zKey.on('down', () => {
             this.brushSize = Math.min(5, this.brushSize + 1)
             this._draw_cursor()
+        })
+
+        // Zoom In
+        this.plusKey.on('down', () => {
+            if (this.scaleLevel < 5) { 
+                if (this.scaleLevel < 1) {
+                    this.scaleLevel *= 2
+                } else {
+                    this.scaleLevel += 1
+                }
+                
+                // Refresh the map and the red cursor
+                this.layers.forEach(layer => layer.setScale(this.scaleLevel))
+                this.game.scale.setGameSize(this.map.widthInPixels * this.scaleLevel, this.map.heightInPixels * this.scaleLevel)
+                this._draw_cursor()
+            }
+        })
+
+        // Zoom Out
+        this.minusKey.on('down', () => {
+            if (this.scaleLevel > 0.25) {
+                if (this.scaleLevel <= 1) {
+                    this.scaleLevel /= 2
+                } else {
+                    this.scaleLevel -= 1
+                }
+    
+                // Refresh the map and the red cursor
+                this.layers.forEach(layer => layer.setScale(this.scaleLevel))
+                this.game.scale.setGameSize(this.map.widthInPixels * this.scaleLevel, this.map.heightInPixels * this.scaleLevel)
+                this._draw_cursor()
+            }
         })
     }
 
@@ -245,7 +280,7 @@ export default class MapMakerScene extends Scene {
 
         this.marker = this.add.graphics()
         this.marker.lineStyle(2, 0xf04e4e, 1)
-        this.marker.strokeRect(0, 0, this.map.tileWidth * this.brushSize, this.map.tileHeight * this.brushSize)
+        this.marker.strokeRect(0, 0, (this.map.tileWidth * this.brushSize) * this.scaleLevel, (this.map.tileHeight * this.brushSize) * this.scaleLevel)
 
         this.cameras.main.setBounds(
             0,
@@ -355,7 +390,7 @@ export default class MapMakerScene extends Scene {
             layerName
         )
 
-        const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY);
+        const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY)
         const startX = tile.x - Math.floor(this.brushSize / 2)
         const startY = tile.y - Math.floor(this.brushSize / 2)
 
@@ -376,7 +411,7 @@ export default class MapMakerScene extends Scene {
                 for (let x = startX; x < startX + this.brushSize; x++) {
                     for (let y = startY; y < startY + this.brushSize; y++) {
                         this.layers[this.selectedLayer].removeTileAt(
-                            pointerTileX + x + Math.floor(this.brushSize / 2),
+                            (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,
                             pointerTileY + y + Math.floor(this.brushSize / 2),
                             true,
                             true
@@ -389,8 +424,8 @@ export default class MapMakerScene extends Scene {
                     for (let y = startY; y < startY + this.brushSize; y++) {
                         this.layers[this.selectedLayer].putTileAt(
                             this.selectedTile,
-                            pointerTileX + x + Math.floor(this.brushSize / 2),
-                            pointerTileY + y + Math.floor(this.brushSize / 2),
+                            (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,
+                            (pointerTileY + y + Math.floor(this.brushSize / 2)) * this.scaleLevel,
                             true,
                             layerName
                         )
