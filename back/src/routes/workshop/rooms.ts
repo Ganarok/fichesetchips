@@ -30,7 +30,7 @@ router.get("/", async (req: Request, res) => {
      */
     try {
         const response = await roomsService.findAll(((req as CustomRequest).jwtPayload as JwtPayload).username);
-        res.status(200).send({ data: response, message: 'Rooms successfully found' });
+        res.status(200).send({ data: response, message: 'Rooms found' });
     } catch (error) {
         return getErrorMessage(error, res);
     }
