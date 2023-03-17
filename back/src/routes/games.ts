@@ -7,12 +7,12 @@ import { GameStatus } from "../database/entities/public/Game";
 
 const router = express.Router();
 
-router.put("/:game_id", async (req: Request, res) => {
+router.patch("/:game_id", async (req: Request, res) => {
     /**
      * @swagger
      * /games/{game_id}:
-     *   put:
-     *     description: A gm can update a game.
+     *   patch:
+     *     description: A gm can begin a game.
      *     tags: 
      *       - Games
      *     parameters:
@@ -22,7 +22,7 @@ router.put("/:game_id", async (req: Request, res) => {
      *       required: true
      *       description: "id of the game"
      *     requestBody:
-     *       description: The game to update
+     *       description: The game to begin
      *       required: true
      *       content:
      *         application/json:

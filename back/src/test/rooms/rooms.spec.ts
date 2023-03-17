@@ -32,6 +32,7 @@ describe('Rooms', () => {
             // - not created by me public
             // - not created by me private
             // - he is in
+            // - he has played in but the game is close
             // ajouter nb de players dans la room ?
         }
     )
@@ -45,6 +46,30 @@ describe('Rooms', () => {
         async () => {
             // PATCH rooms/{room_id}
             // body : { password: string nullable }
+        }
+    )
+    it('A gm should be able to remove a user from a room',
+        async () => {
+            // DELETE rooms/creator/{room_id}/remove/{user_id}
+            // This should update game
+            // destroy player 
+            // and update related character
+        }
+    )
+    it('A user should be able to leave a room',
+        async () => {
+            // DELETE rooms/{room_id}/leave
+            // This should update game
+            // destroy player 
+            // and update related character
+        }
+    )
+    it('A gm should be able to destroy a room',
+        async () => {
+            // DELETE rooms/creator/{room_id}
+            // This should destory game
+            // destroy players 
+            // and update related characters
         }
     )
 })
