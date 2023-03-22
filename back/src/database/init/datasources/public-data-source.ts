@@ -12,7 +12,7 @@ export const PublicDataSource = new DataSource({
     password: process.env.DB_PASSWORD || "postgres",
     database: process.env.DB_NAME || "fichesetchips",
     synchronize: true,
-    logging: false,
+    logging: true,
     entities: ["src/database/entities/public/characters/*.ts", "src/database/entities/public/workshop/*.ts", "src/database/entities/public/*.ts"],
     migrations: [process.env.DB_MIGRATION_DIR || "src/database/migrations/*.ts"],
     subscribers: ["src/database/subscribers/*.ts", "src/database/subscribers/characters/*.ts"]

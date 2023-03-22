@@ -72,7 +72,7 @@ router.get("/:room_id", async (req: Request, res) => {
     }
 })
 
-router.post("/creator", async (req: Request, res) => {
+router.post("/", async (req: Request, res) => {
     /**
      * @swagger
      * /rooms/creator:
@@ -108,7 +108,7 @@ router.post("/creator", async (req: Request, res) => {
     }
 })
 
-router.patch("/creator/:room_id", async (req: Request, res) => {
+router.patch("/:room_id", async (req: Request, res) => {
     /**
      * @swagger
      * /rooms/creator/{room_id}:
@@ -150,7 +150,7 @@ router.patch("/creator/:room_id", async (req: Request, res) => {
     }
 })
 
-router.put("/creator/:room_id", async (req: Request, res) => {
+router.put("/:room_id", async (req: Request, res) => {
     /**
      * @swagger
      * /rooms/creator/{room_id}:
@@ -192,7 +192,7 @@ router.put("/creator/:room_id", async (req: Request, res) => {
     }
 })
 
-router.delete("/creator/:room_id", async (req: Request, res) => {
+router.delete("/:room_id", async (req: Request, res) => {
     /**
      * @swagger
      * /rooms/creator/{room_id}:
@@ -228,7 +228,7 @@ router.delete("/creator/:room_id", async (req: Request, res) => {
     }
 })
 
-router.patch("/:room_id", async (req: Request, res) => {
+router.patch("/:room_id/join", async (req: Request, res) => {
     /**
      * @swagger
      * /rooms/{room_id}:

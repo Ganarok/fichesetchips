@@ -21,5 +21,5 @@ export class Player {
     game: Game;
 
     @Column({ default: "not implemented" })
-    state_id: string
+    state: string
 }
