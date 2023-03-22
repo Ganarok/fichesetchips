@@ -8,7 +8,7 @@ export function getErrorMessage(error: unknown, res: any) {
         } else if (error.message == "Wrong username or password") {
             return res.status(404).send({ message: error.message, error: "User not found" })
         } else if (error.message == "Unexpected parameters") {
-            return res.status(400).send({ message: 'Authentification failed: wrong bearer token', error: "Unauthorized" })
+            return res.status(400).send({ message: error.message, error: error.name })
         } else if (error.message == "Unauthorized") {
             return res.status(401).send({ message: error.message, error: error.name })
         } else if (error.message == "Forbidden") {
