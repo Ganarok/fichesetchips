@@ -13,7 +13,7 @@
                 />
 
                 <img
-                    src="@/phaser/assets/layer.svg"
+                    src="@/assets/icons/layer.svg"
                     :class="`h-8 w-8 transition ease-in-out hover:scale-110 ${
                         $store.state.phaser.isolateLayer ? 'grayscale-0' : 'grayscale'
                     } hover:cursor-pointer`"
@@ -28,7 +28,7 @@
                 >
 
                 <img
-                    src="@/phaser/assets/eraser.svg"
+                    src="@/assets/icons/eraser.svg"
                     :class="`h-8 w-8 transition ease-in-out hover:scale-110 ${
                         $store.state.phaser.eraser ? 'grayscale-0' : 'grayscale'
                     } hover:cursor-pointer`"
@@ -65,15 +65,18 @@
 <script>
 import Topbar from "@/components/phaser/Topbar.vue"
 import Layers from "@/components/phaser/Layers.vue"
+import { mapState } from "vuex"
 // TODO: Ajouter le onclick pour changer le layer sélectionné enregistré dans le store
 export default {
     name: "MapEditor",
     components: { Topbar, Layers },
-    props: {},
-    data() {
-        return {
-            ...this.$store.state.phaser,
-        }
+    computed: {
+        ...mapState("phaser", {
+            isolateLayer: (state) => state.isolateLayer,
+            eraser: (state) => state.eraser,
+            isExporting: (state) => state.isExporting,
+            isSaving: (state) => state.isSaving,
+        })
     },
     methods: {
         createCanvas(id, gl, texture) {

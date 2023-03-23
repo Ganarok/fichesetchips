@@ -1,7 +1,5 @@
 import { Scene, Tilemaps } from "phaser"
 import store from "@/store"
-import desert_grounds from "@/phaser/assets/desert_grounds.png"
-import desert_items from "@/phaser/assets/desert_items.png"
 import template from "@/phaser/maps/template.json"
 import Phaser from "phaser"
 
@@ -33,18 +31,9 @@ export default class WorkshopTilemap extends Scene {
 
     preload() {
         // tilemap
-        this.load.spritesheet('grounds', desert_grounds, { frameWidth: 32, frameHeight: 32 })
-        this.load.spritesheet('items', desert_items, { frameWidth: 32, frameHeight: 32 })
+        this.load.spritesheet('grounds', '/phaser/desert_grounds.png', { frameWidth: 32, frameHeight: 32 })
+        this.load.spritesheet('items', '/phaser/desert_items.png', { frameWidth: 32, frameHeight: 32 })
         this.load.tilemapTiledJSON('map', template)
-        this.load.spritesheet("grounds", desert_grounds, {
-            frameWidth: 32,
-            frameHeight: 32,
-        })
-        this.load.spritesheet("items", desert_items, {
-            frameWidth: 32,
-            frameHeight: 32,
-        })
-        this.load.tilemapTiledJSON("map", template)
     }
 
     create() {

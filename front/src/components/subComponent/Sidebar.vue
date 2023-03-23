@@ -139,7 +139,7 @@
                         to="/about"
                         class="font-bold text-xl cursor-pointer hover:opacity-70"
                     >
-                        {{ $t('A propos') }}
+                        {{ $t('À propos') }}
                     </router-link>
                     
                     <router-link

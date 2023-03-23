@@ -2,11 +2,10 @@ import { Scene, Tilemaps } from "phaser"
 import Phaser from "phaser"
 
 import store from "@/store"
-import desert_grounds from "@/phaser/assets/desert_grounds.png"
-import desert_items from "@/phaser/assets/desert_items.png"
 import templateBase from "@/phaser/maps/templateBase.json"
 import template from "@/phaser/maps/template.json"
 import { exportMap } from "@/phaser/lib/exportMap"
+import { saveMap } from "@/phaser/lib/saveMap"
 
 export default class MapMakerScene extends Scene {
     constructor() {
@@ -41,8 +40,8 @@ export default class MapMakerScene extends Scene {
 
     preload() {
         // tilemap
-        this.load.spritesheet('grounds', desert_grounds, { frameWidth: 32, frameHeight: 32 })
-        this.load.spritesheet('items', desert_items, { frameWidth: 32, frameHeight: 32 })
+        this.load.spritesheet('grounds', '/phaser/desert_grounds.png', { frameWidth: 32, frameHeight: 32 })
+        this.load.spritesheet('items', "/phaser/desert_items.png", { frameWidth: 32, frameHeight: 32 })
         this.load.json('mapJson', template)
         this.load.tilemapTiledJSON('map', templateBase)
     }
@@ -117,6 +116,7 @@ export default class MapMakerScene extends Scene {
             }
         )
 
+        // Watch for the exporting event
         store.watch(
             () => store.state.phaser.isExporting,
             (isExporting) => {
@@ -131,8 +131,27 @@ export default class MapMakerScene extends Scene {
                 }
             }
         )
+
+        // Watch for the saving event
+        store.watch(
+            () => store.state.phaser.isSaving,
+            async (isSaving) => {
+                console.log("isSaving", isSaving);
+                if (isSaving) {
+                    const map = this.prepareMapObject()
+
+                    await saveMap(map)
+                    
+                    store.commit("phaser/updateState", {
+                        property: "isSaving",
+                        newState: false,
+                    })
+                }
+            }
+        )
     }
 
+    // Init input keys
     _initKeys() {
         this.shiftKey = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.SHIFT
@@ -154,7 +173,7 @@ export default class MapMakerScene extends Scene {
         // Mouse Wheel / Touchpad
         this.input.on(
             "wheel",
-            function(pointer, gameObjects, deltaX, deltaY) {
+            (pointer, gameObjects, deltaX, deltaY) => {
                 this.cameras.main._x -= deltaX / 5
                 this.cameras.main._y -= deltaY / 5
             }
@@ -274,6 +293,7 @@ export default class MapMakerScene extends Scene {
         // this.layers.forEach(layer => layer.setPosition(window.innerWidth / 2 - this.mapsize, 0))
     }
 
+    // Draws the red cursor
     _draw_cursor() {
         if (this.marker)
             this.marker.destroy()
@@ -301,6 +321,7 @@ export default class MapMakerScene extends Scene {
         })
     }
 
+    // Prepare the map object to be exported as a JSON file
     prepareMapObject() {
         const map = {}
 
@@ -391,8 +412,8 @@ export default class MapMakerScene extends Scene {
         )
 
         const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY)
-        const startX = tile.x - Math.floor(this.brushSize / 2)
-        const startY = tile.y - Math.floor(this.brushSize / 2)
+        const startX = tile?.x - Math.floor(this.brushSize / 2)
+        const startY = tile?.y - Math.floor(this.brushSize / 2)
 
         if (this.input.manager.activePointer.isDown) {
             if (this.shiftKey.isDown) {
@@ -406,7 +427,7 @@ export default class MapMakerScene extends Scene {
                     property: "selectedTile",
                     newState: this.selectedTile,
                 })
-            } else if (eraser) {
+            } else if (eraser && startX && startY) {
                 // Supprimer la ou les tiles selon la taille du brush
                 for (let x = startX; x < startX + this.brushSize; x++) {
                     for (let y = startY; y < startY + this.brushSize; y++) {
