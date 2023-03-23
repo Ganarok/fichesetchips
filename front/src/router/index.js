@@ -1,6 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router"
 import { nextTick } from "vue"
+import { useToast } from "vue-toastification"
 
+import store from "@/store"
 import Home from "@/views/index.vue"
 import About from "@/views/about.vue"
 import Login from "@/views/login.vue"
@@ -20,7 +22,7 @@ import NotFound from "@/views/404.vue"
 import CharacterCreate from "@/views/character/create.vue"
 import Characters from "@/views/character/index.vue"
 import CharacterID from "@/views/character/characterDetails.vue"
-import TilemapEditor from "@/views/phaser/tilemap-editor.vue"
+import MapMaker from "@/views/phaser/mapmaker.vue"
 
 const routes = [{
     path: "/",
@@ -56,61 +58,61 @@ const routes = [{
     path: "/user/dashboard",
     name: "Tableau de bord",
     component: Dashboard,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/user/admin",
     name: "Admin",
     component: Admin,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/user/profile",
     name: "Profil",
     component: Profile,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/user/profile/:username",
     name: "ProfileID",
     component: ProfileID,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/user/maps/",
     name: "Maps",
     component: Maps,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: '/user/character/:id',
     name: 'CharacterID',
     component: CharacterID,
-    requiresAuth: true
+    meta: { requiresAuth: true }
 },
 {
     path: "/rooms",
     name: "Rooms",
     component: Rooms,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/rooms/create",
     name: "Create_Room",
     component: Create_Room,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/rooms/:id",
     name: "RoomsID",
     component: RoomID,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/rooms/:id/session",
     name: "Session",
     component: Session,
-    requiresAuth: true,
+    meta: { requiresAuth: true }
 },
 {
     path: "/:pathMatch(.*)*",
@@ -122,25 +124,41 @@ const routes = [{
     name: "CharacterCreate",
     component: CharacterCreate,
     requiresAuth: true,
-    // props: true
-    props: route => ({ currentStep: route.query.currentStep })
+    meta: { requiresAuth: true }
 },
 {
     path: "/characters",
     name: "Personnages",
     component: Characters,
-    requiresAuth: true
+    meta: { requiresAuth: true }
 },
 {
-    path: "/tilemap/editor",
-    name: "TilemapEditr",
-    component: TilemapEditor,
+    path: "/mapmaker",
+    name: "MapMaker",
+    component: MapMaker,
+    meta: { requiresAuth: true }
 },
 ]
 
 const router = createRouter({
     history: createWebHistory(),
-    routes,
+    routes
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        // TODO: Faire une vérification de l'access_token avec la méthode connected() du module User
+        if (!store.state.user.access_token) {
+            const toast = useToast()
+            console.log('Rerouting, user is not connected')
+            next({
+                path: "/login",
+                params: { nextUrl: to.fullPath },
+            })
+
+            toast.error("Vous devez être connecté pour accéder à cette page")
+        } else next()
+    } else next()
 })
 
 router.afterEach((to) => {

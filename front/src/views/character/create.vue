@@ -75,8 +75,6 @@ export default {
     },
     async mounted() {
         await this.fetch_character_creation_steps()
-
-        console.log('steps', this.character_creation_steps)
     },
     methods: {
         ...mapActions({

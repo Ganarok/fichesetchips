@@ -46,6 +46,21 @@
                     </router-link>
                 </div>
 
+                <router-link
+                    to="/user/maps"
+                    class="font-bold text-xl"
+                    active-class="underline"
+                >
+                    Maps
+                </router-link>
+
+                <router-link
+                    to="/rooms"
+                    class="font-bold text-xl"
+                    active-class="underline"
+                >
+                    Rooms
+                </router-link>
                 <div class="bloc flex flex-col mb-12">
                     <div
                         class="categorie flex flex-col mb-4"
@@ -124,7 +139,7 @@
                         to="/about"
                         class="font-bold text-xl cursor-pointer hover:opacity-70"
                     >
-                        {{ $t('A propos') }}
+                        {{ $t('À propos') }}
                     </router-link>
                     
                     <router-link

@@ -119,7 +119,7 @@ export default {
             const toast = useToast()
             this.parseStats()
 
-            console.log(this.character_creation['character'])
+            console.log(this.character_creation)
 
             try {
                 await apiCall({
