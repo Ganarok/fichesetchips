@@ -13,8 +13,8 @@ export class Story {
     @Column()
     title: string;
 
-    @Column({ unique: true })
-    path: string;
+    @Column({type: "bytea"})
+    file: Buffer;
 
     @ManyToOne(type => User, user => user.stories, { onDelete: "CASCADE" })
     creator: User
