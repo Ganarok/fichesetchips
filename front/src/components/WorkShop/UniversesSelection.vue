@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import Selector from "@/components/subComponent/Selector.vue"
+import Selector from "@/components/common/Selector.vue"
 import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
 import { mapState, mapActions, mapMutations } from "vuex"
 

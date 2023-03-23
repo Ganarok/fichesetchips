@@ -20,7 +20,7 @@
 import { mapState, mapMutations } from "vuex"
 
 import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
-import RaceCard from "../subComponent/Cards/RaceCard.vue"
+import RaceCard from "@/components/common/Cards/RaceCard.vue"
 
 export default {
     components: {

@@ -158,8 +158,8 @@
 </template>
 
 <script>
-import Button from "@/components/subComponent/Button.vue"
-import BlackGreenDiv from "@/components/subComponent/BlackGreenDiv.vue"
+import Button from "@/components/common/Button.vue"
+import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
 
 export default {
     name: "Room",

@@ -11,7 +11,7 @@
         >
             <img
                 class="h-2/3"
-                src="../../assets/icons/star.svg"
+                src="@/assets/icons/star.svg"
                 alt="Etoile"
             >
         </div>

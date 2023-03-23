@@ -200,12 +200,12 @@
 
 <script>
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import BlackGreenDiv from "@/components/subComponent/BlackGreenDiv.vue"
-import Button from "@/components/subComponent/Button.vue"
-import Selector from "@/components/subComponent/Selector.vue"
-import CustomInput from "@/components/subComponent/CustomInput.vue"
-import ParamInput from "@/components/subComponent/ParamInput.vue"
-import Loader from "@/components/Loader.vue"
+import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
+import Button from "@/components/common/Button.vue"
+import Selector from "@/components/common/Selector.vue"
+import CustomInput from "@/components/common/CustomInput.vue"
+import ParamInput from "@/components/common/ParamInput.vue"
+import Loader from "@/components/common/Loader.vue"
 import { useToast } from "vue-toastification"
 import { PLAYSTYLE, EXPERIENCE, LANGUAGES } from "@/utils/enums"
 import { mapState, mapActions } from "vuex"

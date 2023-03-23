@@ -76,11 +76,12 @@
 </template>
 
 <script>
-import Avatar from "@/components/subComponent/Avatar.vue"
-import Badge from "@/components/subComponent/Badge.vue"
+import moment from "moment"
+
+import Avatar from "@/components/common/Avatar.vue"
+import Badge from "@/components/common/Badge.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import { mapState, mapActions } from "vuex"
-import moment from "moment"
 
 export default {
     components: { SidebarLayout, Avatar, Badge },

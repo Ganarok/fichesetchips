@@ -79,8 +79,8 @@
 import { mapState, mapMutations } from 'vuex'
 import { useToast } from 'vue-toastification'
 
-import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
-import StatSelector from '@/components/subComponent/StatSelector.vue'
+import BlackGreenDiv from '@/components/common/BlackGreenDiv.vue'
+import StatSelector from '@/components/common/StatSelector.vue'
 import { apiCall } from '@/utils/apiCall'
 
 export default {

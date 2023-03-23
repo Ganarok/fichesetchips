@@ -45,8 +45,8 @@
 import { mapState, mapMutations } from "vuex"
 import { useToast } from "vue-toastification"
 
-import Selector from '@/components/subComponent/Selector.vue'
-import ClassCard from '@/components/subComponent/Cards/ClassCard.vue'
+import Selector from '@/components/common/Selector.vue'
+import ClassCard from '@/components/common/Cards/ClassCard.vue'
 import Modal from '@/components/Modal.vue'
 
 export default {

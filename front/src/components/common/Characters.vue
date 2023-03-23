@@ -73,8 +73,8 @@
 </template>
 
 <script>
-import Card from "@/components/subComponent/Cards/CharacterCard.vue"
-import Selector from "@/components/subComponent/Selector.vue"
+import Card from "@/components/common/Cards/CharacterCard.vue"
+import Selector from "@/components/common/Selector.vue"
 
 export default {
     name: "CharactersList",

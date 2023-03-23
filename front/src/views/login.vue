@@ -101,8 +101,8 @@
 </template>
 
 <script>
-import CustomInput from "@/components/subComponent/CustomInput.vue"
-import Loader from "@/components/Loader.vue"
+import CustomInput from "@/components/common/CustomInput.vue"
+import Loader from "@/components/common/Loader.vue"
 import { useToast } from "vue-toastification"
 import { mapState, mapActions } from "vuex"
 

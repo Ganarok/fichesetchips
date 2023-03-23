@@ -104,9 +104,9 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 
-import CustomInput from '@/components/subComponent/CustomInput.vue'
-import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
-import Selector from '@/components/subComponent/Selector.vue'
+import CustomInput from '@/components/common/CustomInput.vue'
+import BlackGreenDiv from '@/components/common/BlackGreenDiv.vue'
+import Selector from '@/components/common/Selector.vue'
 import { ALIGNMENT, SEXTYPE } from '@/utils/enums'
 
 export default {

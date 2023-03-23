@@ -97,7 +97,7 @@
 import Chat from '@/components/game/Chat.vue'
 import Diary from '@/components/game/Diary.vue'
 import Options from '@/components/game/Options.vue'
-import Loader from '@/components/Loader.vue'
+import Loader from '@/components/common/Loader.vue'
 
 export default {
     name: "GameLayout",

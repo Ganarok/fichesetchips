@@ -270,10 +270,10 @@
 
 <script>
 import Modal from "@/components/Modal.vue"
-import EditableDiv from "@/components/subComponent/EditableDiv.vue"
-import Avatar from "@/components/subComponent/Avatar.vue"
-import Badge from "@/components/subComponent/Badge.vue"
-import CharacterCard from "@/components/subComponent/Cards/CharacterCard.vue"
+import EditableDiv from "@/components/common/EditableDiv.vue"
+import Avatar from "@/components/common/Avatar.vue"
+import Badge from "@/components/common/Badge.vue"
+import CharacterCard from "@/components/common/Cards/CharacterCard.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import { mapState, mapActions } from "vuex"
 import moment from "moment"
