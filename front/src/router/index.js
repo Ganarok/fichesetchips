@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router"
 import { nextTick } from "vue"
+import { useToast } from "vue-toastification"
 
 import store from "@/store"
 import Home from "@/views/index.vue"
@@ -148,11 +149,14 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.requiresAuth)) {
         // TODO: Faire une vérification de l'access_token avec la méthode connected() du module User
         if (!store.state.user.access_token) {
+            const toast = useToast()
             console.log('Rerouting, user is not connected');
             next({
                 path: "/login",
                 params: { nextUrl: to.fullPath },
             })
+
+            toast.error("Vous devez être connecté pour accéder à cette page")
         } else next()
     } else next()
 })
