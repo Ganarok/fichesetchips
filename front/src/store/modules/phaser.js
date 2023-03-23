@@ -5,6 +5,7 @@ export default {
         title: 'Untitled',
         controls: null,
         isExporting: false,
+        isSaving: false,
         layers: [
             {
                 name: "grounds",
@@ -36,6 +37,7 @@ export default {
             state.launched = false
             state.controls = null
             state.isExporting = false
+            state.isSaving = false
             state.layers = [
                 {
                     name: "grounds",
@@ -61,7 +63,28 @@ export default {
             state.layers = layers
         },
     },
-    actions: {},
+    actions: {
+        async save_map({ commit }, body) {
+            try {
+                console.log('Saving the map on DB', body)
+                // const response = await apiCall({
+                //     method: "POST",
+                //     route: "/auth/register",
+                //     body: body,
+                // })
+                // commit("set_user", response.user)
+                // commit("set_token", response.access_token)
+            } catch(error) {
+                // commit("errors/set_error", { message: error.message }, { root: true })
+                console.log(JSON.stringify(error.message))
+
+                return false
+
+            }
+
+            return true
+        }
+    },
     getters: {
         getSelectedTile(state) {
             return state.selectedTile

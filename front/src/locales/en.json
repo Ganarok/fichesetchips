@@ -59,5 +59,8 @@
     "Filtre": "Filter",
     "Prénom": "Firstname",
     "Nom": "Lastname",
-    "Alignement": "Alignment"
+    "Alignement": "Alignment",
+    "Cartes": "Maps",
+    "À propos": "About",
+    "Glossaire": "Glossary"
 }

@@ -96,11 +96,12 @@ export default {
         },
         saveMap() {
             this.optionsOpened = false
-            console.log("save")
+            console.log("Sauvegarder")
+            store.commit("phaser/updateState", { property: "isSaving", newState: true })
         },
         loadMap() {
             this.optionsOpened = false
-            console.log("load")
+            console.log("Charger une carte")
         },
     }
 }
