@@ -1,3 +1,5 @@
+import { apiCall } from "@/utils/apiCall"
+
 export default {
     namespaced: true,
     state: {
@@ -70,20 +72,17 @@ export default {
     actions: {
         async save_map({ commit }, body) {
             try {
-                console.log('Saving the map on DB', body)
-                // const response = await apiCall({
-                //     method: "POST",
-                //     route: "/auth/register",
-                //     body: body,
-                // })
-                // commit("set_user", response.user)
-                // commit("set_token", response.access_token)
-            } catch(error) {
+                console.log('Saving the map on DB', body, commit)
+                await apiCall({
+                    method: "POST",
+                    route: "/maps",
+                    body: body,
+                })
+            } catch (error) {
                 // commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
 
                 return false
-
             }
 
             return true

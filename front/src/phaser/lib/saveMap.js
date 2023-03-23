@@ -28,16 +28,14 @@ export const saveMap = async (map, name = '') => {
     const mapObject = {
         title: name,
         data: map, // JSON (ou file)
-        created_at: new Date().toISOString(),
-        created_by: store.state.user.user.id || '',
         assets: [
             {
                 name: "grounds",
-                file: groundsByteArray,
+                image: groundsByteArray,
             },
             {
                 name: "items",
-                file: itemsByteArray
+                image: itemsByteArray
             },
         ]
     }

@@ -150,7 +150,7 @@ router.beforeEach((to, from, next) => {
         // TODO: Faire une vérification de l'access_token avec la méthode connected() du module User
         if (!store.state.user.access_token) {
             const toast = useToast()
-            console.log('Rerouting, user is not connected');
+            console.log('Rerouting, user is not connected')
             next({
                 path: "/login",
                 params: { nextUrl: to.fullPath },

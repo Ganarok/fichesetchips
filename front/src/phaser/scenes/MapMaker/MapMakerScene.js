@@ -136,7 +136,6 @@ export default class MapMakerScene extends Scene {
         store.watch(
             () => store.state.phaser.isSaving,
             async (isSaving) => {
-                console.log("isSaving", isSaving);
                 if (isSaving) {
                     const map = this.prepareMapObject()
 
