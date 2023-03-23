@@ -29,9 +29,6 @@ export async function findOne(username: string, map_id: string) {
 }
 
 export async function update(username: string, body: object, map_id: string) {
-    if (Object.keys(body).every(elem => ["title", "path"].includes(elem)) == false) {
-        throw new Error("Unexpected parameters")
-    }
     const user = await UserRepository.findOneByOrFail({ username: username })
     const cmap = await CMapRepository.findOneByOrFail({ creatorId: user.id, id: map_id })
     await CMapRepository.save({ id: cmap.id, ...body })

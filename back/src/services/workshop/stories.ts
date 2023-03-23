@@ -26,9 +26,6 @@ export async function findOne(username: string, story_id: string) {
 }
 
 export async function update(username: string, body: object, story_id: string) {
-    if (Object.keys(body).every(elem => ["title", "path"].includes(elem)) == false) {
-        throw new Error("Unexpected parameters")
-    }
     const user = await UserRepository.findOneByOrFail({ username: username })
     const story = await StoryRepository.findOneByOrFail({ creatorId: user.id, id: story_id })
     await StoryRepository.save({ id: story.id, ...body })
