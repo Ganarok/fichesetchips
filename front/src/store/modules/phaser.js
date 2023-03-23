@@ -17,6 +17,8 @@ export default {
             }
         ],
         selectedLayer: 0,
+        brushSize: 1,
+        scaleLevel: 1,
         eraser: false,
         selectedTile: undefined,
         selectedTileIndex: undefined,
@@ -38,6 +40,8 @@ export default {
             state.controls = null
             state.isExporting = false
             state.isSaving = false
+            state.brushSize = 1
+            state.scaleLevel = 1
             state.layers = [
                 {
                     name: "grounds",

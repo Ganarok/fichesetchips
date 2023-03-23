@@ -149,6 +149,28 @@ export default class MapMakerScene extends Scene {
                 }
             }
         )
+
+        // Watch for the scale level
+        store.watch(
+            () => store.state.phaser.scaleLevel,
+            (newScaleLevel) => {
+                this.scaleLevel = newScaleLevel
+
+                // Refresh the map and the red cursor
+                this.layers.forEach(layer => layer.setScale(this.scaleLevel))
+                this.game.scale.setGameSize(this.map.widthInPixels * this.scaleLevel, this.map.heightInPixels * this.scaleLevel)
+                this._draw_cursor()
+            }
+        )
+
+        // Watch for the brush size
+        store.watch(
+            () => store.state.phaser.brushSize,
+            (newBrushSize) => {
+                this.brushSize = newBrushSize
+                this._draw_cursor()
+            }
+        )
     }
 
     // Init input keys
@@ -203,19 +225,19 @@ export default class MapMakerScene extends Scene {
             })
         })
 
-        // Minus Key (-)
+        // U Key (-)
         this.uKey.on('down', () => {
             this.brushSize = Math.max(1, this.brushSize - 1)
             this._draw_cursor()
         })
 
-        // Plus Key (+)        
+        // Z Key (+)        
         this.zKey.on('down', () => {
             this.brushSize = Math.min(5, this.brushSize + 1)
             this._draw_cursor()
         })
 
-        // Zoom In
+        // Plus Key
         this.plusKey.on('down', () => {
             if (this.scaleLevel < 5) { 
                 if (this.scaleLevel < 1) {
@@ -231,7 +253,7 @@ export default class MapMakerScene extends Scene {
             }
         })
 
-        // Zoom Out
+        // Minus Key
         this.minusKey.on('down', () => {
             if (this.scaleLevel > 0.25) {
                 if (this.scaleLevel <= 1) {
