@@ -3,16 +3,14 @@ import { assert, expect } from 'chai';
 import { agent as request } from 'supertest';
 import 'mocha'
 import fs from 'fs'
-// A story is a path and a title 
 
-// const fs = require('fs')
 describe('Stories', () => {
     const path = "./src/test/.token.txt"
     const token = fs.readFileSync(path, "utf8")
     let story = {
         "id": "",
         "title": "Story title",
-        "path": "story/path/file.pdf"
+        "file": [42, 53, 14]
     }
     
     it('A user should be able to create a story',
@@ -22,7 +20,7 @@ describe('Stories', () => {
                 .set({ "Authorization": `Bearer ${token}` })
                 .send({
                     "title": "Story title",
-                    "path": "story/path/file.pdf"
+                    "file": [42, 53, 14]
                 })
             expect(res.status).to.equal(200);
         }

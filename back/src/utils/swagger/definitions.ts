@@ -349,9 +349,9 @@ export const definitions = {
                 type: "string",
                 default: "Story title"
             },
-            path: {
-                type: "string",
-                default: "story/path/file.pdf"
+            file: {
+                type: "buffer",
+                default: [42, 36]
             }
         }
     },
