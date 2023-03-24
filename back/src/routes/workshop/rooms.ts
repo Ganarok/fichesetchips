@@ -75,7 +75,7 @@ router.get("/:room_id", async (req: Request, res) => {
 router.post("/", async (req: Request, res) => {
     /**
      * @swagger
-     * /rooms/creator:
+     * /rooms:
      *   post:
      *     description: Post a room.
      *     tags: 
@@ -111,7 +111,7 @@ router.post("/", async (req: Request, res) => {
 router.patch("/:room_id", async (req: Request, res) => {
     /**
      * @swagger
-     * /rooms/creator/{room_id}:
+     * /rooms/{room_id}:
      *   patch:
      *     description: A gm can put on published one of his created rooms => only if the object game is correctly set (with story_id and map_id).
      *     tags: 
@@ -153,7 +153,7 @@ router.patch("/:room_id", async (req: Request, res) => {
 router.put("/:room_id", async (req: Request, res) => {
     /**
      * @swagger
-     * /rooms/creator/{room_id}:
+     * /rooms/{room_id}:
      *   put:
      *     description: A gm can update a room.
      *     tags: 
@@ -195,7 +195,7 @@ router.put("/:room_id", async (req: Request, res) => {
 router.delete("/:room_id", async (req: Request, res) => {
     /**
      * @swagger
-     * /rooms/creator/{room_id}:
+     * /rooms/{room_id}:
      *   delete:
      *     description: Delete a room as a gm.
      *     tags: 
@@ -231,7 +231,7 @@ router.delete("/:room_id", async (req: Request, res) => {
 router.patch("/:room_id/join", async (req: Request, res) => {
     /**
      * @swagger
-     * /rooms/{room_id}:
+     * /rooms/{room_id}/join:
      *   patch:
      *     description: A user can enter a room that he has the password / a public room.
      *     tags: 
@@ -262,7 +262,7 @@ router.patch("/:room_id/join", async (req: Request, res) => {
      *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
      */
     try {
-        const response = await roomsService.publish(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body, req.params.room_id);
+        const response = await roomsService.join(((req as CustomRequest).jwtPayload as JwtPayload).username, req.params.room_id, req.body?.password);
         res.status(200).send({ data: response, message: 'Room successfully patched' });
     } catch (error) {
         return getErrorMessage(error, res);

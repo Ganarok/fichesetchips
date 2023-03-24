@@ -1,4 +1,4 @@
-import { Entity, OneToOne, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique, OneToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm"
 import { Story } from "./workshop/Story"
 import { Player } from "./Players"
 
@@ -30,6 +30,6 @@ export class Game {
     @Column({ default: "not implemented" })
     universe: string
 
-    @OneToMany(type => Player, player => player.game, { onDelete: "CASCADE" })
+    @OneToMany(type => Player, player => player.game, { onDelete: "CASCADE", eager: true })
     players: Player[];
 }

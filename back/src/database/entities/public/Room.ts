@@ -1,5 +1,4 @@
-import { Entity, OneToOne, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique } from "typeorm"
-import { Player } from "./Players"
+import { Entity, OneToOne, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm"
 import { Game } from "./Game"
 import { User } from "./User"
 
@@ -32,10 +31,10 @@ export class Room {
     @Column()
     players_nb_max: number
 
-    @ManyToOne(() => User, user => user.rooms, { onDelete: "CASCADE", eager: true })
+    @ManyToOne(() => User, user => user.rooms, { onDelete: "CASCADE", eager: true, nullable: false })
     gm: User
 
-    @OneToOne(type => Game, { onDelete: "CASCADE", eager: true })
+    @OneToOne(type => Game, { onDelete: "CASCADE", eager: true, nullable: false })
     @JoinColumn()
     game: Game
 

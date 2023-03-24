@@ -49,10 +49,10 @@ export class User {
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     last_connection: string
 
-    @OneToMany(() => Room, room => room.gm, { cascade: true })
+    @OneToMany(() => Room, room => room.gm)
     rooms: Room[];
 
-    @OneToMany(type => Player, player => player.user, { cascade: true })
+    @OneToMany(type => Player, player => player.user)
     players: Player[];
 
     @CreateDateColumn({ type: "timestamp" })

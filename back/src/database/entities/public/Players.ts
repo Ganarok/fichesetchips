@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm"
 import { Character } from "./characters/Character";
 import { Game } from "./Game";
 import { User } from "./User";
@@ -6,6 +6,7 @@ import { User } from "./User";
 
 
 @Entity()
+@Unique(["user", "game"])
 export class Player {
     @PrimaryGeneratedColumn("uuid")
     id: string;
