@@ -1,11 +1,8 @@
 import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacterResponse, loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
 import defaultStories from "../../database/fixtures/stories"
-<<<<<<< HEAD
 import defaultMaps from "../../database/fixtures/maps"
-=======
 import defaultRooms from "../../database/fixtures/rooms"
->>>>>>> d033623... Rooms controllers
 import defaultGames from "../../database/fixtures/games"
 import { GameStatus } from "../../database/entities/public/Game";
 
