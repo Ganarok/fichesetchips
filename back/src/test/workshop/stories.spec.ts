@@ -16,12 +16,9 @@ describe('Stories', () => {
     it('A user should be able to create a story',
         async () => {
             const res = await request(app)
-                .post('/stories')
+                .post(`/stories?title=${story.title}`)
                 .set({ "Authorization": `Bearer ${token}` })
-                .send({
-                    "title": "Story title",
-                    "file": [42, 53, 14]
-                })
+                .send([42, 53, 14])
             expect(res.status).to.equal(200);
         }
     )
