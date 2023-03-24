@@ -29,7 +29,7 @@ export class RoomsSeeder1678969543486 implements MigrationInterface {
         await GamesRepository.save(defaultGames)
         const game0 = await GamesRepository.findOneOrFail({ where: { id: defaultGames[0].id } })
         const game1 = await GamesRepository.findOneOrFail({ where: { id: defaultGames[1].id } })
-        const story = await StoryRepository.findOneOrFail({ where: { user_id: gm.id } })
+        const story = await StoryRepository.findOneOrFail({ where: { creatorId: gm.id } })
         game0.story = story
         await GamesRepository.save(game0)
 

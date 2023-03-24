@@ -12,6 +12,7 @@ describe('Stories', () => {
         "title": "Story title",
         "file": [42, 53, 14]
     }
+    let id = ""
     
     it('A user should be able to create a story',
         async () => {
@@ -27,15 +28,15 @@ describe('Stories', () => {
             const res = await request(app)
                 .get('/stories')
                 .set({ "Authorization": `Bearer ${token}` })
-            story = res.body.data[0]
             expect(res.status).to.equal(200);
         }
     )
     it('A user should be able to get a story that he created',
         async () => {
             const res = await request(app)
-                .get(`/stories/${story.id}`)
+                .get(`/stories/${id}`)
                 .set({ "Authorization": `Bearer ${token}` })
+            story = res.body.data
             expect(res.status).to.equal(200);
         }
     )
