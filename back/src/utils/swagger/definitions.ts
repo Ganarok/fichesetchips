@@ -460,48 +460,101 @@ export const definitions = {
         properties: {
             title: {
                 type: "string",
-                default: "Room title"
+                default: "Room title",
+                required: true
             },
             description: {
                 type: "string",
-                default: "Room description"
+                default: "Room description",
+                required: true
             },
             requirements: {
                 type: "string",
-                default: "Room requirements"
+                default: "Room requirements",
+                required: true
             },
             vocal_url: {
                 type: "string",
-                default: "Room vocal url"
+                default: "Room vocal url",
+                required: true
             },
             is_private: {
                 type: "boolean",
-                default: false
+                default: false,
+                required: false
             },
             is_published: {
                 type: "boolean",
-                default: false
+                default: false,
+                required: false
             },
             password: {
                 type: "string",
-                default: "Room password"
+                required: false
             },
             players_nb_max: {
                 type: "number",
-                default: 5
+                default: 5,
+                required: true
             },
-            map_id: {
+            game: {
+                type: "object",
+                default: {
+                    "story_id": "451fbb1a-1350-49d3-9433-2c9c2b3e75e5",
+                    "map_id": "baa3ceaa-b175-4289-8028-4dd441d3e101",
+                    "universe": "cem"
+                },
+                required: false
+            }
+        }
+    },
+    updateRoomRequest: {
+        properties: {
+            title: {
                 type: "string",
-                default: "Map id"
+                default: "Room title",
+                required: false
             },
-            story_id: {
+            description: {
                 type: "string",
-                default: "Story id"
+                default: "Room description",
+                required: false
             },
-            universe: {
+            requirements: {
                 type: "string",
-                default: "cem"
+                default: "Room requirements",
+                required: false
             },
+            vocal_url: {
+                type: "string",
+                default: "Room vocal url",
+                required: false
+            },
+            is_private: {
+                type: "boolean",
+                default: false,
+                required: false
+            },
+            password: {
+                type: "string",
+                default: "don't do that, please.",
+                required: false
+            },
+            players_nb_max: {
+                type: "number",
+                default: 5,
+                required: false
+            },
+            game: {
+                type: "object",
+                default: {
+                    "status": "planned",
+                    "story_id": "451fbb1a-1350-49d3-9433-2c9c2b3e75e5",
+                    "map_id": "baa3ceaa-b175-4289-8028-4dd441d3e101",
+                    "universe": "cem"
+                },
+                required: false
+            }
         }
     },
     updateGameRequest: {

@@ -171,7 +171,7 @@ router.put("/:room_id", dataValidator(UpdateRoom), async (req: Request, res) => 
      *       required: true
      *       content:
      *         application/json:
-     *           schema: { $ref: '#/definitions/createRoomRequest' }
+     *           schema: { $ref: '#/definitions/updateRoomRequest' }
      *     security:
      *       - bearerAuth: []
      *     responses:
