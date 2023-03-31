@@ -1,8 +1,10 @@
 import express, { Request } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { CustomRequest } from "../../middleware/authJwt";
-import * as roomsService from "../../services/workshop/rooms"
+import { dataValidator } from '../../middleware/typeValidator';
+import * as roomsService from "../../services/workshop/rooms";
 import { getErrorMessage } from "../../utils/error-handler/getErrorMessage";
+import { CreateRoom, UpdateRoom } from '../../utils/types/rooms';
 
 const router = express.Router();
 
@@ -72,7 +74,7 @@ router.get("/:room_id", async (req: Request, res) => {
     }
 })
 
-router.post("/", async (req: Request, res) => {
+router.post("/", dataValidator(CreateRoom), async (req: Request, res) => {
     /**
      * @swagger
      * /rooms:
@@ -101,7 +103,7 @@ router.post("/", async (req: Request, res) => {
      *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
      */
     try {
-        const response = await roomsService.create(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body);
+        const response = await roomsService.create(((req as CustomRequest).jwtPayload as JwtPayload).username, req.view_instance);
         res.status(200).send({ data: response, message: 'Room successfully created' });
     } catch (error) {
         return getErrorMessage(error, res);
@@ -150,7 +152,7 @@ router.patch("/:room_id", async (req: Request, res) => {
     }
 })
 
-router.put("/:room_id", async (req: Request, res) => {
+router.put("/:room_id", dataValidator(UpdateRoom), async (req: Request, res) => {
     /**
      * @swagger
      * /rooms/{room_id}:
@@ -185,7 +187,7 @@ router.put("/:room_id", async (req: Request, res) => {
      *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
      */
     try {
-        const response = await roomsService.update(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body, req.params.room_id);
+        const response = await roomsService.update(((req as CustomRequest).jwtPayload as JwtPayload).username, req.view_instance, req.params.room_id);
         res.status(200).send({ data: response, message: 'Room successfully patched' });
     } catch (error) {
         return getErrorMessage(error, res);
