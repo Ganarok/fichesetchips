@@ -380,6 +380,11 @@
     "@types/express" "*"
     "@types/serve-static" "*"
 
+"@types/validator@^13.7.10":
+  "integrity" "sha512-J6OAed6rhN6zyqL9Of6ZMamhlsOEU/poBVvbHr/dKOYKTeuYYMlDkMv+b6UUV0o2i0tw73cgyv/97WTWaUl0/g=="
+  "resolved" "https://registry.npmjs.org/@types/validator/-/validator-13.7.14.tgz"
+  "version" "13.7.14"
+
 "@typescript-eslint/eslint-plugin@^5.38.1":
   "integrity" "sha512-ky7EFzPhqz3XlhS7vPOoMDaQnQMn+9o5ICR9CPr/6bw8HrFkzhMSxuA3gRfiJVvs7geYrSeawGJjZoZQKCOglQ=="
   "resolved" "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.38.1.tgz"
@@ -867,6 +872,20 @@
   "integrity" "sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ=="
   "resolved" "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz"
   "version" "2.0.0"
+
+"class-transformer@^0.5.1":
+  "integrity" "sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw=="
+  "resolved" "https://registry.npmjs.org/class-transformer/-/class-transformer-0.5.1.tgz"
+  "version" "0.5.1"
+
+"class-validator@^0.14.0":
+  "integrity" "sha512-ct3ltplN8I9fOwUd8GrP8UQixwff129BkEtuWDKL5W45cQuLd19xqmTLu5ge78YDm/fdje6FMt0hGOhl0lii3A=="
+  "resolved" "https://registry.npmjs.org/class-validator/-/class-validator-0.14.0.tgz"
+  "version" "0.14.0"
+  dependencies:
+    "@types/validator" "^13.7.10"
+    "libphonenumber-js" "^1.10.14"
+    "validator" "^13.7.0"
 
 "clean-stack@^2.0.0":
   "integrity" "sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A=="
@@ -2317,6 +2336,11 @@
   dependencies:
     "prelude-ls" "^1.2.1"
     "type-check" "~0.4.0"
+
+"libphonenumber-js@^1.10.14":
+  "integrity" "sha512-3Dk8f5AmrcWqg+oHhmm9hwSTqpWHBdSqsHmjCJGroULFubi0+x7JEIGmRZCuL3TI8Tx39xaKqfnhsDQ4ALa/Nw=="
+  "resolved" "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.10.24.tgz"
+  "version" "1.10.24"
 
 "locate-path@^5.0.0":
   "integrity" "sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g=="
@@ -3846,7 +3870,7 @@
   "resolved" "https://registry.npmjs.org/v8-compile-cache-lib/-/v8-compile-cache-lib-3.0.1.tgz"
   "version" "3.0.1"
 
-"validator@^13.6.0":
+"validator@^13.6.0", "validator@^13.7.0":
   "integrity" "sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA=="
   "resolved" "https://registry.npmjs.org/validator/-/validator-13.9.0.tgz"
   "version" "13.9.0"
