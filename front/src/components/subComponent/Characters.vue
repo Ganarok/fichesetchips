@@ -28,45 +28,14 @@
         </div>
         
         <div class="flex justify-between flex-row gap-x-2 gap-y-2 flex-wrap mt-4">
-            <div class="flex flex-col items-center max-w-xs max-h-[550px] border-2 border-fc-green p-2 hover:cursor-pointer">
-                <router-link :to="`/user/character/create`" >
-                    <div
-                    class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold"
-                    >
-                    <p>
-                        ????????
-                    </p>
-                    
-                    <p
-                    class="text-fc-black opacity-60"
-                    >
-                    Lvl. 0
-                </p>
-            </div>
-            
-            <div
-                        v-if="!image"
-                        class="relative bg-fc-yellow w-full my-2"
-                        >
-                        <img
-                        src="@/assets/unknowCharacter.svg"
-                        class="object-contain"
-                        :style="grayed ? 'filter: grayscale(1)' : null"
-                        >
-                    </div>
-                    
-                    <div class="flex items-center justify-center w-full h-24 bg-fc-green p-2">
-                        <p class="text-xl font-bold opacity-60 text-center pr-3" >
-                            Nouveau personnage
-                        </p>
-                    </div>
-                </router-link>
-            </div>
-
+            <Card 
+                :character="defaultCard"
+                class="max-w-[340px] min-w-[340px] max-h-[550px]"/>
             <Card 
                 v-for="character in characters"
                 :key="character.id"
                 :character="character"
+                class="max-w-[340px] min-w-[340px] max-h-[550px]"
             />
 
         </div>
@@ -76,18 +45,13 @@
 <script>
 import Card from "@/components/subComponent/Cards/CharacterCard.vue"
 import Selector from "@/components/subComponent/Selector.vue"
+import { mapState, mapActions } from "vuex"
 
 export default {
     name: "CharactersList",
     components:{
         Card,
         Selector,
-    },
-    props:{
-        characters: {
-            type: Array,
-            default: () => []
-        } 
     },
     data() {
         return {
@@ -102,9 +66,18 @@ export default {
             selectedClass: "",
             query: "?",
             search: "",
+            defaultCard: {"firstname": "????????", "lastname": "", "id": "create", "bio": "Nouveau personnage"}
         }
     },
+    computed: {
+        ...mapState("characters", {
+            characters: (state) => state.characters,
+        })
+    },
     methods: {
+        ...mapActions({
+            fetch_characters: "characters/fetch_characters"
+        }),
         updateClass(status){
             this.selectedClass = status
             this.parseQueries("Class", status)

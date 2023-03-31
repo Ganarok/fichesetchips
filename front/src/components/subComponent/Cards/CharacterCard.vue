@@ -1,7 +1,7 @@
 <template>
     <div class="border-2 border-fc-green p-2 hover:cursor-pointer">
-        <router-link class="h-full w-full flex flex-col items-center" :to="`/user/character/${character.id}`">
-            <div v-if="level || firstname" class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold h-[10%]">
+        <router-link class="h-full w-full flex flex-col items-center" :to="urlSelection(character.id)">
+            <div v-if="level || firstname" class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold h-[9%]">
                 <p>
                     {{ `${firstname} ${lastname}` }}
                 </p>
@@ -10,14 +10,18 @@
                 </p>
             </div>
 
-            <div class="bg-fc-yellow w-full my-2 h-[66%] flex flex-col justify-end items-center">
-                <div v-if="!image">
+            <div class="bg-fc-yellow w-full my-2 min-h-[50%] flex flex-col justify-end items-center">
+                <div v-if='!image && id != "create"'>
                     <img src="@/assets/dragon.svg" class="object-contain" :style="grayed ? 'filter: grayscale(1)' : null">
                 </div>
-                <div v-else/>
+                <div v-else-if='id == "create"'>
+                    <img src="@/assets/unknowCharacter.svg" class="object-contain" :style="grayed ? 'filter: grayscale(1)' : null">
+                </div>
+                <div v-else>
+                </div>
             </div>
             
-            <div class="w-full bg-fc-green p-2 flex-1">
+            <div v-if='id != "create"' class="w-full bg-fc-green p-2 flex-1">
                 <p class="text-sm text-ellipsis text-justify overflow-y-scroll pr-3 break-words h-full" :class="owner || location ? 'h-3/4' : 'h-full'">
                     {{ bio }}
                 </p>
@@ -29,6 +33,11 @@
                         {{ location }}
                     </p>
                 </div>
+            </div>
+            <div v-else class="w-full bg-fc-green p-2 flex-1 my-auto">
+                <p class="text-xl font-bold opacity-60 text-center" >
+                    Nouveau personnage
+                </p>
             </div>
         </router-link>
     </div>
@@ -65,6 +74,13 @@ export default {
                 return " bg-" + this.color
             }
         },
+        urlSelection: function(id) {
+            console.log(id)
+            if(id == "create") 
+                return "/characters/create"
+            else
+                return "/user/character/" + id
+        }
     }
 }
 </script>

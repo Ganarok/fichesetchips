@@ -8,46 +8,50 @@
                     :style="grayed ? 'filter: grayscale(1)' : null"
                 >
                 <div class="flex flex-col justify-between w-full items-center">
-                    <div class="flex flex-col font-bold xl:flex-row">
+                    <div class="flex flex-col font-bold xl:flex-row min-w-full">
                         <span class="flex flex-col ml-3 items-center xl:items-start">
                             <p class=" text-7xl ">
-                                Username
+                                {{ user.username }}
                             </p>
                             <p class="text-2xl mt-5 text-ellipsis flex-nowrap text-center xl:text-left ">
-                                “Jeune elfe recherche un mage mortel ...”
+                                
                             </p>
                         </span>
                         <span class="flex flex-col items-center xl:items-start xl:ml-16 w-full pt-4 infoProfils  ">
-                            <span>
-                                Paris, France
+                            <span v-if="user.location">
+                                <!-- Paris, France -->
+                                {{ user.location }}
+                            </span>
+                            <span v-else>
+                                Rawdon Québec, Canada
                             </span>
                             <span>
-                                Jean.bobby@gmail.com
+                                {{ user.email }}
                             </span>
                         </span>
                     </div>
                     <div class="flex  justify-end w-full ">
-                        <span class="tabs flex flex-row w-full pt-5 justify-evenly font-bold text-xl xl:text-3xl xl:w-4/5">
+                        <span class="tabs flex flex-row w-full pt-5 xl:justify-end xl:gap-x-4 justify-around font-bold text-xl xl:text-3xl xl:w-4/5">
                             <span v-bind:class="[isTabActive('Friends') ? 'activeTab' : 'inactiveTab']"  @click="changeTab('Friends')">
                                 <RouterLink to="/user/profile?page=Friends">
                                     {{ $t('Amis') }} 
                                 </RouterLink>
                             </span>        
-                            <span v-bind:class="[isTabActive('Stats') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Stats')">
+                            <!-- <span v-bind:class="[isTabActive('Stats') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Stats')">
                                 <RouterLink to="/user/profile?page=Stats">
                                     {{ $t('Stats') }} 
                                 </RouterLink>
-                            </span>
+                            </span> -->
                             <span v-bind:class="[isTabActive('Characters') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Characters')">
                                 <RouterLink to="/user/profile?page=Characters">
                                     {{ $t('Personnages') }} 
                                 </RouterLink>
                             </span>
-                            <span v-bind:class="[isTabActive('Games') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Games')">
+                            <!-- <span v-bind:class="[isTabActive('Games') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Games')">
                                 <RouterLink to="/user/profile?page=Games">
                                     {{ $t('Partie') }} 
                                 </RouterLink>
-                            </span>
+                            </span> -->
                         </span>
                     </div>
                 </div>
@@ -70,6 +74,7 @@ import Loader from "@/components/Loader.vue"
 import { useRoute } from 'vue-router'
 
 import Characters from "@/components/subComponent/Characters.vue"
+import Friends from "@/components/subComponent/FriendsList.vue"
 
 export default {
     components: {
@@ -181,6 +186,7 @@ export default {
         changeTab(string) {
             const components = {
                 Characters,
+                Friends
             }
             console.log(string)
             console.log("aaaaaaaaaaaa")
