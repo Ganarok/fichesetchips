@@ -153,6 +153,7 @@ import ParamInput from "@/components/subComponent/ParamInput.vue"
 import Loader from "@/components/Loader.vue"
 import { PLAYSTYLE, EXPERIENCE, LANGUAGES } from "@/utils/enums"
 import { apiCall } from "@/utils/apiCall"
+import store from "@/store"
 
 export default {
     name: "CreateRoom",
@@ -167,6 +168,17 @@ export default {
         Loader,
     },
     data() {
+        store.commit("room/set_room", {
+            title: "",
+            description:"",
+            password: "",
+            player_nb_max: 5,
+            mj: {},
+            players: [],
+            vocal_url: "",
+            isPrivate: false,
+        })
+
         return {
             loading: false,
             maps: [],
@@ -190,6 +202,17 @@ export default {
         ...mapState("user", {
             user: (state) => state.user,
         }),
+
+        // set_room({
+        //     title: "",
+        //     description:"",
+        //     password: "",
+        //     player_nb_max: 5,
+        //     mj: {},
+        //     players: [],
+        //     vocal_url: "",
+        //     isPrivate: false,
+        // })
     },
     async beforeMount() {
         const toast = useToast()
