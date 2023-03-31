@@ -1,5 +1,8 @@
 import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacterResponse, loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
+import defaultStories from "../../database/fixtures/stories"
+import defaultMaps from "../../database/fixtures/maps"
+
 export const definitions = {
     loginRequest: {
         properties: {
@@ -312,8 +315,98 @@ export const definitions = {
             },
             data: {
                 type: "array",
-                default: [{id: "cem", name: "Caves Et Monstres", image: "https://jolstatic.fr/www/captures/5405/7/148557.jpg", description: "Pas du tout Dungeon et Dragon"}]
+                default: [{ id: "cem", name: "Caves Et Monstres", image: "https://jolstatic.fr/www/captures/5405/7/148557.jpg", description: "Pas du tout Dungeon et Dragon" }]
             }
         }
     },
+    getStoriesResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Stories successfully found"
+            },
+            data: {
+                type: "array",
+                default: [defaultStories[0]]
+            }
+        }
+    },
+    getStoryResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Story successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultStories[0]
+            }
+        }
+    },
+    createStoryRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Story title"
+            },
+            file: {
+                type: "buffer",
+                default: [42, 36]
+            }
+        }
+    },
+    getMapsResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Maps successfully found"
+            },
+            data: {
+                type: "array",
+                default: [defaultMaps[0]]
+            }
+        }
+    },
+    getMapResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Map successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultMaps[0]
+            }
+        }
+    },
+    createMapsRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Maps title"
+            },
+            data: {
+                type: "object",
+                default: {}
+            },
+            assets: {
+                type: "array",
+                default: [{
+                    name: 'sol',
+                    image: [
+                        137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13,
+                        73, 72, 68, 82, 0, 0, 1, 9, 0, 0, 0, 199,
+                        8, 6, 0, 0, 0, 10, 253, 166, 20, 0, 0, 0,
+                        1, 115, 82, 71, 66, 0, 174, 206, 28, 233, 0, 0,
+                        0, 6, 98, 75, 71, 68, 0, 255, 0, 255, 0, 255,
+                        160, 189, 167, 147, 0, 0, 0, 9, 112, 72, 89, 115,
+                        0, 0, 11, 19, 0, 0, 11, 19, 1, 0, 154, 156,
+                        24, 0, 0, 0, 7, 116, 73, 77, 69, 7, 216, 8,
+                        30, 21, 56, 13
+                    ]
+                }
+                ]
+            }
+        }
+    }
 }

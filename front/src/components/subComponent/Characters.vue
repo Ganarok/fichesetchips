@@ -37,10 +37,9 @@
                 :character="character"
                 class="max-w-[340px] min-w-[340px] max-h-[550px]"
             />
-
         </div>
     </div>
-    </template>
+</template>
 
 <script>
 import Card from "@/components/subComponent/Cards/CharacterCard.vue"

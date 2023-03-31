@@ -1,1 +1,0 @@
-`CREATE DATABASE ${process.env.DB_NAME}`

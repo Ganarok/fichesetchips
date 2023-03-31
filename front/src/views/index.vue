@@ -16,7 +16,7 @@
                         class="flex flex-col w-[41%] bg-fc-green justify-between p-[2%] absolute bottom-[13%] tablet:w-[45%] mobile:w-full"
                     >
                         <p
-                            class="text-xl sm:text-2xl  text-white font-bold pr-[5%] tablet:text-2xl mobile:w-full"
+                            class="max-w-md text-xl sm:text-2xl text-white font-bold pr-[5%] tablet:text-2xl mobile:w-full"
                         >
                             Faites du JdR avec vos amis !
                             Créez vos propres personnages, cartes et plus encore ... le tout, sur Fiches&Chips !
@@ -24,7 +24,7 @@
 
                         <router-link
                             to="/login"
-                            class="flex flex-row justify-center w-20 px-2 py-1 bg-fc-black self-end text-3xl font-bold text-white tablet:text-xl hover:opacity-90"
+                            class="flex flex-row justify-center w-20 px-2 py-1 bg-fc-black self-end text-2xl font-bold text-white whitespace-nowrap tablet:text-xl hover:opacity-90"
                         >
                             GO ->
                         </router-link>
