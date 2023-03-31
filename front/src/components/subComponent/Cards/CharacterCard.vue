@@ -1,18 +1,16 @@
 <template>
-    <div
-        class="flex flex-col items-center max-w-xs max-h-[550px] border-2 border-fc-green p-2 hover:cursor-pointer"
-    >
+    <div class="border-2 border-fc-green p-2 hover:cursor-pointer">
         <router-link
-            :to="`/user/character/${character.id}`"
+            class="h-full w-full flex flex-col items-center"
+            :to="urlSelection(character.id)"
         >
             <div
                 v-if="level || firstname"
-                class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold"
+                class="flex items-center justify-between w-full bg-fc-green p-2 text-xl font-bold h-[9%]"
             >
                 <p>
                     {{ `${firstname} ${lastname}` }}
                 </p>
-
                 <p
                     v-if="level"
                     class="text-fc-black opacity-60"
@@ -21,42 +19,54 @@
                 </p>
             </div>
 
-            <div
-                v-if="!image"
-                class="relative bg-fc-yellow w-full my-2"
-            >
-                <img
-                    src="@/assets/dragon.svg"
-                    class="object-contain"
-                    :style="grayed ? 'filter: grayscale(1)' : null"
-                >
+            <div class="bg-fc-yellow w-full my-2 min-h-[50%] flex flex-col justify-end items-center">
+                <div v-if="!image && id != &quot;create&quot;">
+                    <img
+                        src="@/assets/dragon.svg"
+                        class="object-contain"
+                        :style="grayed ? 'filter: grayscale(1)' : null"
+                    >
+                </div>
+                <div v-else-if="id == &quot;create&quot;">
+                    <img
+                        src="@/assets/unknowCharacter.svg"
+                        class="object-contain"
+                        :style="grayed ? 'filter: grayscale(1)' : null"
+                    >
+                </div>
+                <div v-else>
+                </div>
             </div>
-
+            
             <div
-                v-else
-                class="bg-fc-yellow h-80 w-full m-2"
-            />
-
-            <div class="w-full h-24 bg-fc-green p-2">
+                v-if="id != &quot;create&quot;"
+                class="w-full bg-fc-green p-2 flex-1"
+            >
                 <p
-                    class="text-sm text-ellipsis text-justify overflow-y-scroll pr-3 break-words h-3/4"
+                    class="text-sm text-ellipsis text-justify overflow-y-scroll pr-3 break-words h-full"
                     :class="owner || location ? 'h-3/4' : 'h-full'"
                 >
                     {{ bio }}
                 </p>
-
                 <div
                     v-if="owner || location"
-                    class="flex flex-row items-center justify-end text-sm space-x-4 w-full h-1/4"
+                    class="flex flex-row items-center justify-end text-sm space-x-4 w-full h-full"
                 >
                     <p>
                         {{ owner }}
                     </p>
-
-                    <p>
+                    <p> 
                         {{ location }}
                     </p>
                 </div>
+            </div>
+            <div
+                v-else
+                class="w-full bg-fc-green p-2 flex-1 my-auto"
+            >
+                <p class="text-xl font-bold opacity-60 text-center">
+                    Nouveau personnage
+                </p>
             </div>
         </router-link>
     </div>
@@ -93,6 +103,13 @@ export default {
                 return " bg-" + this.color
             }
         },
+        urlSelection: function(id) {
+            console.log(id)
+            if(id == "create") 
+                return "/characters/create"
+            else
+                return "/user/character/" + id
+        }
     }
 }
 </script>

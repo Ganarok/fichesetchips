@@ -1,293 +1,94 @@
 <template>
     <SidebarLayout :is-border="false">
-        <div class="flex flex-col h-screen w-full md:flex-row">
-            <div
-                class="flex flex-col relative items-center justify-between h-full w-full md:w-1/2 md:max-w-sm space-y-4 p-4 md:border-fc-green md:border-r-4"
-            >
+        <div class="flex justify-center flex-col items-center ">
+            <div class="flex w-4/5 justify-center items-center bg-gray-200 mt-10 p-5 flex-col xl:flex-row"> 
                 <img
-                    src="@/assets/cornerPixels.svg"
-                    class="absolute top-0 right-0 rotate-90 -z-10 scale-x-[-1] invisible sm:visible"
+                    src="../../assets/avatar/character.png"
+                    class="object-contain rounded-full bg-fc-green border-8 border-fc-black w-52"
+                    :style="grayed ? 'filter: grayscale(1)' : null"
                 >
-
-                <div class="relative text-2xl w-52 sm:w-40 xl:w-52">
-                    <Avatar
-                        :username="user.username"
-                        username_under
-                        class="text-3xl xl:text-4xl"
-                    />
-                </div>
-
-                <div class="flex flex-col items-center space-y-1 text-xl">
-                    <EditableDiv
-                        v-model="user.location"
-                        :edit-mode="editMode"
-                    />
-                    <EditableDiv
-                        v-model="user.email"
-                        :edit-mode="editMode"
-                    />
-                </div>
-
-                <p class="flex text-center font-bold italic text-xl">
-                    <EditableDiv
-                        v-model="user.description"
-                        :edit-mode="editMode"
-                    />
-                </p>
-
-                <div class="flex flex-wrap items-center justify-center">
-                    <Badge
-                        v-for="(badge, idx) in badges[badgesPage]"
-                        :key="badge.id"
-                        size="s"
-                        can-fav
-                        class="m-1"
-                        :is-fav="badges[badgesPage][idx].isFav"
-                        :completion="badge.completion"
-                        @favorite="handleFavorite(badge.id)"
-                    />
-                </div>
-
-                <div class="flex items-center justify-evenly mt-4">
-                    <div
-                        :class="badgesPage != 0 ? null : 'pointer-events-none opacity-25'"
-                        class="cursor-pointer select-none"
-                        @click="badgesPage > 0 ? (badgesPage -= 1) : null"
-                    >
-                        <img src="../../assets/icons/fleche.svg">
+                <div class="flex flex-col justify-between w-full items-center">
+                    <div class="flex flex-col font-bold xl:flex-row min-w-full">
+                        <span class="flex flex-col ml-3 items-center xl:items-start">
+                            <p class=" text-7xl ">
+                                {{ user.username }}
+                            </p>
+                            <p class="text-2xl mt-5 text-ellipsis flex-nowrap text-center xl:text-left ">
+                                
+                            </p>
+                        </span>
+                        <span class="flex flex-col items-center xl:items-start xl:ml-16 w-full pt-4 infoProfils  ">
+                            <span v-if="user.location">
+                                <!-- Paris, France -->
+                                {{ user.location }}
+                            </span>
+                            <span v-else>
+                                Rawdon Québec, Canada
+                            </span>
+                            <span>
+                                {{ user.email }}
+                            </span>
+                        </span>
                     </div>
-
-                    <div class="mx-2">
-                        {{ badgesPage + 1 }} / {{ badges.length }}
-                    </div>
-
-                    <div
-                        :class="
-                            badgesPage < badges.length - 1
-                                ? null
-                                : 'pointer-events-none opacity-25'
-                        "
-                        class="cursor-pointer select-none rotate-180"
-                        @click="badgesPage < badges.length - 1 ? (badgesPage += 1) : null"
-                    >
-                        <img src="../../assets/icons/fleche.svg">
+                    <div class="flex  justify-end w-full ">
+                        <span class="tabs flex flex-row w-full pt-5 xl:justify-end xl:gap-x-4 justify-around font-bold text-xl xl:text-3xl xl:w-4/5">
+                            <span
+                                :class="[isTabActive('Friends') ? 'activeTab' : 'inactiveTab']"
+                                @click="changeTab('Friends')"
+                            >
+                                <RouterLink to="/user/profile?page=Friends">
+                                    {{ $t('Amis') }} 
+                                </RouterLink>
+                            </span>        
+                            <!-- <span v-bind:class="[isTabActive('Stats') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Stats')">
+                                <RouterLink to="/user/profile?page=Stats">
+                                    {{ $t('Stats') }} 
+                                </RouterLink>
+                            </span> -->
+                            <span
+                                :class="[isTabActive('Characters') ? 'activeTab' : 'inactiveTab']"
+                                @click="changeTab('Characters')"
+                            >
+                                <RouterLink to="/user/profile?page=Characters">
+                                    {{ $t('Personnages') }} 
+                                </RouterLink>
+                            </span>
+                            <!-- <span v-bind:class="[isTabActive('Games') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Games')">
+                                <RouterLink to="/user/profile?page=Games">
+                                    {{ $t('Partie') }} 
+                                </RouterLink>
+                            </span> -->
+                        </span>
                     </div>
                 </div>
-
-                <div class="flex space-x-10">
-                    <button
-                        class="text-gray-600"
-                        @click="editMode = !editMode"
-                    >
-                        {{ editMode ? "Enregistrer" : "Editer" }}
-                    </button>
-                    <button
-                        class="text-gray-600 hover:text-red-500"
-                        @click="showModal = true"
-                    >
-                        Supprimer
-                    </button>
-                </div>
-
-                <img
-                    src="@/assets/cornerPixels.svg"
-                    class="absolute bottom-0 right-0 rotate-180 -z-10 scale-x-[-1] invisible sm:visible"
-                >
             </div>
-
-            <div class="flex flex-col space-y-4 w-full h-full px-4 pt-4">
-                <div
-                    class="flex flex-col items-center w-full space-y-4 md:space-x-2 md:space-y-0 md:flex-row xl:space-x-4"
-                >
-                    <div class="flex flex-col w-full h-full text-center space-y-2">
-                        <div
-                            class="flex w-full h-20 items-center justify-center text-center text-3xl font-bold bg-fc-black text-fc-green"
-                        >
-                            Statistiques
-                        </div>
-
-                        <div class="flex flex-col justify-evenly h-full space-y-2 p-1">
-                            <div class="flex w-full h-16">
-                                <div class="w-2/5 flex items-center justify-center">
-                                    666
-                                </div>
-                                <div
-                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black"
-                                >
-                                    <div
-                                        class="absolute -right-1 -top-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    <div
-                                        class="absolute -right-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    Parties jouées (Joueur)
-                                </div>
-                            </div>
-
-                            <div class="flex w-full h-16">
-                                <div
-                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black"
-                                >
-                                    <div
-                                        class="absolute -left-1 -top-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    <div
-                                        class="absolute -left-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    Parties jouées (MJ)
-                                </div>
-                                <div class="w-2/5 flex items-center justify-center">
-                                    666
-                                </div>
-                            </div>
-                            <div class="flex w-full h-16">
-                                <div class="w-2/5 flex items-center justify-center">
-                                    {{ getDate(user.created_at) }}
-                                </div>
-                                <div
-                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black"
-                                >
-                                    <div
-                                        class="absolute -right-1 -top-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    <div
-                                        class="absolute -right-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    Date d'inscription
-                                </div>
-                            </div>
-                            <div class="flex w-full h-16">
-                                <div
-                                    class="relative w-3/5 flex items-center justify-center text-white bg-fc-black"
-                                >
-                                    <div
-                                        class="absolute -left-1 -top-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    <div
-                                        class="absolute -left-1 -bottom-1 z-[-1] bg-fc-green h-2 w-2"
-                                    />
-                                    Temps de jeu
-                                </div>
-                                <div class="w-2/5 flex items-center justify-center">
-                                    666
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <CharacterCard
-                        v-for="character in characters"
-                        :key="character.id"
-                        :character="character"
-                    />
-                </div>
-
-                <div class="flex flex-col w-full h-full">
-                    <h1 class="font-bold text-3xl">
-                        Amis
-                    </h1>
-
-                    <div class="h-1 w-full bg-fc-black" />
-
-                    <div
-                        class="flex self-center overflow-x-auto space-x-2 justify-center items-center h-full w-full md:w-[50vw] my-4"
-                    >
-                        <div
-                            v-if="friends.length < 1"
-                            class="flex font-bold text-center h-full items-center"
-                        >
-                            Ajoutez des amis pour voir leur status
-                        </div>
-
-                        <Avatar
-                            v-for="friendship in friends"
-                            :key="friendship.id"
-                            :grayed="false"
-                            :username="getFriendUsername(friendship)"
-                        />
-                        <div v-if="pending_approval.length > 0">
-                            <p>Ils veulent être ton ami !</p>
-                            <Avatar
-                                v-for="friendship in pending_approval"
-                                :key="friendship.id"
-                                :grayed="false"
-                                :username="friendship.user_asked.username"
-                            />
-                        </div>
-
-                        <div v-if="pending_request.length > 0">
-                            <p>Vouys attendez toujours leur retour</p>
-                            <Avatar
-                                v-for="friendship in pending_request"
-                                :key="friendship.id"
-                                :grayed="false"
-                                :username="friendship.user_answered.username"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <Modal
-                    v-show="showModal"
-                    @close-modal="showModal = false"
-                >
-                    <div
-                        class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-fc-yellow-trans"
-                    >
-                        <div
-                            class="bg-white h-1/3 w-1/3 flex flex-col justify-center items-center text-red-500 font-bold text-xl space-y-10"
-                        >
-                            <div class="text-center">
-                                <div>Voulez-vous vraiment supprimer votre profil ?</div>
-                                <div class="text-sm">
-                                    Attention, cette action est irreversible et toute vos donnée
-                                    serons perdues définitivement
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center w-full space-x-16">
-                                <button
-                                    class="bg-red-500 text-white h-[2.5em] p-1"
-                                    style="aspect-ratio: 1/1"
-                                    @click="deleteProfile"
-                                >
-                                    Oui
-                                </button>
-                                <button
-                                    class="bg-fc-green text-white h-[2.5em] p-1"
-                                    style="aspect-ratio: 1/1"
-                                    @click="showModal = false"
-                                >
-                                    Non
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
+            <div class="mt-5 w-full">
+                <div class="flex w-full flex-col h-full justify-between items-center">
+                    <component :is="tabs" />
+                </div>     
             </div>
         </div>
     </SidebarLayout>
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue"
-import EditableDiv from "@/components/subComponent/EditableDiv.vue"
-import Avatar from "@/components/subComponent/Avatar.vue"
-import Badge from "@/components/subComponent/Badge.vue"
-import CharacterCard from "@/components/subComponent/Cards/CharacterCard.vue"
-import SidebarLayout from "@/layouts/Sidebar.vue"
 import { mapState, mapActions } from "vuex"
 import moment from "moment"
+
+import Modal from "@/components/Modal.vue"
+import SidebarLayout from "@/layouts/Sidebar.vue"
+import Loader from "@/components/Loader.vue"
+import Characters from "@/components/subComponent/Characters.vue"
+import Friends from "@/components/subComponent/FriendsList.vue"
 
 export default {
     components: {
         Modal,
-        EditableDiv,
-        Avatar,
-        Badge,
-        CharacterCard,
         SidebarLayout,
+        Characters,
+        Loader,
+        Friends
     },
-
     data() {
         return {
             showModal: false,
@@ -295,6 +96,7 @@ export default {
             badgesPage: 0,
             preview: false,
             editMode: false,
+            tabName: "Friends",
         }
     },
     computed: {
@@ -322,10 +124,13 @@ export default {
             return toDisplay
         },
     },
+    watch: {
+        $route() {
+            this.changeTab(this.$route.query.page)
+        }
+    },
     async mounted() {
-        this.badgeGenerator(3)
-        await this.fetch_my_friends()
-        await this.fetch_characters()
+        this.changeTab(this.$route.query.page)
     },
     methods: {
         ...mapActions({
@@ -384,5 +189,73 @@ export default {
                 return friendship.user_asked.username
             }
         },
-    }}
+        changeTab(string) {
+            const components = {
+                Characters,
+                Friends
+            }
+            console.log(string)
+            console.log("aaaaaaaaaaaa")
+            let newTabName = string || "Characters"
+            this.tabs = components[newTabName]
+            this.tabName = newTabName
+        },
+        isTabActive(tabName) {
+            return this.tabName == tabName
+        },
+    }
+}
 </script>
+
+<style>
+.infoProfils {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.inactiveTab {
+    position: relative;
+    opacity: 0.3;
+    letter-spacing: 0.02rem;
+    display: inline-block;
+}
+.activeTab {
+    position: relative;
+    opacity: 1;
+}
+.tabs{
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.activeTab::after{
+    content: '';
+    width: 100%;
+    height: .2rem;
+    bottom: 0;
+    left: 0;
+    background-color: #4FEA74;
+}
+
+.inactiveTab:hover{
+    opacity: .6;
+}
+
+:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: .2rem;
+    left: 0;
+    position: absolute;
+    background: #4FEA74;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+.inactiveTab:hover:after { 
+    width: 100%; 
+    left: 0; 
+}
+
+
+</style>
