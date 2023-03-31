@@ -54,13 +54,6 @@
                     Maps
                 </router-link>
 
-                <router-link
-                    to="/rooms"
-                    class="font-bold text-xl"
-                    active-class="underline"
-                >
-                    Rooms
-                </router-link>
                 <div class="bloc flex flex-col mb-12">
                     <div
                         class="categorie flex flex-col mb-4"
@@ -194,21 +187,14 @@
                     Made with ❤️ by fiches&chips
                 </p>
             </div>
-    
-            <!-- <div class="flex flex-col w-full justify-center items-center relative">
-                <router-link exact to="/" class="text-yellow-400 border-yellow-400 border font-bold text-xl py-2 px-4 rounded-lg transition-all ease-in-out duration-200 hover:bg-yellow-400 hover:text-gray-900" @click.native="logout()" v-if="connected()">
-                    {{$t('Déconnexion')}}
-                </router-link>
-                <img src="@/assets/icon.png" class="w-2/4" alt="F&C logo" />
-                <p class="text-white text-[10px]">Made with ❤️ by fiches&chips</p>
-            </div> -->
         </div>
     </div>
 </template>
 
 <script>
-import Button from "@/components/subComponent/Button.vue"
 import { mapGetters, mapMutations } from "vuex"
+
+import Button from "@/components/subComponent/Button.vue"
 
 export default {
     name: "Sidebar",
