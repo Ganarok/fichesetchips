@@ -32,7 +32,10 @@
                     </div>
                     <div class="flex  justify-end w-full ">
                         <span class="tabs flex flex-row w-full pt-5 xl:justify-end xl:gap-x-4 justify-around font-bold text-xl xl:text-3xl xl:w-4/5">
-                            <span v-bind:class="[isTabActive('Friends') ? 'activeTab' : 'inactiveTab']"  @click="changeTab('Friends')">
+                            <span
+                                :class="[isTabActive('Friends') ? 'activeTab' : 'inactiveTab']"
+                                @click="changeTab('Friends')"
+                            >
                                 <RouterLink to="/user/profile?page=Friends">
                                     {{ $t('Amis') }} 
                                 </RouterLink>
@@ -42,7 +45,10 @@
                                     {{ $t('Stats') }} 
                                 </RouterLink>
                             </span> -->
-                            <span v-bind:class="[isTabActive('Characters') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Characters')">
+                            <span
+                                :class="[isTabActive('Characters') ? 'activeTab' : 'inactiveTab']"
+                                @click="changeTab('Characters')"
+                            >
                                 <RouterLink to="/user/profile?page=Characters">
                                     {{ $t('Personnages') }} 
                                 </RouterLink>
@@ -56,9 +62,9 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-5 w-full" > <!--CONTENT-->
+            <div class="mt-5 w-full">
                 <div class="flex w-full flex-col h-full justify-between items-center">
-                    <component :is="tabs" class="w-4/5"/>
+                    <component :is="tabs" />
                 </div>     
             </div>
         </div>
@@ -66,13 +72,12 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue"
-import SidebarLayout from "@/layouts/Sidebar.vue"
 import { mapState, mapActions } from "vuex"
 import moment from "moment"
-import Loader from "@/components/Loader.vue"
-import { useRoute } from 'vue-router'
 
+import Modal from "@/components/Modal.vue"
+import SidebarLayout from "@/layouts/Sidebar.vue"
+import Loader from "@/components/Loader.vue"
 import Characters from "@/components/subComponent/Characters.vue"
 import Friends from "@/components/subComponent/FriendsList.vue"
 
@@ -82,6 +87,7 @@ export default {
         SidebarLayout,
         Characters,
         Loader,
+        Friends
     },
     data() {
         return {
@@ -118,13 +124,13 @@ export default {
             return toDisplay
         },
     },
-    async mounted() {
-        this.changeTab(this.$route.query.page)
-    },
     watch: {
         $route() {
             this.changeTab(this.$route.query.page)
         }
+    },
+    async mounted() {
+        this.changeTab(this.$route.query.page)
     },
     methods: {
         ...mapActions({
@@ -201,7 +207,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 .infoProfils {
     font-size: 1.5rem;
     font-weight: 500;

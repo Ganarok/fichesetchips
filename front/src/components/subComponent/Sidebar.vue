@@ -58,7 +58,10 @@
                         class="categorie flex flex-col mb-4"
                         :class="{active: personnageIsShow}"
                     >
-                        <router-link to="/user/profile" class="font-bold text-xl cursor-pointer hover:opacity-70">
+                        <router-link
+                            to="/user/profile"
+                            class="font-bold text-xl cursor-pointer hover:opacity-70"
+                        >
                             {{ $t('Profile') }} 
                         </router-link>
                         <ul 
@@ -70,21 +73,22 @@
                                 </router-link>
                             </li>
 
-                            <li class="leading-7 text-neutral-300 hover:opacity-70">
+                            <!-- <li class="leading-7 text-neutral-300 hover:opacity-70">
                                 <router-link to="/user/profile?page=Stats">
                                     {{ $t('Liste') }} 
                                 </router-link>
-                            </li>
+                            </li> -->
                             <li class="leading-7 text-neutral-300 hover:opacity-70">
                                 <router-link to="/user/profile?page=Characters">
                                     {{ $t('Personnage') }} 
                                 </router-link>
                             </li>
-                            <li class="leading-7 text-neutral-300 hover:opacity-70">
+
+                            <!-- <li class="leading-7 text-neutral-300 hover:opacity-70">
                                 <router-link to="/user/profile?page=Games">
                                     {{ $t('Partie') }} 
                                 </router-link>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
 
