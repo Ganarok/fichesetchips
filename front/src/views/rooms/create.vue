@@ -113,6 +113,23 @@
                         />
                     </div>
 
+                    <div class="flex w-full items-center justify-between px-4">
+                        <p class="font-bold">
+                            Max. de joueurs
+                        </p>
+
+                        <input
+                            :max="64"
+                            :min="0"
+                            :placeholder="5"
+                            type="number"
+                            class="flex w-12 h-12 mr-5 text-center bg-fc-black text-fc-green placeholder:text-fc-yellow-trans text-lg font-bold outline-none"
+                            outline="fc-green"
+                            :value="room.player_nb_max"
+                            @input="(v) => (room.player_nb_max = parseInt(v.target.value || 0))"
+                        />
+                    </div>
+
                     <BlackGreenDiv
                         title="Communication"
                         :right-green-div="false"
@@ -202,17 +219,6 @@ export default {
         ...mapState("user", {
             user: (state) => state.user,
         }),
-
-        // set_room({
-        //     title: "",
-        //     description:"",
-        //     password: "",
-        //     player_nb_max: 5,
-        //     mj: {},
-        //     players: [],
-        //     vocal_url: "",
-        //     isPrivate: false,
-        // })
     },
     async beforeMount() {
         const toast = useToast()
