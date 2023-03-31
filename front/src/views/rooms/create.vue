@@ -21,7 +21,7 @@
                     color="text-fc-yellow"
                     height="h-16"
                     :autofocus="true"
-                    />
+                />
                     
                 <Button
                     class="ml-4 sm:mx-12"
@@ -163,10 +163,8 @@ import { mapState, mapActions, mapMutations } from "vuex"
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import BlackGreenDiv from "@/components/subComponent/BlackGreenDiv.vue"
 import Button from "@/components/subComponent/Button.vue"
-import Selector from "@/components/subComponent/Selector.vue"
 import SelectorMultiple from '@/components/subComponent/SelectorMultiple.vue'
 import CustomInput from "@/components/subComponent/CustomInput.vue"
-import ParamInput from "@/components/subComponent/ParamInput.vue"
 import Loader from "@/components/Loader.vue"
 import { PLAYSTYLE, EXPERIENCE, LANGUAGES } from "@/utils/enums"
 import { apiCall } from "@/utils/apiCall"
@@ -178,10 +176,8 @@ export default {
         SidebarLayout,
         BlackGreenDiv,
         Button,
-        Selector,
         SelectorMultiple,
         CustomInput,
-        ParamInput,
         Loader,
     },
     data() {
@@ -257,7 +253,6 @@ export default {
             this.room.title = v.target.value
         },
         handleSelectedMaps(v) {
-            console.log(v);
             this.selectedMaps.push(v)
         },
         handleUpdateExp(v) {
