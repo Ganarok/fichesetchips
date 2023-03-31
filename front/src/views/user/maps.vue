@@ -19,7 +19,7 @@
                         @click="() => $router.push('/mapmaker')"
                     >
                         <img
-                            src="@/assets/plus.svg"
+                            src="@/assets/icons/plus.svg"
                             alt="plus"
                         >
 

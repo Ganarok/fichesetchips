@@ -1,27 +1,45 @@
 <template>
     <SidebarLayout
         :title="story.title"
-    >       
-        <div class="my-4">
-            <Button
-                :button-text="$t('Retour')"
-                class="px-6 py-2"
-                color="fc-green"
-                @click="() => $router.push('/user/stories')"
-            />
-        </div>
-        {{ pdf }}
-        <div v-if="loaded">
-            <PDFViewer
-                :pdf="pdf"
-            />
-        </div>
+    >
         <button
             class="text-gray-600 hover:text-red-500"
             @click="showModal = true"
         >
             Supprimer
         </button>
+
+        <div 
+            v-if="loaded"
+            class="relative"
+        >
+            <PDFViewer
+                :pdf="pdf"
+            />
+
+            <div 
+                class="absolute top-16 left-0 p-4 z-50"
+            >
+                <Button
+                    :button-text="$t('Retour')"
+                    class="px-6 py-2 transition duration-150 opacity-30 hover:opacity-100"
+                    color="fc-green"
+                    @click="() => $router.push('/user/stories')"
+                />
+            </div>
+
+            <div 
+                class="absolute top-32 left-0 p-4 z-50"
+            >
+                <Button
+                    :button-text="$t('Supprimer')"
+                    class="px-6 py-2 transition duration-150 opacity-30 hover:opacity-100"
+                    color="fc-red"
+                    @click="showModal = true"
+                />
+            </div>
+        </div>
+
         <Modal
             v-show="showModal"
             @close-modal="showModal = false"
