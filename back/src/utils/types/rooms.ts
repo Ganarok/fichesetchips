@@ -1,10 +1,7 @@
-import { Type } from "class-transformer"
 import { ArrayContains, ArrayUnique, IsArray, IsBoolean, IsDefined, IsEnum, IsNumber, IsString, IsUUID, ValidateNested } from "class-validator"
 import { GameStatus } from "../../database/entities/public/Game"
-import { Player } from "../../database/entities/public/Players"
-import { Story } from "../../database/entities/public/workshop/Story"
 
-export class CreateGame {
+export class CreateGameInRoom {
 
     @IsUUID()
     story_id?: string
@@ -43,11 +40,11 @@ export class CreateRoom {
     @IsString()
     password?: string
 
-    game?: CreateGame
+    game?: CreateGameInRoom
 }
 
 
-export class UpdateGame {
+export class UpdateGameInRoom {
 
     @IsEnum(GameStatus)
     status?: GameStatus
@@ -85,5 +82,5 @@ export class UpdateRoom {
     @IsNumber()
     players_nb_max?: number
 
-    game?: UpdateGame
+    game?: UpdateGameInRoom
 }
