@@ -93,9 +93,11 @@ export default {
         return {
             showModal: false,
             badges: [],
+            tabs: null,
             badgesPage: 0,
             preview: false,
             editMode: false,
+            grayed: false,
             tabName: "Friends",
         }
     },
@@ -158,10 +160,9 @@ export default {
         handleFavorite(badgeID) {
             this.badges.forEach((badgeList, page) => {
                 const badgeIndex = badgeList.findIndex((badge) => badge.id == badgeID)
-                console.log(badgeID, badgeIndex)
+
                 if (badgeIndex != -1) {
-                    this.badges[page][badgeIndex].isFav =
-            !this.badges[page][badgeIndex].isFav
+                    this.badges[page][badgeIndex].isFav = !this.badges[page][badgeIndex].isFav
                 }
             })
         },
@@ -194,8 +195,7 @@ export default {
                 Characters,
                 Friends
             }
-            console.log(string)
-            console.log("aaaaaaaaaaaa")
+
             let newTabName = string || "Characters"
             this.tabs = components[newTabName]
             this.tabName = newTabName

@@ -104,7 +104,6 @@ export default {
             }
         },
         urlSelection: function(id) {
-            console.log(id)
             if(id == "create") 
                 return "/characters/create"
             else

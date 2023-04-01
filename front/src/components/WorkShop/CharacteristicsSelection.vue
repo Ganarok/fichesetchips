@@ -63,6 +63,7 @@ export default {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_stats: "characters/set_stats",
+            set_currentStep: "characters/set_currentStep",
         }),
         handleRandomize({name = '', id, diceMaxValue = 6, dices = 4, valuesNb = 3}) {
             let dicesResults = []
@@ -103,8 +104,7 @@ export default {
             }
             
             this.set_stats(this.character_creation.stats)
-
-            await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Description' }})
+            this.set_currentStep('Description')
         },
     },
 }

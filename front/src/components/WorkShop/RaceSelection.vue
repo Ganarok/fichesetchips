@@ -48,6 +48,7 @@ export default {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_racial: "characters/set_racial",
+            set_currentStep: "characters/set_currentStep",
         }),
         async chooseRace(id, languages, nb_free_standard_language, racial_bonus) {
             this.set_racial(racial_bonus)
@@ -66,9 +67,9 @@ export default {
             this.character_creation.character.height = 10
             this.set_character_creation(this.character_creation)
             if (nb_free_standard_language > 0) {
-                await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Language' }})
+                this.set_currentStep('Language')
             } else {
-                await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Class' }})
+                this.set_currentStep('Class')
             }
         },
     }

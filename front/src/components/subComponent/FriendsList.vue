@@ -1,11 +1,11 @@
 <template>
-    <div class="flex justify-between flex-row gap-x-2 gap-y-2 flex-wrap mt-4">
+    <div class="flex flex-wrap justify-between gap-2 m-4">
         <Avatar
             v-for="friendship in friends"
             :key="friendship.id"
             :grayed="false"
             :username="getFriendUsername(friendship)"
-            class=" w-[15%]"
+            class="w-36"
         />
     </div>
 </template>
