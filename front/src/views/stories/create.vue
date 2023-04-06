@@ -1,51 +1,65 @@
 <template>
     <SidebarLayout 
         :title="'Import de scénario'"
+        description="Vous pouvez importer un .pdf depuis votre ordinateur. Ce fichier servira de base pour votre scénario."
     >
-        <div class="flex flex-row items-center pl-6 space-x-6">
-            <div
-                class=""
+        <div class="flex flex-col cursor pl-6 space-y-6">
+            <p>Importez votre fichier ici : </p>
+
+            <input
+                type="file"
+                accept="application/pdf"
+                @change="onFileChange"
             >
-                <p>Importez votre fichier ici : </p>
-                <input
-                    type="file"
-                    @change="onFileChange"
-                >
-                <p>Et choisissez un titre !</p>
-                <input
-                    type="text" 
-                    :value="title"
-                    placeholder="Titre..."
-                    @input="(v) => (title = v.target.value)"
-                >
-                <Button button-text="Importer" @click="uploadFile">
-                </Button>
-            </div>
+
+            <p>Et choisissez un titre !</p>
+
+            <CustomInput
+                :max-length="254"
+                place-holder="Titre de la story"
+                type="text"
+                outline="fc-green"
+                :value="title"
+                class="max-w-xs"
+                @input="(v) => (title = v.target.value)"
+            />
+
+            <Button
+                :button-text="$t('Importer')"
+                class="px-4 py-2 text-base w-36 bg-gra"
+                :class="file === null || title === '' ? 'cursor-not-allowed' : 'cursor-pointer'"
+                textColor="text-fc-black"
+                :color="file === null || title === '' ? 'gray-200' : 'fc-green'"
+                :backgroundColor="file === null || title === '' ? 'gray-200' : 'fc-green'"
+                :rounded="false"
+                :disabled="file === null || title === ''"
+                @click="uploadFile"
+            />
         </div>
     </SidebarLayout>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
-import ParamInput from "@/components/subComponent/ParamInput.vue"
-import Button from "@/components/subComponent/Button.vue"
+import { mapActions } from "vuex"
 import { useToast } from "vue-toastification"
 
+import Button from "@/components/common/Button.vue"
 import SidebarLayout from '@/layouts/Sidebar.vue'
+import CustomInput from "@/components/common/CustomInput.vue"
 
 export default {
     name: "StoryCreate",
     components: {
         SidebarLayout,
-        ParamInput,
         Button,
+        CustomInput
     },
     props: {
     },
     data() {
         return {
             file: null,
-            title: ""
+            title: ''
         }
     },
     computed: {

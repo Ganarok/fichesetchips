@@ -59,7 +59,7 @@ export default {
         },
         async delete_story({ commit }, story_id) {
             try {
-                const { data } = await apiCall({
+                await apiCall({
                     method: "DELETE",
                     route: `/stories/${story_id}`
                 })
@@ -91,48 +91,48 @@ export default {
     getters: {},
 }
 
-function formDataToBuffer(formData) {
-    let dataBuffer = new Buffer(0)
-    let boundary = formData.getBoundary()
-    for(let i = 0, len = formData._streams.length; i < len; i++) {
+// function formDataToBuffer(formData) {
+//     let dataBuffer = new Buffer(0)
+//     let boundary = formData.getBoundary()
+//     for(let i = 0, len = formData._streams.length; i < len; i++) {
 
-        if(typeof formData._streams[i] !== 'function') {
+//         if(typeof formData._streams[i] !== 'function') {
 
-            dataBuffer = this.bufferWrite(dataBuffer, formData._streams[i])
+//             dataBuffer = this.bufferWrite(dataBuffer, formData._streams[i])
 
-            // The item have 2 more "-" in the boundary. No clue why
-            // rfc7578 specifies (4.1): "The boundary is supplied as a "boundary"
-            //    parameter to the multipart/form-data type.  As noted in Section 5.1
-            //    of [RFC2046], the boundary delimiter MUST NOT appear inside any of
-            //    the encapsulated parts, and it is often necessary to enclose the
-            //    "boundary" parameter values in quotes in the Content-Type header
-            //    field."
-            // This means, that we can use the boundary as unique value, indicating that
-            // we do NOT need to add a break (\r\n). These are added by data-form package.
-            //
-            // As seen in this example (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST#Example)
-            // the boundary is preceded by 2x "-". If thus --Boundary exists, do not add the break.
-            if(typeof formData._streams[i] !== 'string' || formData._streams[i].substring(2, boundary.length + 2) !== boundary) {
-                dataBuffer = bufferWrite(dataBuffer, "\r\n")
-            }
-        }
-    }
+//             // The item have 2 more "-" in the boundary. No clue why
+//             // rfc7578 specifies (4.1): "The boundary is supplied as a "boundary"
+//             //    parameter to the multipart/form-data type.  As noted in Section 5.1
+//             //    of [RFC2046], the boundary delimiter MUST NOT appear inside any of
+//             //    the encapsulated parts, and it is often necessary to enclose the
+//             //    "boundary" parameter values in quotes in the Content-Type header
+//             //    field."
+//             // This means, that we can use the boundary as unique value, indicating that
+//             // we do NOT need to add a break (\r\n). These are added by data-form package.
+//             //
+//             // As seen in this example (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST#Example)
+//             // the boundary is preceded by 2x "-". If thus --Boundary exists, do not add the break.
+//             if(typeof formData._streams[i] !== 'string' || formData._streams[i].substring(2, boundary.length + 2) !== boundary) {
+//                 dataBuffer = bufferWrite(dataBuffer, "\r\n")
+//             }
+//         }
+//     }
 
-    // Close the request
-    dataBuffer = bufferWrite(dataBuffer, '--' + boundary + '--')
+//     // Close the request
+//     dataBuffer = bufferWrite(dataBuffer, '--' + boundary + '--')
 
-    return dataBuffer
-}
+//     return dataBuffer
+// }
 
 
-function bufferWrite(buffer, data) {
+// function bufferWrite(buffer, data) {
 
-    let addBuffer
-    if(typeof data === 'string') {
-        addBuffer = Buffer.from(data)
-    } else if(typeof data === 'object' && Buffer.isBuffer(data)) {
-        addBuffer = data
-    }
+//     let addBuffer
+//     if(typeof data === 'string') {
+//         addBuffer = Buffer.from(data)
+//     } else if(typeof data === 'object' && Buffer.isBuffer(data)) {
+//         addBuffer = data
+//     }
 
-    return Buffer.concat([buffer, addBuffer])
-}
+//     return Buffer.concat([buffer, addBuffer])
+// }

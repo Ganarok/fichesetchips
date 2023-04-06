@@ -2,20 +2,11 @@
     <SidebarLayout
         :title="story.title"
     >
-        <button
-            class="text-gray-600 hover:text-red-500"
-            @click="showModal = true"
-        >
-            Supprimer
-        </button>
-
         <div 
             v-if="loaded"
             class="relative"
         >
-            <PDFViewer
-                :pdf="pdf"
-            />
+            <PDFViewer class="pb-4" />
 
             <div 
                 class="absolute top-16 left-0 p-4 z-50"
@@ -45,13 +36,13 @@
             @close-modal="showModal = false"
         >
             <div
-                class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-fc-yellow-trans"
+                class="flex justify-center items-center bg-fc-yellow-trans fixed -top-4 bottom-0 left-0 right-0"
             >
                 <div
                     class="bg-white h-1/3 w-1/3 flex flex-col justify-center items-center text-red-500 font-bold text-xl space-y-10"
                 >
                     <div class="text-center">
-                        <div>Voulez-vous vraiment supprimer ce scénario ?</div>
+                        <p>Voulez-vous vraiment supprimer ce scénario ?</p>
                         <div class="text-sm">
                             Attention, cette action est irreversible et toute vos donnée
                             serons perdues définitivement
@@ -80,17 +71,20 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
+
 import SidebarLayout from '@/layouts/Sidebar.vue'
-import { mapState, mapActions, mapMutations } from "vuex"
-import Button from "@/components/subComponent/Button.vue"
-import PDFViewer from "@/components/subComponent/PDFViewer.vue"
+import Button from "@/components/common/Button.vue"
+import PDFViewer from "@/components/common/PDFViewer.vue"
+import Modal from "@/components/Modal.vue"
 
 export default {
     name: 'StoryDetails',
     components: {
         SidebarLayout,
         Button,
-        PDFViewer
+        PDFViewer,
+        Modal
     },
     props: {
     },
@@ -106,6 +100,11 @@ export default {
             story: (state) => state.story,
         }),
     },
+    async mounted() {
+        this.story_id = this.$route.params.id
+        await this.fetch_story(this.story_id)
+        this.loaded = true
+    },
     methods: {
         ...mapActions({
             fetch_story: "stories/fetch_story",
@@ -115,11 +114,6 @@ export default {
             await this.delete_story(this.story_id)
             await this.$router.push('/user/stories')
         },
-    },
-    async mounted() {
-        this.story_id = this.$route.params.id
-        await this.fetch_story(this.story_id)
-        this.loaded = true
     }
 }
 </script>

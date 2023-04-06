@@ -33,8 +33,8 @@ export default {
     components: {
     },
     props: {
-        story: {},
-        index: {type: Number}
+        story: { type: Object, default: () => {} },
+        index: { type: Number, default: 0 }
     },
     data () {
         return {

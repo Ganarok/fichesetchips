@@ -52,8 +52,8 @@
 import { mapState, mapActions, mapMutations } from "vuex"
 
 import SidebarLayout from '@/layouts/Sidebar.vue'
-import Loader from "@/components/Loader.vue"
-import Story from '@/components/subComponent/Story.vue'
+import Loader from "@/components/common/Loader.vue"
+import Story from '@/components/common/Story.vue'
 
 export default {
     name: 'Stories',
@@ -72,6 +72,11 @@ export default {
             stories: (state) => state.stories,
         }),
     },
+    async mounted() {
+        await this.fetch_stories()
+
+        this.loading = false
+    },
     methods: {
         ...mapActions({
             fetch_stories: "stories/fetch_stories",
@@ -79,11 +84,6 @@ export default {
         ...mapMutations({
             set_story: "stories/set_story"
         }),
-    },
-    async mounted() {
-        await this.fetch_stories()
-
-        this.loading = false
-    },
+    }
 }
 </script>
