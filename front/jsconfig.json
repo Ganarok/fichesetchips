@@ -7,7 +7,7 @@
         "jsx": "preserve",
         "paths": {
             "@/*": [ "./src/*" ],
-            "@/components/subComponent" : [ "./src/components/subComponents*" ],
+            "@/components/common" : [ "./src/components/common*" ],
             "@/components" : [ "./src/components/*" ],
             "@/views" : [ "./src/views/*" ],
             "@/assets" : [ "./src/assets/*" ],

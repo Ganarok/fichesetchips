@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import StatSelector from "@/components/subComponent/StatSelector.vue"
-import StatPreview from "@/components/subComponent/StatPreview.vue"
+import StatSelector from "@/components/common/StatSelector.vue"
+import StatPreview from "@/components/common/StatPreview.vue"
 
 import { useToast } from "vue-toastification"
 import { mapState, mapMutations } from "vuex"
@@ -63,6 +63,7 @@ export default {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_stats: "characters/set_stats",
+            set_currentStep: "characters/set_currentStep",
         }),
         handleRandomize({name = '', id, diceMaxValue = 6, dices = 4, valuesNb = 3}) {
             let dicesResults = []
@@ -103,8 +104,7 @@ export default {
             }
             
             this.set_stats(this.character_creation.stats)
-
-            await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Description' }})
+            this.set_currentStep('Description')
         },
     },
 }

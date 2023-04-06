@@ -55,8 +55,8 @@
 <script>
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import Sheet from "@/components/Sheet.vue"
-import Selector from "@/components/subComponent/Selector.vue"
-import ParamInput from "@/components/subComponent/ParamInput.vue"
+import Selector from "@/components/common/Selector.vue"
+import ParamInput from "@/components/common/ParamInput.vue"
 import { ROOMSTATUS, PLAYSTYLE } from "@/utils/enums"
 
 export default {

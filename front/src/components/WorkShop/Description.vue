@@ -16,8 +16,11 @@
 
                         <Selector
                             :items="ALIGNMENT"
-                            :default-selected-item="getDefaultAlignment()"
-                            :on-select-item="(v) => character_creation.character.alignment = v"
+                            :default-selected-item="{
+                                name: $t('Alignement'),
+                                value: ''
+                            }"
+                            :on-select-item="(v) => character.alignment = v"
                         />
                     </div>
 
@@ -25,18 +28,18 @@
                         :placeHolder="$t('Prénom')"
                         outline="fc-green"
                         :max-length="52"
-                        :value="character_creation.character.firstname"
+                        :value="character?.firstname"
                         class="w-full"
-                        @input="v => character_creation.character.firstname = v.target.value"
+                        @input="v => character.firstname = v.target.value"
                     />
 
                     <CustomInput 
                         :placeHolder="$t('Nom')"
                         outline="fc-green"
                         :max-length="52"
-                        :value="character_creation.character.lastname"
+                        :value="character?.lastname"
                         class="w-full"
-                        @input="v => character_creation.character.lastname = v.target.value"
+                        @input="v => character.lastname = v.target.value"
                     />
                 </div>
             </div>
@@ -46,7 +49,7 @@
                     :items="SEXTYPE"
                     :default-selected-item="getDefaultGenre()"
                     selector-class="flex flex-col w-72 relative bg-fc-black text-white cursor-pointer select-none"
-                    :on-select-item="(v) => character_creation.character.sex = v"
+                    :on-select-item="(v) => character.sex = v"
                 />
 
                 <CustomInput 
@@ -54,9 +57,9 @@
                     outline="fc-green"
                     :max-length="12"
                     type="number"
-                    :value="character_creation.character.weight"
+                    :value="character?.weight"
                     class="w-full"
-                    @input="v => character_creation.character.weight = v.target.value"
+                    @input="v => character.weight = v.target.value"
                 />
 
                 <CustomInput 
@@ -64,9 +67,9 @@
                     outline="fc-green"
                     :max-length="12"
                     type="number"
-                    :value="character_creation.character.height"
+                    :value="character?.height"
                     class="w-full"
-                    @input="v => character_creation.character.height = v.target.value"
+                    @input="v => character.height = v.target.value"
                 />
             </div>
         </div>
@@ -80,7 +83,6 @@
                 />
     
                 <textarea
-                    v-model="character_creation.character.bio"
                     class="flex text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
                     placeholder="Entrez une description"
                 />
@@ -104,9 +106,9 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 
-import CustomInput from '@/components/subComponent/CustomInput.vue'
-import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
-import Selector from '@/components/subComponent/Selector.vue'
+import CustomInput from '@/components/common/CustomInput.vue'
+import BlackGreenDiv from '@/components/common/BlackGreenDiv.vue'
+import Selector from '@/components/common/Selector.vue'
 import { ALIGNMENT, SEXTYPE } from '@/utils/enums'
 
 export default {
@@ -125,17 +127,19 @@ export default {
     computed: {
         ...mapState("characters", {
             character_creation: (state) => state.character_creation,
+            character: (state) => state.character_creation.character,
         }),
     },
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
+            set_currentStep: "characters/set_currentStep",
         }),
         chooseDescription() {
-            this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Validation' }})
+            this.set_currentStep('Validation')
         },
         getDefaultAlignment() {
-            const defaultAlignment = this.character_creation.character.alignment
+            const defaultAlignment = this.character.alignment
 
             if (defaultAlignment) {
                 return {
@@ -150,9 +154,7 @@ export default {
             }
         },
         getDefaultGenre() {
-            const defaultSex = this.character_creation.character.sex
-
-            console.log('sex', this.character_creation.character.sex)
+            const defaultSex = this.character?.sex
 
             if (defaultSex && defaultSex !== 'toset') {
                 return {

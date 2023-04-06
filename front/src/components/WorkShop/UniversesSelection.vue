@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import Selector from "@/components/subComponent/Selector.vue"
+import Selector from "@/components/common/Selector.vue"
 import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
 import { mapState, mapActions, mapMutations } from "vuex"
 
@@ -91,11 +91,12 @@ export default {
         ...mapMutations({
             set_universe: "universes/set_universe",
             set_completed: "characters/set_completed",
+            set_currentStep: "characters/set_currentStep",
         }),
         async chooseUnivers(id) {
             this.set_universe(id)
             this.set_completed()
-            this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Race' }})
+            this.set_currentStep('Race')
         },
     }
 }

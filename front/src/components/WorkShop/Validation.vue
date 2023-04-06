@@ -3,7 +3,7 @@
         <div class="flex flex-col space-y-8 w-1/2">
             <div class="flex w-64">
                 <BlackGreenDiv
-                    :title="`${character_creation.character.firstname} ${character_creation.character.lastname}`"
+                    :title="`${character_creation.character?.firstname} ${character_creation.character?.lastname}`"
                     :right-green-div="false"
                     className=""
                 />
@@ -79,8 +79,8 @@
 import { mapState, mapMutations } from 'vuex'
 import { useToast } from 'vue-toastification'
 
-import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
-import StatSelector from '@/components/subComponent/StatSelector.vue'
+import BlackGreenDiv from '@/components/common/BlackGreenDiv.vue'
+import StatSelector from '@/components/common/StatSelector.vue'
 import { apiCall } from '@/utils/apiCall'
 
 export default {

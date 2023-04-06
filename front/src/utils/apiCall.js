@@ -15,7 +15,7 @@ export async function apiCall({
             "http://localhost:3000" :
             `http://${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`
 
-    if(store.state.user.access_token != "") {
+    if (store.state.user.access_token != "") {
         headers["Authorization"] = `Bearer ${store.state.user.access_token}`
         // headers['Content-Length'] = 152616
     }

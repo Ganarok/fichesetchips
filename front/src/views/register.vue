@@ -108,9 +108,9 @@
 </template>
 
 <script>
-import CustomInput from "@/components/subComponent/CustomInput.vue"
+import CustomInput from "@/components/common/CustomInput.vue"
 import { mapState, mapActions } from "vuex"
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/common/Loader.vue"
 import { isEmailValid, isPasswordValid } from "@/utils/validations"
 import { useToast } from "vue-toastification"
 const CryptoJS = require("crypto-js")

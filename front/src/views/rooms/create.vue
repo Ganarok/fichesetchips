@@ -161,11 +161,11 @@ import { useToast } from "vue-toastification"
 import { mapState, mapActions, mapMutations } from "vuex"
 
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import BlackGreenDiv from "@/components/subComponent/BlackGreenDiv.vue"
-import Button from "@/components/subComponent/Button.vue"
-import SelectorMultiple from '@/components/subComponent/SelectorMultiple.vue'
-import CustomInput from "@/components/subComponent/CustomInput.vue"
-import Loader from "@/components/Loader.vue"
+import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
+import Button from "@/components/common/Button.vue"
+import SelectorMultiple from '@/components/common/SelectorMultiple.vue'
+import CustomInput from "@/components/common/CustomInput.vue"
+import Loader from "@/components/common/Loader.vue"
 import { PLAYSTYLE, EXPERIENCE, LANGUAGES } from "@/utils/enums"
 import { apiCall } from "@/utils/apiCall"
 import store from "@/store"

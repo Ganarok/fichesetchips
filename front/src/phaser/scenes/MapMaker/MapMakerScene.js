@@ -30,20 +30,37 @@ export default class MapMakerScene extends Scene {
         this.mapsize = 32 * 20
         this.selectedLayer = 0
         this.scaleLevel = 1
+        this.mapId = ''
     }
 
-    init() { // props : (data)
-        // TODO : La data envoyée depuis BootScene arrive ici, dans l'object data
-        // console.log(data)
+    init({ map }) {
         store.commit('phaser/resetStates')
+
+        this.map = map || undefined
     }
 
     preload() {
-        // tilemap
-        this.load.spritesheet('grounds', '/phaser/desert_grounds.png', { frameWidth: 32, frameHeight: 32 })
-        this.load.spritesheet('items', "/phaser/desert_items.png", { frameWidth: 32, frameHeight: 32 })
-        this.load.json('mapJson', template)
-        this.load.tilemapTiledJSON('map', templateBase)
+        // MANDATORY
+
+        // TODO: Moins crado
+        if (this.map) {
+            const { assets, data: json, title } = this.map.data
+
+            this.title = title
+
+            assets.forEach(asset => {
+                const blob = new Blob([asset.image.data])
+                this.load.spritesheet(asset.name, blob)
+            })
+
+            this.load.tilemapTiledJSON('map', json)
+            this.load.json('mapJson', json)
+        } else {
+            this.load.spritesheet('grounds', '/phaser/desert_grounds.png', { frameWidth: 32, frameHeight: 32 })
+            this.load.spritesheet('items', '/phaser/desert_items.png', { frameWidth: 32, frameHeight: 32 })
+            this.load.json('mapJson', template)
+            this.load.tilemapTiledJSON('map', templateBase)
+        }
     }
 
     create() {
