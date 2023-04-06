@@ -448,6 +448,22 @@ export const definitions = {
             }
         }
     },
+    getPlayerResponse: {
+        properties: {
+            id: {
+                type: "uuid",
+                default: "90c8aee8-d491-11ed-afa1-0242ac120002"
+            },
+            state: {
+                type: "object",
+                default: "not implemented"
+            },
+            character: {
+                type: "object",
+                default: "an object containing the character values"
+            }
+        }
+    },
     createRoomRequest: {
         properties: {
             title: {
@@ -567,6 +583,14 @@ export const definitions = {
                 type: GameStatus,
                 default: GameStatus.PLANNED
             },
+        }
+    },
+    updatePlayerRequest: {
+        properties: {
+            character_id: {
+                type: "uuid",
+                default: "2b0f6de8-d488-11ed-afa1-0242ac120002"
+            }
         }
     }
 }
