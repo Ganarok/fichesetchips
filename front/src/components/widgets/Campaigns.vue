@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import Loader from "@/components/Loader.vue"
-import Button from "@/components/subComponent/Button.vue"
+import Loader from "@/components/common/Loader.vue"
+import Button from "@/components/common/Button.vue"
 
 export default {
     components: {

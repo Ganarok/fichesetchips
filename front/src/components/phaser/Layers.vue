@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex relative w-full px-4 items-center text-white font-bold select-none bg-fc-black border-t border-fc-green transition duration-250 ease-in-out z-50"
+        class="flex relative w-full px-4 items-center text-white font-bold select-none bg-fc-black border-t border-fc-green transition-all duration-150 ease-in-out z-50"
         :class="$store.state.phaser.layerTab ? 'h-12' : 'h-1'"
     >
         <div
@@ -69,7 +69,7 @@
 
 <script>
 import Layer from "@/components/phaser/Layer.vue"
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/common/Loader.vue"
 
 export default {
     name: 'Layers',

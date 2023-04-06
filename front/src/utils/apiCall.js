@@ -8,26 +8,36 @@ export async function apiCall({
         "Content-Type": "application/json",
     },
     body,
+    isBuffer = false
 }) {
     const baseUrl =
         process.env.NODE_ENV === "development" ?
             "http://localhost:3000" :
             `http://${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`
 
-    if(store.state.user.access_token != "") {
+    if (store.state.user.access_token != "") {
         headers["Authorization"] = `Bearer ${store.state.user.access_token}`
+        // headers['Content-Length'] = 152616
     }
-
-    const res = body ?
-        await fetch(`${baseUrl}${route}`, {
+    let res
+    if(isBuffer) {
+        res = await fetch(`${baseUrl}${route}`, {
             method,
             headers,
-            body: JSON.stringify(body),
-        }) :
-        await fetch(`${baseUrl}${route}`, {
-            method,
-            headers,
+            body: body,
         })
+    } else {
+        res = body ?
+            await fetch(`${baseUrl}${route}`, {
+                method,
+                headers,
+                body: JSON.stringify(body),
+            }) :
+            await fetch(`${baseUrl}${route}`, {
+                method,
+                headers,
+            })
+    }
 
     if(!res.ok) throw new Error(res.statusText)
 

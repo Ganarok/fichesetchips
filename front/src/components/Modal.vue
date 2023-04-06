@@ -15,7 +15,7 @@
 
                     <div class="flex">
                         <img
-                            src="@/assets/plus.svg"
+                            src="@/assets/icons/plus.svg"
                             class="transform rotate-45 object-contain h-8 w-8 p-2 bg-fc-green rounded-full cursor-pointer transition hover:opacity-80 hover:-rotate-45"
                             alt="Fermer"
                             @click="$emit('close-modal')"

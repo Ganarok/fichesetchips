@@ -1,17 +1,26 @@
+import { apiCall } from "@/utils/apiCall"
+
 export default {
     namespaced: true,
     state: {
+        launched: false,
+        title: 'Untitled',
         controls: null,
-        layers: [{
-            name: "grounds",
-            asset: "desert_grounds",
-        },
-        {
-            name: "items",
-            asset: "desert_items",
-        },
+        isExporting: false,
+        isSaving: false,
+        layers: [
+            {
+                name: "grounds",
+                asset: "desert_grounds",
+            },
+            {
+                name: "items",
+                asset: "desert_items",
+            }
         ],
         selectedLayer: 0,
+        brushSize: 1,
+        scaleLevel: 1,
         eraser: false,
         selectedTile: undefined,
         selectedTileIndex: undefined,
@@ -28,11 +37,57 @@ export default {
 
             state[property] = newState
         },
+        resetStates(state) {
+            state.launched = false
+            state.controls = null
+            state.isExporting = false
+            state.isSaving = false
+            state.brushSize = 1
+            state.scaleLevel = 1
+            state.layers = [
+                {
+                    name: "grounds",
+                    asset: "desert_grounds",
+                },
+                {
+                    name: "items",
+                    asset: "desert_items",
+                }
+            ],
+            state.selectedLayer = 0
+            state.eraser = false
+            state.selectedTile = undefined
+            state.selectedTileIndex = undefined
+            state.isolateLayer = false
+            state.layerTab = true
+            state.tileSetsInfos = []
+            state.tilesPics = {}
+            state.tilesSize = 32
+            state.mapSize = 32 * 20
+        },
         initLayers(state, layers) {
             state.layers = layers
         },
     },
-    actions: {},
+    actions: {
+        async save_map({ commit }, body) {
+            try {
+                console.log('Saving the map on DB', body, commit)
+                await apiCall({
+                    method: "POST",
+                    route: "/maps",
+                    body: body,
+                })
+            } catch (error) {
+                // commit("errors/set_error", { message: error.message }, { root: true })
+                console.log(JSON.stringify(error.message))
+
+                return false
+            }
+
+            return true
+        }
+    },
     getters: {
         getSelectedTile(state) {
             return state.selectedTile

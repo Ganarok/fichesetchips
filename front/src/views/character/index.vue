@@ -24,7 +24,7 @@
 
 <script>
 import SidebarLayout from '@/layouts/Sidebar.vue'
-import CharactersList from '@/components/subComponent/Characters.vue'
+import CharactersList from '@/components/common/Characters.vue'
 
 export default {
     name: 'Characters',

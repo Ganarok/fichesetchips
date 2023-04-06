@@ -1,7 +1,7 @@
 import express, { Request } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { CustomRequest } from "../../middleware/authJwt";
-import * as charactersService from "../../services/cem/characters"
+import * as charactersService from "../../services/characters/characters"
 import { getErrorMessage } from "../../utils/error-handler/getErrorMessage";
 
 const router = express.Router();
