@@ -39,8 +39,8 @@
                 min="1"
                 placeholder="0"
                 :value="value"
-                @change="onChange"
                 :disabled="disabled"
+                @change="onChange"
             >
     
             <img
