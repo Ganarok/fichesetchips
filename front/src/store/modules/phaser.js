@@ -8,8 +8,7 @@ export default {
         controls: null,
         isExporting: false,
         isSaving: false,
-        layers: [
-            {
+        layers: [{
                 name: "grounds",
                 asset: "desert_grounds",
             },
@@ -44,17 +43,16 @@ export default {
             state.isSaving = false
             state.brushSize = 1
             state.scaleLevel = 1
-            state.layers = [
-                {
-                    name: "grounds",
-                    asset: "desert_grounds",
-                },
-                {
-                    name: "items",
-                    asset: "desert_items",
-                }
-            ],
-            state.selectedLayer = 0
+            state.layers = [{
+                        name: "grounds",
+                        asset: "desert_grounds",
+                    },
+                    {
+                        name: "items",
+                        asset: "desert_items",
+                    }
+                ],
+                state.selectedLayer = 0
             state.eraser = false
             state.selectedTile = undefined
             state.selectedTileIndex = undefined
@@ -71,14 +69,32 @@ export default {
     },
     actions: {
         async save_map({ commit }, body) {
+            const nb = Math.random() * 100
+            const map = {
+                title: `title-${nb}`,
+                data: body.data
+            }
+            const assets = body.assets
             try {
-                console.log('Saving the map on DB', body, commit)
-                await apiCall({
+                console.log('Saving the map on DB', map, commit)
+                const { data } = await apiCall({
                     method: "POST",
                     route: "/maps",
-                    body: body,
+                    body: map,
                 })
-            } catch (error) {
+                assets.map(async(asset) => {
+                    console.log(`Saving the asset ${asset.name} on DB`, asset, commit)
+                    await apiCall({
+                        method: "POST",
+                        route: `/maps/asset?map_id=${data.id}&name=${asset.name}`,
+                        body: asset.image,
+                        headers: {
+                            'Content-Type': 'application/octet-stream'
+                        },
+                        isBuffer: true
+                    })
+                })
+            } catch(error) {
                 // commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
 
