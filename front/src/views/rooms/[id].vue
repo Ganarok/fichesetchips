@@ -13,7 +13,7 @@
 
 <script>
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/common/Loader.vue"
 import Room from "@/components/Room.vue"
 import { useToast } from "vue-toastification"
 import { mapState, mapActions } from "vuex"

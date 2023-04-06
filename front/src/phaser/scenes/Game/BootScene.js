@@ -6,7 +6,7 @@ export default class BootScene extends Scene {
     }
 
     init() {
-    // TODO: Faire les calls API en DB pour récupérer les assets avec les tilemaps
+        // TODO: Faire les calls API en DB pour récupérer les assets avec les tilemaps
     }
 
     preload() {

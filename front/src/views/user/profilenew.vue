@@ -76,8 +76,8 @@
 </template>
 
 <script>
-import Avatar from "@/components/subComponent/Avatar.vue"
-import Badge from "@/components/subComponent/Badge.vue"
+import Avatar from "@/components/common/Avatar.vue"
+import Badge from "@/components/common/Badge.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import { apiCall } from "@/utils/apiCall"
 

@@ -24,7 +24,7 @@ import { useToast } from "vue-toastification"
 
 import GameContainer from "@/components/phaser/GameContainer"
 import GameLayout from "@/layouts/Game.vue"
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/common/Loader.vue"
 import { useSocketIO } from "@/utils/socket.io"
 
 export default {

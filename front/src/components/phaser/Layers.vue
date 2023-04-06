@@ -69,7 +69,7 @@
 
 <script>
 import Layer from "@/components/phaser/Layer.vue"
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/common/Loader.vue"
 
 export default {
     name: 'Layers',

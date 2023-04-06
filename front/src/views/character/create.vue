@@ -36,14 +36,14 @@ import { mapState, mapActions, mapMutations } from "vuex"
 
 import SidebarLayout from '@/layouts/Sidebar.vue'
 import Universe from '@/components/WorkShop/UniversesSelection.vue'
-import CompletionBar from '@/components/subComponent/completionBar.vue'
+import CompletionBar from '@/components/common/completionBar.vue'
 import Race from '@/components/WorkShop/RaceSelection.vue'
 import Language from '@/components/WorkShop/LanguageSelection.vue'
 import Class from '@/components/WorkShop/ClassSelection.vue'
 import Characteristics from "@/components/WorkShop/CharacteristicsSelection.vue"
 import Description from "@/components/WorkShop/Description.vue"
 import Validation from "@/components/WorkShop/Validation.vue"
-import Loader from '@/components/Loader.vue'
+import Loader from '@/components/common/Loader.vue'
 
 export default {
     name: "CharacterCreate",

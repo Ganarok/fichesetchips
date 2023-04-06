@@ -59,7 +59,7 @@
 import { mapState } from 'vuex'
 
 import store from '@/store'
-import EditableDiv from '@/components/subComponent/EditableDiv.vue'
+import EditableDiv from '@/components/common/EditableDiv.vue'
 
 export default {
     name: "Topbar",
