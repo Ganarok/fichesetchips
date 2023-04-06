@@ -3,16 +3,17 @@ import { JwtPayload } from "jsonwebtoken";
 import { CustomRequest } from "../middleware/authJwt";
 import * as gamesService from "../services/games"
 import { getErrorMessage } from "../utils/error-handler/getErrorMessage";
-import { GameStatus } from "../database/entities/public/Game";
+import { dataValidator } from '../middleware/typeValidator';
+import { UpdateGame } from "../utils/types/game";
 
 const router = express.Router();
 
-router.patch("/:game_id", async (req: Request, res) => {
+router.put("/:game_id", dataValidator(UpdateGame), async (req: Request, res) => {
     /**
      * @swagger
      * /games/{game_id}:
-     *   patch:
-     *     description: A gm can begin a game.
+     *   put:
+     *     description: Update game.
      *     tags: 
      *       - Games
      *     parameters:
@@ -42,7 +43,7 @@ router.patch("/:game_id", async (req: Request, res) => {
      *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
      */
     try {
-        const response = await gamesService.update(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body, req.params.game_id);
+        const response = await gamesService.update(((req as CustomRequest).jwtPayload as JwtPayload).username, req.view_instance, req.params.game_id);
         res.status(200).send({ data: response, message: 'Game successfully patched' });
     } catch (error) {
         return getErrorMessage(error, res);
