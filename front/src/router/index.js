@@ -23,6 +23,9 @@ import CharacterCreate from "@/views/character/create.vue"
 import Characters from "@/views/character/index.vue"
 import CharacterID from "@/views/character/characterDetails.vue"
 import MapMaker from "@/views/phaser/mapmaker.vue"
+import Stories from "@/views/stories/index.vue"
+import Story from "@/views/stories/StoryDetails.vue"
+import StoryCreate from "@/views/stories/create.vue"
 
 const routes = [{
     path: "/",
@@ -138,6 +141,24 @@ const routes = [{
     component: MapMaker,
     meta: { requiresAuth: true }
 },
+{
+    path: "/user/stories",
+    name: "Stories",
+    component: Stories,
+    meta: { requiresAuth: true }
+},
+{
+    path: "/user/stories/:id",
+    name: "Story",
+    component: Story,
+    meta: { requiresAuth: true }
+},
+{
+    path: "/user/stories/create",
+    name: "StoryCreate",
+    component: StoryCreate,
+    meta: { requiresAuth: true }
+},
 ]
 
 const router = createRouter({
@@ -146,9 +167,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if(to.matched.some((record) => record.meta.requiresAuth)) {
         // TODO: Faire une vérification de l'access_token avec la méthode connected() du module User
-        if (!store.state.user.access_token) {
+        if(!store.state.user.access_token) {
             const toast = useToast()
             console.log('Rerouting, user is not connected')
             next({

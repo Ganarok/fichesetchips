@@ -113,6 +113,39 @@
                             </router-link>
                         </ul>
                     </div>
+
+                    <div 
+                        :class="{active: storiesIsShow}"
+                        class="flex flex-col mb-4"
+                    >
+                        <span 
+                            class="text-xl font-bold cursor-pointer hover:opacity-70"
+                            @click="() => storiesIsShow = !storiesIsShow" 
+                        >
+                            Stories
+                        </span>
+
+                        <ul 
+                            v-if="storiesIsShow"
+                            class="flex flex-col text-xl font-bold text-neutral-300 pl-2 list-none opacity-50"
+                        >
+                            <router-link 
+                                to="/user/stories/create"
+                                class="hover:opacity-70"
+                                active-class="underline"
+                            >
+                                {{ $t('Créer') }}  
+                            </router-link>
+
+                            <router-link 
+                                to="/user/stories"
+                                class="hover:opacity-70"
+                                active-class="underline"
+                            >
+                                {{ $t('Liste') }} 
+                            </router-link>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -206,7 +239,8 @@ export default {
     data() {
         return {
             personnageIsShow: true,
-            roomIsShow: true
+            roomIsShow: true,
+            storiesIsShow: true
         }
     },
     methods: {

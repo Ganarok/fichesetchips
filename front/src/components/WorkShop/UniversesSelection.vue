@@ -21,14 +21,23 @@
                 />
             </div>
 
-            <input
+            <CustomInput
+                :max-length="254"
+                place-holder="URL du vocal"
+                type="text"
+                outline="fc-green"
+                :value="search"
+                @input="(v) => (search = v.target.value)"
+            />
+
+            <!-- <input
                 class="flex grid1Col:w-[35%] w-[20%] px-2 h-full bg-fc-black-light font-bold outline-none"
                 :class="search.length > 0 ? 'text-fc-yellow' : ''"
                 :value="search"
                 placeholder="Rechercher..."
                 type="text"
                 @input="(v) => (search = v.target.value)"
-            >
+            > -->
         </div>
 
         <div
@@ -58,13 +67,16 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapMutations } from "vuex"
+
 import Selector from "@/components/common/Selector.vue"
 import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
-import { mapState, mapActions, mapMutations } from "vuex"
+import CustomInput from "@/components/common/CustomInput.vue"
 
 export default {
     components: {
         Selector,
+        CustomInput
     },
     data() {
         return {
