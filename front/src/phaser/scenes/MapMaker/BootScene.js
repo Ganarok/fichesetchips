@@ -27,8 +27,8 @@ export default class BootScene extends Scene {
                     method: "GET",
                     route: `/maps/${this.mapId}`,
                 })
-    
-                console.log('map du get', map)
+                
+                console.log(`Retreived map ${map.data.title}, launching it...`)
                 this.scene.start("MapMakerScene", { map })
             } catch (error) {
                 toast.error("Error while loading map", error)

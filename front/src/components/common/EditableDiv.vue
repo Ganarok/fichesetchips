@@ -7,19 +7,17 @@
         <input
             v-show="isEditMode"
             ref="input"
-            v-model="newValue"
-            :name="value"
-            class="flex flex-grow h-[1.4em] placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
-            :placeholder="displayValue"
-            :type="password ? 'password' : 'text'"
+            :value="value"
+            class="flex p-2 px-1 placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
+            type="text"
             @keyup.enter="toggleEdit"
         >
         <div
             v-show="!isEditMode"
-            :class="canEdit ? ' cursor-pointer' : null"
+            :class="canEdit ? ' cursor-pointer ' : null"
             @click="toggleEdit"
         >
-            {{ displayValue }}
+            {{ value }}
         </div>
     </div>
 </template>
@@ -29,22 +27,16 @@ export default {
     name: "EditableDiv",
     props: {
         label: { type: String, default: '' },
-        modelValue: { type: String, default: '' },
-        password: { type: Boolean, default: false },
+        value: { type: String, default: '' },
         editMode: { type: Boolean, default: false },
         canEdit: { type: Boolean, default: false },
     },
     data() {
         return {
             edit: false,
-            newValue: null,
         }
     },
     computed: {
-        displayValue() {
-            if (this.password) return "*********"
-            else return this.newValue || this.value || this.modelValue
-        },
         isEditMode() {
             return this.editMode || this.edit
         },

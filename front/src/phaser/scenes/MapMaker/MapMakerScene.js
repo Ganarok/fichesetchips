@@ -36,26 +36,34 @@ export default class MapMakerScene extends Scene {
     init({ map }) {
         store.commit('phaser/resetStates')
 
-        this.map = map || undefined
+        console.log('map', map)
+
+        this.mapId = map ? map.data.id : ''
+        this.mapObject = map || undefined
     }
 
     preload() {
         // MANDATORY
-
-        // TODO: Moins crado
-        if (this.map) {
-            const { assets, data: json, title } = this.map.data
+        if (this.mapObject) {
+            const { assets, title } = this.mapObject.data
 
             this.title = title
+            store.commit('phaser/updateState', { property: 'title', newState: title })
 
             assets.forEach(asset => {
-                const blob = new Blob([asset.image.data])
-                this.load.spritesheet(asset.name, blob)
+                let binary = Buffer.from(asset.image.data, 'binary')
+                let imgData = new Blob([binary], { type: 'image/png' })
+                let url = URL.createObjectURL(imgData)
+
+                console.log('Loading asset', asset.name)
+                this.load.spritesheet(asset.name, url, { frameWidth: this.tiles_size, frameHeight: this.tiles_size })
             })
 
-            this.load.tilemapTiledJSON('map', json)
-            this.load.json('mapJson', json)
+            this.load.tilemapTiledJSON('map', templateBase)
         } else {
+            this.title = 'Untitled'
+            store.commit('phaser/updateState', { property: 'title', newState: this.title })
+
             this.load.spritesheet('grounds', '/phaser/desert_grounds.png', { frameWidth: 32, frameHeight: 32 })
             this.load.spritesheet('items', '/phaser/desert_items.png', { frameWidth: 32, frameHeight: 32 })
             this.load.json('mapJson', template)
@@ -156,7 +164,7 @@ export default class MapMakerScene extends Scene {
                 if (isSaving) {
                     const map = this.prepareMapObject()
 
-                    await saveMap(map)
+                    await saveMap(map, this.title)
                     
                     store.commit("phaser/updateState", {
                         property: "isSaving",
@@ -289,10 +297,16 @@ export default class MapMakerScene extends Scene {
     // Draw tilemap, add tileset to map object, set position of layer(s)
     _draw_map() {
         // let { layers } = store.state.phaser
-        const jsonFile = this.cache.json.get("mapJson")
+        var jsonFile 
+        if (this.mapObject) {
+            jsonFile = this.mapObject.data.data
+        } else jsonFile = this.cache.json.get("mapJson")
         const layers = jsonFile.layers
 
+        console.log('avant map', this.map)
         this.map = this.make.tilemap({ key: 'map' })
+
+        console.log('avant foreach')
 
         layers.forEach((layer, index) => {
             this.tileSets[index] = this.map.addTilesetImage(layer.name)
@@ -383,7 +397,11 @@ export default class MapMakerScene extends Scene {
             // [0, 1, 1, 0]
             // [0, 1, 1, 0]
             // So here, for each horizontal line, we return the index of each tile. Flatmap is used to flatten the array.
-            layer.data = layerValues.layer.data.flatMap(horizontalTiles => horizontalTiles.map(tile => tile.index))
+            layer.data = layerValues.layer.data.flatMap(horizontalTiles => horizontalTiles.map(tile => {
+                console.log('tile', tile)
+
+                return tile.index
+            }))
 
             return layer
         })

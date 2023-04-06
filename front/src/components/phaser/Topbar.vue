@@ -40,8 +40,9 @@
 
             <div class="text-fc-green">
                 <EditableDiv 
-                    :modelValue="title"
+                    :value="title"
                     :canEdit="true"
+                    @change="(v) => handleChange(v)"
                 />
             </div>
         </div>
@@ -89,6 +90,9 @@ export default {
         }),
     },
     methods: {
+        handleChange(v) {
+            store.commit("phaser/updateState", { property: "title", newState: v.target.value })
+        },
         exportMap() {
             this.optionsOpened = false
             console.log("Télécharger")
