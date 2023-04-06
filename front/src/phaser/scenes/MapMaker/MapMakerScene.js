@@ -406,7 +406,6 @@ export default class MapMakerScene extends Scene {
             return layer
         })
 
-        console.log('layers', map.layers);
         map.orientation = "orthogonal"
         map.properties = {}
         map.tileheight = this.tiles_size

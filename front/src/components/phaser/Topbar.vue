@@ -102,7 +102,6 @@ export default {
             delete_map: "phaser/delete_map"
         }),
         handleChange(v) {
-            console.log('on update', v.target.value);
             store.commit("phaser/updateState", { property: "title", newState: v.target.value })
         },
         exportMap() {

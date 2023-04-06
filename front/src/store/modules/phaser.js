@@ -140,7 +140,7 @@ export default {
         },
         async delete_map({ commit }, mapId) {
             try {
-                console.log(`Deleting map ${mapId}`, mapId)
+                console.log(`Deleting map ${mapId}`, commit)
                 await apiCall({
                     method: "DELETE",
                     route: `/maps/${mapId}`,
