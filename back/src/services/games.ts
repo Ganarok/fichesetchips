@@ -9,7 +9,7 @@ const UserRepository = PublicDataSource.getRepository(User)
 const RoomRepository = PublicDataSource.getRepository(Room)
 const GameRepository = PublicDataSource.getRepository(Game)
 
-// TODO add player state
+// TODO add player state modification on status: pause and status:closed
 export async function update(username: string, view_instance: UpdateGame, game_id: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
     const game = await GameRepository.findOneByOrFail({ id: game_id })
