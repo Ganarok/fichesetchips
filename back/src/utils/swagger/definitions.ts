@@ -559,22 +559,14 @@ export const definitions = {
     },
     updateGameRequest: {
         properties: {
-            map_id: {
-                type: "string",
-                default: "Map id"
-            },
-            story_id: {
-                type: "string",
-                default: "Story id"
-            },
-            universe: {
-                type: "string",
-                default: "cem"
-            },
             status: {
                 type: GameStatus,
                 default: GameStatus.PLANNED
             },
+            player_state: {
+                type: "string",
+                default: "not implemented"
+            }
         }
     }
 }
