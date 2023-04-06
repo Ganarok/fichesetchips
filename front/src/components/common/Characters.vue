@@ -16,7 +16,7 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
-import Card from "@/components/subComponent/Cards/CharacterCard.vue"
+import Card from "@/components/common/Cards/CharacterCard.vue"
 
 export default {
     name: "CharactersList",

@@ -198,7 +198,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex"
 
-import Button from "@/components/subComponent/Button.vue"
+import Button from "@/components/common/Button.vue"
 
 export default {
     name: "Sidebar",

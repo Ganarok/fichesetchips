@@ -119,8 +119,6 @@ export default {
         Selector
     },
     data() {
-        console.log('ALIGNMENT', ALIGNMENT);
-
         return {
             ALIGNMENT,
             SEXTYPE,

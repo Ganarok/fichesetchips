@@ -77,9 +77,9 @@ import moment from "moment"
 
 import Modal from "@/components/Modal.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import Loader from "@/components/Loader.vue"
-import Characters from "@/components/subComponent/Characters.vue"
-import Friends from "@/components/subComponent/FriendsList.vue"
+import Loader from "@/components/common/Loader.vue"
+import Characters from "@/components/common/Characters.vue"
+import Friends from "@/components/common/FriendsList.vue"
 
 export default {
     components: {

@@ -12,7 +12,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import Avatar from "@/components/subComponent/Avatar.vue"
+import Avatar from "@/components/common/Avatar.vue"
 export default {
     name: "FriendsList",
     components: {
