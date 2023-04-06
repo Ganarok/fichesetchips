@@ -36,9 +36,11 @@ export default class MapMakerScene extends Scene {
     init({ map }) {
         store.commit('phaser/resetStates')
 
-        console.log('map', map)
+        if (map) {
+            this.mapId = map.data.id
+            store.commit('phaser/updateState', { property: 'mapId', newState: this.mapId })
+        }
 
-        this.mapId = map ? map.data.id : ''
         this.mapObject = map || undefined
     }
 
@@ -164,7 +166,7 @@ export default class MapMakerScene extends Scene {
                 if (isSaving) {
                     const map = this.prepareMapObject()
 
-                    await saveMap(map, this.title)
+                    await saveMap(map, store.state.phaser.title)
                     
                     store.commit("phaser/updateState", {
                         property: "isSaving",
@@ -398,13 +400,13 @@ export default class MapMakerScene extends Scene {
             // [0, 1, 1, 0]
             // So here, for each horizontal line, we return the index of each tile. Flatmap is used to flatten the array.
             layer.data = layerValues.layer.data.flatMap(horizontalTiles => horizontalTiles.map(tile => {
-                console.log('tile', tile)
-
                 return tile.index
             }))
 
             return layer
         })
+
+        console.log('layers', map.layers);
         map.orientation = "orthogonal"
         map.properties = {}
         map.tileheight = this.tiles_size

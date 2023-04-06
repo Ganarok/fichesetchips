@@ -29,6 +29,7 @@ export default {
         tilesPics: {},
         tilesSize: 32,
         mapSize: 32 * 20,
+        mapId: ''
     },
     mutations: {
         updateState(state, payload) {
@@ -61,13 +62,48 @@ export default {
             state.tileSetsInfos = []
             state.tilesPics = {}
             state.tilesSize = 32
-            state.mapSize = 32 * 20
+            state.mapSize = 32 * 20,
+            state.mapId = ''
         },
         initLayers(state, layers) {
             state.layers = layers
         },
     },
     actions: {
+        async update_map({ commit }, body) {
+            const map = {
+                title: body.title,
+                data: body.data
+            }
+            const assets = body.assets
+            try {
+                console.log('Saving the map on DB', map, commit)
+                const { data } = await apiCall({
+                    method: "PATCH",
+                    route: `/maps/${body.mapId}`,
+                    body: map,
+                })
+                assets.map(async(asset) => {
+                    console.log(`Saving the asset ${asset.name} on DB`, asset, commit)
+                    await apiCall({
+                        method: "POST",
+                        route: `/maps/asset?map_id=${data.id}&name=${asset.name}`,
+                        body: asset.image,
+                        headers: {
+                            'Content-Type': 'application/octet-stream'
+                        },
+                        isBuffer: true
+                    })
+                })
+            } catch (error) {
+                // commit("errors/set_error", { message: error.message }, { root: true })
+                console.log(JSON.stringify(error.message))
+
+                return false
+            }
+
+            return true
+        },
         async save_map({ commit }, body) {
             const map = {
                 title: body.title,
@@ -93,8 +129,38 @@ export default {
                         isBuffer: true
                     })
                 })
-            } catch(error) {
+            } catch (error) {
                 // commit("errors/set_error", { message: error.message }, { root: true })
+                console.log(JSON.stringify(error.message))
+
+                return false
+            }
+
+            return true
+        },
+        async delete_map({ commit }, mapId) {
+            try {
+                console.log(`Deleting map ${mapId}`, mapId)
+                await apiCall({
+                    method: "DELETE",
+                    route: `/maps/${mapId}`,
+                })
+
+                // TODO: Clean assets stored on DB ?
+
+                // assets.map(async(asset) => {
+                //     console.log(`Saving the asset ${asset.name} on DB`, asset, commit)
+                //     await apiCall({
+                //         method: "POST",
+                //         route: `/maps/asset?map_id=${data.id}&name=${asset.name}`,
+                //         body: asset.image,
+                //         headers: {
+                //             'Content-Type': 'application/octet-stream'
+                //         },
+                //         isBuffer: true
+                //     })
+                // })
+            } catch(error) {
                 console.log(JSON.stringify(error.message))
 
                 return false
