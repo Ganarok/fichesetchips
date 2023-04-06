@@ -129,7 +129,8 @@ export default {
             isExporting: (state) => state.isExporting,
             isSaving: (state) => state.isSaving,
             scaleLevel: (state) => state.scaleLevel,
-            brushSize: (state) => state.brushSize
+            brushSize: (state) => state.brushSize,
+            mapId: (state) => state.mapId
         })
     },
     methods: {

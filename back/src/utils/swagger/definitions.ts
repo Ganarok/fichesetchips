@@ -379,6 +379,14 @@ export const definitions = {
             }
         }
     },
+    assetCreationRes: {
+        properties: {
+            id: {
+                type: "string",
+                default: ""
+            }
+        }
+    },
     createMapsRequest: {
         properties: {
             title: {

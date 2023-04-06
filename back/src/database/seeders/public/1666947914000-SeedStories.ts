@@ -9,7 +9,7 @@ export class SeedStories1666947914000 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         const StoryRepository = PublicDataSource.getRepository(Story)
-        const file = fs.readFileSync("./src/database/fixtures/assets/T-PRO-000_project-LDA.pdf")
+        const file = fs.readFileSync("./src/database/fixtures/assets/Masque-utruz.pdf")
         const defaultStories = [{
             id: "9c9bfccd-7023-4d72-bc14-45d07eb2b855",
             creatorId: users.test.id,

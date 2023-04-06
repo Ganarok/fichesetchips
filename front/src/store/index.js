@@ -9,6 +9,7 @@ import room from "./modules/room"
 import friends from "./modules/friends"
 import universes from "./modules/universes"
 import game from './modules/game'
+import stories from './modules/stories'
 
 const vuexLocal = new VuexPersistence({
     storage: window.localStorage,
@@ -22,7 +23,8 @@ const store = createStore({
         room,
         friends,
         universes,
-        game
+        game,
+        stories
     },
     plugins: [vuexLocal.plugin],
 })

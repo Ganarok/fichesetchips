@@ -40,12 +40,20 @@ export const saveMap = async (map, name = '') => {
         ]
     }
 
-    const isOkay = await store.dispatch('phaser/save_map', mapObject)
+    const mapId = store.state.phaser.mapId
+    let isOkay = null
+
+    if (mapId) {
+        isOkay = await store.dispatch('phaser/update_map', { ...mapObject, mapId })
+    } else {
+        isOkay = await store.dispatch('phaser/save_map', mapObject)
+    }
 
     if (!isOkay) {
         toast.error("Error while saving map")
         return
     } else {
-        toast.success(`Map ${name} saved !`)
+        toast.success(`Map ${name} ${mapId ? 'updated': 'saved'} !`)
     }
+
 }

@@ -9,25 +9,19 @@
 
             <div
                 v-else
-                class="flex flex-col flex-wrap sm:flex-row items-start"
+                class="flex flex-col flex-wrap sm:flex-row justify-center lg:justify-start items-start gap-4"
             >
                 <div
-                    class="flex flex-col w-80 transition hover:cursor-pointer hover:scale-105"
+                    class="flex flex-col w-80 transition hoverStyle"
                 >
                     <div
                         class="flex items-center justify-around relative bg-fc-black h-48 p-4"
                         @click="() => $router.push('/mapmaker')"
                     >
                         <img
-                            src="@/assets/plus.svg"
+                            src="@/assets/icons/plus.svg"
                             alt="plus"
                         >
-
-                        <!-- <img
-                            src="@/assets/import.svg"
-                            alt="plus"
-                            class="transition hover:cursor-pointer hover:scale-105"
-                        /> -->
                     </div>
 
                     <div class="flex flex-col space-y-3 p-2 bg-gray-50">
@@ -40,20 +34,30 @@
                         </p>
                     </div>
                 </div>
+
+                <MapPreview
+                    v-for="map in maps.data"
+                    :key="map.id"
+                    :map="map"
+                />
             </div>
         </div>
     </SidebarLayout>
 </template>
 
 <script>
+
+import { apiCall } from "@/utils/apiCall"
+import MapPreview from "@/components/common/MapPreview.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/common/Loader.vue"
 
 export default {
     name: "Maps",
     components: {
         SidebarLayout,
         Loader,
+        MapPreview
     },
     data() {
         return {
@@ -65,10 +69,17 @@ export default {
         this.getMaps()
     },
     methods: {
-        getMaps() {
-            setTimeout(() => {
-                this.loading = false
-            }, 1000)
+        async getMaps() {
+            this.maps = await apiCall({
+                method: 'GET',
+                route: '/maps'
+            })
+
+            this.loading = false
+
+            // setTimeout(() => {
+            //     this.loading = false
+            // }, 1000)
         },
     },
 }

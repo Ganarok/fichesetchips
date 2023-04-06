@@ -21,6 +21,7 @@ const host = process.env.HOST || "localhost"
 
 app.use(cors())
 app.use(bodyParser.json());
+app.use(bodyParser.raw({ type: 'application/octet-stream', limit: '10mb' }));
 
 configSwagger(app)
 routing(app);

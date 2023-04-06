@@ -1,23 +1,42 @@
 import { Scene } from "phaser"
+import { useToast } from "vue-toastification"
+
+import { apiCall } from "@/utils/apiCall"
 
 export default class BootScene extends Scene {
     constructor() {
         super({ key: "BootScene" })
+
+        this.mapId = ''
     }
 
     init() {
-    // TODO: Faire les calls API en DB pour récupérer les assets avec les tilemaps
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (target, name) => target.get(name)
+        })
+
+        this.mapId = params.mapId || ''
     }
 
-    preload() {
-    // this.load.image('sky', sky)
-    // this.load.image('bomb', bomb)
-    // this.load.audio('thud', [thudMp3, thudOgg])
-    }
+    async create() {
+        if (this.mapId) {
+            const toast = useToast()
 
-    create() {
-    // TODO: dans le .start() en deuxième argument l'object avec les assets
-
-        this.scene.start("MapMakerScene", {})
+            try {
+                const map = await apiCall({
+                    method: "GET",
+                    route: `/maps/${this.mapId}`,
+                })
+                
+                console.log(`Retreived map ${map.data.title}, launching it...`)
+                this.scene.start("MapMakerScene", { map })
+            } catch (error) {
+                toast.error("Error while loading map", error)
+                // TODO : redirect to home
+                this.scene.start("MapMakerScene", {})
+            }
+        } else {
+            this.scene.start("MapMakerScene", {})
+        }
     }
 }

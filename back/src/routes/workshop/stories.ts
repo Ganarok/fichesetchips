@@ -86,6 +86,12 @@ router.post("/", async (req: Request, res) => {
      *       content:
      *         application/json:
      *           schema: { $ref: '#/definitions/createStoryRequest' }
+     *     parameters: 
+     *       - in: query
+     *         name: title
+     *         schema:
+     *           type: sting
+     *           description: The title of your file
      *     security:
      *       - bearerAuth: []
      *     responses:
@@ -101,9 +107,17 @@ router.post("/", async (req: Request, res) => {
      *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
      */
     try {
-        const response = await storiesService.create(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body);
-        res.status(200).send({ data: response, message: 'Story successfully created' });
+        if (req.body && req.query.title) {
+            const arrayBuffer = Buffer.from(req.body);
+            const response = await storiesService.create(((req as CustomRequest).jwtPayload as JwtPayload).username, { file: arrayBuffer, title: req.query.title as string });
+            res.status(200).send({ data: response, message: 'Story successfully created' });
+        } else {
+            const e = Error("Wrong params")
+            e.name = "Unexpected parameters"
+            throw e
+        }
     } catch (error) {
+        console.log(error)
         return getErrorMessage(error, res);
     }
 })

@@ -16,7 +16,7 @@
 
 <script setup>
 import PhaserContainer from "@/components/phaser/PhaserContainer"
-import Loader from "@/components/Loader.vue"
+import Loader from "@/components/common/Loader.vue"
 import MapEditorLayout from "@/layouts/MapEditor.vue"
 </script>
 

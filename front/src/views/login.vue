@@ -101,8 +101,8 @@
 </template>
 
 <script>
-import CustomInput from "@/components/subComponent/CustomInput.vue"
-import Loader from "@/components/Loader.vue"
+import CustomInput from "@/components/common/CustomInput.vue"
+import Loader from "@/components/common/Loader.vue"
 import { useToast } from "vue-toastification"
 import { mapState, mapActions } from "vuex"
 
@@ -165,7 +165,7 @@ export default {
                     this.errorText = this.$t("Les identifiants ne sont pas valides")
                     await this.update_error({ message: null })
                 } else {
-                    await this.$router.push("/user/dashboard")
+                    await this.$router.push("/user/profile")
                     setTimeout(
                         () =>
                             toast.success(`${this.$t("Bienvenue")} ${this.user.username} !`),
