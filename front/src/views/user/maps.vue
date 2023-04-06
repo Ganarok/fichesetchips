@@ -75,7 +75,6 @@ export default {
                 route: '/maps'
             })
 
-            console.log(this.maps)
             this.loading = false
 
             // setTimeout(() => {

@@ -21,6 +21,7 @@
                         class="flex flex-col"
                     >
                         <p
+                            :class="option.class"
                             class="text-xs cursor-pointer hover:opacity-80"
                             @click="option.action"
                         >
@@ -40,8 +41,9 @@
 
             <div class="text-fc-green">
                 <EditableDiv 
-                    :modelValue="title"
+                    :value="title"
                     :canEdit="true"
+                    @change="(v) => handleChange(v)"
                 />
             </div>
         </div>
@@ -56,10 +58,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import store from '@/store'
 import EditableDiv from '@/components/common/EditableDiv.vue'
+import { useToast } from 'vue-toastification'
 
 export default {
     name: "Topbar",
@@ -79,6 +82,11 @@ export default {
                 {
                     name: "Charger une carte",
                     action: () => this.loadMap(),
+                },
+                {
+                    name: "Supprimer la carte",
+                    class: "text-fc-red",
+                    action: () => this.deleteMap(),
                 }
             ]
         }
@@ -86,9 +94,16 @@ export default {
     computed: {
         ...mapState("phaser", {
             title: (state) => state.title,
+            mapId: (state) => state.mapId
         }),
     },
     methods: {
+        ...mapActions({
+            delete_map: "phaser/delete_map"
+        }),
+        handleChange(v) {
+            store.commit("phaser/updateState", { property: "title", newState: v.target.value })
+        },
         exportMap() {
             this.optionsOpened = false
             console.log("Télécharger")
@@ -102,6 +117,13 @@ export default {
         loadMap() {
             this.optionsOpened = false
             console.log("Charger une carte")
+        },
+        async deleteMap() {
+            const toast = useToast()
+            this.optionsOpened = false
+            
+            await store.dispatch("phaser/delete_map", this.mapId)
+            this.$router.push("user/maps").then(() => toast.success("Carte supprimée !"))
         },
     }
 }
