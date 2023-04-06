@@ -73,6 +73,7 @@ export default {
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
+            set_currentStep: "characters/set_currentStep",
         }),
         parseSkills(skills) {
             var parsedSkills = []
@@ -100,7 +101,7 @@ export default {
             this.character_creation.skills = this.skills
             this.character_creation.character.class_id = id
             this.set_character_creation(this.character_creation)
-            this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Characteristics' }})
+            this.set_currentStep('Characteristics')
         }
     }
 }

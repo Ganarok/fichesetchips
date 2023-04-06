@@ -20,33 +20,15 @@
                     :on-select-item="(v) => updateRoomStatus(v)"
                 />
 
-                <Selector
-                    :items="PLAYSTYLE"
-                    :default-selected-item="{
-                        name:$t('Expérience'),
-                        value: ''
-                    }"
-                    :on-select-item="(v) => updatePlayStyle(v)"
-                />
-
                 <ParamInput
-                    :input-text="'Niv. Min:'"
-                    input-type="number"
-                    :placeholder="0"
-                    :input-value="minLevel"
-                    input-class="outline-none"
-                    :on-value-changed="(v) => updateMinLevel(v.target.value)"
-                />
-
-                <ParamInput
-                    :input-text="'Salles pleines'"
+                    :input-text="'Full'"
                     input-type="checkbox"
                     :input-value="roomfull"
                     :on-value-changed="(v) => updateRoomFull(v.target.value)"
                 />
 
                 <ParamInput
-                    :input-text="'Salles privées'"
+                    :input-text="'Privée'"
                     input-type="checkbox"
                     :input-value="roomprivate"
                     :on-value-changed="(v) => updateRoomPrivate(v.target.value)"

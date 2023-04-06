@@ -3,7 +3,7 @@
         <div class="flex flex-col space-y-8 w-1/2">
             <div class="flex w-64">
                 <BlackGreenDiv
-                    :title="`${character_creation.character.firstname} ${character_creation.character.lastname}`"
+                    :title="`${character_creation.character?.firstname} ${character_creation.character?.lastname}`"
                     :right-green-div="false"
                     className=""
                 />

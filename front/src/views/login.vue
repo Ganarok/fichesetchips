@@ -165,7 +165,7 @@ export default {
                     this.errorText = this.$t("Les identifiants ne sont pas valides")
                     await this.update_error({ message: null })
                 } else {
-                    await this.$router.push("/user/dashboard")
+                    await this.$router.push("/user/profile")
                     setTimeout(
                         () =>
                             toast.success(`${this.$t("Bienvenue")} ${this.user.username} !`),

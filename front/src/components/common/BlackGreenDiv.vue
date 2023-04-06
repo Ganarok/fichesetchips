@@ -16,7 +16,7 @@
 
         <input
             v-else
-            :class="`flex text-center self-center sm:w-1/2 w-full bg-transparent outline-none font-bold placeholder:font-normal placeholder:text-fc-yellow placeholder:italic ${color} ${maxWidth} ${height}`"
+            :class="`flex text-center self-center sm:w-1/2 w-full bg-transparent outline-none font-bold placeholder:font-normal placeholder:${placeholderColor} placeholder:italic ${color} ${maxWidth} ${height}`"
             :autofocus="autofocus"
             type="text"
             :value="title"
@@ -44,6 +44,10 @@ export default {
             default: "",
         },
         color: {
+            type: String,
+            default: "text-fc-yellow",
+        },
+        placeholderColor: {
             type: String,
             default: "text-fc-yellow",
         },
@@ -78,7 +82,7 @@ export default {
         onChange: {
             type: Function,
             default: () => {},
-        },
+        }
     },
     methods: {
         getTextSize() {

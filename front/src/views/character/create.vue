@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
+import { mapState, mapActions, mapMutations } from "vuex"
 
 import SidebarLayout from '@/layouts/Sidebar.vue'
 import Universe from '@/components/WorkShop/UniversesSelection.vue'
@@ -59,26 +59,27 @@ export default {
         Description,
         Validation
     },
-    props: {
-        currentStep: {
-            type: String,
-            default: "Universe"
-        }
-    },
     computed: {
         ...mapState("characters", {
             loading: (state) => state.loading,
             completed: (state) => state.completed,
             character_creation_steps: (state) => state.character_creation_steps,
             character_creation: (state) => state.character_creation,
+            currentStep: (state) => state.currentStep,
         }),
     },
     async mounted() {
         await this.fetch_character_creation_steps()
+
+        if (!this.currentStep)
+            this.set_currentStep('Universe')
     },
     methods: {
         ...mapActions({
             fetch_character_creation_steps: "characters/fetch_character_creation_steps",
+        }),
+        ...mapMutations({
+            set_currentStep: "characters/set_currentStep",
         }),
     }
 }
