@@ -10,10 +10,10 @@ export async function apiCall({
     body,
     isBuffer = false
 }) {
-    const baseUrl =
-        process.env.NODE_ENV === "development" ?
-            "http://localhost:3000" :
-            `http://${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`
+    let baseUrl = "http://localhost:3000"
+    if (process.env.NODE_ENV === "production") {
+        baseUrl = `http://${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`
+    }
 
     if (store.state.user.access_token != "") {
         headers["Authorization"] = `Bearer ${store.state.user.access_token}`
