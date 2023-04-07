@@ -15,6 +15,11 @@ export class SeedStories1666947914000 implements MigrationInterface {
             creatorId: users.test.id,
             title: "A Good Story",
             file: file
+        }, {
+            id: "bb6c9a66-8d75-4077-8994-9d60fe45c33a",
+            creatorId: users.defaultUser.id,
+            title: "A Good Story",
+            file: file
         }]
         await StoryRepository.save(defaultStories)
     }

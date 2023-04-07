@@ -18,8 +18,8 @@ export class Asset {
     @Column({type: "bytea"})
     image: Buffer;
 
-    @ManyToOne(type => CMap, cmap => cmap.assets, { onDelete: "CASCADE" })
-    cmap: CMap
+    // @ManyToOne(type => CMap, cmap => cmap.assets, { onDelete: "CASCADE" })
+    // cmap: CMap
 
     @CreateDateColumn({ type: "timestamp" })
     created_at: string
