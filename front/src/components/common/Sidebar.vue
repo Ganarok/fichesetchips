@@ -44,7 +44,7 @@
                     class="font-bold text-xl cursor-pointer hover:opacity-70"
                     active-class="underline"
                 >
-                    {{ $t('Profil') }} 
+                    {{ $t('profile') }} 
                 </router-link>
 
                 <div class="flex flex-col">
@@ -68,7 +68,7 @@
                                 class="hover:opacity-70"
                                 active-class="underline"
                             >
-                                {{ $t('Créer') }} 
+                                {{ $t('create') }} 
                             </router-link>
 
                             <router-link 
@@ -76,7 +76,7 @@
                                 class="hover:opacity-70"
                                 active-class="underline"
                             >
-                                {{ $t('Liste') }} 
+                                {{ $t('list') }} 
                             </router-link>
                         </ul>
                     </div>
@@ -101,7 +101,7 @@
                                 class="hover:opacity-70"
                                 active-class="underline"
                             >
-                                {{ $t('Créer') }}  
+                                {{ $t('create') }}  
                             </router-link>
 
                             <router-link 
@@ -109,7 +109,7 @@
                                 class="hover:opacity-70"
                                 active-class="underline"
                             >
-                                {{ $t('Rejoindre') }} 
+                                {{ $t('join') }} 
                             </router-link>
                         </ul>
                     </div>
@@ -134,7 +134,7 @@
                                 class="hover:opacity-70"
                                 active-class="underline"
                             >
-                                {{ $t('Créer') }}  
+                                {{ $t('create') }}  
                             </router-link>
 
                             <router-link 
@@ -142,7 +142,7 @@
                                 class="hover:opacity-70"
                                 active-class="underline"
                             >
-                                {{ $t('Liste') }} 
+                                {{ $t('list') }} 
                             </router-link>
                         </ul>
                     </div>
@@ -160,7 +160,7 @@
                         active-class="underline"
                         exact
                     >
-                        {{ $t('Accueil') }}
+                        {{ $t('home') }}
                     </router-link>
 
                     <router-link
@@ -168,7 +168,7 @@
                         class="font-bold text-xl cursor-pointer hover:opacity-70"
                         active-class="underline"
                     >
-                        {{ $t('À propos') }}
+                        {{ $t('about') }}
                     </router-link>
                     
                     <router-link
@@ -176,7 +176,7 @@
                         class="font-bold text-xl cursor-pointer hover:opacity-70"
                         active-class="underline"
                     >
-                        {{ $t('Glossaire') }}
+                        {{ $t('glossary') }}
                     </router-link>
                 </div>
             </div>
@@ -190,7 +190,7 @@
                     @click="logout()"
                 >
                     <Button
-                        :button-text="$t('Déconnexion')"
+                        :button-text="$t('logout')"
                         class="px-4 py-2 text-base"
                         textColor="text-fc-black"
                         color="fc-yellow"
@@ -206,7 +206,7 @@
                     class="flex items-center justify-center font-bold text-xl w-[80%]"
                 >
                     <Button
-                        :button-text="$t('Connexion')"
+                        :button-text="$t('login')"
                         class="bg-fc-green px-4 py-2 text-base"
                         textColor="text-fc-black"
                         color="fc-green"
@@ -221,7 +221,7 @@
                 >
 
                 <p class="text-white text-[10px]">
-                    Made with ❤️ by fiches&chips
+                    {{ $t('made_with_love') }}
                 </p>
             </div>
         </div>

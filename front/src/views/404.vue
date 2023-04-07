@@ -12,11 +12,11 @@
             </h1>
 
             <p class="text-fc-black opacity-70 font-bold text-xl italic">
-                {{ $t("Page introuvable") }}
+                {{ $t("not_found") }}
             </p>
 
             <Button
-                :button-text="$t('Retour')"
+                :button-text="$t('back')"
                 class="bg-fc-green w-1/2 self-center px-4 py-2"
                 textColor="text-fc-black"
                 color="fc-green"

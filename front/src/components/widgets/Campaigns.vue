@@ -7,9 +7,9 @@
         >
             <div class="absolute left-0 w-4 h-full bg-fc-green" />
 
-            <h3>{{ $t("Campagne en cours") }}</h3>
-            <h3>{{ $t("MJ") }}</h3>
-            <h3>{{ $t("Lancée le") }}</h3>
+            <h3>{{ $t("current_campaign") }}</h3>
+            <h3>{{ $t("gm") }}</h3>
+            <h3>{{ $t("launched_on") }}</h3>
         </div>
 
         <div class="flex items-center justify-center w-full h-full">
@@ -18,7 +18,7 @@
                 v-else
                 class="font-bold"
             >
-                No data
+                {{ $t('no_data') }}
             </p>
         </div>
 

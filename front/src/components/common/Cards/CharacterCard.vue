@@ -15,7 +15,7 @@
                     v-if="level"
                     class="text-fc-black opacity-60"
                 >
-                    Lvl. {{ level }}
+                    {{ $t('level') }}. {{ level }}
                 </p>
             </div>
 
@@ -65,7 +65,7 @@
                 class="w-full bg-fc-green p-2 flex-1 my-auto"
             >
                 <p class="text-xl font-bold opacity-60 text-center">
-                    Nouveau personnage
+                    {{$t('new_character')}}
                 </p>
             </div>
         </router-link>

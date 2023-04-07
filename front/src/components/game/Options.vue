@@ -17,7 +17,7 @@
                 class="flex font-bold hoverStyle bg-fc-yellow text-fc-black p-3"
             >
                 <p class="text-base">
-                    Quitter la partie 
+                    {{ $t('leave_game') }}
                 </p>
             </router-link>
         </div>

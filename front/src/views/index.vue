@@ -18,8 +18,7 @@
                         <p
                             class="max-w-md text-xl sm:text-2xl text-white font-bold pr-[5%] tablet:text-2xl mobile:w-full"
                         >
-                            Faites du JdR avec vos amis !
-                            Créez vos propres personnages, cartes et plus encore ... le tout, sur Fiches&Chips !
+                            {{ $t('home_slogan') }}
                         </p>
 
                         <router-link

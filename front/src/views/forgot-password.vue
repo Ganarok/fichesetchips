@@ -26,7 +26,7 @@
                 class="ml-5"
             >
                 <h1 class="text-5xl">
-                    {{ $t("Vous avez perdu quelque chose") }} ?
+                    {{ $t("forgotten_password_title") }} ?
                 </h1>
 
                 <p class="my-4 underline text-xs opacity-70">
@@ -34,7 +34,7 @@
                         class="cursor-pointer"
                         to="/login"
                     >
-                        {{ $t("Finalement non") }} !
+                        {{ $t("forgotten_password_cancel") }} !
                     </router-link>
                 </p>
             </div>
@@ -115,7 +115,7 @@ export default {
         handleEmailFocusOut() {
             if (!isEmailValid(this.email)) {
                 this.emailError = true
-                this.errorText = this.$t("L'email n'est pas valide")
+                this.errorText = this.$t("invalid_email")
             } else {
                 this.emailError = false
                 this.errorText = ""

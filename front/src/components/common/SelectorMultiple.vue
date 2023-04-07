@@ -40,7 +40,7 @@
             class="flex space-x-2 p-2"
         >
             <p class="text-fc-black">
-                Sélectionner
+                {{ $t('select') }}
             </p>
 
             <div :class="imageClass">

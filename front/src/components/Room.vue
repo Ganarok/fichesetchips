@@ -3,11 +3,11 @@
         v-if="!room"
         class="flex flex-col h-full items-center justify-center font-bold text-xl"
     >
-        {{ $t("Cette room n'existe pas") }}
+        {{ $t("room_not_found") }}
 
         <div class="my-4">
             <Button
-                :button-text="$t('Retour')"
+                :button-text="$t('back')"
                 class="px-6 py-2"
                 color="fc-green"
                 @click="() => $router.push('/rooms')"
@@ -66,37 +66,37 @@
                         <h3 class="flex font-bold">
                             Style:
                             <p class="font-normal">
-                                {{ room.style || "Aucun" }}
+                                {{ room.style || $t('none') }}
                             </p>
                         </h3>
 
                         <h3 class="flex font-bold">
                             Vocal:
                             <p class="font-normal">
-                                {{ room.vocal || "Non défini" }}
+                                {{ room.vocal || $t('undefined') }}
                             </p>
                         </h3>
                     </div>
 
                     <div class="flex flex-col space-y-4 sm:space-y-6">
                         <h3 class="flex font-bold">
-                            Experience:
+                            {{ $t('experience') }}:
                             <p class="font-normal">
-                                {{ room.experience || "Non défini" }}
+                                {{ room.experience || $t('undefined') }}
                             </p>
                         </h3>
 
                         <h3 class="flex font-bold">
                             Tranche de niveau:
                             <p class="font-normal">
-                                {{ room.levelGap || "Non défini" }}
+                                {{ room.levelGap || $t('undefined') }}
                             </p>
                         </h3>
 
                         <h3 class="flex font-bold">
-                            Langue:
+                            {{ $t('language') }}:
                             <p class="font-normal">
-                                {{ room.language || "Non défini" }}
+                                {{ room.language || $t('undefined') }}
                             </p>
                         </h3>
                     </div>
@@ -104,7 +104,7 @@
 
                 <div class="flex flex-col h-full">
                     <BlackGreenDiv
-                        title="Maitre de jeu"
+                        :title="$t('gm_full')"
                         :right-green-div="false"
                         color="text-white"
                     />
@@ -122,18 +122,17 @@
                             </p>
                         </div>
 
-                        <p>Succes</p>
+                        <p>{{ $t('success') }}</p>
 
                         <p class="font-bold">
                             {{
-                                `${room?.mj?.gamePlayedAsMj} parties enregistrées` ||
-                                    "Pas de partie enregistrée"
+                                `${room?.mj?.gamePlayedAsMj} ` + $t('x_games_saved')|| $t('no_game_saved')
                             }}
                         </p>
                     </div>
 
                     <BlackGreenDiv
-                        title="Liste des joueurs"
+                        :title="$t('players_list')"
                         :right-green-div="false"
                         color="text-white"
                     />
@@ -148,7 +147,7 @@
                                 class="bg-gray-400 border-2 border-fc-black-light rounded-full mr-4 w-20 h-20"
                             />
 
-                            {{ player.username || "Utilisateur" }}
+                            {{ player.username || $t('username') }}
                         </div>
                     </div>
                 </div>

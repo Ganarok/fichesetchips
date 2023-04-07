@@ -1,5 +1,5 @@
 <template>
-    <SidebarLayout :title="$t('À Propos')">
+    <SidebarLayout :title="$t('about')">
         <p class="text-justify sm:w-[80%] sm:ml-[10%] lg:w-[70%]">
             Fiches&Chips est un projet étudiant proposant une plateforme web pour
             réaliser des parties de jeu de rôle en ligne.<br>

@@ -14,7 +14,7 @@
                 <Selector
                     :items="ROOMSTATUS"
                     :default-selected-item="{
-                        name: $t('Statut'),
+                        name: $t('status'),
                         value: ''
                     }"
                     :on-select-item="(v) => updateRoomStatus(v)"

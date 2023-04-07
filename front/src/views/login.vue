@@ -26,15 +26,16 @@
                 class="ml-5"
             >
                 <h1 class="text-5xl">
-                    {{ $t("Connexion") }}
+                    {{ $t("login") }}
                 </h1>
                 <p class="mb-4 mt-2 text-xs opacity-70">
-                    Vous n'avez pas de compte ? 
+                    {{ $t("not_registered") }}
+
                     <router-link
                         class="underline cursor-pointer"
                         to="/register"
                     >
-                        {{ $t("Inscrivez-vous") }}
+                        {{ $t("click_here") }}
                     </router-link>
                 </p>
             </div>
@@ -45,7 +46,7 @@
             >
                 <CustomInput
                     :max-length="36"
-                    :place-holder="$t('Identifiant')"
+                    :place-holder="$t('username')"
                     :has-error="credentialsError"
                     outline="fc-green"
                     :on-focus-out="() => handleFocusOut()"
@@ -56,7 +57,7 @@
                 <CustomInput
                     :max-length="64"
                     :typeinput="'password'"
-                    :place-holder="$t('Mot de passe')"
+                    :place-holder="$t('password')"
                     :has-error="credentialsError"
                     outline="fc-green"
                     :on-focus-out="() => handleFocusOut()"
@@ -69,7 +70,7 @@
                         class="cursor-pointer"
                         to="/forgot-password"
                     >
-                        {{ $t("Mot de passe oublié") }}
+                        {{ $t("forgotten_password") }}
                     </router-link>
                 </p>
             </div>
@@ -162,13 +163,13 @@ export default {
                 if (this.errors.message) {
                     toast.error(this.errors.message)
                     this.credentialsError = true
-                    this.errorText = this.$t("Les identifiants ne sont pas valides")
+                    this.errorText = this.$t("invalid_login")
                     await this.update_error({ message: null })
                 } else {
                     await this.$router.push("/user/profile")
                     setTimeout(
                         () =>
-                            toast.success(`${this.$t("Bienvenue")} ${this.user.username} !`),
+                            toast.success(`${this.$t("welcome")} ${this.user.username} !`),
                         400
                     )
                 }

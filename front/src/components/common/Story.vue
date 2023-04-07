@@ -15,7 +15,7 @@
 
         <div class="flex flex-col space-y-3 p-2 bg-gray-50">
             <p class="text-fc-green font-bold">
-                Voir
+                {{ $t('see') }}
             </p>
 
             <p class="ml-6 text-fc-black-light">

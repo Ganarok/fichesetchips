@@ -17,7 +17,7 @@
                         <Selector
                             :items="ALIGNMENT"
                             :default-selected-item="{
-                                name: $t('Alignement'),
+                                name: $t('alignment'),
                                 value: ''
                             }"
                             :on-select-item="(v) => character.alignment = v"
@@ -25,7 +25,7 @@
                     </div>
 
                     <CustomInput 
-                        :placeHolder="$t('Prénom')"
+                        :placeHolder="$t('firstname')"
                         outline="fc-green"
                         :max-length="52"
                         :value="character?.firstname"
@@ -34,7 +34,7 @@
                     />
 
                     <CustomInput 
-                        :placeHolder="$t('Nom')"
+                        :placeHolder="$t('lastname')"
                         outline="fc-green"
                         :max-length="52"
                         :value="character?.lastname"
@@ -53,7 +53,7 @@
                 />
 
                 <CustomInput 
-                    placeHolder="Poids"
+                    :placeHolder="$t('weight')"
                     outline="fc-green"
                     :max-length="12"
                     type="number"
@@ -63,7 +63,7 @@
                 />
 
                 <CustomInput 
-                    placeHolder="Taille"
+                    :placeHolder="$t('height')"
                     outline="fc-green"
                     :max-length="12"
                     type="number"
@@ -149,7 +149,7 @@ export default {
             }
 
             return {
-                name: this.$t('Alignement'),
+                name: this.$t('alignment'),
                 value: ''
             }
         },

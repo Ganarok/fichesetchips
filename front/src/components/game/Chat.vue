@@ -29,7 +29,7 @@
                 v-else
                 class="opacity-50"
             >
-                No messages
+                {{ $t('no_message') }}
             </p>
         </div>
 
@@ -37,7 +37,7 @@
             type="text"
             :model="message"
             :value="message"
-            placeholder="Type your message"
+            :placeholder="$t('type_message')"
             class="p-2 mx-2 m-1 focus:outline-fc-green"
             autofocus
             @input="message = $event.target.value"

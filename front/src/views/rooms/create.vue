@@ -69,7 +69,7 @@
                     <div class="flex justify-evenly">
                         <div class="flex flex-col px-4 items-center justify-between">
                             <p class="font-bold">
-                                {{ $t("Maps") }}
+                                {{ $t("maps") }}
                             </p>
     
                             <SelectorMultiple
@@ -100,12 +100,12 @@
 
                     <div class="flex w-full items-center justify-between px-4">
                         <p class="font-bold">
-                            {{ $t("Mot de passe") }}
+                            {{ $t("password") }}
                         </p>
 
                         <CustomInput
                             :max-length="64"
-                            :place-holder="$t('Mot de passe')"
+                            :place-holder="$t('password')"
                             :typeinput="'password'"
                             outline="fc-green"
                             :value="room.password"
@@ -282,7 +282,7 @@ export default {
                 this.room.title = `Room de ${this.$store.state?.user?.username}`
 
             if (!this.room.description)
-                this.room.description = this.$t("Pas de description")
+                this.room.description = this.$t("no_description")
 
             this.room.mj = this.user
 
