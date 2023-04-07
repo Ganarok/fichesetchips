@@ -31,8 +31,8 @@ export default class BootScene extends Scene {
                 console.log(`Retreived map ${map.data.title}, launching it...`)
                 this.scene.start("MapMakerScene", { map })
             } catch (error) {
-                toast.error("Error while loading map", error)
-                // TODO : redirect to home
+                toast.error(`Error while loading map : ${error.message}`)
+
                 this.scene.start("MapMakerScene", {})
             }
         } else {
