@@ -65,7 +65,7 @@
                 class="w-full bg-fc-green p-2 flex-1 my-auto"
             >
                 <p class="text-xl font-bold opacity-60 text-center">
-                    {{$t('new_character')}}
+                    {{ $t('new_character') }}
                 </p>
             </div>
         </router-link>

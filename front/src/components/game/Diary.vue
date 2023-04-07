@@ -11,7 +11,7 @@
 
         <div class="flex flex-col">
             <p class="font-bold">
-                {{$t('characters')}}
+                {{ $t('characters') }}
             </p>
 
             <div
