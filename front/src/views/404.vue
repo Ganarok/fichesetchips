@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Button from "@/components/subComponent/Button.vue"
+import Button from "@/components/common/Button.vue"
 
 export default {
     name: "NotFound",

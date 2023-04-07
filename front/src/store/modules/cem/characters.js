@@ -28,7 +28,7 @@ export default {
                 "hp": 0,
                 "race_id": "",
                 "class_id": "",
-                "level_id": 0
+                "level_id": 1
             },
             "skills": [],
             "stats": {
@@ -43,6 +43,7 @@ export default {
                 "copper": 0
             }
         },
+        currentStep: 'Universe',
         character_creation_steps: {}
     },
     mutations: {
@@ -54,6 +55,7 @@ export default {
         set_stats: (state, data) => (state.character_creation.stats = {...state.character_creation.stats, ...data}),
         set_racial: (state, data) => (state.character_creation.stats = {...state.character_creation.stats, 'racial': data}),
         set_character_creation: (state, data) => (state.character_creation = data),
+        set_currentStep: (state, data) => (state.currentStep = data),
         set_character_creation_steps: (state, data) => (state.character_creation_steps = data),
     },
     actions: {

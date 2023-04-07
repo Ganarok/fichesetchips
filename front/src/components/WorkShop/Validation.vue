@@ -3,7 +3,7 @@
         <div class="flex flex-col space-y-8 w-1/2">
             <div class="flex w-64">
                 <BlackGreenDiv
-                    :title="`${character_creation.character.firstname} ${character_creation.character.lastname}`"
+                    :title="`${character_creation.character?.firstname} ${character_creation.character?.lastname}`"
                     :right-green-div="false"
                     className=""
                 />
@@ -77,9 +77,10 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { useToast } from 'vue-toastification'
 
-import BlackGreenDiv from '@/components/subComponent/BlackGreenDiv.vue'
-import StatSelector from '@/components/subComponent/StatSelector.vue'
+import BlackGreenDiv from '@/components/common/BlackGreenDiv.vue'
+import StatSelector from '@/components/common/StatSelector.vue'
 import { apiCall } from '@/utils/apiCall'
 
 export default {
@@ -115,20 +116,23 @@ export default {
             this.character_creation.character_characteristic = stats
         },
         async validation() {
+            const toast = useToast()
             this.parseStats()
 
-            console.log(this.character_creation['character'])
+            console.log(this.character_creation)
 
-            const res = await apiCall({
-                route: '/cem/characters/creation',
-                method: 'POST',
-                body: this.character_creation
-            })
+            try {
+                await apiCall({
+                    route: '/cem/characters/creation',
+                    method: 'POST',
+                    body: this.character_creation
+                })
 
-            if (!res.ok)
-                console.log('Error', res)
-
-            // await this.$router.push('/characters')
+                await this.$router.push('/characters')
+                    .then(() => toast.success('Personnage créé avec succès'))
+            } catch (error) {
+                toast.error(error)
+            }
         }
     }
 }

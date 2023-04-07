@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Loader from "./Loader.vue"
+import Loader from "./common/Loader.vue"
 // import { useToast } from 'vue-toastification'
 
 export default {

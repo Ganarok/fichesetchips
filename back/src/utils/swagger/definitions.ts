@@ -1,5 +1,11 @@
 import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacterResponse, loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
+import defaultStories from "../../database/fixtures/stories"
+import defaultMaps from "../../database/fixtures/maps"
+import defaultRooms from "../../database/fixtures/rooms"
+import defaultGames from "../../database/fixtures/games"
+import { GameStatus } from "../../database/entities/public/Game";
+
 export const definitions = {
     loginRequest: {
         properties: {
@@ -312,8 +318,261 @@ export const definitions = {
             },
             data: {
                 type: "array",
-                default: [{id: "cem", name: "Caves Et Monstres", image: "https://jolstatic.fr/www/captures/5405/7/148557.jpg", description: "Pas du tout Dungeon et Dragon"}]
+                default: [{ id: "cem", name: "Caves Et Monstres", image: "https://jolstatic.fr/www/captures/5405/7/148557.jpg", description: "Pas du tout Dungeon et Dragon" }]
             }
         }
     },
+    getStoriesResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Stories successfully found"
+            },
+            data: {
+                type: "array",
+                default: [defaultStories[0]]
+            }
+        }
+    },
+    getStoryResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Story successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultStories[0]
+            }
+        }
+    },
+    createStoryRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Story title"
+            },
+            file: {
+                type: "buffer",
+                default: [42, 36]
+            }
+        }
+    },
+    getMapsResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Maps successfully found"
+            },
+            data: {
+                type: "array",
+                default: [defaultMaps[0]]
+            }
+        }
+    },
+    getMapResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Map successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultMaps[0]
+            }
+        }
+    },
+    assetCreationRes: {
+        properties: {
+            id: {
+                type: "string",
+                default: ""
+            }
+        }
+    },
+    createMapsRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Maps title"
+            },
+            data: {
+                type: "object",
+                default: defaultMaps[0].data
+            }
+        }
+    },
+    getRoomsResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Rooms successfully found"
+            },
+            data: {
+                type: "array",
+                default: [defaultRooms[0]]
+            }
+        }
+    },
+    getRoomResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Room successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultRooms[0]
+            }
+        }
+    },
+    getGameResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Game successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultGames[0]
+            }
+        }
+    },
+    getPlayerResponse: {
+        properties: {
+            id: {
+                type: "uuid",
+                default: "90c8aee8-d491-11ed-afa1-0242ac120002"
+            },
+            state: {
+                type: "object",
+                default: "not implemented"
+            },
+            character: {
+                type: "object",
+                default: "an object containing the character values"
+            }
+        }
+    },
+    createRoomRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Room title",
+                required: true
+            },
+            description: {
+                type: "string",
+                default: "Room description",
+                required: true
+            },
+            requirements: {
+                type: "string",
+                default: "Room requirements",
+                required: true
+            },
+            vocal_url: {
+                type: "string",
+                default: "Room vocal url",
+                required: true
+            },
+            is_private: {
+                type: "boolean",
+                default: false,
+                required: false
+            },
+            is_published: {
+                type: "boolean",
+                default: false,
+                required: false
+            },
+            password: {
+                type: "string",
+                required: false
+            },
+            players_nb_max: {
+                type: "number",
+                default: 5,
+                required: true
+            },
+            game: {
+                type: "object",
+                default: {
+                    "story_id": "451fbb1a-1350-49d3-9433-2c9c2b3e75e5",
+                    "map_id": "baa3ceaa-b175-4289-8028-4dd441d3e101",
+                    "universe": "cem"
+                },
+                required: false
+            }
+        }
+    },
+    updateRoomRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Room title",
+                required: false
+            },
+            description: {
+                type: "string",
+                default: "Room description",
+                required: false
+            },
+            requirements: {
+                type: "string",
+                default: "Room requirements",
+                required: false
+            },
+            vocal_url: {
+                type: "string",
+                default: "Room vocal url",
+                required: false
+            },
+            is_private: {
+                type: "boolean",
+                default: false,
+                required: false
+            },
+            password: {
+                type: "string",
+                default: "don't do that, please.",
+                required: false
+            },
+            players_nb_max: {
+                type: "number",
+                default: 5,
+                required: false
+            },
+            game: {
+                type: "object",
+                default: {
+                    "status": "planned",
+                    "story_id": "451fbb1a-1350-49d3-9433-2c9c2b3e75e5",
+                    "map_id": "baa3ceaa-b175-4289-8028-4dd441d3e101",
+                    "universe": "cem"
+                },
+                required: false
+            }
+        }
+    },
+    updateGameRequest: {
+        properties: {
+            status: {
+                type: GameStatus,
+                default: GameStatus.PLANNED
+            },
+            player_state: {
+                type: "string",
+                default: "not implemented"
+            }
+        }
+    },
+    updatePlayerRequest: {
+        properties: {
+            character_id: {
+                type: "uuid",
+                default: "2b0f6de8-d488-11ed-afa1-0242ac120002"
+            }
+        }
+    }
 }

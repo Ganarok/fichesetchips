@@ -1,34 +1,38 @@
 <template>
-    <SidebarLayout>
-        <div
-            v-if="loading"
-            class="flex w-full h-full items-center justify-center"
-        >
-            <Loader />
-        </div>
+    <GameLayout
+        :loading="loading"
+        :socket="socket"
+    >
+        <!-- La map -->
 
-        <Chat
-            v-else
-            :connected="connected"
-            :messages="messages"
-            :send-message="sendMessage"
-        />
-    </SidebarLayout>
+        <Suspense>
+            <GameContainer />
+
+            <template #fallback>
+                <div
+                    class="flex h-screen w-screen justify-center items-center bg-fc-black-light"
+                >
+                    <Loader />
+                </div>
+            </template>
+        </Suspense>
+    </GameLayout>
 </template>
 
 <script>
-import SidebarLayout from "@/layouts/Sidebar.vue"
-import Loader from "@/components/Loader.vue"
-import Chat from "@/components/Chat.vue"
-import { useSocketIO } from "@/utils/socket.io"
 import { useToast } from "vue-toastification"
+
+import GameContainer from "@/components/phaser/GameContainer"
+import GameLayout from "@/layouts/Game.vue"
+import Loader from "@/components/common/Loader.vue"
+import { useSocketIO } from "@/utils/socket.io"
 
 export default {
     name: "Session",
     components: {
-        SidebarLayout,
-        Loader,
-        Chat,
+        GameContainer,
+        GameLayout,
+        Loader
     },
     data() {
         return {
@@ -36,8 +40,7 @@ export default {
             loading: true,
             roomId: this.$route.params.id,
             connectionId: null,
-            messages: [],
-            socket: null,
+            socket: null
         }
     },
     mounted() {
@@ -58,7 +61,7 @@ export default {
             this.loading = false
             this.connectionId = n.connectionId
 
-            this.socket.emit("message", {
+            socket.emit("message", {
                 text: "joined the room",
                 senderName: this.$store.state.user.username || n.connectionId,
                 roomId: this.roomId,
@@ -69,22 +72,8 @@ export default {
             toast.error("You are not connected to the server")
             this.loading = false
         })
-
-        socket.on("message", (message) => {
-            this.messages.push(message)
-        })
     },
-    methods: {
-        sendMessage(text) {
-            const newMessage = {
-                text,
-                senderName: this.connectionId,
-                roomId: this.roomId,
-            }
-
-            this.socket.emit("message", newMessage)
-            this.messages.push(newMessage)
-        },
-    },
+    beforeUnmount() {
+    }
 }
 </script>

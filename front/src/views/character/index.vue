@@ -9,7 +9,7 @@
             <p class="text-xl font-bold">
                 Vous n'avez pas encore de personnages
             </p>
-
+            
             <router-link
                 to="/characters/create"
                 class="font-bold undeline p-2 px-4 bg-fc-green hover:opacity-80"
@@ -17,20 +17,23 @@
                 Créer un personnage
             </router-link>
         </div>
+        <CharactersList v-else />
     </SidebarLayout>
 </template>
 
 <script>
 import SidebarLayout from '@/layouts/Sidebar.vue'
+import CharactersList from '@/components/common/Characters.vue'
 
 export default {
     name: 'Characters',
     components: {
         SidebarLayout,
+        CharactersList
     },
     data() {
         return {
-            characters: []
+            characters: ["a",]
         }
     }
 }

@@ -112,19 +112,18 @@ export const ALIGNMENT = [
     }
 ]
 
-export const SEXTYPE = [
-    {
-        name: "Homme",
-        value: "men"
-    },
-    {
-        name: "Femme",
-        value: "women"
-    },
-    {
-        name: "Autres",
-        value: "others"
-    }
+export const SEXTYPE = [{
+    name: "Homme",
+    value: "Male"
+},
+{
+    name: "Femme",
+    value: "Female"
+},
+{
+    name: "Autre",
+    value: "Other"
+}
 ]
 
 export const TYPEUNIVERSES = []

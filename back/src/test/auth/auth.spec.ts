@@ -2,7 +2,7 @@ import app from '../../server';
 import { expect } from 'chai';
 import { agent as request } from 'supertest';
 import 'mocha'
-let token = ""
+import fs from 'fs'
 
 import defaultUsers from "../../database/fixtures/users"
 import { User } from '../../database/entities/public/User';
@@ -42,11 +42,17 @@ describe('Auth', () => {
                     username: user.username
                 });
             expect(res.status).to.equal(200);
-            token = res.body.access_token
-            const fs = require('fs')
-            fs.writeFile('src/test/.token.txt', token, () => console.error("Error writing file"));
+            const token = res.body.access_token
+            const path = "./src/test/.token.txt"
+            fs.writeFile(path, token, (err) => {
+                if (err)
+                    console.error(err);
+                else {
+                    console.info("File written successfully\n");
+                }
+            });
         });
-    });
+    })
     describe('Error gestion for register', () => {
         it('Register should return 409 because Query miss email', async () => {
             const res = await request(app)
@@ -150,4 +156,4 @@ describe('Auth', () => {
             expect(res.body).to.have.property('message');
         });
     });
-});
+})

@@ -65,13 +65,14 @@ export default {
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
+            set_currentStep: "characters/set_currentStep",
         }),
         async chooseLanguage(id) {
             this.character_creation.languages.push(id)
             const languages_distinct = new Set(this.character_creation.languages)
             this.character_creation.languages = [...languages_distinct]
             this.set_character_creation(this.character_creation)
-            await this.$router.push({ name: 'CharacterCreate', query: {currentStep: 'Class' }})
+            this.set_currentStep('Class')
         },
     }
 }

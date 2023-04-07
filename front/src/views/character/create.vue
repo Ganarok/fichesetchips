@@ -32,18 +32,18 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
+import { mapState, mapActions, mapMutations } from "vuex"
 
 import SidebarLayout from '@/layouts/Sidebar.vue'
 import Universe from '@/components/WorkShop/UniversesSelection.vue'
-import CompletionBar from '@/components/subComponent/completionBar.vue'
+import CompletionBar from '@/components/common/completionBar.vue'
 import Race from '@/components/WorkShop/RaceSelection.vue'
 import Language from '@/components/WorkShop/LanguageSelection.vue'
 import Class from '@/components/WorkShop/ClassSelection.vue'
 import Characteristics from "@/components/WorkShop/CharacteristicsSelection.vue"
 import Description from "@/components/WorkShop/Description.vue"
 import Validation from "@/components/WorkShop/Validation.vue"
-import Loader from '@/components/Loader.vue'
+import Loader from '@/components/common/Loader.vue'
 
 export default {
     name: "CharacterCreate",
@@ -59,28 +59,27 @@ export default {
         Description,
         Validation
     },
-    props: {
-        currentStep: {
-            type: String,
-            default: "Universe"
-        }
-    },
     computed: {
         ...mapState("characters", {
             loading: (state) => state.loading,
             completed: (state) => state.completed,
             character_creation_steps: (state) => state.character_creation_steps,
             character_creation: (state) => state.character_creation,
+            currentStep: (state) => state.currentStep,
         }),
     },
     async mounted() {
         await this.fetch_character_creation_steps()
 
-        console.log('steps', this.character_creation_steps)
+        if (!this.currentStep)
+            this.set_currentStep('Universe')
     },
     methods: {
         ...mapActions({
             fetch_character_creation_steps: "characters/fetch_character_creation_steps",
+        }),
+        ...mapMutations({
+            set_currentStep: "characters/set_currentStep",
         }),
     }
 }
