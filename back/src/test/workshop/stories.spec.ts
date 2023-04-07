@@ -20,6 +20,7 @@ describe('Stories', () => {
                 .post(`/stories?title=${story.title}`)
                 .set({ "Authorization": `Bearer ${token}` })
                 .send([42, 53, 14])
+            id = res.body.data
             expect(res.status).to.equal(200);
         }
     )
@@ -29,6 +30,7 @@ describe('Stories', () => {
                 .get('/stories')
                 .set({ "Authorization": `Bearer ${token}` })
             expect(res.status).to.equal(200);
+
         }
     )
     it('A user should be able to get a story that he created',
