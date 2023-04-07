@@ -4,11 +4,11 @@ import updatesSockets from "./updates"
 
 export default function initSockets(namespace: Namespace) {
     namespace.on('connection', (socket) => {
-        console.log('User connected')
+        console.log('User connected to socket')
 
         socket.on('join', (n) => {
+            console.log("Call Join with roomId: " + n)
             const roomId = n.roomId
-
             console.log(`Room ${roomId} joined by user ${socket.id}`)
 
             // TODO: Récupérer en DB (ou non) le state actuel de la partie
