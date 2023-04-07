@@ -10,15 +10,17 @@ import { Player } from "../../entities/public/Players"
 import { Story } from "../../entities/public/workshop/Story"
 import { User } from "../../entities/public/User"
 import { Character } from "../../entities/public/characters/Character"
+import { CMap } from "../../entities/public/workshop/CMap"
 
-export class RoomsSeeder1678969543486 implements MigrationInterface {
-    name = 'RoomsSeeder1678969543486'
+export class RoomsSeeder1679063830965 implements MigrationInterface {
+    name = 'RoomsSeeder1679063830965'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         const RoomsRepository = PublicDataSource.getRepository(Room)
         const GamesRepository = PublicDataSource.getRepository(Game)
         const PlayersRepository = PublicDataSource.getRepository(Player)
         const StoryRepository = PublicDataSource.getRepository(Story)
+        const CMapRepository = PublicDataSource.getRepository(CMap)
         const UserRepository = PublicDataSource.getRepository(User)
         const CharacterRepository = PublicDataSource.getRepository(Character)
 
@@ -29,8 +31,10 @@ export class RoomsSeeder1678969543486 implements MigrationInterface {
         await GamesRepository.save(defaultGames)
         const game0 = await GamesRepository.findOneOrFail({ where: { id: defaultGames[0].id } })
         const game1 = await GamesRepository.findOneOrFail({ where: { id: defaultGames[1].id } })
+        const tilemap = await CMapRepository.findOneOrFail({ where: { creatorId: gm.id } })
         const story = await StoryRepository.findOneOrFail({ where: { creatorId: gm.id } })
         game0.story = story
+        game0.tilemap = tilemap
         await GamesRepository.save(game0)
 
         // await RoomsRepository.save(defaultRooms)

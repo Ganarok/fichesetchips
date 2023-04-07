@@ -6,6 +6,7 @@ import { CMap } from "../../database/entities/public/workshop/CMap"
 import { Story } from "../../database/entities/public/workshop/Story"
 import { PublicDataSource } from "../../database/init/datasources/public-data-source"
 import { CreateRoom, UpdateRoom } from "../../utils/types/rooms"
+import { Not } from "typeorm"
 
 const UserRepository = PublicDataSource.getRepository(User)
 const RoomRepository = PublicDataSource.getRepository(Room)
@@ -16,33 +17,38 @@ const CMapRepository = PublicDataSource.getRepository(CMap)
 
 export async function findAll(username: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
-    const public_rooms = await RoomRepository.find({
-        where: [
-            { is_published: true },
-        ]
-    });
-
-    const user_rooms = await RoomRepository.find({
-        where: [
-            {
-                is_published: false, game: {
-                    players: {
-                        user: { id: user.id }
-                    }
-                }
-            },
-            {
-                is_published: false, gm: { id: user.id }
+    // rooms published where i'm not the gm nor the player
+    const published_rooms = await findRooms([{
+        is_published: true,
+        game: {
+            players: {
+                user: { id: Not(user.id) }
             }
-        ]
-    })
-    return { "user_rooms": user_rooms, "public_rooms": public_rooms }
+        }, 
+        gm: { id: Not(user.id) }
+    }])
+    // rooms un/published where i'm the player
+    const player_rooms = await findRooms([
+        {
+            game: {
+                players: {
+                    user: { id: user.id }
+                }
+            }
+        }
+    ])
+    // rooms un/published where i'm the gm
+    const gm_rooms = await findRooms([
+        {
+            gm: { id: user.id }
+        }
+    ])
+    return { "gm_rooms": gm_rooms, "published_rooms": published_rooms, "player_rooms": player_rooms }
 }
 
 export async function findOne(username: string, room_id: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
-    const room = await RoomRepository.findOneByOrFail({ id: room_id })
-
+    const room = await findOneRoom([{ id: room_id }])
 
     if (!room.is_published) {
         if (room.gm.id !== user.id && !await is_user_in_game(user.id, room.game)) {
@@ -87,25 +93,25 @@ export async function create(username: string, room_view: CreateRoom) {
         new_room.password = room_view.password
 
     const room = await RoomRepository.save(new_room)
-    room.game.story.file = new Buffer('')
-    return room
+    return await findOneRoom([{ id: room.id }])
 }
 
 // publish or unplubished depending on query params value
 export async function publish(username: string, body: any, room_id: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
-    const room = await RoomRepository.findOneByOrFail({ id: room_id })
+    const room = await findOneRoom([{ id: room_id }])
 
     if (room?.gm.id != user.id)
         throw Error("Unauthorized")
 
-    return await RoomRepository.save({ ...room, is_published: body.is_published })
+    const new_room = await RoomRepository.save({ ...room, is_published: body.is_published })
+    return await findOneRoom([{ id: room_id }])
 
 }
 export async function update(username: string, room_view: UpdateRoom, room_id: string) {
 
     const user = await UserRepository.findOneByOrFail({ username: username })
-    const room_to_update = await RoomRepository.findOneByOrFail({ gm: { id: user.id }, id: room_id })
+    const room_to_update = await findOneRoom([{ gm: { id: user.id }, id: room_id }])
 
     // update room
     try {
@@ -146,13 +152,14 @@ export async function update(username: string, room_view: UpdateRoom, room_id: s
 
 export async function destroy(username: string, room_id: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
-    const room_to_delete = await RoomRepository.delete({ id: room_id, gm: { id: user.id } })
-    return room_to_delete
+    const room = await findOneRoom([{ id: room_id, gm: { id: user.id } }])
+    await RoomRepository.delete({ id: room_id, gm: { id: user.id } })
+    return room
 }
 
 export async function join(username: string, room_id: string, password?: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
-    const room_to_join = await RoomRepository.findOneByOrFail({ id: room_id, is_published: true })
+    const room_to_join = await findOneRoom([{ id: room_id, is_published: true }])
 
     // check user cannot join game if gm
     if (is_user_gm_of_room(user.id, room_to_join)) {
@@ -176,7 +183,7 @@ export async function join(username: string, room_id: string, password?: string)
 
     room_to_join.game.players.push(new_player)
     await RoomRepository.save(room_to_join)
-    return await RoomRepository.findOneBy({ id: room_to_join.id })
+    return await findOneRoom([{ id: room_to_join.id }])
 }
 
 // return true if user in game else false
@@ -203,4 +210,34 @@ export function check_room_password(room: Room, password?: string) {
 // return true if use gm of room else false
 export function is_user_gm_of_room(user_id: string, room: Room): boolean {
     return room.gm.id === user_id
+}
+
+async function findRooms(filters: any[]) {
+    return await RoomRepository.find({
+        relations: {
+            game: { tilemap: true, story: true }
+        },
+        select: {
+            game: {
+                tilemap: { id: true },
+                story: { id: true }
+            },
+        },
+        where: filters
+    })
+}
+
+async function findOneRoom(filters: any[]) {
+    return await RoomRepository.findOneOrFail({
+        relations: {
+            game: { tilemap: true, story: true }
+        },
+        select: {
+            game: {
+                tilemap: { id: true },
+                story: { id: true }
+            },
+        },
+        where: filters
+    })
 }
