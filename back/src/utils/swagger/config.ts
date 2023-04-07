@@ -65,6 +65,10 @@ const swaggerDefinition = {
         {
             name: "Rooms",
             description: "Everything about the Rooms"
+        },
+        {
+            name: "Maps",
+            description: "Everything about the Maps"
         }
     ],
     definitions: definitions

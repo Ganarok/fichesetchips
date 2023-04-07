@@ -13,7 +13,7 @@ router.get("/", async (req: Request, res) => {
      *   get:
      *     description: Get my created maps.
      *     tags: 
-     *       - Workshop
+     *       - Maps
      *     security:
      *       - bearerAuth: []
      *     responses:
@@ -43,7 +43,7 @@ router.get("/:map_id", async (req: Request, res) => {
      *   get:
      *     description: Get a map.
      *     tags: 
-     *       - Workshop
+     *       - Maps
      *     parameters:
      *     - in: "path"
      *       name: "map_id"
@@ -79,7 +79,7 @@ router.post("/asset", async (req: Request, res) => {
      *   post:
      *     description: Post an asset.
      *     tags: 
-     *       - Workshop
+     *       - Maps
      *     requestBody:
      *       description: The asset to create
      *       required: true
@@ -125,7 +125,7 @@ router.post("/", async (req: Request, res) => {
      *   post:
      *     description: Post a map.
      *     tags: 
-     *       - Workshop
+     *       - Maps
      *     requestBody:
      *       description: The map to create
      *       required: true
@@ -161,7 +161,7 @@ router.patch("/:map_id", async (req: Request, res) => {
      *   patch:
      *     description: Patch a map.
      *     tags: 
-     *       - Workshop
+     *       - Maps
      *     parameters:
      *     - in: "path"
      *       name: "map_id"
@@ -203,7 +203,7 @@ router.delete("/:map_id", async (req: Request, res) => {
      *   delete:
      *     description: Delete a map.
      *     tags: 
-     *       - Workshop
+     *       - Maps
      *     parameters:
      *     - in: "path"
      *       name: "map_id"
