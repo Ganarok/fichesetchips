@@ -6,12 +6,12 @@
         }"
     >
         <p class="text-xl font-bold text-fc-yellow">
-            Journal
+            {{ $t('log') }}
         </p>
 
         <div class="flex flex-col">
             <p class="font-bold">
-                Personnages
+                {{ $t('characters') }}
             </p>
 
             <div
@@ -24,7 +24,7 @@
 
         <div class="flex flex-col">
             <p class="font-bold">
-                Lieux
+                {{ $t('places') }}
             </p>
 
             <div
@@ -37,7 +37,7 @@
 
         <div class="flex flex-col">
             <p class="font-bold">
-                Joueurs
+                {{ $t('players') }}
             </p>
 
             <div

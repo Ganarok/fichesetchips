@@ -7,10 +7,10 @@
         >
             <div class="absolute left-0 w-4 h-full bg-fc-green" />
 
-            <h3>{{ $t("Titre") }}</h3>
-            <h3>{{ $t("Univers") }}</h3>
-            <h3>{{ $t("MJ") }}</h3>
-            <h3>{{ $t("Joueurs") }}</h3>
+            <h3>{{ $t("title") }}</h3>
+            <h3>{{ $t("universe") }}</h3>
+            <h3>{{ $t("gm") }}</h3>
+            <h3>{{ $t("players") }}</h3>
         </div>
 
         <div class="flex items-center justify-center w-full h-full">
@@ -19,7 +19,7 @@
                 v-else
                 class="font-bold"
             >
-                No data
+                {{ $t('no_data') }}
             </p>
         </div>
     </div>

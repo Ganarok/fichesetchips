@@ -37,12 +37,12 @@
                                 @click="changeTab('Friends')"
                             >
                                 <RouterLink to="/user/profile?page=Friends">
-                                    {{ $t('Amis') }} 
+                                    {{ $t('friends') }} 
                                 </RouterLink>
                             </span>        
                             <!-- <span v-bind:class="[isTabActive('Stats') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Stats')">
                                 <RouterLink to="/user/profile?page=Stats">
-                                    {{ $t('Stats') }} 
+                                    {{ $t('statistics') }} 
                                 </RouterLink>
                             </span> -->
                             <span
@@ -50,12 +50,12 @@
                                 @click="changeTab('Characters')"
                             >
                                 <RouterLink to="/user/profile?page=Characters">
-                                    {{ $t('Personnages') }} 
+                                    {{ $t('characters') }} 
                                 </RouterLink>
                             </span>
                             <!-- <span v-bind:class="[isTabActive('Games') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Games')">
                                 <RouterLink to="/user/profile?page=Games">
-                                    {{ $t('Partie') }} 
+                                    {{ $t('game') }} 
                                 </RouterLink>
                             </span> -->
                         </span>

@@ -20,15 +20,15 @@
 
                 <div class="flex flex-col space-y-2">
                     <p>
-                        Classe: {{ character_creation_steps.Race.data.find(race => race.id === character_creation.character.race_id).name }}
+                        {{ $t('class') }}: {{ character_creation_steps.Race.data.find(race => race.id === character_creation.character.race_id).name }}
                     </p>
 
                     <p>
-                        Classe: {{ character_creation_steps.Class.data.find(classe => classe.id === character_creation.character.class_id).name }}
+                        {{ $t('class') }}: {{ character_creation_steps.Class.data.find(classe => classe.id === character_creation.character.class_id).name }}
                     </p>
 
                     <p>
-                        Sexe: {{ character_creation.character.sex }}
+                        {{ $t('gender') }}: {{ character_creation.character.sex }}
                     </p>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 class="self-end text-5xl font-bold cursor-pointer"
                 @click="validation()"
             >
-                Valider
+                {{ $t('validate') }}
             </button>
         </div>
     </div>

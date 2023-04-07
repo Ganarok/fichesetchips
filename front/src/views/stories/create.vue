@@ -25,7 +25,7 @@
             />
 
             <Button
-                :button-text="$t('Importer')"
+                :button-text="$t('import')"
                 class="px-4 py-2 text-base w-36 bg-gra"
                 :class="file === null || title === '' ? 'cursor-not-allowed' : 'cursor-pointer'"
                 textColor="text-fc-black"

@@ -12,7 +12,7 @@
                 class="absolute top-16 left-0 p-4 z-50"
             >
                 <Button
-                    :button-text="$t('Retour')"
+                    :button-text="$t('back')"
                     class="px-6 py-2 transition duration-150 opacity-30 hover:opacity-100"
                     color="fc-green"
                     @click="() => $router.push('/user/stories')"
@@ -23,7 +23,7 @@
                 class="absolute top-32 left-0 p-4 z-50"
             >
                 <Button
-                    :button-text="$t('Supprimer')"
+                    :button-text="$t('delete')"
                     class="px-6 py-2 transition duration-150 opacity-30 hover:opacity-100"
                     color="fc-red"
                     @click="showModal = true"

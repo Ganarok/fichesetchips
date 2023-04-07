@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full px-4">
         <p>
-            Vos langues déjà apprises :
+            {{ $t('language_already_learned') }} :
         </p>
 
         <div

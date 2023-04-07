@@ -14,7 +14,7 @@
                 <Selector
                     :items="FILTERUNIVERSES"
                     :default-selected-item="{
-                        name: $t('Filtre'),
+                        name: $t('filter'),
                         value: ''
                     }"
                     :on-select-item="(v) => selectedFilter = v"
@@ -23,7 +23,7 @@
 
             <CustomInput
                 :max-length="254"
-                place-holder="URL du vocal"
+                :place-holder="$t('voice_channel_url')"
                 type="text"
                 outline="fc-green"
                 :value="search"

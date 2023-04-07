@@ -26,16 +26,17 @@
                 class="ml-5"
             >
                 <h1 class="text-5xl">
-                    {{ $t("Inscription") }}
+                    {{ $t("register") }}
                 </h1>
 
                 <p class="mb-4 mt-2 text-xs opacity-70">
-                    Vous avez déjà un compte ? 
+                    {{ $t("not_registered") }}
+
                     <router-link
                         class="underline cursor-pointer"
                         to="/login"
                     >
-                        {{ $t("Connectez-vous") }}
+                        {{ $t("click_here") }}
                     </router-link>
                 </p>
             </div>
@@ -47,7 +48,7 @@
                 <CustomInput
                     outline="fc-yellow-trans"
                     :max-length="36"
-                    :place-holder="$t('Identifiant')"
+                    :place-holder="$t('username')"
                     :has-error="usernameError"
                     :value="username"
                     @input="(v) => handleUsername(v.target.value)"
@@ -64,7 +65,7 @@
                 <CustomInput
                     outline="fc-yellow-trans"
                     :max-length="64"
-                    :place-holder="$t('Mot de passe')"
+                    :place-holder="$t('password')"
                     :has-error="passwordError"
                     :on-focus-out="() => handlePasswordFocusOut()"
                     :typeinput="'password'"
@@ -74,7 +75,7 @@
                 <CustomInput
                     outline="fc-yellow-trans"
                     :max-length="64"
-                    :place-holder="$t('Mot de passe')"
+                    :place-holder="$t('password')"
                     :has-error="passwordConfirmError"
                     :on-focus-out="() => handleConfirmFocusOut()"
                     :typeinput="'password'"
@@ -153,7 +154,7 @@ export default {
         handleErrors() {
             if (!isEmailValid(this.email)) {
                 this.emailError = true
-                this.errorText = this.$t("L'email n'est pas valide")
+                this.errorText = this.$t("invalid_email")
 
                 return false
             }
@@ -166,7 +167,7 @@ export default {
         handleEmailFocusOut() {
             if (!isEmailValid(this.email)) {
                 this.emailError = true
-                this.errorText = this.$t("L'email n'est pas valide")
+                this.errorText = this.$t("invalid_email")
             } else {
                 this.emailError = false
                 this.errorText = ""
@@ -176,9 +177,7 @@ export default {
             if (process.env.NODE_ENV !== "production") {
                 if (!isPasswordValid(this.password)) {
                     this.passwordError = true
-                    this.errorText = this.$t(
-                        "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères"
-                    )
+                    this.errorText = this.$t("password_rules")
                 } else {
                     this.passwordError = false
                     this.errorText = ""
@@ -190,9 +189,7 @@ export default {
                 if (this.password !== this.passwordConfirm) {
                     this.passwordConfirmError = true
                     this.passwordError = true
-                    this.errorText = this.$t(
-                        "La confirmation doit correspondre au mot de passe"
-                    )
+                    this.errorText = this.$t("password_must_match")
                 } else {
                     this.passwordConfirmError = false
                     if (isPasswordValid(this.password)) {
@@ -200,9 +197,7 @@ export default {
                         this.errorText = ""
                     } else {
                         if (this.password)
-                            this.errorText = this.$t(
-                                "Le mot de passe doit contenir au moins 1 majuscule, 1 chiffre et 8 charactères"
-                            )
+                            this.errorText = this.$t("password_rules")
                     }
                 }
             }
@@ -230,7 +225,7 @@ export default {
                         toast.error(this.errors.message)
                         await this.update_error({ message: null })
                     } else {
-                        toast.success(this.$t("Inscription réalisée avec succès"))
+                        toast.success(this.$t("successful_register"))
 
                         this.$router.push("/user/dashboard")
                     }

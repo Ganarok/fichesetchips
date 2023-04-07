@@ -6,7 +6,7 @@
             v-else
             class="font-bold text-fc-black-light"
         >
-            Pas de donnée pour le moment
+            {{ $t('no_data_yet') }}
         </div>
     </div>
 </template>

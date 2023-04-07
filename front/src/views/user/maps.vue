@@ -1,5 +1,5 @@
 <template>
-    <SidebarLayout :title="$t('Cartes')">
+    <SidebarLayout :title="$t('maps')">
         <div
             :class="`flex w-[90%] h-full self-center ${
                 loading ? 'items-center justify-center' : 'justify-start'

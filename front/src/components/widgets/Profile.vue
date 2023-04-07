@@ -25,7 +25,7 @@
                 </div>
 
                 <h3 class="self-center text-lg italic">
-                    "{{ description ? description : $t("Pas de description") }}"
+                    "{{ description ? description : $t("no_description") }}"
                 </h3>
 
                 <div class="flex pt-4 items-center justify-around font-bold">
@@ -34,11 +34,11 @@
                     >
                         <div class="flex flex-col items-center">
                             <p class="text-xl text-white">
-                                {{ $t("Parties jouées") }} :
+                                {{ $t("games_played") }} :
                             </p>
 
                             <p class="text-white opacity-70 italic">
-                                ({{ $t("Joueur") }})
+                                ({{ $t("player") }})
                             </p>
                         </div>
                     </div>
@@ -53,11 +53,11 @@
                         class="flex flex-col items-center justify-center p-4 bg-fc-black w-[80%] h-full"
                     >
                         <p class="text-xl text-white font-bold">
-                            {{ $t("Parties jouées") }} :
+                            {{ $t("games_played") }} :
                         </p>
 
                         <p class="text-white opacity-70 font-bold italic">
-                            ({{ $t("MJ") }})
+                            ({{ $t("gm") }})
                         </p>
                     </div>
 
