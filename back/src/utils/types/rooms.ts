@@ -1,5 +1,6 @@
 import { ArrayContains, ArrayUnique, IsArray, IsBoolean, IsDefined, IsEnum, IsNumber, IsString, IsUUID, ValidateNested } from "class-validator"
 import { GameStatus } from "../../database/entities/public/Game"
+import { User } from "../../database/entities/public/User"
 
 export class CreateGameInRoom {
 
@@ -9,7 +10,7 @@ export class CreateGameInRoom {
     @IsString()
     universe?: string = "cem"
 
-    @IsString()
+    @IsUUID()
     map_id?: string
 }
 
