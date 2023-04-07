@@ -2,6 +2,7 @@ import { Game } from "../../database/entities/public/Game"
 import { Player } from "../../database/entities/public/Players"
 import { Room } from "../../database/entities/public/Room"
 import { User } from "../../database/entities/public/User"
+import { CMap } from "../../database/entities/public/workshop/CMap"
 import { Story } from "../../database/entities/public/workshop/Story"
 import { PublicDataSource } from "../../database/init/datasources/public-data-source"
 import { CreateRoom, UpdateRoom } from "../../utils/types/rooms"
@@ -11,6 +12,7 @@ const RoomRepository = PublicDataSource.getRepository(Room)
 const PLayerRepository = PublicDataSource.getRepository(Player)
 const GamesRepository = PublicDataSource.getRepository(Game)
 const StoryRepository = PublicDataSource.getRepository(Story)
+const CMapRepository = PublicDataSource.getRepository(CMap)
 
 export async function findAll(username: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
@@ -57,10 +59,13 @@ export async function create(username: string, room_view: CreateRoom) {
 
     // game inside room
     const new_game = new Game()
-    if (room_view.game?.map_id)
-        new_game.map = room_view.game.map_id
-    if (room_view.game?.universe)
+    if (room_view.game?.map_id) {
+        const tilemap = await CMapRepository.findOneByOrFail({ id: room_view.game.map_id })
+        new_game.tilemap = tilemap
+    }
+    if (room_view.game?.universe) {
         new_game.universe = room_view.game.universe
+    }
     if (room_view.game?.story_id) {
         const story = await StoryRepository.findOneByOrFail({ id: room_view.game.story_id })
         new_game.story = story
@@ -82,6 +87,7 @@ export async function create(username: string, room_view: CreateRoom) {
         new_room.password = room_view.password
 
     const room = await RoomRepository.save(new_room)
+    room.game.story.file = new Buffer('')
     return room
 }
 
@@ -123,7 +129,9 @@ export async function update(username: string, room_view: UpdateRoom, room_id: s
             if (game_to_update.story) {
                 game_to_update.story.id = room_view.game?.story_id ? room_view.game.story_id : game_to_update.story.id
             }
-            game_to_update.map = room_view.game.map_id ? room_view.game.map_id : game_to_update.map
+            if (game_to_update.tilemap) {
+                game_to_update.tilemap.id = room_view.game?.map_id ? room_view.game.map_id : game_to_update.tilemap.id
+            }
             game_to_update.universe = room_view.game.universe ? room_view.game.universe : game_to_update.universe
             const updated_game = await GamesRepository.save(game_to_update)
             room_to_update.game = updated_game

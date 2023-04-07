@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm"
 import { Story } from "./workshop/Story"
 import { Player } from "./Players"
+import { CMap } from "./workshop/CMap"
 
 export enum GameStatus {
     PLANNED = "planned",
@@ -24,8 +25,8 @@ export class Game {
     @ManyToOne(type => Story, story => story.games, { onDelete: "CASCADE", nullable: true })
     story: Story;
 
-    @Column({ default: "not implemented" })
-    map: string
+    @ManyToOne(type => CMap, tilemap => tilemap.games, { onDelete: "CASCADE", nullable: true })
+    tilemap: CMap;
 
     @Column({ default: "not implemented" })
     universe: string

@@ -72,51 +72,51 @@ router.get("/:map_id", async (req: Request, res) => {
     }
 })
 
-router.post("/asset", async (req: Request, res) => {
-    /**
-     * @swagger
-     * /maps/asset:
-     *   post:
-     *     description: Post an asset.
-     *     tags: 
-     *       - Maps
-     *     requestBody:
-     *       description: The asset to create
-     *       required: true
-     *       content:
-     *         application/octet-stream
-     *     parameters: 
-     *       - in: query
-     *         name: name
-     *         schema:
-     *           type: sting
-     *           description: The name of your asset
-     *       - in: query
-     *         name: map_id
-     *         schema:
-     *           type: sting
-     *           description: The map_id
-     *     security:
-     *       - bearerAuth: []
-     *     responses:
-     *       200:
-     *         description: asset created.
-     *         content:
-     *           application/json:
-     *             schema: { $ref: '#/definitions/assetCreationRes' }
-     *       401:
-     *         description: UnAuthorized
-     *         content:
-     *           application/json:
-     *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
-     */
-    try {
-        const response = await mapsService.createAsset(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body, { map_id: req.query.map_id as string, name: req.query.name as string });
-        res.status(200).send({ data: response, message: 'asset successfully created' });
-    } catch (error) {
-        return getErrorMessage(error, res);
-    }
-})
+// router.post("/asset", async (req: Request, res) => {
+//     /**
+//      * @swagger
+//      * /maps/asset:
+//      *   post:
+//      *     description: Post an asset.
+//      *     tags: 
+//      *       - Maps
+//      *     requestBody:
+//      *       description: The asset to create
+//      *       required: true
+//      *       content:
+//      *         application/octet-stream
+//      *     parameters: 
+//      *       - in: query
+//      *         name: name
+//      *         schema:
+//      *           type: sting
+//      *           description: The name of your asset
+//      *       - in: query
+//      *         name: map_id
+//      *         schema:
+//      *           type: sting
+//      *           description: The map_id
+//      *     security:
+//      *       - bearerAuth: []
+//      *     responses:
+//      *       200:
+//      *         description: asset created.
+//      *         content:
+//      *           application/json:
+//      *             schema: { $ref: '#/definitions/assetCreationRes' }
+//      *       401:
+//      *         description: UnAuthorized
+//      *         content:
+//      *           application/json:
+//      *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+//      */
+//     try {
+//         const response = await mapsService.createAsset(((req as CustomRequest).jwtPayload as JwtPayload).username, req.body, { map_id: req.query.map_id as string, name: req.query.name as string });
+//         res.status(200).send({ data: response, message: 'asset successfully created' });
+//     } catch (error) {
+//         return getErrorMessage(error, res);
+//     }
+// })
 
 router.post("/", async (req: Request, res) => {
     /**
