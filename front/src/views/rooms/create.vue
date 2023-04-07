@@ -25,7 +25,7 @@
                     
                 <Button
                     class="ml-4 sm:mx-12"
-                    button-text="Publier"
+                    button-text="Sauvegarder"
                     textColor="text-fc-yellow"
                     color="fc-black"
                     :rounded="false"
@@ -33,6 +33,16 @@
                     background-color="fc-black"
                     :onclick="handleSubmit"
                 />
+                <!-- <Button
+                    class="ml-4 sm:mx-12"
+                    button-text="Publier"
+                    textColor="text-fc-yellow"
+                    color="fc-black"
+                    :rounded="false"
+                    :disabled="loading"
+                    background-color="fc-black"
+                    :onclick="handleSubmit"
+                /> -->
             </div>
 
             <div
@@ -49,7 +59,18 @@
 
                     <textarea
                         v-model="room.description"
-                        class="flex h-screen text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:h-full sm:m-3 placeholder:italic"
+                        class="scrollbar-hide flex h-screen text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:h-full sm:m-3 placeholder:italic"
+                        placeholder="Entrez une description"
+                    />
+                    <BlackGreenDiv
+                        title="Requirements"
+                        :right-green-div="false"
+                        color="text-white"
+                    />
+
+                    <textarea
+                        v-model="room.requirements"
+                        class="scrollbar-hide flex h-screen text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:h-full sm:m-3 placeholder:italic"
                         placeholder="Entrez une description"
                     />
 
@@ -72,11 +93,24 @@
                                 {{ $t("Cartes") }}
                             </p>
     
-                            <SelectorMultiple
-                                :items="maps"
-                                :on-select-item="handleSelectedMaps.bind(this)"
-                                selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
-                            />
+                                <SelectorMultiple
+                                    :items="maps"
+                                    :isMultiple="false"
+                                    :on-select-item="handleSelectedMaps.bind(this)"
+                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                                />
+                            </div>
+                            <div class="flex flex-col px-4 items-center justify-between">
+                                <p class="font-bold">
+                                    {{ $t("Story") }}
+                                </p>
+                                <SelectorMultiple
+                                    :items="stories"
+                                    :isMultiple="false"
+                                    :on-select-item="handleSelectedStory.bind(this)"
+                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                                />
+                            </div>
                         </div>
     
                         <!-- <div class="flex flex-col px-4 items-center justify-between">
@@ -196,7 +230,8 @@ export default {
         return {
             loading: false,
             maps: [],
-            selectedMaps: [],
+            selectedMaps: "",
+            selectedStory: "",
             stories: [],
             PLAYSTYLE,
             EXPERIENCE,
@@ -235,12 +270,21 @@ export default {
                     }
                 ]
             }, [])
-    
-            // const storiesRes = await apiCall({
-            //     method: 'GET',
-            //     route: '/maps'
-            // })
 
+            const storyRes = await apiCall({
+                method: 'GET',
+                route: '/stories'
+            })
+
+            this.stories = storyRes.data.reduce((stories, curStory) => {
+                return [
+                    ...stories,
+                    {
+                        name: curStory.title,
+                        value: curStory.id
+                    }
+                ]
+            }, [])
         } catch (error) {
             toast.error(error)
         }
@@ -253,8 +297,11 @@ export default {
         handleTitleChange(v) {
             this.room.title = v.target.value
         },
+        handleSelectedStory(v) {
+            this.selectedStory = v
+        },
         handleSelectedMaps(v) {
-            this.selectedMaps.push(v)
+            this.selectedMaps = v
         },
         handleUpdateExp(v) {
             this.room.experience = v
@@ -277,33 +324,45 @@ export default {
             else this.room.levelGap = `${minLvl}-${v.target.value}`
         },
         handleSubmit() {
+            const toast = useToast()
+            let canBeSubmitted = true
             if (this.room.password) this.room.isPrivate = true
 
-            if (!this.room.title)
-                this.room.title = `Room de ${this.$store.state?.user?.username}`
+            if (!this.room.title) {
+                toast.error("Titre obligatoire")
+                canBeSubmitted = false
+            }
 
             if (!this.room.description)
-                this.room.description = this.$t("Pas de description")
+                this.room.description = ''
 
-            this.room.mj = this.user
+            if (!this.room.requirements)
+                this.room.requirements = ''
 
-            console.log(this.room)
-            this.submitRoom()
+            this.room.gm = this.user
+            this.room.game = {
+                universe: 'cem',
+                story_id: this.selectedStory,
+                map_id: this.selectedMaps,
+            }
+            if (canBeSubmitted) {
+                this.submitRoom()
+            }
         },
         async submitRoom() {
             const toast = useToast()
 
             this.loading = true
-
             await this.create_room(this.room)
-
             if (this.errors.message) {
+                console.log(this.errors)
                 toast.error(this.errors.message)
                 this.update_error({ message: null })
+            } else {
+                this.$router.push(`/rooms/${this.room.id}`).then(() => toast.success(this.$t('Création de la room réalisée avec succès')))
             }
             this.loading = false
 
-            //TODO: this.$router.push(`/rooms/${res.id}`).then(() => toast.success(this.$t('Création de la room réalisée avec succès')))
         },
     }}
 </script>
