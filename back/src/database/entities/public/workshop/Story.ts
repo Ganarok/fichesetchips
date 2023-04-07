@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique, OneToMany } from "typeorm"
 import { User } from "../User";
+import { Game } from "../Game";
 
 @Entity()
 @Unique(['creatorId', 'title'])
@@ -18,6 +19,9 @@ export class Story {
 
     @ManyToOne(type => User, user => user.stories, { onDelete: "CASCADE" })
     creator: User
+
+    @OneToMany(type => Game, game => game.story, { onDelete: "CASCADE" })
+    games: Game[];
 
     @CreateDateColumn({ type: "timestamp" })
     created_at: string

@@ -2,6 +2,9 @@ import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacter
 
 import defaultStories from "../../database/fixtures/stories"
 import defaultMaps from "../../database/fixtures/maps"
+import defaultRooms from "../../database/fixtures/rooms"
+import defaultGames from "../../database/fixtures/games"
+import { GameStatus } from "../../database/entities/public/Game";
 
 export const definitions = {
     loginRequest: {
@@ -395,25 +398,180 @@ export const definitions = {
             },
             data: {
                 type: "object",
-                default: {}
+                default: defaultMaps[0].data
+            }
+        }
+    },
+    getRoomsResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Rooms successfully found"
             },
-            assets: {
+            data: {
                 type: "array",
-                default: [{
-                    name: 'sol',
-                    image: [
-                        137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13,
-                        73, 72, 68, 82, 0, 0, 1, 9, 0, 0, 0, 199,
-                        8, 6, 0, 0, 0, 10, 253, 166, 20, 0, 0, 0,
-                        1, 115, 82, 71, 66, 0, 174, 206, 28, 233, 0, 0,
-                        0, 6, 98, 75, 71, 68, 0, 255, 0, 255, 0, 255,
-                        160, 189, 167, 147, 0, 0, 0, 9, 112, 72, 89, 115,
-                        0, 0, 11, 19, 0, 0, 11, 19, 1, 0, 154, 156,
-                        24, 0, 0, 0, 7, 116, 73, 77, 69, 7, 216, 8,
-                        30, 21, 56, 13
-                    ]
-                }
-                ]
+                default: [defaultRooms[0]]
+            }
+        }
+    },
+    getRoomResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Room successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultRooms[0]
+            }
+        }
+    },
+    getGameResponse: {
+        properties: {
+            message: {
+                type: "string",
+                default: "Game successfully found"
+            },
+            data: {
+                type: "object",
+                default: defaultGames[0]
+            }
+        }
+    },
+    getPlayerResponse: {
+        properties: {
+            id: {
+                type: "uuid",
+                default: "90c8aee8-d491-11ed-afa1-0242ac120002"
+            },
+            state: {
+                type: "object",
+                default: "not implemented"
+            },
+            character: {
+                type: "object",
+                default: "an object containing the character values"
+            }
+        }
+    },
+    createRoomRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Room title",
+                required: true
+            },
+            description: {
+                type: "string",
+                default: "Room description",
+                required: true
+            },
+            requirements: {
+                type: "string",
+                default: "Room requirements",
+                required: true
+            },
+            vocal_url: {
+                type: "string",
+                default: "Room vocal url",
+                required: true
+            },
+            is_private: {
+                type: "boolean",
+                default: false,
+                required: false
+            },
+            is_published: {
+                type: "boolean",
+                default: false,
+                required: false
+            },
+            password: {
+                type: "string",
+                required: false
+            },
+            players_nb_max: {
+                type: "number",
+                default: 5,
+                required: true
+            },
+            game: {
+                type: "object",
+                default: {
+                    "story_id": "451fbb1a-1350-49d3-9433-2c9c2b3e75e5",
+                    "map_id": "baa3ceaa-b175-4289-8028-4dd441d3e101",
+                    "universe": "cem"
+                },
+                required: false
+            }
+        }
+    },
+    updateRoomRequest: {
+        properties: {
+            title: {
+                type: "string",
+                default: "Room title",
+                required: false
+            },
+            description: {
+                type: "string",
+                default: "Room description",
+                required: false
+            },
+            requirements: {
+                type: "string",
+                default: "Room requirements",
+                required: false
+            },
+            vocal_url: {
+                type: "string",
+                default: "Room vocal url",
+                required: false
+            },
+            is_private: {
+                type: "boolean",
+                default: false,
+                required: false
+            },
+            password: {
+                type: "string",
+                default: "don't do that, please.",
+                required: false
+            },
+            players_nb_max: {
+                type: "number",
+                default: 5,
+                required: false
+            },
+            game: {
+                type: "object",
+                default: {
+                    "status": "planned",
+                    "story_id": "451fbb1a-1350-49d3-9433-2c9c2b3e75e5",
+                    "map_id": "baa3ceaa-b175-4289-8028-4dd441d3e101",
+                    "universe": "cem"
+                },
+                required: false
+            }
+        }
+    },
+    updateGameRequest: {
+        properties: {
+            status: {
+                type: GameStatus,
+                default: GameStatus.PLANNED
+            },
+            player_state: {
+                type: "string",
+                default: "not implemented"
+            }
+        }
+    },
+    updatePlayerRequest: {
+        properties: {
+            character_id: {
+                type: "uuid",
+                default: "2b0f6de8-d488-11ed-afa1-0242ac120002"
             }
         }
     }
