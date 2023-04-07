@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, Generated, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne, JoinColumn, ObjectIdColumn, ObjectID, AfterLoad, Unique, OneToMany } from "typeorm"
+import { Game } from "../Game";
 import { User } from "../User";
 import { Asset } from "./Asset";
 
@@ -21,11 +22,14 @@ export class CMap {
     @ManyToOne(type => User, user => user.maps, { onDelete: "CASCADE" })
     creator: User
 
-    @OneToMany(type => Asset, tmap => tmap.cmap, {
-        cascade: true,
-        eager: true
-    })
-    assets: Asset[];
+    // @OneToMany(type => Asset, tmap => tmap.cmap, {
+    //     cascade: true,
+    //     // eager: true
+    // })
+    // assets: Asset[];
+
+    @OneToMany(type => Game, game => game.tilemap, { onDelete: "CASCADE" })
+    games: Game[];
 
     @CreateDateColumn({ type: "timestamp" })
     created_at: string

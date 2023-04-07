@@ -1,6 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
 import { PublicDataSource } from "../../init/datasources/public-data-source"
 import fixtures from "../../fixtures/character_creation"
+import { User } from "../../entities/public/User"
+import { Character } from "../../entities/public/characters/Character"
+import defaultUsers from "../../fixtures/users"
 
 export class CharacterCreationSeeder1671108034466 implements MigrationInterface {
     name = 'CharacterCreationSeeder1671108034466'
@@ -27,7 +30,16 @@ export class CharacterCreationSeeder1671108034466 implements MigrationInterface 
         await PublicDataSource.createQueryBuilder().insert().into("money").values(fixtures.money).execute()
         await PublicDataSource.createQueryBuilder().insert().into("character_characteristic").values(fixtures.characters_caracteristics).execute()
         await PublicDataSource.createQueryBuilder().insert().into("equipment").values(fixtures.equipment).execute()
-        await PublicDataSource.createQueryBuilder().insert().into("character_skill").values(fixtures.character_skill).execute()
+        await PublicDataSource.createQueryBuilder().insert().into("character_skill").values(fixtures.character_skill).execute()        
+        
+        const UserRepository = PublicDataSource.getRepository(User)
+        const CharacterRepository = PublicDataSource.getRepository(Character)
+        
+        const user = await UserRepository.findOneOrFail({ where: { id: defaultUsers.test.id } })
+        const character = await CharacterRepository.findOneOrFail({ where: { user_id: user.id } })
+        character.user = user
+        await CharacterRepository.save(character)
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
