@@ -21,6 +21,7 @@
 
 <script>
 import { useToast } from "vue-toastification"
+import { mapState } from "vuex"
 
 import GameContainer from "@/components/phaser/GameContainer"
 import GameLayout from "@/layouts/Game.vue"
@@ -28,6 +29,11 @@ import Loader from "@/components/common/Loader.vue"
 import { useSocketIO } from "@/utils/socket.io"
 
 export default {
+    // TODO: On fait un call api voir si la ROOM existe
+    // Si elle existe pas, on redirige vers la page d'erreur
+    // Si elle existe, on connecte l'utilisateur en socket
+    // Si l'utilisateur est connecté, on apiCall pour récupérer les infos de la map dans la BootScene
+    // Ensuite, on envoie la map dans la GameScene
     name: "Session",
     components: {
         GameContainer,
@@ -36,12 +42,16 @@ export default {
     },
     data() {
         return {
-            connected: false,
             loading: true,
             roomId: this.$route.params.id,
             connectionId: null,
             socket: null
         }
+    },
+    computed: {
+        ...mapState("game", {
+            connected: (state) => state.connected,
+        })
     },
     mounted() {
         const { socket } = useSocketIO()
@@ -69,7 +79,7 @@ export default {
         })
 
         socket.on("connect_error", () => {
-            toast.error("You are not connected to the server")
+            toast.error("You failed to connect to the server")
             this.loading = false
         })
     },

@@ -1,6 +1,7 @@
 export default {
     namespaced: true,
     state: {
+        connected: false,
         messages: [],
         diary: {
             characters: [],
