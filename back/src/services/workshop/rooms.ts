@@ -24,7 +24,7 @@ export async function findAll(username: string) {
             players: {
                 user: { id: Not(user.id) }
             }
-        }, 
+        },
         gm: { id: Not(user.id) }
     }])
     // rooms un/published where i'm the player
@@ -55,6 +55,12 @@ export async function findOne(username: string, room_id: string) {
             throw new Error("Unauthorized")
         }
     }
+    let players: any = []
+    for (let player of room.game.players) {
+        const db_player = await PLayerRepository.findOneOrFail({ where: { id: player.id }, relations: ["user", "character"] })
+        players.push(db_player)
+    }
+    room.game.players = players
     return room
 }
 
