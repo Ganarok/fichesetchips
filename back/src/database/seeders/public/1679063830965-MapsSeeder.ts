@@ -14,12 +14,16 @@ export class MapsSeeder1679063830965 implements MigrationInterface {
 
         const AssetRepository = PublicDataSource.getRepository(Asset)
         const image = fs.readFileSync("./src/database/fixtures/assets/desert_grounds.png")
-        const asset = {
+        const assets = [{
             cmapId: map[0].id,
             name: "sol",
             image: image
-        }
-        await AssetRepository.save(asset)
+        }, {
+            cmapId: map[1].id,
+            name: "sol",
+            image: image
+        }]
+        await AssetRepository.save(assets)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
