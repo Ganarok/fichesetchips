@@ -1,6 +1,5 @@
 import { characterWorkshopCreationResponse, createCharacterRequest, GetCharacterResponse, loginRequest, registerRequest, updateRequest } from "./defaultValues";
 
-import defaultStories from "../../database/fixtures/stories"
 import defaultMaps from "../../database/fixtures/maps"
 import defaultRooms from "../../database/fixtures/rooms"
 import defaultGames from "../../database/fixtures/games"
@@ -330,7 +329,12 @@ export const definitions = {
             },
             data: {
                 type: "array",
-                default: [defaultStories[0]]
+                default: [{
+                    id: "cfe1a32b-9535-4808-82df-4b00b5fdaf02",
+                    creatorId: "",
+                    title: "A Good Story",
+                    file: Buffer
+                }]
             }
         }
     },
@@ -342,7 +346,12 @@ export const definitions = {
             },
             data: {
                 type: "object",
-                default: defaultStories[0]
+                default: {
+                    id: "cfe1a32b-9535-4808-82df-4b00b5fdaf02",
+                    creatorId: "",
+                    title: "A Good Story",
+                    file: Buffer
+                }
             }
         }
     },
