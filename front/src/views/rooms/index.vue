@@ -44,20 +44,37 @@
                 @input="(v) => (search = v.target.value)"
             >
         </div>
-
-        <Sheet
-            :route="apiRoute"
-            :search="query"
-        />
-        <div>
-            here
+        <div
+            v-if="loading"
+            class="pl-6 space-x-6"
+        >
+            <div v-if="gm_rooms.length > 0 || published_rooms.length > 0 || player_rooms.length > 0">
+                <div v-if="gm_rooms.length > 0">
+                    <h1>Rooms dont vous êtes le Maître du jeu</h1>
+                    <RoomSub :rooms="gm_rooms" />
+                </div>
+                <div v-if="player_rooms.length > 0">
+                    <h1>Rooms dont vous êtes Player</h1>
+                    <RoomSub :rooms="player_rooms" />
+                </div>
+                <div v-if="published_rooms.length > 0">
+                    <h1>Rooms que vous pouvez rejoindre</h1>
+                    <RoomSub :rooms="published_rooms" />
+                </div>
+            </div>
+            <div
+                v-else
+                class="font-bold text-fc-black-light"
+            >
+                Pas de donnée pour le moment
+            </div>
         </div>
     </SidebarLayout>
 </template>
 
 <script>
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import Sheet from "@/components/Sheet.vue"
+import RoomSub from "@/components/RoomSub.vue"
 import Selector from "@/components/common/Selector.vue"
 import ParamInput from "@/components/common/ParamInput.vue"
 import { ROOMSTATUS, PLAYSTYLE } from "@/utils/enums"
@@ -66,7 +83,7 @@ import { mapState, mapActions } from "vuex"
 export default {
     components: {
         SidebarLayout,
-        Sheet,
+        RoomSub,
         Selector,
         ParamInput,
     },
@@ -82,10 +99,11 @@ export default {
             minLevel: 0,
             roomfull: false,
             roomprivate: false,
+            loading: false
         }
     },
     computed: {
-        ...mapState("rooms", {
+        ...mapState("room", {
             gm_rooms: (state) => state.gm_rooms,
             published_rooms: (state) => state.published_rooms,
             player_rooms: (state) => state.player_rooms,
@@ -93,10 +111,11 @@ export default {
     },
     async mounted() {
         await this.fetch_rooms()
+        this.loading = true
     },
     methods: {
         ...mapActions({
-            fetch_rooms: "rooms/fetch_rooms"
+            fetch_rooms: "room/fetch_rooms"
         }),
         updateRoomStatus(status) {
             this.selectedRoomStatus = status
