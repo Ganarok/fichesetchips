@@ -49,6 +49,9 @@
             :route="apiRoute"
             :search="query"
         />
+        <div>
+            here
+        </div>
     </SidebarLayout>
 </template>
 
@@ -58,6 +61,7 @@ import Sheet from "@/components/Sheet.vue"
 import Selector from "@/components/common/Selector.vue"
 import ParamInput from "@/components/common/ParamInput.vue"
 import { ROOMSTATUS, PLAYSTYLE } from "@/utils/enums"
+import { mapState, mapActions } from "vuex"
 
 export default {
     components: {
@@ -80,7 +84,20 @@ export default {
             roomprivate: false,
         }
     },
+    computed: {
+        ...mapState("rooms", {
+            gm_rooms: (state) => state.gm_rooms,
+            published_rooms: (state) => state.published_rooms,
+            player_rooms: (state) => state.player_rooms,
+        })
+    },
+    async mounted() {
+        await this.fetch_rooms()
+    },
     methods: {
+        ...mapActions({
+            fetch_rooms: "rooms/fetch_rooms"
+        }),
         updateRoomStatus(status) {
             this.selectedRoomStatus = status
             this.parseQueries("roomstatus", status)
@@ -118,7 +135,6 @@ export default {
                 console.log(cuttedQuery)
             }
         },
-        getRooms() {},
     },
 }
 </script>
