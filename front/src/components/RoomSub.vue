@@ -18,7 +18,7 @@
             <tr>
                 <td>
                     <img
-                        :src="room.gm.avatar"
+                        src="../assets/avatar/character.png"
                         class="object-cover h-10 rounded-full bg-fc-green border-2 border-fc-black"
                         :style="grayed ? 'filter: grayscale(1)' : null"
                     >
@@ -28,8 +28,8 @@
                 </td>
                 <td>Caves & Monstres</td>
                 <td>
-                    <div v-if="room.game.map">
-                        {{ room.game.map.title }}
+                    <div v-if="room.game">
+                        {{ room.game }}
                     </div><div v-else>
                         None
                     </div>
@@ -37,35 +37,18 @@
                 <td>{{ room.game.players.length }}/{{ room.players_nb_max }}</td>
                 <td>
                     <Button
-                        :button-text="'Voir'"
-                        class="px-4 py-2 text-base rounded-full"
-                        textColor="text-fc-black"
+                        :button-text="'Inspecter'"
+                        class="px-4 py-2 text-base divide-x-2"
+                        textColor="text-white"
                         color="fc-green"
-                        backgroundColor="fc-green"
+                        backgroundColor="fc-black"
                         :rounded="false"
+                        @click="() => $router.push(`/rooms/${room.id}`)"
                     />
                 </td>
             </tr>
         </tbody>
     </table>
-<!-- 
-    <div class="flex flex-col relative space-y-3 p-4 bg-white">
-                    <div class="flex flex-row space-x-4 lg:space-x-32">
-                        <p>GM</p>
-                        <p>NOM DE LA PARTIE</p>
-                        <p>UNIVERS</p>
-                        <p>CARTE</p>
-                        <p>SLOT</p>
-                    </div>
-                    <div
-                        class="flex flex-row space-x-4 lg:space-x-32"
-                        v-for="(room, index) in rooms"
-                        :key="index"
-                        :room="room"
-                    >
-                    <p>{{ room.gm.avatar }}</p>
-                    </div>
-                    </div> -->
 </template>
 
 <script>
@@ -86,3 +69,4 @@ export default {
     methods: {
     }}
 </script>
+
