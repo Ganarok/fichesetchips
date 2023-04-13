@@ -67,7 +67,10 @@ export default {
                 console.log(cuttedQuery)
             }
         },
-    }
+    },
+    async mounted() {
+        await this.fetch_characters() 
+    },
 }
 </script>
 

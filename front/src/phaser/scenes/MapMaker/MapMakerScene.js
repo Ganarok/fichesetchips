@@ -46,19 +46,22 @@ export default class MapMakerScene extends Scene {
 
     preload() {
         // MANDATORY
+        store.commit('phaser/updateState', { property: 'isLoadingAssets', newState: true })
+
         if (this.mapObject) {
-            const { assets, title } = this.mapObject.data
+            const { data, title } = this.mapObject.data
+
 
             this.title = title
             store.commit('phaser/updateState', { property: 'title', newState: title })
 
-            assets.forEach(asset => {
-                let binary = Buffer.from(asset.image.data, 'binary')
-                let imgData = new Blob([binary], { type: 'image/png' })
-                let url = URL.createObjectURL(imgData)
+            data.layers.forEach(layer => {
+                // let binary = Buffer.from(layer.image.data, 'binary')
+                // let imgData = new Blob([binary], { type: 'image/png' })
+                // let url = URL.createObjectURL(imgData)
 
-                console.log('Loading asset', asset.name)
-                this.load.spritesheet(asset.name, url, { frameWidth: this.tiles_size, frameHeight: this.tiles_size })
+                console.log('Loading layer', layer.name)
+                this.load.spritesheet(layer.name, `/phaser/desert_${layer.name}.png`,  { frameWidth: this.tiles_size, frameHeight: this.tiles_size })
             })
 
             this.load.tilemapTiledJSON('map', templateBase)
@@ -303,12 +306,15 @@ export default class MapMakerScene extends Scene {
         if (this.mapObject) {
             jsonFile = this.mapObject.data.data
         } else jsonFile = this.cache.json.get("mapJson")
+
         const layers = jsonFile.layers
 
-        console.log('avant map', this.map)
         this.map = this.make.tilemap({ key: 'map' })
 
-        console.log('avant foreach')
+        store.commit("phaser/updateState", {
+            property: "isLoadingAssets",
+            newState: false,
+        })
 
         layers.forEach((layer, index) => {
             this.tileSets[index] = this.map.addTilesetImage(layer.name)
