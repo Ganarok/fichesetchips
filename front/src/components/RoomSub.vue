@@ -2,12 +2,12 @@
     <table class="table-auto relative space-y-3 p-4 bg-white">
         <thead>
             <tr>
-                <th></th>
-                <th>NOM DE LA PARTIE</th>
-                <th>UNIVERS</th>
-                <th>CARTE</th>
-                <th>SLOT</th>
-                <th></th>
+                <th class="text-grey"></th>
+                <th class="text-fc-gray">NOM DE LA PARTIE</th>
+                <th class="text-fc-gray">UNIVERS</th>
+                <th class="text-fc-gray">CARTE</th>
+                <th class="text-fc-gray">SLOT</th>
+                <th class="text-fc-gray"></th>
             </tr>
         </thead>
         <tbody
@@ -28,8 +28,8 @@
                 </td>
                 <td>Caves & Monstres</td>
                 <td>
-                    <div v-if="room.game">
-                        {{ room.game }}
+                    <div v-if="room.game.tilemap">
+                        {{ room.game.tilemap.title }}
                     </div><div v-else>
                         None
                     </div>
