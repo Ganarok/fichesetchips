@@ -1,9 +1,9 @@
 <template>
     <div
-        v-if="!room"
+        v-if="!room.title"
         class="flex flex-col h-full items-center justify-center font-bold text-xl"
     >
-        {{ $t("Cette room n'existe pas") }}
+        {{ $t("Cette room n'existe pas ou n'a pas pu être récupérée") }}
 
         <div class="my-4">
             <Button
@@ -14,7 +14,6 @@
             />
         </div>
     </div>
-
     <div
         v-else
         class="flex flex-col h-full space-y-4 sm:space-y-8"
@@ -118,7 +117,7 @@
                             />
 
                             <p class="text-xl font-bold">
-                                {{ room?.mj?.username || "MJ" }}
+                                {{ room?.gm?.username || "MJ" }}
                             </p>
                         </div>
 
@@ -147,7 +146,6 @@
                             <div
                                 class="bg-gray-400 border-2 border-fc-black-light rounded-full mr-4 w-20 h-20"
                             />
-
                             {{ player.username || "Utilisateur" }}
                         </div>
                     </div>
@@ -155,13 +153,16 @@
             </div>
         </div>
     </div>
+    <div>
+        {{ room }}
+    </div>
 </template>
 
 <script>
 import Button from "@/components/common/Button.vue"
 import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
 
-export default {
+ export default {
     name: "Room",
     components: {
         Button,
@@ -173,5 +174,8 @@ export default {
             default() { return {} }
         }
     },
+    mounted() {
+    
+    }
 }
 </script>
