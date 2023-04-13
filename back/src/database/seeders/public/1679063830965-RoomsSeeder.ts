@@ -15,6 +15,10 @@ import { CMap } from "../../entities/public/workshop/CMap"
 export class RoomsSeeder1679063830965 implements MigrationInterface {
     name = 'RoomsSeeder1679063830965'
 
+    async addGame() {
+
+    }
+
     public async up(queryRunner: QueryRunner): Promise<void> {
         const RoomsRepository = PublicDataSource.getRepository(Room)
         const GamesRepository = PublicDataSource.getRepository(Game)
@@ -24,35 +28,46 @@ export class RoomsSeeder1679063830965 implements MigrationInterface {
         const UserRepository = PublicDataSource.getRepository(User)
         const CharacterRepository = PublicDataSource.getRepository(Character)
 
-        const gm = await UserRepository.findOneOrFail({ where: { id: defaultUsers.defaultUser.id } })
-        const player = await UserRepository.findOneOrFail({ where: { id: defaultUsers.test.id } })
-        const character = await CharacterRepository.findOneOrFail({ where: { user_id: player.id } })
+        const defaultUser = await UserRepository.findOneOrFail({ where: { id: defaultUsers.defaultUser.id } })
+        const test = await UserRepository.findOneOrFail({ where: { id: defaultUsers.test.id } })
+        const characterTest = await CharacterRepository.findOneOrFail({ where: { user_id: test.id } })
+        const characterUser = await CharacterRepository.findOneOrFail({ where: { user_id: defaultUser.id } })
 
         await GamesRepository.save(defaultGames)
-        const game0 = await GamesRepository.findOneOrFail({ where: { id: defaultGames[0].id } })
-        const game1 = await GamesRepository.findOneOrFail({ where: { id: defaultGames[1].id } })
-        const tilemap = await CMapRepository.findOneOrFail({ where: { creatorId: gm.id } })
-        const story = await StoryRepository.findOneOrFail({ where: { creatorId: gm.id } })
-        game0.story = story
-        game0.tilemap = tilemap
-        await GamesRepository.save(game0)
+        const gameUserIsGM = await GamesRepository.findOneOrFail({ where: { id: defaultGames[0].id } })
+        const gameTestIsGM = await GamesRepository.findOneOrFail({ where: { id: defaultGames[1].id } })
+        const tilemapUser = await CMapRepository.findOneOrFail({ where: { creatorId: defaultUser.id } })
+        const tilemapTest = await CMapRepository.findOneOrFail({ where: { creatorId: test.id } })
+        const storyUser = await StoryRepository.findOneOrFail({ where: { creatorId: defaultUser.id } })
+        const storyTest = await StoryRepository.findOneOrFail({ where: { creatorId: test.id } })
+        gameUserIsGM.story = storyUser
+        gameTestIsGM.story = storyTest
+        gameUserIsGM.tilemap = tilemapUser
+        gameTestIsGM.tilemap = tilemapTest
+        await GamesRepository.save(gameUserIsGM)
+        await GamesRepository.save(gameTestIsGM)
 
         // await RoomsRepository.save(defaultRooms)
-        const room0 = defaultRooms[0] as unknown as Room
-        const room1 = defaultRooms[1] as unknown as Room
-        room0.game = game0
-        room1.game = game1
-        room0.gm = gm
-        room1.gm = gm
-        await RoomsRepository.save(room0)
-        await RoomsRepository.save(room1)
+        const roomUserIsGM = defaultRooms[0] as unknown as Room
+        const roomTestIsGM = defaultRooms[1] as unknown as Room
+        roomUserIsGM.game = gameUserIsGM
+        roomTestIsGM.game = gameTestIsGM
+        roomUserIsGM.gm = defaultUser
+        roomTestIsGM.gm = test
+        await RoomsRepository.save(roomUserIsGM)
+        await RoomsRepository.save(roomTestIsGM)
 
         await PlayersRepository.save(defaultPlayers)
-        const player0 = await PlayersRepository.findOneOrFail({ where: { id: defaultPlayers[0].id } })
-        player0.game = game0
-        player0.character = character
-        player0.user = player
-        await PlayersRepository.save(player0)
+        const playerUser = await PlayersRepository.findOneOrFail({ where: { id: defaultPlayers[0].id } })
+        const playerTest = await PlayersRepository.findOneOrFail({ where: { id: defaultPlayers[1].id } })
+        playerTest.game = gameUserIsGM
+        playerUser.game = gameTestIsGM
+        playerTest.character = characterTest
+        playerUser.character = characterUser
+        playerTest.user = test
+        playerUser.user = defaultUser
+        await PlayersRepository.save(playerUser)
+        await PlayersRepository.save(playerTest)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

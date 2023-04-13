@@ -219,8 +219,8 @@ async function findRooms(filters: any[]) {
         },
         select: {
             game: {
-                tilemap: { id: true },
-                story: { id: true }
+                tilemap: { id: true, title: true },
+                story: { id: true, title: true }
             },
         },
         where: filters
@@ -234,8 +234,8 @@ async function findOneRoom(filters: any[]) {
         },
         select: {
             game: {
-                tilemap: { id: true },
-                story: { id: true }
+                tilemap: { id: true, title: true },
+                story: { id: true, title: true }
             },
         },
         where: filters
