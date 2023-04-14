@@ -1,7 +1,7 @@
 <template>
     <table class="flex flex-col justify-between w-full relative space-y-3 p-4 bg-white">
         <thead class="w-full">
-            <tr class="grid grid-cols-6 justify-between w-full">
+            <tr class="grid grid-cols-6 justify-between w-full border-b-2 border-fc-gray-light">
                 <th class="text-grey min-w-1/10"></th> <!-- Avatar -->
                 <th class="text-fc-gray w-2/10">NOM DE LA PARTIE</th>
                 <th class="text-fc-gray w-2/10">UNIVERS</th>
@@ -16,7 +16,7 @@
             :room="room"
             class="flex justify-between w-full"
         >
-            <tr class="grid grid-cols-6 w-full">
+            <tr class="grid grid-cols-6 w-full border-b-2 border-fc-gray-light">
                 <td class="flex justify-start">
                     <img
                         src="../assets/avatar/character.png"

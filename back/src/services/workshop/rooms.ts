@@ -21,9 +21,9 @@ export async function findAll(username: string) {
     const published_rooms = await findRooms([{
         is_published: true,
         // game: {
-        //     players: {
+        //     players: [{
         //         user: { id: Not(user.id) }
-        //     }
+        //     }]
         // }, 
         gm: { id: Not(user.id) }
     }])
@@ -43,11 +43,19 @@ export async function findAll(username: string) {
             gm: { id: user.id }
         }
     ])
-    // console.log(published_rooms)
-    const published_rooms_filtered = published_rooms.filter((room) => room.game.players.some((player) => {
-        return player.user.id != user.id
-    }))
-    return { "gm_rooms": gm_rooms, "published_rooms": published_rooms, "player_rooms": player_rooms }
+    // TODO better algo please
+    const published_rooms_filtered = published_rooms.filter((room) => {
+        if (room.game.players.length > 0 && room.game.players.map((player) => {
+            if (player.user.id == user.id) {
+                return true
+            }
+        })) {
+            return false
+        } else {
+            return true
+        }
+    })
+    return { "gm_rooms": gm_rooms, "published_rooms": published_rooms_filtered, "player_rooms": player_rooms }
 }
 
 export async function findOne(username: string, room_id: string) {
