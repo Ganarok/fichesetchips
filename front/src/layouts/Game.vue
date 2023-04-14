@@ -1,19 +1,23 @@
 <template>
     <div class="flex w-screen">
         <div
-            v-if="loading"
-            class="flex items-center justify-center"
+            v-if="current_map_title"
+            class="absolute right-0 m-4 text-fc-yellow transition opacity-40 hover:opacity-100 delay-200 hover:delay-75"
         >
-            <Loader />
+            <div class="bg-fc-black-light p-4">
+                <p class="font-bold">
+                    {{ current_map_title }}
+                </p>
+            </div>
         </div>
 
         <div
-            v-else
+            v-if="!loading"
             class="absolute left-0"
         >
             <div 
                 class="flex flex-col relative items-center h-screen bg-fc-black transition-all duration-200"
-                :class="sidebarOpened ? 'w-72' : 'w-0'"
+                :class="sidebarOpened ? 'w-72' : 'w-0 animate-pulse'"
             >
                 <div 
                     class="absolute items-center h-8 w-6 -right-6 top-4 rounded-r-lg bg-fc-yellow border border-fc-black z-20 cursor-pointer"
@@ -94,15 +98,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import Chat from '@/components/game/Chat.vue'
 import Diary from '@/components/game/Diary.vue'
 import Options from '@/components/game/Options.vue'
-import Loader from '@/components/common/Loader.vue'
 
 export default {
     name: "GameLayout",
     components: {
-        Loader,
         Chat,
         Options,
         Diary
@@ -114,14 +118,25 @@ export default {
         },
         socket: {
             type: Object,
-            required: true
+            default: null
         }
     },
     data() {
         return {
             selectedOption: 'chat',
-            sidebarOpened: true
+            sidebarOpened: false
         }
+    },
+    computed: {
+        ...mapState('game', {
+            current_map_title: (state) => state.current_map_title
+        })
+    },
+    created() {
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab')
+                this.sidebarOpened = !this.sidebarOpened
+        })
     },
     methods: {}
 }

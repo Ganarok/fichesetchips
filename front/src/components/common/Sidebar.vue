@@ -220,7 +220,7 @@
                     alt="F&C logo"
                 >
 
-                <p class="text-white text-[10px]">
+                <p class="text-white text-xs">
                     Made with ❤️ by fiches&chips
                 </p>
             </div>

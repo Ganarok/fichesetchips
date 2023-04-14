@@ -128,6 +128,13 @@ export const SEXTYPE = [{
 
 export const TYPEUNIVERSES = []
 
+export const GAMESTATUS = {
+    PLANNED: "planned",
+    RUNNING: "running",
+    PAUSED: "paused",
+    CLOSED: "closed"
+}
+
 export const COLORS = {
     "fc-green": "#4FEA74",
     "fc-yellow": "#FFDB57",
