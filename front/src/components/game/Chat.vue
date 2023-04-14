@@ -60,8 +60,13 @@ export default {
     props: {
         socket: {
             type: Object,
-            required: true
+            default: null
         },
+    },
+    data() {
+        return {
+            message: "",
+        }
     },
     computed: {
         ...mapState("user", {

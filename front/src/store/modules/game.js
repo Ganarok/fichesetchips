@@ -37,29 +37,34 @@ export default {
             try {
                 const data = {
                     "id": "4380045a-3d92-433f-b5a9-5b0c3c321a8b",
-                    "title": "Room",
-                    "description": "A nice room",
-                    "requirements": "Blabla",
-                    "vocal_url": "blabla",
+                    "title": "Les mines du roi salmonelle",
+                    "description": "Dans cette aventure, Les personnages doivent délivrer le fantôme d'un nain condamné à errer dans une ancienne mine.",
+                    "requirements": "+ 16 yo. No racist, no leaver, no noob.",
+                    "vocal_url": "https://discord.gg/uJe5ff8s",
                     "is_private": false,
-                    "is_published": false,
-                    "password": "password",
+                    "is_published": true,
+                    "password": null,
                     "players_nb_max": 5,
-                    "created_at": "2023-04-13T09:00:05.821Z",
-                    "updated_at": "2023-04-13T09:00:05.821Z",
+                    "created_at": "2023-04-13T12:47:19.112Z",
+                    "updated_at": "2023-04-13T12:47:19.112Z",
                     "game": {
                         "id": "30208ae8-95b3-4d3e-aa0f-e0a6c15509b1",
                         "status": "planned",
                         "universe": "cem",
-                        "map_id": "b517fc2f-f310-4852-a333-4bc463415eaf",
-                        "tilemap": null,
-                        "story": null,
+                        "tilemap": {
+                            "id": "9c9bfccd-7023-4d72-bc14-45d07eb2b855",
+                            "title": "Nice Map"
+                        },
+                        "story": {
+                            "id": "9c9bfccd-7023-4d72-bc14-45d07eb2b855",
+                            "title": "A Good Story"
+                        },
                         "players": [
                             {
                                 "id": "429cf332-c0b9-415a-b6ac-6c4f4ecd4f19",
                                 "state": "not implemented",
                                 "user": {
-                                    "id": "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
+                                    "id": "edf1dc34-35341279f9",
                                     "email": "user@email.com",
                                     "username": "user",
                                     "password": "$2b$10$K0oH.iyWccc/O16hKiY13ONt8D6YpN5afheqIE7SMWnh0VG3b7re6",
@@ -101,16 +106,16 @@ export default {
                         ]
                     },
                     "gm": {
-                        "id": "edf1dc34-3534-4cd7-85cf-a9488f1279f9",
-                        "email": "user@email.com",
-                        "username": "user",
-                        "password": "$2b$10$K0oH.iyWccc/O16hKiY13ONt8D6YpN5afheqIE7SMWnh0VG3b7re6",
+                        "id": "e0676065-f9f2-4f18-8f65-dcecbb8b58dc",
+                        "email": "test@email.com",
+                        "username": "test",
+                        "password": "$2b$10$sXhesAHmGahQZV04rDfSl.4371W/ADZ50tNrSu4N55ybTnTYorABC",
                         "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/1200px-OOjs_UI_icon_userAvatar.svg.png",
                         "role": "USER",
                         "preference_id": "3a9975f8-f34c-4a07-bbff-ab8a9b2e6309",
-                        "last_connection": "2023-04-13T09:16:17.653Z",
+                        "last_connection": "2022-06-24T11:29:59.619Z",
                         "created_at": "2022-06-24T11:29:59.619Z",
-                        "updated_at": "2023-04-13T09:16:17.659Z"
+                        "updated_at": "2022-06-24T11:29:59.619Z"
                     }
                 }
 
@@ -128,10 +133,10 @@ export default {
                 state.players = data.game.players
                 state.gm = data.gm
                 state.vocal_url = data.vocal_url
-                state.starter_map_id = data.game.map_id
+                state.starter_map_id = 'b517fc2f-f310-4852-a333-4bc463415eaf' // data.game.map_id
                 state.diary.players = data.game.players
                 state.diary.my_character = data.game.players[0].character
-                state.diary.is_gm = data.game.players[0].character.user_id === data.gm.id
+                state.diary.is_gm = data.game.players[0].user.id === data.gm.id
                 state.story = {
                     id: '9c9bfccd-7023-4d72-bc14-45d07eb2b855',
                     title: 'The story',
