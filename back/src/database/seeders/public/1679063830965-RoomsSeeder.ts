@@ -36,26 +36,42 @@ export class RoomsSeeder1679063830965 implements MigrationInterface {
         await GamesRepository.save(defaultGames)
         const gameUserIsGM = await GamesRepository.findOneOrFail({ where: { id: defaultGames[0].id } })
         const gameTestIsGM = await GamesRepository.findOneOrFail({ where: { id: defaultGames[1].id } })
+        const gameUser1IsGM = await GamesRepository.findOneOrFail({ where: { id: defaultGames[2].id } })
+        const gameTestIsGMNotPublished = await GamesRepository.findOneOrFail({ where: { id: defaultGames[3].id } })
         const tilemapUser = await CMapRepository.findOneOrFail({ where: { creatorId: defaultUser.id } })
+        const tilemapUser1 = await CMapRepository.findOneOrFail({ where: { creatorId: defaultUser1.id } })
         const tilemapTest = await CMapRepository.findOneOrFail({ where: { creatorId: test.id } })
         const storyUser = await StoryRepository.findOneOrFail({ where: { creatorId: defaultUser.id } })
+        const storyUser1 = await StoryRepository.findOneOrFail({ where: { creatorId: defaultUser1.id } })
         const storyTest = await StoryRepository.findOneOrFail({ where: { creatorId: test.id } })
         gameUserIsGM.story = storyUser
+        gameUser1IsGM.story = storyUser1
         gameTestIsGM.story = storyTest
         gameUserIsGM.tilemap = tilemapUser
+        gameUser1IsGM.tilemap = tilemapUser1
         gameTestIsGM.tilemap = tilemapTest
         await GamesRepository.save(gameUserIsGM)
+        await GamesRepository.save(gameTestIsGMNotPublished)
+        await GamesRepository.save(gameUser1IsGM)
         await GamesRepository.save(gameTestIsGM)
 
         // await RoomsRepository.save(defaultRooms)
         const roomUserIsGM = defaultRooms[0] as unknown as Room
         const roomTestIsGM = defaultRooms[1] as unknown as Room
+        const roomUser1IsGM = defaultRooms[2] as unknown as Room
+        const roomTestIsGMNotPublished = defaultRooms[3] as unknown as Room
         roomUserIsGM.game = gameUserIsGM
+        roomUser1IsGM.game = gameUser1IsGM
+        roomTestIsGMNotPublished.game = gameTestIsGMNotPublished
         roomTestIsGM.game = gameTestIsGM
         roomUserIsGM.gm = defaultUser
+        roomUser1IsGM.gm = defaultUser1
+        roomTestIsGMNotPublished.gm = test
         roomTestIsGM.gm = test
         await RoomsRepository.save(roomUserIsGM)
         await RoomsRepository.save(roomTestIsGM)
+        await RoomsRepository.save(roomUser1IsGM)
+        await RoomsRepository.save(roomTestIsGMNotPublished)
 
         await PlayersRepository.save(defaultPlayers)
         const playerUser = await PlayersRepository.findOneOrFail({ where: { id: defaultPlayers[0].id } })

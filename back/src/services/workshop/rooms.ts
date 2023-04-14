@@ -20,11 +20,11 @@ export async function findAll(username: string) {
     // rooms published where i'm not the gm nor the player
     const published_rooms = await findRooms([{
         is_published: true,
-        game: {
-            players: {
-                user: { id: Not(user.id) }
-            }
-        }, 
+        // game: {
+        //     players: [{
+        //         user: { id: Not(user.id) }
+        //     }]
+        // }, 
         gm: { id: Not(user.id) }
     }])
     // rooms un/published where i'm the player
@@ -43,7 +43,19 @@ export async function findAll(username: string) {
             gm: { id: user.id }
         }
     ])
-    return { "gm_rooms": gm_rooms, "published_rooms": published_rooms, "player_rooms": player_rooms }
+    // TODO better algo please
+    const published_rooms_filtered = published_rooms.filter((room) => {
+        if (room.game.players.length > 0 && room.game.players.map((player) => {
+            if (player.user.id == user.id) {
+                return true
+            }
+        })) {
+            return false
+        } else {
+            return true
+        }
+    })
+    return { "gm_rooms": gm_rooms, "published_rooms": published_rooms_filtered, "player_rooms": player_rooms }
 }
 
 export async function findOne(username: string, room_id: string) {
@@ -215,12 +227,13 @@ export function is_user_gm_of_room(user_id: string, room: Room): boolean {
 async function findRooms(filters: any[]) {
     return await RoomRepository.find({
         relations: {
-            game: { tilemap: true, story: true }
+            game: { tilemap: true, story: true, players: { user: true, character: true } }
         },
         select: {
             game: {
                 tilemap: { id: true, title: true },
-                story: { id: true, title: true }
+                story: { id: true, title: true },
+                players: { id: true, user: { id: true, username: true } }
             },
         },
         where: filters
@@ -230,12 +243,13 @@ async function findRooms(filters: any[]) {
 async function findOneRoom(filters: any[]) {
     return await RoomRepository.findOneOrFail({
         relations: {
-            game: { tilemap: true, story: true }
+            game: { tilemap: true, story: true, players: { user: true, character: true } }
         },
         select: {
             game: {
                 tilemap: { id: true, title: true },
-                story: { id: true, title: true }
+                story: { id: true, title: true },
+                players: { id: true, user: { id: true, username: true } }
             },
         },
         where: filters

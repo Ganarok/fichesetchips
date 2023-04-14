@@ -50,15 +50,15 @@
         >
             <div v-if="gm_rooms.length > 0 || published_rooms.length > 0 || player_rooms.length > 0">
                 <div v-if="gm_rooms.length > 0">
-                    <h1>Rooms dont vous êtes le Maître du jeu</h1>
+                    <h1 class="font-bold text-xl">Rooms dont vous êtes le Maître du jeu</h1>
                     <RoomSub :rooms="gm_rooms" />
                 </div>
                 <div v-if="player_rooms.length > 0">
-                    <h1>Rooms dont vous êtes Player</h1>
+                    <h1 class="font-bold text-xl">Rooms dont vous êtes Player</h1>
                     <RoomSub :rooms="player_rooms" />
                 </div>
                 <div v-if="published_rooms.length > 0">
-                    <h1>Rooms que vous pouvez rejoindre</h1>
+                    <h1 class="font-bold text-xl">Rooms que vous pouvez rejoindre</h1>
                     <RoomSub :rooms="published_rooms" />
                 </div>
             </div>
@@ -107,6 +107,9 @@ export default {
             gm_rooms: (state) => state.gm_rooms,
             published_rooms: (state) => state.published_rooms,
             player_rooms: (state) => state.player_rooms,
+        }),
+        ...mapState("user", {
+            user: (state) => state.user
         })
     },
     async mounted() {
