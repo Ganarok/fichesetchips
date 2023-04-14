@@ -8,6 +8,8 @@ export default {
         maps: [],
         gm: {},
         diary: {
+            is_gm: false,
+            my_character: {}, 
             characters: [],
             places: [],
             players: [],
@@ -128,6 +130,12 @@ export default {
                 state.vocal_url = data.vocal_url
                 state.starter_map_id = data.game.map_id
                 state.diary.players = data.game.players
+                state.diary.my_character = data.game.players[0].character
+                state.diary.is_gm = data.game.players[0].character.user_id === data.gm.id
+                state.story = {
+                    id: '9c9bfccd-7023-4d72-bc14-45d07eb2b855',
+                    title: 'The story',
+                }
 
                 return data
             } catch (error) {

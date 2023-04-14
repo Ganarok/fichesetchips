@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="flex flex-col w-full h-full justify-between space-y-4 p-4 text-white"
+        class="flex flex-col w-full justify-between space-y-4 p-4 overflow-y-scroll text-white"
         :style="{
             height: 'calc(100vh - 64px)'
         }"

@@ -80,6 +80,9 @@ export default class MapMakerScene extends Scene {
         this._draw_cursor()
         this._initKeys()
         this._initListeners()
+
+        this.addPlayer('player1', 'salut', 10, 10)
+        this.addPlayer('player1', 'EZ', 22, 2)
     }
 
     update() {

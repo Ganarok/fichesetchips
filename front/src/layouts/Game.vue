@@ -57,7 +57,33 @@
                                 alt="Chat"
                             />
                         </div>
-        
+
+                        <div
+                            v-if="is_gm"
+                            class="relative h-10 w-10 p-1 hoverStyle"
+                            :class="selectedOption === 'gm' && 'border-2 bg-fc-yellow border-black'"
+                            @click="selectedOption = 'gm'"
+                        >
+                            <img
+                                src="@/assets/icons/gm.svg"
+                                class="object-contain"
+                                alt="Chat"
+                            />
+                        </div>
+
+                        <div
+                            v-if="!is_gm"
+                            class="relative h-10 w-10 p-1 hoverStyle"
+                            :class="selectedOption === 'character' && 'border-2 bg-fc-yellow border-black'"
+                            @click="selectedOption = 'character'"
+                        >
+                            <img
+                                src="@/assets/icons/user.svg"
+                                class="object-contain"
+                                alt="Chat"
+                            />
+                        </div>
+                        
                         <div
                             class="relative h-10 w-10 p-1 hoverStyle"
                             :class="selectedOption === 'diary' && 'border-2 bg-fc-yellow border-black'"
@@ -87,6 +113,8 @@
                         v-if="selectedOption === 'chat'"
                         :socket="socket"
                     />
+                    <GM v-if="selectedOption === 'gm' && is_gm" />
+                    <Character v-if="selectedOption === 'character' && !is_gm" />
                     <Diary v-if="selectedOption === 'diary'" />
                     <Options v-if="selectedOption === 'options'" />
                 </div>
@@ -103,13 +131,17 @@ import { mapState } from 'vuex'
 import Chat from '@/components/game/Chat.vue'
 import Diary from '@/components/game/Diary.vue'
 import Options from '@/components/game/Options.vue'
+import Character from '@/components/game/Character.vue'
+import GM from '@/components/game/GM.vue'
 
 export default {
     name: "GameLayout",
     components: {
         Chat,
         Options,
-        Diary
+        Diary,
+        Character,
+        GM
     },
     props: {
         loading: {
@@ -129,7 +161,8 @@ export default {
     },
     computed: {
         ...mapState('game', {
-            current_map_title: (state) => state.current_map_title
+            current_map_title: (state) => state.current_map_title,
+            is_gm: (state) => state.diary.is_gm
         })
     },
     created() {
@@ -137,7 +170,6 @@ export default {
             if (e.key === 'Tab')
                 this.sidebarOpened = !this.sidebarOpened
         })
-    },
-    methods: {}
+    }
 }
 </script>

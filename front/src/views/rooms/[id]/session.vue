@@ -98,8 +98,6 @@ export default {
                 const toast = useToast()
                 this.socket = socket
 
-                console.log('socket', socket)
-
                 socket.on("connect", () => {
                     socket.emit("join", {
                         roomId: this.roomId,

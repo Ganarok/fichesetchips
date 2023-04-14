@@ -69,5 +69,7 @@
     "Liste": "List",
     "Rejoindre": "Join",
     "Supprimer": "Delete",
-    "Reconnexion": "Reconnection"
+    "Reconnexion": "Reconnection",
+    "Niveau": "Level",
+    "PV": "HP"
 }
