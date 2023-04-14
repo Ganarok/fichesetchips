@@ -17,14 +17,13 @@ const CMapRepository = PublicDataSource.getRepository(CMap)
 
 export async function findAll(username: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
-    // rooms published where i'm not the gm nor the player
+    const unpublished_rooms = await findRooms([{
+        is_published: false,
+        gm: { id: user.id }
+    }])
+    // rooms published where i'm not the gm 
     const published_rooms = await findRooms([{
         is_published: true,
-        // game: {
-        //     players: [{
-        //         user: { id: Not(user.id) }
-        //     }]
-        // }, 
         gm: { id: Not(user.id) }
     }])
     // rooms un/published where i'm the player
@@ -40,6 +39,7 @@ export async function findAll(username: string) {
     // rooms un/published where i'm the gm
     const gm_rooms = await findRooms([
         {
+            is_published: true,
             gm: { id: user.id }
         }
     ])
@@ -55,7 +55,7 @@ export async function findAll(username: string) {
             return true
         }
     })
-    return { "gm_rooms": gm_rooms, "published_rooms": published_rooms_filtered, "player_rooms": player_rooms }
+    return { "gm_rooms": gm_rooms, "published_rooms": published_rooms_filtered, "player_rooms": player_rooms, "unpublished_rooms": unpublished_rooms }
 }
 
 export async function findOne(username: string, room_id: string) {

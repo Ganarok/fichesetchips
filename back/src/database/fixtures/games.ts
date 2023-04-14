@@ -8,7 +8,7 @@ export default [{
     universe: "cem"
 }, {
     id: "30208ae8-95b3-4d3e-aa0f-e0a6c15509b1",
-    status: GameStatus.PLANNED,
+    status: GameStatus.RUNNING,
     // storyId: null,
     // map: "a_map",
     universe: "cem"

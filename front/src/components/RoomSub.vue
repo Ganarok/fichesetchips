@@ -1,12 +1,23 @@
 <template>
     <table class="flex flex-col justify-between w-full relative space-y-3 p-4 bg-white">
         <thead class="w-full">
-            <tr class="grid grid-cols-6 justify-between w-full border-b-2 border-fc-gray-light">
+            <tr class="grid grid-cols-7 justify-between w-full border-b-2 border-fc-gray-light">
                 <th class="text-grey min-w-1/10"></th> <!-- Avatar -->
-                <th class="text-fc-gray w-2/10">NOM DE LA PARTIE</th>
-                <th class="text-fc-gray w-2/10">UNIVERS</th>
-                <th class="text-fc-gray w-2/10">CARTE</th>
-                <th class="text-fc-gray w-1/10">SLOT</th>
+                <th class="text-fc-gray w-2/10">
+                    NOM DE LA PARTIE
+                </th>
+                <th class="text-fc-gray w-2/10">
+                    UNIVERS
+                </th>
+                <th class="text-fc-gray w-2/10">
+                    CARTE
+                </th>
+                <th class="text-fc-gray w-1/10">
+                    SLOT
+                </th>
+                <th class="text-fc-gray w-1/10">
+                    STATUT
+                </th>
                 <th class="text-fc-gray min-w-2/10"></th>
             </tr>
         </thead>
@@ -16,18 +27,21 @@
             :room="room"
             class="flex justify-between w-full"
         >
-            <tr class="grid grid-cols-6 w-full border-b-2 border-fc-gray-light">
-                <td class="flex justify-start">
+            <tr class="grid grid-cols-7 w-full border-b-2 border-fc-gray-light">
+                <td class="flex flex-col justify-center items-center">
                     <img
                         src="../assets/avatar/character.png"
                         class="object-cover h-10 rounded-full bg-fc-green border-2 border-fc-black"
                         :style="grayed ? 'filter: grayscale(1)' : null"
                     >
+                    {{ room.gm.username }}
                 </td>
                 <td class="flex justify-center">
                     {{ room.title }}
                 </td>
-                <td class="flex justify-center">Caves & Monstres</td>
+                <td class="flex justify-center">
+                    Caves & Monstres
+                </td>
                 <td class="flex justify-center">
                     <div v-if="room.game.tilemap">
                         {{ room.game.tilemap.title }}
@@ -35,7 +49,12 @@
                         None
                     </div>
                 </td>
-                <td class="flex justify-center">{{ room.game.players?.length }}/{{ room.players_nb_max }}</td>
+                <td class="flex justify-center">
+                    {{ room.game.players?.length }}/{{ room.players_nb_max }}
+                </td>
+                <td class="flex justify-center uppercase text-black">
+                    {{ room.game.status }}
+                </td>
                 <td class="flex justify-end">
                     <Button
                         :button-text="'Inspecter'"
