@@ -31,8 +31,9 @@
                 <td class="flex flex-col justify-center items-center">
                     <img
                         src="../assets/avatar/character.png"
-                        class="object-cover h-10 rounded-full bg-fc-green border-2 border-fc-black"
+                        class="object-cover h-10 rounded-full bg-fc-green border-2 border-fc-black hover:opacity-70 cursor-pointer"
                         :style="grayed ? 'filter: grayscale(1)' : null"
+                        @click="() => $router.push(`/user/profile/${room.gm.username}`)"
                     >
                     {{ room.gm.username }}
                 </td>
