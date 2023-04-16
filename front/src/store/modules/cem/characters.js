@@ -100,6 +100,45 @@ export default {
             console.log(rootState.characters.character_creation)
 
             commit("set_loading", false)
+        },
+        reset_creation({ commit }) {
+            commit("set_character_creation", {
+                "character": {
+                    "firstname": "",
+                    "lastname": "",
+                    "sex": "",
+                    "eye_color": "",
+                    "hair_color": "",
+                    "skin_color": "",
+                    "clothing_color_1": "",
+                    "clothing_color_2": "",
+                    "bio": "",
+                    "alignment": "",
+                    "ideals": "",
+                    "flaws": "",
+                    "age": 0,
+                    "weight": 0,
+                    "height": 0,
+                    "hp": 0,
+                    "race_id": "",
+                    "class_id": "",
+                    "level_id": 1
+                },
+                "skills": [],
+                "stats": {
+                    "racial": [] // { name: String, value: Number }
+                },
+                "languages": [],
+                "character_characteristic": [],
+                "equipment": [],
+                "money": {
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 0
+                }
+            })
+            
+            commit("set_currentStep", 'Universe')
         }
     },
     getters: {},

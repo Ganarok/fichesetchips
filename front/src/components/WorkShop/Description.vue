@@ -85,6 +85,7 @@
                 <textarea
                     class="flex text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
                     placeholder="Entrez une description"
+                    :v-model="character?.bio"
                 />
     
                 <img

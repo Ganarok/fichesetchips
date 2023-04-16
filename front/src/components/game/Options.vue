@@ -34,10 +34,20 @@
             </div>
         </div>
 
-        <div class="flex justify-center">
+        <div class="flex justify-evenly">
+            <Button
+                v-if="is_gm"
+                :button-text="$t('Pauser la partie')"
+                class="bg-fc-green px-4 py-2 text-base"
+                textColor="text-fc-black"
+                color="fc-yellow"
+                :rounded="false"
+                @click="pauseGame()"
+            />
+
             <router-link
                 to="/rooms"
-                class="flex font-bold hoverStyle bg-fc-yellow text-fc-black p-3"
+                class="flex font-bold hoverStyle bg-fc-red text-fc-black p-3"
             >
                 <p class="text-base">
                     Quitter la partie 
@@ -50,14 +60,25 @@
 <script>
 import { mapState } from 'vuex'
 
+import Button from '@/components/common/Button.vue'
+
 export default {
     name: "Options",
+    components: {
+        Button
+    },
     computed: {
         ...mapState('game', {
             vocal_url: state => state.vocal_url,
-            gm: state => state.gm
+            gm: state => state.gm,
+            is_gm: state => state.diary.is_gm
         })
     },
+    methods: {
+        pauseGame() {
+            console.log('pauseGame')
+        }
+    }
 }
 
 </script>
