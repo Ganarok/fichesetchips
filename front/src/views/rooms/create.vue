@@ -69,7 +69,7 @@
                     <div class="flex justify-evenly">
                         <div class="flex flex-col px-4 items-center justify-between">
                             <p class="font-bold">
-                                {{ $t("Maps") }}
+                                {{ $t("Cartes") }}
                             </p>
     
                             <SelectorMultiple
@@ -125,8 +125,8 @@
                             type="number"
                             class="flex w-12 h-12 mr-5 text-center bg-fc-black text-fc-green placeholder:text-fc-yellow-trans text-lg font-bold outline-none"
                             outline="fc-green"
-                            :value="room.player_nb_max"
-                            @input="(v) => (room.player_nb_max = parseInt(v.target.value || 0))"
+                            :value="room.players_nb_max"
+                            @input="(v) => (room.players_nb_max = parseInt(v.target.value || 0))"
                         />
                     </div>
 
@@ -185,7 +185,8 @@ export default {
             title: "",
             description:"",
             password: "",
-            player_nb_max: 5,
+            players_nb_max: 5,
+            requirements: "",
             mj: {},
             players: [],
             vocal_url: "",

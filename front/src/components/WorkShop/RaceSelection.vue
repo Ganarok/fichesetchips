@@ -19,7 +19,6 @@
 <script>
 import { mapState, mapMutations } from "vuex"
 
-import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
 import RaceCard from "@/components/common/Cards/RaceCard.vue"
 
 export default {
@@ -28,16 +27,6 @@ export default {
     },
     props: {
         stepInfo: {type: Object, default: new Object()}
-    },
-    data() {
-        return {
-            FILTERUNIVERSES,
-            TYPEUNIVERSES,
-            query: "?",
-            search: "",
-            selectedFilter: "",
-            selectedType: "",
-        }
     },
     computed: {
         ...mapState("characters", {
@@ -52,8 +41,6 @@ export default {
         }),
         async chooseRace(id, languages, nb_free_standard_language, racial_bonus) {
             this.set_racial(racial_bonus)
-
-            console.log(this.character_creation.stats)
 
             this.character_creation.character.race_id = id
             this.character_creation.character.race_id

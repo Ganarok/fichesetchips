@@ -56,9 +56,6 @@ export default {
             stats: (state) => state.character_creation.stats
         }),
     },
-    mounted() {
-        console.log(this.stats)
-    },
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",

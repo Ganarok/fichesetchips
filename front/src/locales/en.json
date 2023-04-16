@@ -68,5 +68,8 @@
     "Créer": "Create",
     "Liste": "List",
     "Rejoindre": "Join",
-    "Supprimer": "Delete"
+    "Supprimer": "Delete",
+    "Reconnexion": "Reconnection",
+    "Niveau": "Level",
+    "PV": "HP"
 }

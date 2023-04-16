@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { useToast } from 'vue-toastification'
 
 import BlackGreenDiv from '@/components/common/BlackGreenDiv.vue'
@@ -97,7 +97,10 @@ export default {
     },
     methods: {
         ...mapMutations({
-            push_character: "characters/push_character",
+            push_character: "characters/push_character"
+        }),
+        ...mapActions({
+            reset_creation: "characters/reset_creation"
         }),
         parseStats() {
             let keys = Object.keys(this.character_creation.stats)
@@ -128,10 +131,12 @@ export default {
                     body: this.character_creation
                 })
 
+                this.reset_creation()
+
                 await this.$router.push('/characters')
                     .then(() => toast.success('Personnage créé avec succès'))
             } catch (error) {
-                toast.error(error)
+                toast.error(error.message)
             }
         }
     }
