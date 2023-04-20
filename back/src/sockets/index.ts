@@ -4,10 +4,8 @@ import updatesSockets from "./updates"
 
 export default function initSockets(namespace: Namespace) {
     namespace.on('connection', (socket) => {
-        //console.log('User connected to socket')
         socket.emit("connection", "You are connected to the server")
         socket.on('join', (n) => {
-            //console.log("Call Join with roomId: " + n)
             const roomId = n.roomId
             //console.log(`Room ${roomId} joined by user ${socket.id}`)
 
@@ -25,7 +23,6 @@ export default function initSockets(namespace: Namespace) {
         updatesSockets(socket)
         
         socket.on('leaving_room', (n) => {
-            //console.log('User disconnected')
             socket.emit('leaving_room', "You are disconnected from the room")
             if (n.roomId)
             socket.broadcast.to(n.roomId).emit('leaving_room', n)

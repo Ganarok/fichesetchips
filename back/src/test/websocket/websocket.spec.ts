@@ -258,20 +258,16 @@ describe("WebSocket", () => {
 
     it("should connect", (done) => {
         socket.on("connection", (data: any) => {
-            //console.log(data);
             done();
         })
         socket.emit('connection');
     })
     it("should join room", (done) => {
-        //console.log("Test connection")
         socket.on("room_joined", (data: any) => {
-            //console.log("Room joined" + data);
             assert(true);
             done();
         });
         socket.emit("join", { roomId: 0 }, () => {
-            //console.log("Ask to join room");
             assert(true);
         })
     });
@@ -280,12 +276,9 @@ describe("WebSocket", () => {
         socket2.emit('connection');
         socket2.emit("join", { roomId: 0 });
         socket2.on("room_joined", (data: any) => {
-            //console.log("Room joined" + data);
-            //console.log("Before emit message");
             socket.emit("message", { roomId: 0, message: "Hello" });
         });
         socket2.on("message", (message: any) => {
-            //console.log("Client: Message received: " + message);
             assert.equal(message, "Hello");
             socket2.off("message");
             done();
@@ -295,7 +288,6 @@ describe("WebSocket", () => {
     it("should update position of the player 1", (done) => {
         socket.emit("update_character_position", { roomId: 0, player: 2, position: { x: 0, y: 0 } });
         socket2.on("update_character_position", (data: any) => {
-            //console.log("1 ---> ", data);
             assert.equal(data.position.x, 0);
             assert.equal(data.position.y, 0);
             done();
@@ -305,7 +297,6 @@ describe("WebSocket", () => {
     it("should update position of the player 2", (done) => {
         socket2.emit("update_character_position", { roomId: 0, player: 1, position: { x: 5, y: 1 } });
         socket.on("update_character_position", (data: any) => {
-            //console.log("2 ---> ", data);
             assert.equal(data.position.x, 5);
             assert.equal(data.position.y, 1);
             done();
@@ -316,7 +307,6 @@ describe("WebSocket", () => {
         character["hp"] = 15;
         socket.emit("update_character_life", { roomId: 0, player: 2, firstname: character["firstname"], lastname: character["lastname"], update: character["hp"] });
         socket2.on("message", (data: any) => {
-            //console.log("1 ---> ", data);
             assert.equal(data, "Player Gabriel LeDragon has 15 life points left.");
             socket2.off("message");
             done();
@@ -327,39 +317,49 @@ describe("WebSocket", () => {
         character["experience_points"] = 20;
         socket.emit("update_character_xp", { roomId: 0, player: 2, firstname: character["firstname"], lastname: character["lastname"], update: character["experience_points"] });
         socket2.on("message", (data: any) => {
-            //console.log("---> ", data);
             assert.equal(data, "Player Gabriel LeDragon has gain 20 xp points.");
             socket2.off("message");
             done();
         });
     });
     
-    // it("should update the map", (done) => {
-    //     socket.emit("update_map", { roomId: 0, map: map });
-    //     socket2.on("update_map", (data: any) => {
-    //         //console.log("1 ---> ", data);
-    //         assert.equal(data.map, map);
-    //         done();
-    //     });
-    // });
+    it("should update the map 1", (done) => {
+        map["layers"][0]["data"][0] = 1;
+        socket.emit("update_map", { roomId: 0, map: map });
+        socket2.on("update_map", (data: any) => {
+            if (JSON.stringify(map["layers"][0]["data"]) != JSON.stringify(data.map["layers"][0]["data"]))
+              assert(false);
+            socket2.off("update_map");
+            done();
+        });
+    });
+
+    it("should update the map 2", (done) => {
+      map["layers"][0]["data"][0] = 2;
+      socket.emit("update_map", { roomId: 0, map: map });
+      socket2.on("update_map", (data: any) => {
+          map["layers"][0]["data"][0] = 3;
+          if (JSON.stringify(map["layers"][0]["data"]) == JSON.stringify(data.map["layers"][0]["data"])) {
+            assert(false);
+          }
+          done();
+      });
+  });
 
     it("should leave room", (done) => {
         let io = require('socket.io-client');
         let socket = io('http://localhost:3000/rooms', {
         });
         socket.on("leaving_room", (data: any) => {
-            //console.log(data)
             done();
         })
         socket.emit('leaving_room', { roomId: 0 }, () => {
-            //console.log("Ask to leave room");
             assert(false);
         });
         socket2.emit('leaving_room', { roomId: 0 }, () => {
             assert(false);
         });
         socket2.on("leaving_room", (data: any) => {
-            //console.log(data)
             socket2.disconnect();
         })
     });
