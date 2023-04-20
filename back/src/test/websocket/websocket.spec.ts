@@ -303,21 +303,21 @@ describe("WebSocket", () => {
         });
     });
 
-    it ("should update the player life", (done) => {
+    it ("should update the character life", (done) => {
         character["hp"] = 15;
-        socket.emit("update_character_life", { roomId: 0, player: 2, firstname: character["firstname"], lastname: character["lastname"], update: character["hp"] });
+        socket.emit("update_character_life", { roomId: 0, firstname: character["firstname"], lastname: character["lastname"], update: character["hp"] });
         socket2.on("message", (data: any) => {
-            assert.equal(data, "Player Gabriel LeDragon has 15 life points left.");
+            assert.equal(data, "Character Gabriel LeDragon has 15 life points left.");
             socket2.off("message");
             done();
         });
     });
 
-    it ("should update the player xp", (done) => {
+    it ("should update the character xp", (done) => {
         character["experience_points"] = 20;
-        socket.emit("update_character_xp", { roomId: 0, player: 2, firstname: character["firstname"], lastname: character["lastname"], update: character["experience_points"] });
+        socket.emit("update_character_xp", { roomId: 0, firstname: character["firstname"], lastname: character["lastname"], update: character["experience_points"] });
         socket2.on("message", (data: any) => {
-            assert.equal(data, "Player Gabriel LeDragon has gain 20 xp points.");
+            assert.equal(data, "Character Gabriel LeDragon has gain 20 xp points.");
             socket2.off("message");
             done();
         });
