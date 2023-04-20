@@ -14,6 +14,7 @@ export default {
             places: [],
             players: [],
             notes: '',
+            lastDice: {},
         },
         starter_map_id: '',
         current_map_title: '',
@@ -30,6 +31,9 @@ export default {
         },
         resetMessages(state) {
             state.messages = []
+        },
+        updateDiceResult(state, result) {
+            state.diary.lastDice = result
         }
     },
     actions: {
