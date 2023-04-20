@@ -67,7 +67,7 @@
                             <img
                                 src="@/assets/icons/gm.svg"
                                 class="object-contain"
-                                alt="Chat"
+                                alt="GM"
                             />
                         </div>
 
@@ -80,7 +80,7 @@
                             <img
                                 src="@/assets/icons/user.svg"
                                 class="object-contain"
-                                alt="Chat"
+                                alt="User"
                             />
                         </div>
                         
@@ -92,7 +92,19 @@
                             <img
                                 src="@/assets/icons/diary.svg"
                                 class="object-contain"
-                                alt="Chat"
+                                alt="Diary"
+                            />
+                        </div>
+
+                        <div
+                            class="relative h-10 w-10 p-1 hoverStyle"
+                            :class="selectedOption === 'dices' && 'border-2 bg-fc-yellow border-black'"
+                            @click="selectedOption = 'dices'"
+                        >
+                            <img
+                                src="@/assets/icons/dice.svg"
+                                class="object-contain"
+                                alt="Dices"
                             />
                         </div>
         
@@ -104,7 +116,7 @@
                             <img
                                 src="@/assets/icons/option_black.svg"
                                 class="object-contain"
-                                alt="Chat"
+                                alt="Options"
                             />
                         </div>
                     </div>
@@ -116,6 +128,10 @@
                     <GM v-if="selectedOption === 'gm' && is_gm" />
                     <Character v-if="selectedOption === 'character' && !is_gm" />
                     <Diary v-if="selectedOption === 'diary'" />
+                    <Dices 
+                        v-if="selectedOption === 'dices'" 
+                        :socket="socket"
+                    />
                     <Options v-if="selectedOption === 'options'" />
                 </div>
             </div>
@@ -132,6 +148,7 @@ import Chat from '@/components/game/Chat.vue'
 import Diary from '@/components/game/Diary.vue'
 import Options from '@/components/game/Options.vue'
 import Character from '@/components/game/Character.vue'
+import Dices from '@/components/game/Dices.vue'
 import GM from '@/components/game/GM.vue'
 
 export default {
@@ -140,6 +157,7 @@ export default {
         Chat,
         Options,
         Diary,
+        Dices,
         Character,
         GM
     },

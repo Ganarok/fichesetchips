@@ -77,7 +77,7 @@ export default {
     methods: {
         pauseGame() {
             console.log('pauseGame')
-        }
+        },
     }
 }
 
