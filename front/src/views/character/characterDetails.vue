@@ -6,19 +6,31 @@
                     <div class="flex flex-col xl:w-5/12">
                         <div class="flex">
                             <BlackGreenDiv
-                            :title="character.firstname ? (character.firstname+' '+character.lastname) : 'John Smith'"
-                            :right-green-div="false"
+                                :title="character.firstname ? (character.firstname+' '+character.lastname) : 'John Smith'"
+                                :right-green-div="false"
                             />
 
                             <span class="mx-3">
-                                <img v-if="character.sex === 'Female'" src="@/assets/pictoSexFemale.svg">
-                                <img v-else-if="character.sex === 'Male'" src="@/assets/pictoSexMale.svg">
-                                <img v-else src="@/assets/pictoSexOther.svg">
+                                <img
+                                    v-if="character.sex === 'Female'"
+                                    src="@/assets/pictoSexFemale.svg"
+                                >
+                                <img
+                                    v-else-if="character.sex === 'Male'"
+                                    src="@/assets/pictoSexMale.svg"
+                                >
+                                <img
+                                    v-else
+                                    src="@/assets/pictoSexOther.svg"
+                                >
                             </span>
                         </div>
                         
                         <div class="flex">
-                            <img src="../../assets/wizard.svg" alt="Magicien" >
+                            <img
+                                src="../../assets/wizard.svg"
+                                alt="Magicien"
+                            >
                             <div class="flex flex-col text-xl space-y-8 pt-8">
                                 <div>
                                     <span class="font-bold">Level:</span> {{ character.firstname ? character.level_id : 12 }}
@@ -36,7 +48,11 @@
                         </div>
                     </div>  
                     <div class="flex flex-wrap justify-center mt-3 gap-4 max-w-screen-sm xl:w-6/12">
-                        <div v-for="characteristic, i in character?.character_characteristics || new Array(6)" :key="i " class="w-40">
+                        <div
+                            v-for="characteristic, i in character?.character_characteristics || new Array(6)"
+                            :key="i "
+                            class="w-40"
+                        >
                             <BlackGreenDiv
                                 :title="characteristic?.characteristic?.name.substring(0, 3).toUpperCase() || '???'"
                                 :right-green-div="false"
@@ -99,12 +115,12 @@
                     </div>
                 </div>
                 <div class="flex flex-col-reverse  xl:flex-row justify-around">
-                        <div class="relative bio xl:w-5/12" >
+                    <div class="relative bio xl:w-5/12">
                         {{ character.firstname ? character.bio : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Aliquam aspernatur atque autem esse harum impedit iure labore numquam, quam quasi sequi similique vero voluptate.Maxime necessitatibus quam quas quidem recusandae! Lorem ipsum dolor sit amet, consectetur adipisicing elit.Ad animi architecto asperiores cupiditate distinctio esse eum facere fuga harum itaque iusto minus mollitia nostrum pariatur, perspiciatis possimus praesentium provident vitae.Lorem ipsum dolor sit amet, consectetur adipisicing elit.Aperiam atque blanditiis cumque dignissimos et expedita facere fuga illum impedit magnam mollitia nihil quas repudiandae rerum, saepe soluta vel veniam voluptatum.' }}
                     </div>
                     <div class="flex justify-between my-3 xl:w-6/12">
                         <div class="w-5/12 ">
-                                <BlackGreenDiv title="FLAW" />
+                            <BlackGreenDiv title="FLAW" />
                             <div class="p-2">
                                 <h1 class="font-bold">
                                     {{ skill?.name || 'Skill title' }}
@@ -139,7 +155,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -151,11 +166,10 @@ import { mapState, mapActions } from "vuex"
 
 import BlackGreenDiv from "@/components/common/BlackGreenDiv"
 import SidebarLayout from "@/layouts/Sidebar"
-import StatSelector from "@/components/common/StatSelector.vue";
 
 export default {
     name: "CharacterDetails",
-    components: { SidebarLayout, BlackGreenDiv, StatSelector },
+    components: { SidebarLayout, BlackGreenDiv },
     computed: {
         ...mapState("characters", {
             character: (state) => state.character,
