@@ -278,8 +278,8 @@ describe("WebSocket", () => {
         socket2.on("room_joined", (data: any) => {
             socket.emit("message", { roomId: 0, message: "Hello" });
         });
-        socket2.on("message", (message: any) => {
-            assert.equal(message, "Hello");
+        socket2.on("message", (data: any) => {
+            assert.equal(data.message, "Hello");
             socket2.off("message");
             done();
         });
