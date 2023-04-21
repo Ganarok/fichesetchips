@@ -67,6 +67,12 @@ export async function findOne(username: string, room_id: string) {
             throw new Error("Unauthorized")
         }
     }
+    let players: any = []
+    for (let player of room.game.players) {
+        const db_player = await PLayerRepository.findOneOrFail({ where: { id: player.id }, relations: ["user", "character"] })
+        players.push(db_player)
+    }
+    room.game.players = players
     return room
 }
 
@@ -125,15 +131,16 @@ export async function update(username: string, room_view: UpdateRoom, room_id: s
     const user = await UserRepository.findOneByOrFail({ username: username })
     const room_to_update = await findOneRoom([{ gm: { id: user.id }, id: room_id }])
 
+
     // update room
     try {
         room_to_update.title = room_view.title ? room_view.title : room_to_update.title
         room_to_update.description = room_view.description ? room_view.description : room_to_update.description
         room_to_update.requirements = room_view.requirements ? room_view.requirements : room_to_update.requirements
         room_to_update.vocal_url = room_view.vocal_url ? room_view.vocal_url : room_to_update.vocal_url
-        room_to_update.is_private = room_view.is_private ? room_view.is_private : room_to_update.is_private
         room_to_update.password = room_view.password ? room_view.password : room_to_update.password
         room_to_update.players_nb_max = room_view.players_nb_max ? room_view.players_nb_max : room_to_update.players_nb_max
+        room_to_update.is_private = room_view.is_private != undefined ? room_view.is_private : room_to_update.is_private
     } catch (error) {
         console.error(error)
         throw Error("Unable to update room values")
