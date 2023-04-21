@@ -39,6 +39,7 @@ describe('Maps', () => {
                     data: cmap.data,
                     assets: cmap.assets
                 })
+            cmap = res.body.data
             expect(res.status).to.equal(200);
         }
     )
@@ -47,7 +48,6 @@ describe('Maps', () => {
             const res = await request(app)
                 .get('/maps')
                 .set({ "Authorization": `Bearer ${token}` })
-            cmap = res.body.data[0]
             expect(res.status).to.equal(200);
         }
     )

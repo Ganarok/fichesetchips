@@ -36,7 +36,7 @@ export default class MapMakerScene extends Scene {
     init({ map }) {
         store.commit('phaser/resetStates')
 
-        if (map) {
+        if(map) {
             this.mapId = map.data.id
             store.commit('phaser/updateState', { property: 'mapId', newState: this.mapId })
         }
@@ -48,7 +48,7 @@ export default class MapMakerScene extends Scene {
         // MANDATORY
         store.commit('phaser/updateState', { property: 'isLoadingAssets', newState: true })
 
-        if (this.mapObject) {
+        if(this.mapObject) {
             const { data, title } = this.mapObject.data
 
 
@@ -61,7 +61,7 @@ export default class MapMakerScene extends Scene {
                 // let url = URL.createObjectURL(imgData)
 
                 console.log('Loading layer', layer.name)
-                this.load.spritesheet(layer.name, `/phaser/desert_${layer.name}.png`,  { frameWidth: this.tiles_size, frameHeight: this.tiles_size })
+                this.load.spritesheet(layer.name, `/phaser/desert_${layer.name}.png`, { frameWidth: this.tiles_size, frameHeight: this.tiles_size })
             })
 
             this.load.tilemapTiledJSON('map', templateBase)
@@ -119,7 +119,7 @@ export default class MapMakerScene extends Scene {
             (newValue, oldValue) => {
                 this.selectedLayer = newValue
 
-                if (store.state.phaser.isolateLayer) {
+                if(store.state.phaser.isolateLayer) {
                     this.layers[oldValue].setVisible(false)
                     this.layers[newValue].setVisible(true)
                 }
@@ -130,9 +130,9 @@ export default class MapMakerScene extends Scene {
         store.watch(
             () => store.state.phaser.isolateLayer,
             (isIsolated) => {
-                if (isIsolated) {
+                if(isIsolated) {
                     this.layers.forEach((layer, index) => {
-                        if (index !== this.selectedLayer) {
+                        if(index !== this.selectedLayer) {
                             console.log(`Setting ${layer.layer.name} to visibilty false`)
 
                             layer.setVisible(false)
@@ -150,7 +150,7 @@ export default class MapMakerScene extends Scene {
         store.watch(
             () => store.state.phaser.isExporting,
             (isExporting) => {
-                if (isExporting) {
+                if(isExporting) {
                     const map = this.prepareMapObject()
 
                     exportMap(map)
@@ -165,12 +165,12 @@ export default class MapMakerScene extends Scene {
         // Watch for the saving event
         store.watch(
             () => store.state.phaser.isSaving,
-            async (isSaving) => {
-                if (isSaving) {
+            async(isSaving) => {
+                if(isSaving) {
                     const map = this.prepareMapObject()
 
                     await saveMap(map, store.state.phaser.title)
-                    
+
                     store.commit("phaser/updateState", {
                         property: "isSaving",
                         newState: false,
@@ -268,13 +268,13 @@ export default class MapMakerScene extends Scene {
 
         // Plus Key
         this.plusKey.on('down', () => {
-            if (this.scaleLevel < 5) { 
-                if (this.scaleLevel < 1) {
+            if(this.scaleLevel < 5) {
+                if(this.scaleLevel < 1) {
                     this.scaleLevel *= 2
                 } else {
                     this.scaleLevel += 1
                 }
-                
+
                 // Refresh the map and the red cursor
                 this.layers.forEach(layer => layer.setScale(this.scaleLevel))
                 this.game.scale.setGameSize(this.map.widthInPixels * this.scaleLevel, this.map.heightInPixels * this.scaleLevel)
@@ -284,13 +284,13 @@ export default class MapMakerScene extends Scene {
 
         // Minus Key
         this.minusKey.on('down', () => {
-            if (this.scaleLevel > 0.25) {
-                if (this.scaleLevel <= 1) {
+            if(this.scaleLevel > 0.25) {
+                if(this.scaleLevel <= 1) {
                     this.scaleLevel /= 2
                 } else {
                     this.scaleLevel -= 1
                 }
-    
+
                 // Refresh the map and the red cursor
                 this.layers.forEach(layer => layer.setScale(this.scaleLevel))
                 this.game.scale.setGameSize(this.map.widthInPixels * this.scaleLevel, this.map.heightInPixels * this.scaleLevel)
@@ -302,8 +302,8 @@ export default class MapMakerScene extends Scene {
     // Draw tilemap, add tileset to map object, set position of layer(s)
     _draw_map() {
         // let { layers } = store.state.phaser
-        var jsonFile 
-        if (this.mapObject) {
+        var jsonFile
+        if(this.mapObject) {
             jsonFile = this.mapObject.data.data
         } else jsonFile = this.cache.json.get("mapJson")
 
@@ -330,12 +330,12 @@ export default class MapMakerScene extends Scene {
                 0
             )
 
-            if (jsonFile.layers[index].data) {
+            if(jsonFile.layers[index].data) {
                 jsonFile.layers[index].data.forEach((tile, tileIndex) => {
                     const x = tileIndex % jsonFile.width
                     const y = Math.floor(tileIndex / jsonFile.width)
 
-                    if (tile !== 0) {
+                    if(tile !== 0) {
                         this.layers[index].putTileAt(tile, x, y)
                     }
                 })
@@ -355,7 +355,7 @@ export default class MapMakerScene extends Scene {
 
     // Draws the red cursor
     _draw_cursor() {
-        if (this.marker)
+        if(this.marker)
             this.marker.destroy()
 
         this.marker = this.add.graphics()
@@ -406,7 +406,9 @@ export default class MapMakerScene extends Scene {
             // [0, 1, 1, 0]
             // So here, for each horizontal line, we return the index of each tile. Flatmap is used to flatten the array.
             layer.data = layerValues.layer.data.flatMap(horizontalTiles => horizontalTiles.map(tile => {
-                return tile.index
+                if(tile && tile.index) {
+                    return tile.index
+                }
             }))
 
             return layer
@@ -475,11 +477,11 @@ export default class MapMakerScene extends Scene {
         )
 
         const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY)
-        const startX = tile?.x - Math.floor(this.brushSize / 2)
-        const startY = tile?.y - Math.floor(this.brushSize / 2)
+        const startX = tile.x - Math.floor(this.brushSize / 2)
+        const startY = tile.y - Math.floor(this.brushSize / 2)
 
-        if (this.input.manager.activePointer.isDown) {
-            if (this.shiftKey.isDown) {
+        if(this.input.manager.activePointer.isDown) {
+            if(this.shiftKey.isDown) {
                 this.selectedTile = this.layers[this.selectedLayer].getTileAt(
                     pointerTileX,
                     pointerTileY,
@@ -490,10 +492,10 @@ export default class MapMakerScene extends Scene {
                     property: "selectedTile",
                     newState: this.selectedTile,
                 })
-            } else if (eraser && startX && startY) {
+            } else if(eraser && startX && startY) {
                 // Supprimer la ou les tiles selon la taille du brush
-                for (let x = startX; x < startX + this.brushSize; x++) {
-                    for (let y = startY; y < startY + this.brushSize; y++) {
+                for(let x = startX; x < startX + this.brushSize; x++) {
+                    for(let y = startY; y < startY + this.brushSize; y++) {
                         this.layers[this.selectedLayer].removeTileAt(
                             (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,
                             pointerTileY + y + Math.floor(this.brushSize / 2),
@@ -504,8 +506,8 @@ export default class MapMakerScene extends Scene {
                 }
             } else {
                 // Applique une texture sur toutes les tiles du brush
-                for (let x = startX; x < startX + this.brushSize; x++) {
-                    for (let y = startY; y < startY + this.brushSize; y++) {
+                for(let x = startX; x < startX + this.brushSize; x++) {
+                    for(let y = startY; y < startY + this.brushSize; y++) {
                         this.layers[this.selectedLayer].putTileAt(
                             this.selectedTile,
                             (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,

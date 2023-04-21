@@ -6,7 +6,7 @@
         >
             <Loader />
         </div>
-
+        
         <Room :room="room" />
     </SidebarLayout>
 </template>
