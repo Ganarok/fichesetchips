@@ -109,7 +109,7 @@
                                 class="hover:opacity-70"
                                 active-class="underline"
                             >
-                                {{ $t('Rejoindre') }} 
+                                {{ $t('Liste') }} 
                             </router-link>
                         </ul>
                     </div>
