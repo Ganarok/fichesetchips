@@ -95,7 +95,7 @@
                             <Selector
                                 :items="stories"
                                 :default-selected-item="{
-                                    name: room?.game.story?.title, value: room?.game.story?.id
+                                    name: room?.game?.story?.title, value: room?.game?.story?.id
                                 }"
                                 :on-select-item="(v) => set_map_id(v)"
                                 selector-class="font-normal ml-2 border-2 text-black"
@@ -107,7 +107,7 @@
                             <Selector
                                 :items="maps"
                                 :default-selected-item="{
-                                    name: room?.game.tilemap?.title, value: room?.game.tilemap?.id
+                                    name: room?.game?.tilemap?.title, value: room?.game?.tilemap?.id
                                 }"
                                 :on-select-item="(v) => set_map_id(v)"
                                 selector-class="font-normal ml-2 border-2 text-black"
@@ -132,7 +132,7 @@
                             <Selector
                                 :items="tmp_game_status"
                                 :default-selected-item="{
-                                    name: room?.game.status, value: room?.game.status
+                                    name: room?.game?.status, value: room?.game?.status
                                 }"
                                 :on-select-item="(v) => set_status(v)"
                                 selector-class="font-normal ml-2 border-2 text-black"
@@ -258,8 +258,8 @@ export default {
     },
     mounted() {
         this.clear_room()
-        this.fetch_maps()
         this.fetch_room(this.room_id)
+        this.fetch_maps()
         this.fetch_stories()
     },
     computed: {
@@ -276,7 +276,7 @@ export default {
             user: (state) => state.user,
         }),
         is_gm () {
-            return this.room.gm.id === this.user?.id || false
+            return this.room?.gm?.id === this.user?.id || false
         },
     
 
@@ -284,10 +284,10 @@ export default {
         // "Complet": game is full
         // "Rejoindre": can join
         canPlayerJoin() {
-            if (this.room?.game.players.some(player => player.user.id === this.user?.id)) {
+            if (this.room?.game?.players.some(player => player.user.id === this.user?.id)) {
                 return "Rejoint"         
             }
-            else if (this.room?.game.players?.length >= this.room?.players_nb_max) {
+            else if (this.room?.game?.players?.length >= this.room?.players_nb_max) {
                 return "Complet"
             }
             else

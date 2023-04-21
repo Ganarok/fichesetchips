@@ -75,7 +75,7 @@ export default {
                 commit("set_published_rooms", data.published_rooms)
                 commit("set_player_rooms", data.player_rooms)
                 commit("set_unpublished_rooms", data.unpublished_rooms)
-            } catch(error) {
+            } catch (error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }
@@ -86,8 +86,8 @@ export default {
                     method: "GET",
                     route: `/rooms/${room_id}`,
                 })
-                commit("set_room", response)
-            } catch(error) {
+                commit("set_room", response.data)
+            } catch (error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }
@@ -100,7 +100,7 @@ export default {
                     body: body,
                 })
                 commit("set_room", data)
-            } catch(error) {
+            } catch (error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 console.log(JSON.stringify(error.message))
             }

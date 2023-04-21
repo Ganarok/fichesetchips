@@ -45,8 +45,8 @@ export default {
     },
     mounted() {
         this.loading = false
-        // this.clear_room()
-        // this.getRoomData()
+        this.clear_room()
+        this.getRoomData()
 
     },
     methods: {
@@ -61,7 +61,6 @@ export default {
             await this.fetch_room(id)
             const toast = useToast()
             if (this.errors.message) {
-                console.log(this.errors.message)
                 toast.error(this.errors.message)
             }
             this.update_error({ message: null })
