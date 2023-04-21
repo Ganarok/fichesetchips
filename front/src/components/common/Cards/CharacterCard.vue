@@ -110,7 +110,7 @@ export default {
             if(id == "create") 
                 return "/characters/create"
             else
-                return "/user/character/" + id
+                return "/characters/" + id
         }
     }
 }
