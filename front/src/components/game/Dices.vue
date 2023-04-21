@@ -157,11 +157,16 @@ export default {
             gm: state => state.gm,
             is_gm: state => state.diary.is_gm,
             lastDice: state => state.diary.lastDice,
+            roomId: state => state.roomId,
+        }),
+        ...mapState('user', {
+            user: state => state.user,
         })
     },
     methods: {
         ...mapMutations({
-            updateDiceResult: 'game/updateDiceResult'
+            updateDiceResult: 'game/updateDiceResult',
+            pushMessage: 'game/pushMessage'
         }),
         throwDice(diceMaxValue = 6) {
             const dicesResults = Math.floor(Math.random() * diceMaxValue) + 1
@@ -172,6 +177,14 @@ export default {
             })
 
             if (this.announcement) {
+                const message = {
+                    text: `J'ai obtenu ${dicesResults} sur un D${diceMaxValue}`,
+                    senderName: this.user.username,
+                    roomId: this.roomId
+                }
+
+                this.socket.emit('message', message)
+                this.pushMessage(message)
                 // TODO: Emit une update
                 // this.socket.emit()
 
