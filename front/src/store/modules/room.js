@@ -9,6 +9,42 @@ export default {
         player_rooms: []
     },
     mutations: {
+        set_title(state, title) {
+            state.room.title = title
+        },
+        set_description(state, description) {
+            state.room.description = description
+        },
+        set_requirements(state, req) {
+            state.room.requirements = req
+        },
+        set_vocal_url(state, voc_url) {
+            state.room.vocal_url = voc_url
+        },
+        set_status(state, status) {
+            state.room.game.status = status
+        },
+        set_is_private(state, is_private) {
+            state.room.is_private = is_private
+        },
+        set_is_published(state, is_published) {
+            state.room.is_published = is_published
+        },
+        set_password(state, password) {
+            state.room.password = password
+        },
+        set_players_nb_max(state, players_max) {
+            state.room.players_nb_max = players_max
+        },
+        set_story_id(state, story_id) {
+            state.room.game.story_id = story_id
+        },
+        set_map_id(state, map_id) {
+            state.room.game.tilemap.id = map_id
+        },
+        set_universe(state, universe) {
+            state.room.game.universe = universe
+        },
         set_room(state, room) {
             state.room = room
         },
@@ -21,6 +57,9 @@ export default {
         set_player_rooms(state, player_rooms) {
             state.player_rooms = player_rooms
         },
+        remove_room(state) {
+            state.room = null
+        }
     },
     actions: {
         async fetch_rooms({ commit }) {
@@ -62,6 +101,9 @@ export default {
                 console.log(JSON.stringify(error.message))
             }
         },
+        clear_room({ commit }) {
+            commit("remove_room")
+        }
     },
     getters: {},
 }

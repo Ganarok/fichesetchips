@@ -1,13 +1,10 @@
 <template>
     <SidebarLayout>
-        <div
-            v-if="loading"
-            class="flex w-full h-full items-center justify-center"
-        >
+        <div v-if="loading" class="flex w-full h-full items-center justify-center">
             <Loader />
         </div>
-        
-        <Room :room="room" />
+
+        <Room :is_gm=is_gm :room_id=id />
     </SidebarLayout>
 </template>
 
@@ -26,10 +23,10 @@ export default {
     },
     data() {
         const { id } = this.$route.params
-
         return {
             id,
             loading: true,
+            is_gm: this.user?.id === this.room?.gm.id || false,
         }
     },
     computed: {
@@ -39,19 +36,25 @@ export default {
         ...mapState("room", {
             room: (state) => state.room,
         }),
+        ...mapState("users", {
+            users: (state) => state.users,
+        }),
     },
     mounted() {
-        this.getRoomData()
+        this.loading = false
+        // this.clear_room()
+        // this.getRoomData()
+
     },
     methods: {
         ...mapActions({
             fetch_room: "room/fetch_room",
             update_error: "errors/update_error",
+            clear_room: "room/clear_room",
         }),
         async getRoomData() {
             const { id } = this.$route.params
 
-            console.log(this.$route)
             await this.fetch_room(id)
             const toast = useToast()
             if (this.errors.message) {
@@ -61,5 +64,10 @@ export default {
             this.update_error({ message: null })
             this.loading = false
         },
-    }}
+
+        remove_cached_room() {
+            this.clear_room()
+        }
+    }
+}
 </script>
