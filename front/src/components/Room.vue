@@ -12,7 +12,7 @@
                 color="text-fc-yellow" height="h-16" :canEdit=true />
                 <Button v-if="is_gm" class="ml-4 sm:mx-12" :button-text="room.is_published ? 'Dépublier' : 'Publier'" color="fc-green"
                 :rounded="false" background-color="fc-black" @click="handlePublish" />
-            <Button class="ml-4 sm:mx-12" :button-text="is_gm ? 'Sauvegarder' : 'Rejoindre'" color="fc-green"
+            <Button class="ml-4 sm:mx-12" :button-text="is_gm ? 'Sauvegarder' : canPlayerJoin" color="fc-green"
                 :rounded="false" background-color="fc-black" @click="postForm" />
         </div>
 
@@ -37,8 +37,6 @@
                             prerequis:
                             <CustomInput :max-length="254" place-holder="prereuis" type="text" outline="fc-green"
                                 :value="room.requirements" @input="(v) => this.set_requirements(v.target.value)" />
-                            <!-- <textarea :value="room.requirements" :onChange="(v) => this.set_requirements(v.target.value)"
-                                class="font-normal ml-2 resize-none" placeholder="Entrez des prerequis" /> -->
                         </h3>
 
                         <h3 class="flex font-bold">
@@ -164,10 +162,6 @@ export default {
             type: String,
             default: null
         },
-        is_gm: {
-            type: Boolean,
-            default: false
-        }
     },
     mounted() {
         this.clear_room()
@@ -184,7 +178,28 @@ export default {
         }),
         ...mapState("stories", {
             stories: (state) => state.stories.map(({ title: name, id: value }) => ({ name, value }))
-        })
+        }),
+        ...mapState("user", {
+            user: (state) => state.user,
+        }),
+        is_gm () {
+            return this.room.gm.id === this.user?.id || false
+        },
+    
+
+        // "Rejoint": player already in game
+        // "Complet": game is full
+        // "Rejoindre": can join
+        canPlayerJoin() {
+             if (this.room?.game.players.some(player => player.user.id === this.user?.id)) {
+                 return "Rejoint"         
+             }
+             else if (this.room?.game.players?.length >= this.room?.players_nb_max) {
+                return "Complet"
+             }
+             else
+                return "Rejoindre"
+        }
     },
     data() {
         return {
@@ -240,16 +255,34 @@ export default {
 
 
             }
+            else {
+                const toast = useToast()
+                if (this.canPlayerJoin == "Rejoindre") {
+                    try {
+                    await apiCall({
+                        route: `/rooms/${this.room_id}/join`,
+                        method: 'PATCH',
+                        body: {}
+                    }).then(() => toast.success('Room updated avec succes'))
+                    } catch (error) {
+                        toast.error(error)
+                    }
+                } else {
+                    console.error("Impossible de rejoindre - room déja rejoint ou complète")
+                }
+            }
         },
         async handlePublish(v) {
-            this.set_is_published(!this.room.is_published)
             const toast = useToast()
                 try {
                     await apiCall({
                         route: `/rooms/${this.room_id}`,
                         method: 'PATCH',
                         body: {is_published: this.room.is_published}
-                    }).then(() => toast.success('Room updated avec succes'))
+                    }).then(() =>{ 
+                        this.set_is_published(!this.room.is_published)
+                        toast.success('Room updated avec succes')
+                    })
                 } catch (error) {
                     toast.error(error)
                 }

@@ -4,7 +4,7 @@
             <Loader />
         </div>
 
-        <Room :is_gm=is_gm :room_id=id />
+        <Room :room_id=id />
     </SidebarLayout>
 </template>
 
