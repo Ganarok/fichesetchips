@@ -10,7 +10,7 @@
         <div class="flex justify-between">
             <BlackGreenDiv :title=room.title :onChange="(v) => this.set_title(v.target.value)" :right-green-div="false"
                 color="text-fc-yellow" height="h-16" :canEdit=true />
-                <Button v-if="is_gm" class="ml-4 sm:mx-12" :button-text="room.is_published ? 'Publier' : 'Dépublier'" color="fc-green"
+                <Button v-if="is_gm" class="ml-4 sm:mx-12" :button-text="room.is_published ? 'Dépublier' : 'Publier'" color="fc-green"
                 :rounded="false" background-color="fc-black" @click="handlePublish" />
             <Button class="ml-4 sm:mx-12" :button-text="is_gm ? 'Sauvegarder' : 'Rejoindre'" color="fc-green"
                 :rounded="false" background-color="fc-black" @click="postForm" />
