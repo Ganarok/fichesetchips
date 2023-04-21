@@ -55,13 +55,13 @@
                 @click="() => $router.push('/user/maps')"
             />
 
-        <img
-            src="@/assets/icon.svg"
-            class="h-7 w-7 cursor-pointer hover:opacity-80"
-            alt="logo"
-            :onclick="() => $router.push('/')"
-        >
-            </div>
+            <img
+                src="@/assets/icon.svg"
+                class="h-7 w-7 cursor-pointer hover:opacity-80"
+                alt="logo"
+                :onclick="() => $router.push('/')"
+            >
+        </div>
     </div>
 </template>
 

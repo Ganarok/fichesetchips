@@ -93,27 +93,27 @@
                                 {{ $t("Cartes") }}
                             </p>
     
-                                <SelectorMultiple
-                                    :items="maps"
-                                    :isMultiple="false"
-                                    :on-select-item="handleSelectedMaps.bind(this)"
-                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
-                                />
-                            </div>
-                            <div class="flex flex-col px-4 items-center justify-between">
-                                <p class="font-bold">
-                                    {{ $t("Story") }}
-                                </p>
-                                <SelectorMultiple
-                                    :items="stories"
-                                    :isMultiple="false"
-                                    :on-select-item="handleSelectedStory.bind(this)"
-                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
-                                />
-                            </div>
+                            <SelectorMultiple
+                                :items="maps"
+                                :isMultiple="false"
+                                :on-select-item="handleSelectedMaps.bind(this)"
+                                selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                            />
                         </div>
+                        <div class="flex flex-col px-4 items-center justify-between">
+                            <p class="font-bold">
+                                {{ $t("Story") }}
+                            </p>
+                            <SelectorMultiple
+                                :items="stories"
+                                :isMultiple="false"
+                                :on-select-item="handleSelectedStory.bind(this)"
+                                selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                            />
+                        </div>
+                    </div>
     
-                        <!-- <div class="flex flex-col px-4 items-center justify-between">
+                    <!-- <div class="flex flex-col px-4 items-center justify-between">
                             <p class="font-bold">
                                 {{ $t("Stories") }}
                             </p>
@@ -124,66 +124,65 @@
                                 selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
                             />
                         </div> -->
-                    </div>
+                </div>
 
-                    <BlackGreenDiv
-                        title="Accessibilité du salon"
-                        :right-green-div="false"
-                        color="text-white"
+                <BlackGreenDiv
+                    title="Accessibilité du salon"
+                    :right-green-div="false"
+                    color="text-white"
+                />
+
+                <div class="flex w-full items-center justify-between px-4">
+                    <p class="font-bold">
+                        {{ $t("Mot de passe") }}
+                    </p>
+
+                    <CustomInput
+                        :max-length="64"
+                        :place-holder="$t('Mot de passe')"
+                        :typeinput="'password'"
+                        outline="fc-green"
+                        :value="room.password"
+                        @input="(v) => (room.password = v.target.value)"
                     />
+                </div>
 
-                    <div class="flex w-full items-center justify-between px-4">
-                        <p class="font-bold">
-                            {{ $t("Mot de passe") }}
-                        </p>
+                <div class="flex w-full items-center justify-between px-4">
+                    <p class="font-bold">
+                        Max. de joueurs
+                    </p>
 
-                        <CustomInput
-                            :max-length="64"
-                            :place-holder="$t('Mot de passe')"
-                            :typeinput="'password'"
-                            outline="fc-green"
-                            :value="room.password"
-                            @input="(v) => (room.password = v.target.value)"
-                        />
-                    </div>
-
-                    <div class="flex w-full items-center justify-between px-4">
-                        <p class="font-bold">
-                            Max. de joueurs
-                        </p>
-
-                        <input
-                            :max="64"
-                            :min="0"
-                            :placeholder="5"
-                            type="number"
-                            class="flex w-12 h-12 mr-5 text-center bg-fc-black text-fc-green placeholder:text-fc-yellow-trans text-lg font-bold outline-none"
-                            outline="fc-green"
-                            :value="room.players_nb_max"
-                            @input="(v) => (room.players_nb_max = parseInt(v.target.value || 0))"
-                        />
-                    </div>
-
-                    <BlackGreenDiv
-                        title="Communication"
-                        :right-green-div="false"
-                        color="text-white"
+                    <input
+                        :max="64"
+                        :min="0"
+                        :placeholder="5"
+                        type="number"
+                        class="flex w-12 h-12 mr-5 text-center bg-fc-black text-fc-green placeholder:text-fc-yellow-trans text-lg font-bold outline-none"
+                        outline="fc-green"
+                        :value="room.players_nb_max"
+                        @input="(v) => (room.players_nb_max = parseInt(v.target.value || 0))"
                     />
+                </div>
 
-                    <div class="flex w-full items-center justify-between px-4">
-                        <p class="font-bold">
-                            Vocal
-                        </p>
+                <BlackGreenDiv
+                    title="Communication"
+                    :right-green-div="false"
+                    color="text-white"
+                />
 
-                        <CustomInput
-                            :max-length="254"
-                            place-holder="URL du vocal"
-                            type="text"
-                            outline="fc-green"
-                            :value="room.vocal_url"
-                            @input="(v) => (room.vocal_url = v.target.value)"
-                        />
-                    </div>
+                <div class="flex w-full items-center justify-between px-4">
+                    <p class="font-bold">
+                        Vocal
+                    </p>
+
+                    <CustomInput
+                        :max-length="254"
+                        place-holder="URL du vocal"
+                        type="text"
+                        outline="fc-green"
+                        :value="room.vocal_url"
+                        @input="(v) => (room.vocal_url = v.target.value)"
+                    />
                 </div>
             </div>
         </div>

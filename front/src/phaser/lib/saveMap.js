@@ -29,13 +29,13 @@ export const saveMap = async(map, name = '') => {
         title: name,
         data: map, // JSON (ou file)
         assets: [{
-                name: "grounds",
-                image: groundsByteArray,
-            },
-            {
-                name: "items",
-                image: itemsByteArray
-            },
+            name: "grounds",
+            image: groundsByteArray,
+        },
+        {
+            name: "items",
+            image: itemsByteArray
+        },
         ]
     }
 
