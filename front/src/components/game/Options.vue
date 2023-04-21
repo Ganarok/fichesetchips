@@ -32,13 +32,22 @@
                     {{ gm.username }}
                 </p>
             </div>
+
+            <Button
+                :button-text="$t('Pauser la partie')"
+                class="bg-fc-green p-3 text-base self-center hoverStyle"
+                textColor="text-fc-black"
+                color="fc-yellow"
+                :rounded="false"
+                @click="resetMessages()"
+            />
         </div>
 
-        <div class="flex justify-evenly">
+        <div class="flex space-x-2 justify-evenly">
             <Button
                 v-if="is_gm"
                 :button-text="$t('Pauser la partie')"
-                class="bg-fc-green px-4 py-2 text-base"
+                class="bg-fc-green p-3 text-base hoverStyle"
                 textColor="text-fc-black"
                 color="fc-yellow"
                 :rounded="false"
@@ -47,7 +56,7 @@
 
             <router-link
                 to="/rooms"
-                class="flex font-bold hoverStyle bg-fc-red text-fc-black p-3"
+                class="flex items-center font-bold hoverStyle bg-fc-red text-center text-fc-black p-3"
             >
                 <p class="text-base">
                     Quitter la partie 
@@ -58,7 +67,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 import Button from '@/components/common/Button.vue'
 
@@ -75,6 +84,9 @@ export default {
         })
     },
     methods: {
+        ...mapMutations('game', [
+            'resetMessages'
+        ]),
         pauseGame() {
             console.log('pauseGame')
         },

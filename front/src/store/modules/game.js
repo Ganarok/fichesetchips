@@ -18,7 +18,8 @@ export default {
         },
         starter_map_id: '',
         current_map_title: '',
-        vocal_url: ''
+        vocal_url: '',
+        roomId: ''
     },
     mutations: {
         updateState(state, payload) {
@@ -37,7 +38,7 @@ export default {
         }
     },
     actions: {
-        async init_session({ commit, dispatch, state }, room) {
+        async init_session({ commit, state }) {
             try {
                 const data = {
                     "id": "4380045a-3d92-433f-b5a9-5b0c3c321a8b",
@@ -132,13 +133,12 @@ export default {
                 // dispatch('init_players', data)
                 // dispatch('init_maps', data)
 
-                console.log('init_session', dispatch, state, room)
-
                 state.players = data.game.players
                 state.gm = data.gm
                 state.vocal_url = data.vocal_url
-                state.starter_map_id = 'b517fc2f-f310-4852-a333-4bc463415eaf' // data.game.map_id
+                state.starter_map_id = '9c9bfccd-7023-4d72-bc14-45d07eb2b855' // data.game.map_id
                 state.diary.players = data.game.players
+                state.diary.characters = data.game.players.map(player => player.character)
                 state.diary.my_character = data.game.players[0].character
                 state.diary.is_gm = data.game.players[0].user.id === data.gm.id
                 state.story = {

@@ -71,5 +71,6 @@
     "Supprimer": "Delete",
     "Reconnexion": "Reconnection",
     "Niveau": "Level",
-    "PV": "HP"
+    "PV": "HP",
+    "Pause la partie": "Pause the game"
 }

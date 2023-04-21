@@ -46,7 +46,7 @@
 
 <script>
 import { useToast } from "vue-toastification"
-import { mapActions } from "vuex"
+import { mapActions, mapMutations, mapState } from "vuex"
 
 import { useSocketIO } from "@/utils/socket.io"
 import GameContainer from "@/components/phaser/GameContainer"
@@ -73,12 +73,21 @@ export default {
             error: ''
         }
     },
+    computed: {
+        ...mapState('user', {
+            user: (state) => state.user
+        })
+    },
     mounted() {
         this.initGame()
     },
     methods: {
         ...mapActions({
             init_session: "game/init_session"
+        }),
+        ...mapMutations({
+            updateState: "game/updateState",
+            pushMessage: "game/pushMessage",
         }),
         handleReconnect() {
             this.error = ''
@@ -99,6 +108,11 @@ export default {
                 this.socket = socket
 
                 socket.on("connect", () => {
+                    this.updateState({
+                        property: 'roomId',
+                        newState: this.roomId
+                    })
+
                     socket.emit("join", {
                         roomId: this.roomId,
                     })
@@ -113,9 +127,14 @@ export default {
 
                     socket.emit("message", {
                         text: "joined the room",
-                        senderName: this.$store.state.user.username || n.connectionId,
+                        senderName: this.user.username || n.connectionId,
                         roomId: this.roomId,
                     })
+                })
+
+                socket.on("message", (message) => {
+                    console.log("Received message", message)
+                    this.pushMessage(message)
                 })
 
                 socket.on("connect_error", () => {
