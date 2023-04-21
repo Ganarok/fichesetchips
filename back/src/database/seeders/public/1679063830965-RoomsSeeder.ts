@@ -5,12 +5,14 @@ import defaultRooms from "../../fixtures/rooms"
 import defaultGames from "../../fixtures/games"
 import defaultPlayers from "../../fixtures/players"
 import defaultUsers from "../../fixtures/users"
-import { Game } from "../../entities/public/Game"
+import { Game, GameStatus } from "../../entities/public/Game"
 import { Player } from "../../entities/public/Players"
 import { Story } from "../../entities/public/workshop/Story"
 import { User } from "../../entities/public/User"
 import { Character } from "../../entities/public/characters/Character"
 import { CMap } from "../../entities/public/workshop/CMap"
+import { State } from "../../entities/public/State"
+import { randomUUID } from "crypto"
 
 export class RoomsSeeder1679063830965 implements MigrationInterface {
     name = 'RoomsSeeder1679063830965'
@@ -20,6 +22,7 @@ export class RoomsSeeder1679063830965 implements MigrationInterface {
         const GamesRepository = PublicDataSource.getRepository(Game)
         const PlayersRepository = PublicDataSource.getRepository(Player)
         const StoryRepository = PublicDataSource.getRepository(Story)
+        const StateRepository = PublicDataSource.getRepository(State)
         const CMapRepository = PublicDataSource.getRepository(CMap)
         const UserRepository = PublicDataSource.getRepository(User)
         const CharacterRepository = PublicDataSource.getRepository(Character)
@@ -94,6 +97,20 @@ export class RoomsSeeder1679063830965 implements MigrationInterface {
         await PlayersRepository.save(playerUser1)
         await PlayersRepository.save(playerUser2)
         await PlayersRepository.save(playerTest)
+        const games = await GamesRepository.find({ relations: { players: { user: true, character: true }, tilemap: true, story: true } })
+        let states: State[] = []
+        let games_with_states: Game[] = []
+        games.map(async (game: Game) => {
+            if (game.status != GameStatus.PLANNED) {
+                const state = new State()
+                const new_state = state.fromGame(game)
+                states.push(new_state)
+                game.state = new_state
+                games_with_states.push(game)
+            }
+        })
+        await StateRepository.save(states)
+        await GamesRepository.save(games_with_states)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

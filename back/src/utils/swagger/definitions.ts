@@ -570,9 +570,9 @@ export const definitions = {
                 type: GameStatus,
                 default: GameStatus.PLANNED
             },
-            player_state: {
-                type: "string",
-                default: "not implemented"
+            state: {
+                type: "object",
+                default: null
             }
         }
     },

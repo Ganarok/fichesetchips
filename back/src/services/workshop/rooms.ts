@@ -1,4 +1,4 @@
-import { Game } from "../../database/entities/public/Game"
+import { Game, GameStatus } from "../../database/entities/public/Game"
 import { Player } from "../../database/entities/public/Players"
 import { Room } from "../../database/entities/public/Room"
 import { User } from "../../database/entities/public/User"
@@ -122,9 +122,10 @@ export async function publish(username: string, body: any, room_id: string) {
     if (room?.gm.id != user.id)
         throw Error("Unauthorized")
 
-    const new_room = await RoomRepository.save({ ...room, is_published: body.is_published })
-    return await findOneRoom([{ id: room_id }])
-
+    await RoomRepository.save({ ...room, is_published: body.is_published })
+    await GamesRepository.save({ ...room.game, status: GameStatus.PLANNED })
+    const new_room = await findOneRoom([{ id: room_id }])
+    return new_room
 }
 export async function update(username: string, room_view: UpdateRoom, room_id: string) {
 
@@ -142,7 +143,6 @@ export async function update(username: string, room_view: UpdateRoom, room_id: s
         room_to_update.players_nb_max = room_view.players_nb_max ? room_view.players_nb_max : room_to_update.players_nb_max
         room_to_update.is_private = room_view.is_private != undefined ? room_view.is_private : room_to_update.is_private
     } catch (error) {
-        console.error(error)
         throw Error("Unable to update room values")
     }
 
@@ -161,7 +161,6 @@ export async function update(username: string, room_view: UpdateRoom, room_id: s
             const updated_game = await GamesRepository.save(game_to_update)
             room_to_update.game = updated_game
         } catch (error) {
-            console.error(error)
             throw Error("Unable to update game inside room")
         }
     }
