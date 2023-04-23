@@ -44,41 +44,67 @@
                 @input="(v) => (search = v.target.value)"
             >
         </div>
+
         <div
             v-if="loading"
-            class="pl-6 space-x-6"
+            class="flex items-center justify-center w-full h-2/3"
         >
-            <div v-if="gm_rooms.length > 0 || published_rooms.length > 0 || player_rooms.length > 0">
-                <div v-if="gm_rooms.length > 0">
-                    <h1>Rooms dont vous êtes le Maître du jeu</h1>
-                    <RoomSub :rooms="gm_rooms" />
-                </div>
-                <div v-if="player_rooms.length > 0">
-                    <h1>Rooms dont vous êtes Player</h1>
-                    <RoomSub :rooms="player_rooms" />
-                </div>
-                <div v-if="published_rooms.length > 0">
-                    <h1>Rooms que vous pouvez rejoindre</h1>
-                    <RoomSub :rooms="published_rooms" />
-                </div>
-            </div>
-            <div
-                v-else
-                class="font-bold text-fc-black-light"
+            <Loader />
+        </div>
+
+        <div
+            v-else-if="gm_rooms.length > 0 || published_rooms.length > 0 || player_rooms.length > 0"
+            class="flex flex-col gap-4 px-6"
+        >
+            <div 
+                v-if="gm_rooms.length > 0"
+                class="space-y-2"
             >
-                Pas de donnée pour le moment
+                <h1 class="font-bold underline">
+                    Rooms dont vous êtes le Maître du jeu
+                </h1>
+                <RoomSub :rooms="gm_rooms" />
             </div>
+
+            <div 
+                v-if="player_rooms.length > 0"
+                class="space-y-2"
+            >
+                <h1 class="font-bold underline">
+                    Rooms dont vous êtes Player
+                </h1>
+                <RoomSub :rooms="player_rooms" />
+            </div>
+
+            <div 
+                v-if="published_rooms.length > 0"
+                class="space-y-2"
+            >
+                <h1 class="font-bold underline">
+                    Rooms que vous pouvez rejoindre
+                </h1>
+                <RoomSub :rooms="published_rooms" />
+            </div>
+        </div>
+
+        <div
+            v-else
+            class="font-bold text-fc-black-light"
+        >
+            Pas de donnée pour le moment
         </div>
     </SidebarLayout>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
+
+import Loader from "@/components/common/Loader.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import RoomSub from "@/components/RoomSub.vue"
 import Selector from "@/components/common/Selector.vue"
 import ParamInput from "@/components/common/ParamInput.vue"
 import { ROOMSTATUS, PLAYSTYLE } from "@/utils/enums"
-import { mapState, mapActions } from "vuex"
 
 export default {
     components: {
@@ -86,6 +112,7 @@ export default {
         RoomSub,
         Selector,
         ParamInput,
+        Loader
     },
     data() {
         return {
@@ -99,7 +126,7 @@ export default {
             minLevel: 0,
             roomfull: false,
             roomprivate: false,
-            loading: false
+            loading: true
         }
     },
     computed: {
@@ -110,8 +137,7 @@ export default {
         })
     },
     async mounted() {
-        await this.fetch_rooms()
-        this.loading = true
+        await this.fetch_rooms().then(() => this.loading = false)
     },
     methods: {
         ...mapActions({

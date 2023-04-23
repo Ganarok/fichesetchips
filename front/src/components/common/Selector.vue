@@ -1,34 +1,59 @@
 <template>
-    <div ref="openedBox" v-click-outside="closeSelector" :class="selectorClass" @click="switchOpened()">
+    <div
+        ref="openedBox"
+        v-click-outside="closeSelector"
+        :class="selectorClass"
+        @click="switchOpened()"
+    >
         <div class="flex space-x-2 p-2">
-            <option class="font-bold" default>
+            <option
+                class="font-bold"
+                default
+            >
                 {{ selectedItem }}
             </option>
 
             <div :class="imageClass">
-                <img v-if="image !== undefined" :class="
-                    isOpened
-                        ? 'transition duration-250 rotate-180'
-                        : 'transition duration-250'
-                " :src="image">
+                <img
+                    v-if="image !== undefined"
+                    :class="
+                        isOpened
+                            ? 'transition duration-250 rotate-180'
+                            : 'transition duration-250'
+                    "
+                    :src="image"
+                >
             </div>
         </div>
 
-        <div v-if="isOpened" id="openedBox" class="absolute w-36 z-50" :style="openedStyles">
-            <option v-for="(item, index) in computedItems" :key="index" :class="
-                item.name === selectedItem
-                    ? optionClass + ' text-fc-green'
-                    : optionClass + ' text-white'
-            " @click="
-    () => {
-        selectedItem = item?.name
-        onSelectItem(item?.value);
-    }
-">
+        <div
+            v-if="isOpened"
+            id="openedBox"
+            class="absolute w-36 z-50"
+            :style="openedStyles"
+        >
+            <option
+                v-for="(item, index) in computedItems"
+                :key="index"
+                :class="
+                    item.name === selectedItem
+                        ? optionClass + ' text-fc-green'
+                        : optionClass + ' text-white'
+                "
+                @click="
+                    () => {
+                        selectedItem = item?.name
+                        onSelectItem(item?.value);
+                    }
+                "
+            >
                 {{ item?.name }}
             </option>
 
-            <img class="absolute -bottom-6 -right-6 rotate-180 h-12 scale-x-[-1]" src="@/assets/cornerPixels.svg">
+            <img
+                class="absolute -bottom-6 -right-6 rotate-180 h-12 scale-x-[-1]"
+                src="@/assets/cornerPixels.svg"
+            >
         </div>
     </div>
 </template>

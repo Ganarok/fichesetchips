@@ -1,10 +1,13 @@
 <template>
     <SidebarLayout>
-        <div v-if="loading" class="flex w-full h-full items-center justify-center">
+        <div
+            v-if="loading"
+            class="flex w-full h-full items-center justify-center"
+        >
             <Loader />
         </div>
 
-        <Room :room_id=id />
+        <Room :room_id="id" />
     </SidebarLayout>
 </template>
 

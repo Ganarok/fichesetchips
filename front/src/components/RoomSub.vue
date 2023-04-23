@@ -1,5 +1,5 @@
 <template>
-    <table class="table-auto relative space-y-3 p-4 bg-white">
+    <table class="table-auto relative space-y-4 divide-y-2">
         <thead>
             <tr>
                 <th></th>
@@ -10,18 +10,22 @@
                 <th></th>
             </tr>
         </thead>
+
         <tbody
             v-for="(room, index) in rooms"
             :key="index"
             :room="room"
+            class="text-center gap-4"
         >
             <tr>
                 <td>
-                    <img
-                        src="../assets/avatar/character.png"
-                        class="object-cover h-10 rounded-full bg-fc-green border-2 border-fc-black"
-                        :style="grayed ? 'filter: grayscale(1)' : null"
-                    >
+                    <div class="relative w-10 h-10">
+                        <img
+                            src="../assets/avatar/character.png"
+                            class="object-contain rounded-full bg-fc-green border-2 border-fc-black"
+                            :style="grayed ? 'filter: grayscale(1)' : null"
+                        >
+                    </div>
                 </td>
                 <td class="center">
                     {{ room.title }}
@@ -58,15 +62,15 @@ export default {
     components: { Button
     },
     props: {
-        rooms: []
+        rooms: {
+            type: Array,
+            default: () => []
+        },
+        grayed: {
+            type: Boolean,
+            default: false
+        }
     },
-    data() {
-    },
-    computed: {
-    },
-    async mounted() {
-    },
-    methods: {
-    }}
+}
 </script>
 
