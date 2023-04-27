@@ -6,7 +6,7 @@
             <div
                 v-for="universe in universes"
                 :key="universe.id"
-                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer"
+                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer hoverStyle"
                 @click="chooseUnivers(universe.id)"
             >
                 <img
@@ -44,13 +44,14 @@ export default {
         }),
         ...mapMutations({
             set_universe: "universes/set_universe",
-            set_completed: "characters/set_completed",
+            update_completed: "characters/update_completed",
             set_currentStep: "characters/set_currentStep",
+            set_loading: "characters/set_loading",
         }),
         async chooseUnivers(id) {
             this.set_universe(id)
-            this.set_completed()
             this.set_currentStep('Race')
+            this.update_completed()
         },
     }
 }

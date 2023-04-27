@@ -27,7 +27,7 @@
         </div>
 
         <button
-            class="relative self-end right-12 text-5xl font-bold cursor-pointer"
+            class="relative self-end right-12 text-5xl font-bold cursor-pointer hoverStyle"
             @click="chooseCharacteristics()"
         >
             Go
@@ -61,6 +61,7 @@ export default {
             set_character_creation: "characters/set_character_creation",
             set_stats: "characters/set_stats",
             set_currentStep: "characters/set_currentStep",
+            update_completed: "characters/update_completed"
         }),
         handleRandomize({name = '', id, diceMaxValue = 6, dices = 4, valuesNb = 3}) {
             let dicesResults = []
@@ -102,6 +103,7 @@ export default {
             
             this.set_stats(this.character_creation.stats)
             this.set_currentStep('Description')
+            this.update_completed()
         },
     },
 }

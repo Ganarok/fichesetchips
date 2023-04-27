@@ -49,7 +49,7 @@ export default {
     mutations: {
         reset: (state, data) => (state = data),
         set_loading: (state, data) => (state.loading = data),
-        set_completed: (state) => (state.completed === 0 ? 1 : state.completed += 1),
+        update_completed: (state) => (state.completed = Object.keys(state.character_creation_steps).findIndex(step => step === state.currentStep)),
         set_characters: (state, data) => (state.characters = data),
         set_character: (state, data) => (state.character = data),
         set_stats: (state, data) => (state.character_creation.stats = {...state.character_creation.stats, ...data}),
