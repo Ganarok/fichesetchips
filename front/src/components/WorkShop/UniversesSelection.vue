@@ -6,7 +6,7 @@
             <div
                 v-for="universe in universes"
                 :key="universe.id"
-                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer"
+                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer hoverStyle"
                 @click="chooseUnivers(universe.id)"
             >
                 <img

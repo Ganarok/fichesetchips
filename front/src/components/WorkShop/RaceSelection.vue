@@ -49,9 +49,7 @@ export default {
                 this.character_creation.languages.push(language.id)
             })
             // TODO calcul poid, taille, age
-            this.character_creation.character.age = 10
-            this.character_creation.character.weight = 10
-            this.character_creation.character.height = 10
+            this.character_creation.character.age = 25
             this.set_character_creation(this.character_creation)
             if (nb_free_standard_language > 0) {
                 this.set_currentStep('Language')
