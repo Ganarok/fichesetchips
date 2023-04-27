@@ -130,7 +130,11 @@
 
                         <div class="w-5/12">
                             <BlackGreenDiv title="SKILLS" />
-                            <div class="p-2" v-for="skills, i in character?.skills || new Array(1)" :key="i">
+                            <div
+                                v-for="skills, i in character?.skills || new Array(1)"
+                                :key="i"
+                                class="p-2"
+                            >
                                 <h1 class="font-bold">
                                     {{ skills?.name || 'Skill title' }}
                                 </h1>
