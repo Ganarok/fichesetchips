@@ -14,7 +14,7 @@ const CharacterRepository = PublicDataSource.getRepository(Character)
 export async function update(username: string, view_instance: SetPlayer, player_id: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
     const player = await PLayerRepository.findOneByOrFail({ id: player_id })
-    const character = await CharacterRepository.findOneByOrFail({ id: view_instance.character_id, user: { id: user.id } })
+    const character = await CharacterRepository.findOneByOrFail({ id: view_instance.character_id, user_id: user.id })
     player.character = character
     return await PLayerRepository.save(player)
 }

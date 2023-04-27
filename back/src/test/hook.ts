@@ -14,5 +14,6 @@ describe("Root suite", function() {
     import('./users/friends.spec');
     import('./workshop/stories.spec');
     import('./workshop/maps.spec');
+    import('./games/games.spec');
 });
 

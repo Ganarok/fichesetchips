@@ -20,7 +20,4 @@ export class Player {
 
     @ManyToOne(type => Game, game => game.players, { onDelete: "CASCADE" })
     game: Game;
-
-    @Column({ default: "not implemented" })
-    state: string
 }

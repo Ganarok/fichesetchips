@@ -117,7 +117,6 @@ router.post("/", async (req: Request, res) => {
             throw e
         }
     } catch (error) {
-        console.log(error)
         return getErrorMessage(error, res);
     }
 })
