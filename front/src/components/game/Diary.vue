@@ -30,11 +30,8 @@
                 Lieux
             </p>
 
-            <div
-                v-for="(place, index) in diary.places"
-                :key="index"
-            >
-                <!-- TODO: récupérer la data -->
+            <div>
+                {{ diary.places.title }}
             </div>
         </div>
 

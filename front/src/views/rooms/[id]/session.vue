@@ -96,9 +96,9 @@ export default {
         },
         async initGame() {
             try {
-                const data = await this.init_session({ roomId: this.roomId })
+                const data = await this.init_session(this.roomId)
 
-                if (data.game.status !== GAMESTATUS.PLANNED) {
+                if (data.game.status !== GAMESTATUS.RUNNING) {
                     this.error = `La session n'est pas en cours (${data.game.status}).`
                     return
                 }

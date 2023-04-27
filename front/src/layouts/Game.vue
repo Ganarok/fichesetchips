@@ -132,7 +132,10 @@
                         v-if="selectedOption === 'dices'" 
                         :socket="socket"
                     />
-                    <Options v-if="selectedOption === 'options'" />
+                    <Options 
+                        v-if="selectedOption === 'options'" 
+                        :socket="socket"
+                    />
                 </div>
             </div>
         </div>

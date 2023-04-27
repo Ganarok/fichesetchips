@@ -76,17 +76,13 @@
 import Button from "@/components/common/Button.vue"
 
 export default {
-    components: { Button
-    },
+    components: { Button },
     props: {
-        rooms: []
+        rooms: {
+            type: Array,
+            default: () => [],
+            required: true
+        },
     },
-    data() {
-    },
-    computed: {
-    },
-    async mounted() {
-    },
-    methods: {
-    }}
+}
 </script>
