@@ -1,127 +1,262 @@
 <template>
     <SidebarLayout :is-border="false">
-        <div class="h-screen w-full flex flex-col font-barlow">
-            <div class="flex md:flex-row flex-col md:h-[60%] p-12">
-                <Avatar />
-
-                <div class="flex flex-col h-full ml-8">
-                    <h1 class="text-3xl font-bold text-fc-green">
-                        {{ visited_user.username }}
-                    </h1>
-
-                    <h1 class="text-fc-yellow">
-                        Dernière connexion:
-
-                        <span class="font-bold">{{
-                            getDateSince(visited_user.last_connection)
-                        }}</span>
-                    </h1>
-
-                    <p class="font-bold italic">
-                        {{ visited_user.description }}
-                    </p>
-
-                    <!-- <h1 class="mt-auto">{{ visited_user.location }}</h1> -->
-
-                    <h1>Privé</h1>
-                </div>
-
-                <div class="flex flex-col flex-grow h-full ml-8">
-                    <div class="flex mt-auto">
-                        <div class="">
-                            Nombre de partie (Joueur):
-                        </div>
-                        <div class="ml-auto">
-                            666
-                        </div>
+        <div class="flex justify-center flex-col items-center ">
+            <div class="flex w-4/5 justify-center items-center bg-gray-200 mt-10 p-5 flex-col xl:flex-row"> 
+                <img
+                    src="../../assets/avatar/character.png"
+                    class="object-contain rounded-full bg-fc-green border-8 border-fc-black w-52"
+                    :style="grayed ? 'filter: grayscale(1)' : null"
+                >
+                <div class="flex flex-col justify-between w-full items-center">
+                    <div class="flex flex-col font-bold xl:flex-row min-w-full">
+                        <span class="flex flex-col ml-3 items-center xl:items-start">
+                            <p class=" text-7xl ">
+                                {{ user.username }}
+                            </p>
+                            <p class="text-2xl mt-5 text-ellipsis flex-nowrap text-center xl:text-left ">
+                                
+                            </p>
+                        </span>
+                        <span class="flex flex-col items-center xl:items-start xl:ml-16 w-full pt-4 infoProfils  ">
+                            <span v-if="user.location">
+                                <!-- Paris, France -->
+                                {{ user.location }}
+                            </span>
+                            <span v-else>
+                                Rawdon Québec, Canada
+                            </span>
+                            <span>
+                                {{ user.email }}
+                            </span>
+                        </span>
                     </div>
-                    <div class="flex">
-                        <div class="">
-                            Nombre de partie (MJ):
-                        </div>
-                        <div class="ml-auto">
-                            666
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="">
-                            Temp passé en campagne:
-                        </div>
-                        <div class="ml-auto">
-                            666
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="">
-                            Date d'inscription:
-                        </div>
-                        <div class="ml-auto">
-                            666
-                        </div>
+                    <div class="flex  justify-end w-full ">
+                        <span class="tabs flex flex-row w-full pt-5 xl:justify-end xl:gap-x-4 justify-around font-bold text-xl xl:text-3xl xl:w-4/5">
+                            <span
+                                :class="[isTabActive('Friends') ? 'activeTab' : 'inactiveTab']"
+                                @click="changeTab('Friends')"
+                            >
+                                <RouterLink to="/user/profile?page=Friends">
+                                    {{ $t('Amis') }} 
+                                </RouterLink>
+                            </span>        
+                            <!-- <span v-bind:class="[isTabActive('Stats') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Stats')">
+                                <RouterLink to="/user/profile?page=Stats">
+                                    {{ $t('Stats') }} 
+                                </RouterLink>
+                            </span> -->
+                            <span
+                                :class="[isTabActive('Characters') ? 'activeTab' : 'inactiveTab']"
+                                @click="changeTab('Characters')"
+                            >
+                                <RouterLink to="/user/profile?page=Characters">
+                                    {{ $t('Personnages') }} 
+                                </RouterLink>
+                            </span>
+                            <!-- <span v-bind:class="[isTabActive('Games') ? 'activeTab' : 'inactiveTab']" @click="changeTab('Games')">
+                                <RouterLink to="/user/profile?page=Games">
+                                    {{ $t('Partie') }} 
+                                </RouterLink>
+                            </span> -->
+                        </span>
                     </div>
                 </div>
             </div>
-            <div
-                class="flex w-full md:h-60 h-40 items-center justify-evenly space-x-2 bg-fc-yellow overflow-auto"
-            >
-                <Badge
-                    v-for="badge in badges"
-                    :key="badge.id"
-                    size="l"
-                    :completion="badge.completion"
-                />
+            <div class="mt-5 w-full">
+                <div class="flex w-full flex-col h-full justify-between items-center">
+                    <component :is="tabs" />
+                </div>     
             </div>
         </div>
     </SidebarLayout>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
 import moment from "moment"
 
-import Avatar from "@/components/common/Avatar.vue"
-import Badge from "@/components/common/Badge.vue"
+import Modal from "@/components/Modal.vue"
 import SidebarLayout from "@/layouts/Sidebar.vue"
-import { mapState, mapActions } from "vuex"
+import Loader from "@/components/common/Loader.vue"
+import Characters from "@/components/common/Characters.vue"
+import Friends from "@/components/common/FriendsList.vue"
 
 export default {
-    components: { SidebarLayout, Avatar, Badge },
+    components: {
+        Modal,
+        SidebarLayout,
+        Characters,
+        Loader,
+        Friends
+    },
     data() {
         return {
-            stats: {},
+            showModal: false,
             badges: [],
+            tabs: null,
+            badgesPage: 0,
+            preview: false,
+            editMode: false,
+            grayed: false,
+            tabName: "Friends",
         }
     },
     computed: {
-        ...mapState("user", {
-            visited_user: (state) => state.visited_user,
+        ...mapState("characters", {
+            characters: (state) => state.characters,
         }),
+        ...mapState("errors", {
+            errors: (state) => state.errors,
+        }),
+        ...mapState("user", {
+            user: (state) => state.visited_user,
+        }),
+        ...mapState("friends", {
+            friends: (state) => state.my_friends,
+            pending_approval: (state) => state.pending_approval,
+            pending_request: (state) => state.pending_request,
+        }),
+        badgesToDisplayWhenPublic() {
+            let toDisplay = []
+            this.badges.forEach((badgeList) =>
+                badgeList.forEach((badge) =>
+                    badge.isFav ? toDisplay.push(badge) : null
+                )
+            )
+            return toDisplay
+        },
+    },
+    watch: {
+        $route() {
+            this.changeTab(this.$route.query.page)
+        }
     },
     async mounted() {
-        this.badgeGenerator()
-        await this.fetch_user(this.$route.params.username)
+        this.changeTab(this.$route.query.page)
+        await this.fetch_user(this.state.visited_user, this.$route.params.id)
     },
     methods: {
         ...mapActions({
+            fetch_friends: "friends/fetch_friends",
             fetch_user: "user/fetch_user",
+            delete_user: "user/delete_user",
+            fetch_characters: "characters/fetch_characters"
         }),
-        getDateSince(date) {
-            return moment(date).fromNow()
+        getDate(date) {
+            return moment(date).format("ll")
         },
-        badgeGenerator(badgeNbr = 5) {
-            for (let index = 0; index < badgeNbr; index++) {
-                this.badges.push({
-                    id: badgeNbr + "-" + index,
-                    isFav: false,
-                    completion: this.randomIntFromInterval(0, 100),
-                })
+        badgeGenerator(pageNbr = 3, badgeNbr = 20) {
+            for (let i = 0; i < pageNbr; i++) {
+                let tempBadges = []
+                for (let index = 0; index < badgeNbr; index++) {
+                    tempBadges.push({
+                        id: i + "-" + index,
+                        isFav: false,
+                        completion: this.randomIntFromInterval(0, 100),
+                    })
+                }
+                this.badges.push(tempBadges)
             }
+        },
+        handleFavorite(badgeID) {
+            this.badges.forEach((badgeList, page) => {
+                const badgeIndex = badgeList.findIndex((badge) => badge.id == badgeID)
+
+                if (badgeIndex != -1) {
+                    this.badges[page][badgeIndex].isFav = !this.badges[page][badgeIndex].isFav
+                }
+            })
         },
         randomIntFromInterval(min, max) {
             // min and max included
             return Math.floor(Math.random() * (max - min + 1) + min)
         },
-    },
+        async updateProfile() {
+            const body = {
+                username: this.user.username,
+                email: this.user.email,
+                location: this.user.location,
+                avatar: this.user.avatar,
+            }
+            await this.patch_user(body)
+        },
+        async deleteProfile() {
+            await this.delete_user()
+            await this.$router.push("/login")
+        },
+        getFriendUsername(friendship) {
+            if (this.user.username == friendship.user_asked.username) {
+                return friendship.user_answered.username
+            } else {
+                return friendship.user_asked.username
+            }
+        },
+        changeTab(string) {
+            const components = {
+                Characters,
+                Friends
+            }
+
+            let newTabName = string || "Characters"
+            this.tabs = components[newTabName]
+            this.tabName = newTabName
+        },
+        isTabActive(tabName) {
+            return this.tabName == tabName
+        },
+    }
 }
 </script>
 
-<style></style>
+<style>
+.infoProfils {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.inactiveTab {
+    position: relative;
+    opacity: 0.3;
+    letter-spacing: 0.02rem;
+    display: inline-block;
+}
+.activeTab {
+    position: relative;
+    opacity: 1;
+}
+.tabs{
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.activeTab::after{
+    content: '';
+    width: 100%;
+    height: .2rem;
+    bottom: 0;
+    left: 0;
+    background-color: #4FEA74;
+}
+
+.inactiveTab:hover{
+    opacity: .6;
+}
+
+:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: .2rem;
+    left: 0;
+    position: absolute;
+    background: #4FEA74;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+.inactiveTab:hover:after { 
+    width: 100%; 
+    left: 0; 
+}
+
+
+</style>
