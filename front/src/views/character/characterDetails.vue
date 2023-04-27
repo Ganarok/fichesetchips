@@ -33,24 +33,24 @@
                             >
                             <div class="flex flex-col text-xl space-y-8 pt-8">
                                 <div>
-                                    <span class="font-bold">Level:</span> {{ character.firstname ? character.level_id : 12 }}
+                                    <span class="font-bold">Level:</span> {{ character.level?.id || '???' }}
                                 </div>
                                 <div>
-                                    <span class="font-bold">Univers:</span> {{ character.firstname ? character.level_id : 'Cave et monstres' }}
+                                    <span class="font-bold">Univers:</span> {{ 'Cave et monstres' }}
                                 </div>
                                 <div>
-                                    <span class="font-bold">Race:</span> {{ character.firstname ? character.race_id : 'Humain' }}
+                                    <span class="font-bold">Race:</span> {{ character.race?.name || '???' }}
                                 </div>
                                 <div>
-                                    <span class="font-bold">Classe:</span> {{ character.firstname ? character.class_id : 'Mage' }}
+                                    <span class="font-bold">Classe:</span> {{ character.class?.french_name || '???' }}
                                 </div>
                             </div>
                         </div>
                     </div>  
                     <div class="flex flex-wrap justify-center mt-3 gap-4 max-w-screen-sm xl:w-6/12">
                         <div
-                            v-for="characteristic, i in character?.character_characteristics || new Array(6)"
-                            :key="i "
+                            v-for="characteristic, i in character?.character_characteristic || new Array(6)"
+                            :key="i"
                             class="w-40"
                         >
                             <BlackGreenDiv
@@ -122,35 +122,20 @@
                         <div class="w-5/12 ">
                             <BlackGreenDiv title="FLAW" />
                             <div class="p-2">
-                                <h1 class="font-bold">
-                                    {{ skill?.name || 'Skill title' }}
-                                </h1>
                                 <p class="pl-4">
-                                    {{ skill?.description || 'Skill description' }}
-                                </p>
-                                <h2 class="font-bold pl-2">
-                                    Skill rule
-                                </h2>
-                                <p class="pl-4">
-                                    {{ skill?.rule || 'Skill rule description' }}
+                                    {{ character?.flaws || 'No flaws' }}
                                 </p>
                             </div>
                         </div>
 
                         <div class="w-5/12">
                             <BlackGreenDiv title="SKILLS" />
-                            <div class="p-2">
+                            <div class="p-2" v-for="skills, i in character?.skills || new Array(1)" :key="i">
                                 <h1 class="font-bold">
-                                    {{ skill?.name || 'Skill title' }}
+                                    {{ skills?.name || 'Skill title' }}
                                 </h1>
                                 <p class="pl-2">
-                                    {{ skill?.description || 'Skill description' }}
-                                </p>
-                                <h2 class="font-bold pl-2">
-                                    Skill rule
-                                </h2>
-                                <p class="pl-4">
-                                    {{ skill?.rule || 'Skill rule description' }}
+                                    Ajoute un bonus au jet de dé {{ skills.characteristic.name.toLowerCase() || '???' }}
                                 </p>
                             </div>
                         </div>
@@ -176,8 +161,9 @@ export default {
         }),
     },
     async mounted() {
-        // const { id } = this.$route.params
-        //await this.fetch_character(id)
+        const { id } = this.$route.params
+        await this.fetch_character(id)
+        console.log(this.character)
     },
     methods: {
         ...mapActions({
