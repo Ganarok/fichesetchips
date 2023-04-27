@@ -17,6 +17,7 @@
         "pdf-lib": "^1.17.1",
         "phaser": "^3.55.2",
         "socket.io-client": "^4.5.4",
+        "tailwind-scrollbar": "^3.0.0",
         "vue": "^3.2.37",
         "vue-i18n": "^9.2.2",
         "vue-moment": "^4.1.0",

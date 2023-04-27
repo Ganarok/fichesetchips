@@ -35,7 +35,7 @@
         <div class="flex space-x-2 items-center">
             <h1>MapMaker</h1>
 
-            <p>
+            <p v-if="title">
                 -
             </p>
 
@@ -43,17 +43,28 @@
                 <EditableDiv 
                     :value="title"
                     :canEdit="true"
+                    :autofocus="true"
+                    @focusin="() => handleBusy(true)"
+                    @focusout="() => handleBusy(false)"
                     @change="(v) => handleChange(v)"
                 />
             </div>
         </div>
+        <div class="flex flex-rom justify-center items-center">
+            <Button
+                :button-text="$t('Retour')"
+                class="px-6 py-0 my-4 uppercase"
+                color="fc-black"
+                @click="() => $router.push('/user/maps')"
+            />
 
-        <img
-            src="@/assets/icon.svg"
-            class="h-7 w-7 cursor-pointer hover:opacity-80"
-            alt="logo"
-            :onclick="() => $router.push('/')"
-        >
+            <img
+                src="@/assets/icon.svg"
+                class="h-7 w-7 cursor-pointer hover:opacity-80"
+                alt="logo"
+                :onclick="() => $router.push('/')"
+            >
+        </div>
     </div>
 </template>
 
@@ -63,10 +74,11 @@ import { mapActions, mapState } from 'vuex'
 import store from '@/store'
 import EditableDiv from '@/components/common/EditableDiv.vue'
 import { useToast } from 'vue-toastification'
+import Button from "@/components/common/Button.vue"
 
 export default {
     name: "Topbar",
-    components: { EditableDiv },
+    components: { EditableDiv, Button },
     data() {
         return {
             optionsOpened: false,
@@ -77,7 +89,10 @@ export default {
                 },
                 {
                     name: "Sauvegarder la carte",
-                    action: () => this.saveMap(),
+                    action: async () => {
+                        await this.saveMap()
+                        this.$router.push(`/user/maps`)
+                    },
                 },
                 {
                     name: "Charger une carte",
@@ -101,7 +116,15 @@ export default {
         ...mapActions({
             delete_map: "phaser/delete_map"
         }),
+        handleBusy(isBusy) {
+            console.log("isBusy", isBusy)
+            store.commit('phaser/updateState', { property: 'isBusy', newState: isBusy })
+        },
+        handleInput(v) {
+            console.log(v.target.value)
+        },
         handleChange(v) {
+            console.log(v.target.value)
             store.commit("phaser/updateState", { property: "title", newState: v.target.value })
         },
         exportMap() {

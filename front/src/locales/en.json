@@ -68,5 +68,12 @@
     "Créer": "Create",
     "Liste": "List",
     "Rejoindre": "Join",
-    "Supprimer": "Delete"
+    "Supprimer": "Delete",
+    "Reconnexion": "Reconnection",
+    "Niveau": "Level",
+    "PV": "HP",
+    "Pause la partie": "Pause the game",
+    "Quitter la partie": "Leave the game",
+    "Vider les messages": "Clean messages",
+    "Réinitialiser": "Reset"
 }

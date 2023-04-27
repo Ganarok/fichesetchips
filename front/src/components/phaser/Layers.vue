@@ -42,7 +42,7 @@
         </div>
 
         <div
-            v-if="loadingAssets"
+            v-if="isLoadingAssets"
             class="flex w-full self-center justify-center"
         >
             <Loader :size="15" />
@@ -58,7 +58,8 @@
                 v-for="(img, index) in $store.state.phaser.tilesPics[selectedLayer]"
                 :id="`canvas_${index}`"
                 :key="index"
-                class="flex w-8 h-8 items-center cursor-pointer object-contain border border-fc-green"
+                class="w-8 h-8 cursor-pointer object-contain border border-fc-green hoverStyle"
+                :class="img?.src ? '' : 'hidden'"
                 :src="img.src"
                 :alt="img.alt"
                 @click="() => updateSelectedTile(index)"
@@ -70,24 +71,33 @@
 <script>
 import Layer from "@/components/phaser/Layer.vue"
 import Loader from "@/components/common/Loader.vue"
+import { mapState } from "vuex"
 
 export default {
     name: 'Layers',
     components: { Layer, Loader },
     data() {
-        setTimeout(() => {
-            this.initLayers()
-            this.loadingAssets = false
-
-            // console.log(Object.values(tileSets[selectedLayer].image.frames))
-            // console.log(this.$store.state.phaser.tileSets[1])
-        }, 5000)
-
         return {
             ...this.$store.state.phaser,
             loadingAssets: true,
             gl: null
         }
+    },
+    computed: {
+        ...mapState("phaser", {
+            isLoadingAssets: (state) => state.isLoadingAssets,
+        })
+    },
+    mounted() {
+        this.$store.watch(
+            (state) => state.phaser.isLoadingAssets,
+            (isLoading) => {
+                if (!isLoading) {
+                    this.initLayers()
+                    this.loadingAssets = false
+                }
+            }
+        )
     },
     methods: {
         createCanvas(id, gl, texture, x = 0, y = 0) {

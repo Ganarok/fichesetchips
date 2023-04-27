@@ -14,11 +14,14 @@
                 Personnages
             </p>
 
-            <div
-                v-for="(character, index) in diary.characters"
-                :key="index"
-            >
-                <!-- TODO: récupérer la data -->
+            <div class="flex flex-col space-y-1 truncate">
+                <p
+                    v-for="(character, index) in diary.characters"
+                    :key="index"
+                    class="italic"
+                >
+                    {{ character.firstname }} {{ character.lastname }}
+                </p>
             </div>
         </div>
 
@@ -27,11 +30,8 @@
                 Lieux
             </p>
 
-            <div
-                v-for="(place, index) in diary.places"
-                :key="index"
-            >
-                <!-- TODO: récupérer la data -->
+            <div>
+                {{ diary.places.title }}
             </div>
         </div>
 
@@ -40,15 +40,21 @@
                 Joueurs
             </p>
 
-            <div
-                v-for="(player, index) in diary.players"
-                :key="index"
-            >
-                <!-- TODO: récupérer la data -->
+            <div class="flex flex-col space-y-1 truncate">
+                <p
+                    v-for="(player, index) in diary.players"
+                    :key="index"
+                    class="italic"
+                >
+                    {{ player.user.username }}
+                </p>
             </div>
         </div>
 
-        <div class="flex flex-col h-full space-y-2">
+        <div 
+            class="flex flex-col h-full space-y-2"
+            style="minHeight: 400px"
+        >
             <p class="font-bold">
                 Notes
             </p>

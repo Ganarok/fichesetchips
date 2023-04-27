@@ -1,15 +1,7 @@
 <template>
-    <div class="flex flex-row w-full h-full">
+    <div class="flex flex-row justify-evenly w-full h-full">
         <div class="flex flex-col items-center gap-4">
             <div class="flex flex-row w-full justify-evenly items-center">
-                <div class="relative h-24 w-24 sm:h-48 sm:w-48">
-                    <img
-                        src="@/assets/adventurer.svg"
-                        alt="adventurer"
-                        class="object-contain"
-                    />
-                </div>
-
                 <div class="flex flex-col items-center space-y-4">
                     <div class="flex relative items-start w-full py-1 bg-fc-black">
                         <div class="absolute right-0 top-0 h-full bg-fc-green w-[12%]" />
@@ -44,33 +36,49 @@
                 </div>
             </div>
 
-            <div class="flex flex-row justify-center items-center">
-                <Selector
-                    :items="SEXTYPE"
-                    :default-selected-item="getDefaultGenre()"
-                    selector-class="flex flex-col w-72 relative bg-fc-black text-white cursor-pointer select-none"
-                    :on-select-item="(v) => character.sex = v"
-                />
+            <div class="flex flex-col justify-center items-center gap-4">
+                <div class="flex relative items-start w-full py-1 bg-fc-black">
+                    <div class="absolute right-0 top-0 h-full bg-fc-green w-[12%]" />
 
-                <CustomInput 
-                    placeHolder="Poids"
-                    outline="fc-green"
-                    :max-length="12"
-                    type="number"
-                    :value="character?.weight"
-                    class="w-full"
-                    @input="v => character.weight = v.target.value"
-                />
+                    <Selector
+                        :items="SEXTYPE"
+                        :default-selected-item="getDefaultGenre()"
+                        selector-class="flex flex-col relative bg-fc-black text-white cursor-pointer select-none"
+                        :on-select-item="(v) => character.sex = v"
+                    />
+                </div>
 
-                <CustomInput 
-                    placeHolder="Taille"
-                    outline="fc-green"
-                    :max-length="12"
-                    type="number"
-                    :value="character?.height"
-                    class="w-full"
-                    @input="v => character.height = v.target.value"
-                />
+                <div class="flex items-center">
+                    <CustomInput 
+                        placeHolder="Poids"
+                        outline="fc-green"
+                        :max-length="12"
+                        typeinput="number"
+                        :value="character?.weight"
+                        class="w-full"
+                        @input="v => character.weight = v.target.value"
+                    />
+
+                    <p class="w-12 font-bold">
+                        KGs
+                    </p>
+                </div>
+
+                <div class="flex items-center">
+                    <CustomInput 
+                        placeHolder="Taille"
+                        outline="fc-green"
+                        :max-length="12"
+                        typeinput="number"
+                        :value="character?.height"
+                        class="w-full"
+                        @input="v => character.height = v.target.value"
+                    />
+
+                    <p class="w-12 font-bold">
+                        cm
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -83,18 +91,14 @@
                 />
     
                 <textarea
-                    class="flex text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
+                    v-model="character.bio"
                     placeholder="Entrez une description"
+                    class="flex text-justify h-full w-full pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
                 />
-    
-                <img
-                    src="@/assets/cornerPixels.svg"
-                    class="absolute bottom-0 right-0 w-12 -rotate-180 z-10 scale-x-[-1]"
-                >
             </div>
 
             <button
-                class="self-end text-5xl font-bold cursor-pointer"
+                class="self-end text-5xl font-bold cursor-pointer hoverStyle"
                 @click="chooseDescription()"
             >
                 Go
@@ -126,17 +130,18 @@ export default {
     },
     computed: {
         ...mapState("characters", {
-            character_creation: (state) => state.character_creation,
-            character: (state) => state.character_creation.character,
+            character: (state) => state.character_creation['character'],
         }),
     },
     methods: {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_currentStep: "characters/set_currentStep",
+            update_completed: "characters/update_completed"
         }),
         chooseDescription() {
             this.set_currentStep('Validation')
+            this.update_completed()
         },
         getDefaultAlignment() {
             const defaultAlignment = this.character.alignment

@@ -66,6 +66,7 @@ export default {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_currentStep: "characters/set_currentStep",
+            update_completed: "characters/update_completed",
         }),
         async chooseLanguage(id) {
             this.character_creation.languages.push(id)
@@ -73,6 +74,7 @@ export default {
             this.character_creation.languages = [...languages_distinct]
             this.set_character_creation(this.character_creation)
             this.set_currentStep('Class')
+            this.update_completed()
         },
     }
 }

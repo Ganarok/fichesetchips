@@ -68,7 +68,7 @@ export default {
         },
         onSelectItem: {
             type: Function,
-            default: () => {},
+            default: () => { },
         },
         defaultSelectedItem: {
             type: Object,
@@ -102,7 +102,7 @@ export default {
         },
     },
     data() {
-        const allItems = [ this.defaultSelectedItem, ...this.items ]
+        const allItems = [this.defaultSelectedItem, ...this.items]
 
         return {
             computedItems: allItems,
@@ -132,7 +132,11 @@ export default {
             this.isOpened = false
         },
         handleHeight() {
-            this.openedStyles.marginTop = this.$refs.openedBox.clientHeight + 'px'
+            try {
+                this.openedStyles.marginTop = this.$refs.openedBox.clientHeight + 'px'
+            } catch {
+                console.warn("Selector common component need refacto")
+            }
         }
     }
 }

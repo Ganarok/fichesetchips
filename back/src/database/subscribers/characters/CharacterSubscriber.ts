@@ -21,6 +21,20 @@ export class CharacterSubscriber implements EntitySubscriberInterface {
         }
     }
 
-    async beforeUpdate(event: UpdateEvent<any>) {
+    async beforeUpdate(event: UpdateEvent<Character>) {
+        if (event.entity && event.entity.experience_points) {
+            const xp = event.entity.experience_points
+            const LevelRepository = await PublicDataSource.getRepository(Level)
+            const CharacterRespository = await PublicDataSource.getRepository(Character)
+            const character = await CharacterRespository.findOneByOrFail({ id: event.entity.id })
+            const previous_xp = character.experience_points
+            event.entity.experience_points = previous_xp + xp
+            if (previous_xp + xp >= character.next_level_experience_points) {
+                event.entity.level_id = character.level_id + 1
+                const next_level = await LevelRepository.findOneOrFail({ where: { id: (event.entity.level_id + 1) } })
+                event.entity.next_level_experience_points = next_level.experience_points
+            }
+            return;
+        }
     }
 }
