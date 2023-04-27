@@ -10,7 +10,10 @@
             :value="value"
             class="flex p-2 px-1 placeholder-gray-700 shadow-inner outline-none placeholder-opacity-50"
             type="text"
+            :autofocus="autofocus"
             @keyup.enter="toggleEdit"
+            @keyup.escape="toggleEdit"
+            @keydown="(v) => handleInput(v)"
         >
         <div
             v-show="!isEditMode"
@@ -30,6 +33,7 @@ export default {
         value: { type: String, default: '' },
         editMode: { type: Boolean, default: false },
         canEdit: { type: Boolean, default: false },
+        autofocus: { type: Boolean, default: false }
     },
     data() {
         return {
@@ -48,6 +52,9 @@ export default {
                 if (this.edit) this.$refs.input.focus()
             }
         },
+        handleInput(v) {
+            console.log(v)
+        }
     },
 }
 </script>

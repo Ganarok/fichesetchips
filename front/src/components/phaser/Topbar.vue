@@ -35,7 +35,7 @@
         <div class="flex space-x-2 items-center">
             <h1>MapMaker</h1>
 
-            <p>
+            <p v-if="title">
                 -
             </p>
 
@@ -43,6 +43,9 @@
                 <EditableDiv 
                     :value="title"
                     :canEdit="true"
+                    :autofocus="true"
+                    @focusin="() => handleBusy(true)"
+                    @focusout="() => handleBusy(false)"
                     @change="(v) => handleChange(v)"
                 />
             </div>
@@ -113,7 +116,15 @@ export default {
         ...mapActions({
             delete_map: "phaser/delete_map"
         }),
+        handleBusy(isBusy) {
+            console.log("isBusy", isBusy)
+            store.commit('phaser/updateState', { property: 'isBusy', newState: isBusy })
+        },
+        handleInput(v) {
+            console.log(v.target.value)
+        },
         handleChange(v) {
+            console.log(v.target.value)
             store.commit("phaser/updateState", { property: "title", newState: v.target.value })
         },
         exportMap() {

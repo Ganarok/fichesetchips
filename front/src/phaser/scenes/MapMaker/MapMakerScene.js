@@ -31,6 +31,7 @@ export default class MapMakerScene extends Scene {
         this.selectedLayer = 0
         this.scaleLevel = 1
         this.mapId = ''
+        this.UIBusy = false
     }
 
     init({ map }) {
@@ -93,6 +94,28 @@ export default class MapMakerScene extends Scene {
             () => store.state.phaser.selectedTile,
             (newValue) => {
                 this.selectedTile = newValue
+            }
+        )
+
+        // Watch if the UI is busy
+        store.watch(
+            () => store.state.phaser.isBusy,
+            (isBusy) => {
+                this.UIBusy = isBusy
+
+                if (isBusy) {
+                    this.eKey.enabled = false
+                    this.iKey.enabled = false
+                    this.tabKey.enabled = false
+                    this.minusKey.enabled = false
+                    this.plusKey.enabled = false
+                } else {
+                    this.eKey.enabled = true
+                    this.iKey.enabled = true
+                    this.tabKey.enabled = true
+                    this.minusKey.enabled = true
+                    this.plusKey.enabled = true
+                }
             }
         )
 
@@ -204,22 +227,30 @@ export default class MapMakerScene extends Scene {
 
     // Init input keys
     _initKeys() {
-        this.shiftKey = this.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.SHIFT
-        )
-        this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
-        this.iKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I)
-        this.tabKey = this.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.TAB
-        )
-        this.minusKey = this.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.MINUS
-        )
-        this.plusKey = this.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.PLUS
-        )
-        this.zKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
-        this.uKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.U)
+        if (!this.shiftKey)
+            this.shiftKey = this.input.keyboard.addKey(
+                Phaser.Input.Keyboard.KeyCodes.SHIFT
+            )
+        if (!this.eKey)
+            this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
+        if (!this.iKey)
+            this.iKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I)
+        if (!this.tabKey)
+            this.tabKey = this.input.keyboard.addKey(
+                Phaser.Input.Keyboard.KeyCodes.TAB
+            )
+        if (!this.minusKey)
+            this.minusKey = this.input.keyboard.addKey(
+                Phaser.Input.Keyboard.KeyCodes.MINUS
+            )
+        if (!this.plusKey)
+            this.plusKey = this.input.keyboard.addKey(
+                Phaser.Input.Keyboard.KeyCodes.PLUS
+            )
+        if (!this.zKey)
+            this.zKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
+        if (!this.uKey)
+            this.uKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.U)
 
         // Mouse Wheel / Touchpad
         this.input.on(
@@ -232,43 +263,54 @@ export default class MapMakerScene extends Scene {
 
         // E Key
         this.eKey.on("down", () => {
-            store.commit("phaser/updateState", {
-                property: "eraser",
-                newState: !store.state.phaser.eraser,
-            })
+            if (!this.UIBusy) {
+                store.commit("phaser/updateState", {
+                    property: "eraser",
+                    newState: !store.state.phaser.eraser,
+                })
+            }
         })
 
         // I Key
         this.iKey.on("down", () => {
-            store.commit("phaser/updateState", {
-                property: "isolateLayer",
-                newState: !store.state.phaser.isolateLayer,
-            })
+            if (!this.UIBusy) {
+                store.commit("phaser/updateState", {
+                    property: "isolateLayer",
+                    newState: !store.state.phaser.isolateLayer,
+                })
+            }
         })
 
         // Tab Key
         this.tabKey.on("down", () => {
-            store.commit("phaser/updateState", {
-                property: "layerTab",
-                newState: !store.state.phaser.layerTab,
-            })
+            if (!this.UIBusy) {
+                store.commit("phaser/updateState", {
+                    property: "layerTab",
+                    newState: !store.state.phaser.layerTab,
+                })
+            }
         })
 
         // U Key (-)
         this.uKey.on('down', () => {
-            this.brushSize = Math.max(1, this.brushSize - 1)
-            this._draw_cursor()
+            if (!this.UIBusy) {
+                this.brushSize = Math.max(1, this.brushSize - 1)
+                this._draw_cursor()
+            }
         })
 
         // Z Key (+)        
         this.zKey.on('down', () => {
-            this.brushSize = Math.min(5, this.brushSize + 1)
-            this._draw_cursor()
+            if (!this.UIBusy) {
+                this.brushSize = Math.min(5, this.brushSize + 1)
+                this._draw_cursor()
+            }
         })
 
         // Plus Key
         this.plusKey.on('down', () => {
-            if(this.scaleLevel < 5) {
+
+            if (this.scaleLevel < 5 && !this.UIBusy) {
                 if(this.scaleLevel < 1) {
                     this.scaleLevel *= 2
                 } else {
@@ -284,7 +326,7 @@ export default class MapMakerScene extends Scene {
 
         // Minus Key
         this.minusKey.on('down', () => {
-            if(this.scaleLevel > 0.25) {
+            if (this.scaleLevel > 0.25 && !this.UIBusy) {
                 if(this.scaleLevel <= 1) {
                     this.scaleLevel /= 2
                 } else {
@@ -330,7 +372,7 @@ export default class MapMakerScene extends Scene {
                 0
             )
 
-            if(jsonFile.layers[index].data) {
+            if (jsonFile.layers[index].data) {
                 jsonFile.layers[index].data.forEach((tile, tileIndex) => {
                     const x = tileIndex % jsonFile.width
                     const y = Math.floor(tileIndex / jsonFile.width)
@@ -444,77 +486,79 @@ export default class MapMakerScene extends Scene {
 
     // handle selection of tiles
     handle_event() {
-        const { layers, eraser } = store.state.phaser
-        const layerName = layers[this.selectedLayer].name
-        const worldPoint = this.input.activePointer.positionToCamera(
-            this.cameras.main
-        )
+        if (!this.UIBusy) {
+            const { layers, eraser } = store.state.phaser
+            const layerName = layers[this.selectedLayer].name
+            const worldPoint = this.input.activePointer.positionToCamera(
+                this.cameras.main
+            )
 
-        // Rounds down to nearest tile
-        var pointerTileX = this.map.worldToTileX(
-            worldPoint.x,
-            true,
-            this.cameras.main,
-            layerName
-        )
-        var pointerTileY = this.map.worldToTileY(
-            worldPoint.y,
-            true,
-            this.cameras.main,
-            layerName
-        )
+            // Rounds down to nearest tile
+            var pointerTileX = this.map.worldToTileX(
+                worldPoint.x,
+                true,
+                this.cameras.main,
+                layerName
+            )
+            var pointerTileY = this.map.worldToTileY(
+                worldPoint.y,
+                true,
+                this.cameras.main,
+                layerName
+            )
 
-        // Snap to tile coordinates, but in world space
-        this.marker.x = this.map.tileToWorldX(
-            pointerTileX,
-            this.cameras.main,
-            layerName
-        )
-        this.marker.y = this.map.tileToWorldY(
-            pointerTileY,
-            this.cameras.main,
-            layerName
-        )
+            // Snap to tile coordinates, but in world space
+            this.marker.x = this.map.tileToWorldX(
+                pointerTileX,
+                this.cameras.main,
+                layerName
+            )
+            this.marker.y = this.map.tileToWorldY(
+                pointerTileY,
+                this.cameras.main,
+                layerName
+            )
 
-        const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY)
-        const startX = tile.x - Math.floor(this.brushSize / 2)
-        const startY = tile.y - Math.floor(this.brushSize / 2)
+            const tile = this.map.getTileAtWorldXY(pointerTileX, pointerTileY)
+            const startX = tile?.x - Math.floor(this.brushSize / 2)
+            const startY = tile?.y - Math.floor(this.brushSize / 2)
 
-        if(this.input.manager.activePointer.isDown) {
-            if(this.shiftKey.isDown) {
-                this.selectedTile = this.layers[this.selectedLayer].getTileAt(
-                    pointerTileX,
-                    pointerTileY,
-                    false,
-                    layerName
-                )
-                store.commit("phaser/updateState", {
-                    property: "selectedTile",
-                    newState: this.selectedTile,
-                })
-            } else if(eraser && startX && startY) {
-                // Supprimer la ou les tiles selon la taille du brush
-                for(let x = startX; x < startX + this.brushSize; x++) {
-                    for(let y = startY; y < startY + this.brushSize; y++) {
-                        this.layers[this.selectedLayer].removeTileAt(
-                            (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,
-                            pointerTileY + y + Math.floor(this.brushSize / 2),
-                            true,
-                            true
-                        )
+            if (this.input.manager.activePointer.isDown) {
+                if(this.shiftKey.isDown) {
+                    this.selectedTile = this.layers[this.selectedLayer].getTileAt(
+                        pointerTileX,
+                        pointerTileY,
+                        false,
+                        layerName
+                    )
+                    store.commit("phaser/updateState", {
+                        property: "selectedTile",
+                        newState: this.selectedTile,
+                    })
+                } else if(eraser && startX && startY) {
+                    // Supprimer la ou les tiles selon la taille du brush
+                    for(let x = startX; x < startX + this.brushSize; x++) {
+                        for(let y = startY; y < startY + this.brushSize; y++) {
+                            this.layers[this.selectedLayer].removeTileAt(
+                                (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,
+                                pointerTileY + y + Math.floor(this.brushSize / 2),
+                                true,
+                                true
+                            )
+                        }
                     }
-                }
-            } else {
-                // Applique une texture sur toutes les tiles du brush
-                for(let x = startX; x < startX + this.brushSize; x++) {
-                    for(let y = startY; y < startY + this.brushSize; y++) {
-                        this.layers[this.selectedLayer].putTileAt(
-                            this.selectedTile,
-                            (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,
-                            (pointerTileY + y + Math.floor(this.brushSize / 2)) * this.scaleLevel,
-                            true,
-                            layerName
-                        )
+                } else {
+                    // Applique une texture sur toutes les tiles du brush
+                    for(let x = startX; x < startX + this.brushSize; x++) {
+                        for(let y = startY; y < startY + this.brushSize; y++) {
+                            this.layers[this.selectedLayer].putTileAt(
+                                this.selectedTile,
+                                (pointerTileX + x + Math.floor(this.brushSize / 2)) * this.scaleLevel,
+                                (pointerTileY + y + Math.floor(this.brushSize / 2)) * this.scaleLevel,
+                                true,
+                                layerName
+                            )
+                        }
                     }
                 }
             }

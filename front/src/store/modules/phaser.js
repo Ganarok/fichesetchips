@@ -9,6 +9,7 @@ export default {
         isExporting: false,
         isSaving: false,
         isLoadingAssets: false,
+        isBusy: false,
         layers: [{
             name: "grounds",
             asset: "desert_grounds",
