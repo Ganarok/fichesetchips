@@ -69,7 +69,7 @@
                 </p>
 
                 <button
-                    class="mr-5 self-end text-5xl font-bold"
+                    class="mr-5 self-end text-5xl font-bold hoverStyle"
                     @click="handleEmail"
                 >
                     Go

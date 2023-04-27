@@ -7,7 +7,7 @@
         class="relative"
     >
         <div
-            v-if="loading"
+            v-if="!loading"
             class="absolute top-0 self-end"
         >
             <Button 
@@ -20,7 +20,7 @@
         </div>
 
         <div 
-            v-if="loading"
+            v-if="!loading"
             class="flex flex-col relative h-full justify-between items-center"
         >
             <component
@@ -29,8 +29,8 @@
             />
 
             <CompletionBar
+                v-if="currentStep !== 'Universe' && currentStep !== 'Validation'"
                 :size="Object.keys(character_creation_steps).length"
-                :completed="completed"
                 class="flex mx-auto mt-[10px] my-4 py-4 mobile:hidden tablet:pb-2"
             />
         </div>
@@ -80,16 +80,17 @@ export default {
             completed: (state) => state.completed,
             character_creation_steps: (state) => state.character_creation_steps,
             character_creation: (state) => state.character_creation,
-            currentStep: (state) => state.currentStep,
+            currentStep: (state) => state.currentStep
         }),
     },
     async mounted() {
+        this.set_loading(true)
         await this.fetch_character_creation_steps()
 
         if (!this.currentStep)
             this.set_currentStep('Universe')
 
-        this.loading = false
+        this.set_loading(false)
     },
     methods: {
         ...mapActions({
@@ -98,10 +99,13 @@ export default {
         }),
         ...mapMutations({
             set_currentStep: "characters/set_currentStep",
+            set_loading: "characters/set_loading",
+            update_completed: "characters/update_completed",
         }),
         handleReset() {
             this.reset_creation()
             this.set_currentStep('Universe')
+            this.update_completed()
             this.$router.push({ name: "CharacterCreate" })
         }
     }

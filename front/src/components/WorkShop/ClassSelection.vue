@@ -30,7 +30,7 @@
                 </div>
 
                 <button
-                    class="self-end text-5xl font-bold cursor-pointer"
+                    class="self-end text-5xl font-bold cursor-pointer hoverStyle"
                     @click="submitClass(selectedClass.id)"
                 >
                     Go
@@ -75,6 +75,7 @@ export default {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_currentStep: "characters/set_currentStep",
+            update_completed: "characters/update_completed"
         }),
         parseSkills(skills) {
             var parsedSkills = []
@@ -120,6 +121,7 @@ export default {
             this.character_creation.character.class_id = id
             this.set_character_creation(this.character_creation)
             this.set_currentStep('Characteristics')
+            this.update_completed()
         }
     }
 }

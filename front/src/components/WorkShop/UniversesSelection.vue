@@ -44,13 +44,14 @@ export default {
         }),
         ...mapMutations({
             set_universe: "universes/set_universe",
-            set_completed: "characters/set_completed",
+            update_completed: "characters/update_completed",
             set_currentStep: "characters/set_currentStep",
+            set_loading: "characters/set_loading",
         }),
         async chooseUnivers(id) {
             this.set_universe(id)
-            this.set_completed()
             this.set_currentStep('Race')
+            this.update_completed()
         },
     }
 }
