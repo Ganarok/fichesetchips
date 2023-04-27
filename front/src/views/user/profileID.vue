@@ -11,22 +11,25 @@
                     <div class="flex flex-col font-bold xl:flex-row min-w-full">
                         <span class="flex flex-col ml-3 items-center xl:items-start">
                             <p class=" text-7xl ">
-                                {{ user.username }}
+                                <!-- {{ user.username }} -->
                             </p>
                             <p class="text-2xl mt-5 text-ellipsis flex-nowrap text-center xl:text-left ">
                                 
                             </p>
                         </span>
                         <span class="flex flex-col items-center xl:items-start xl:ml-16 w-full pt-4 infoProfils  ">
-                            <span v-if="user.location">
+                            <!-- <span v-if="user.location"> -->
+                                 <span>
                                 <!-- Paris, France -->
-                                {{ user.location }}
+                                <!-- {{ user.location }} -->
+                                {{ user.id }}
                             </span>
-                            <span v-else>
+                            <span>
+                            <!-- <span v-else> -->
                                 Rawdon Québec, Canada
                             </span>
                             <span>
-                                {{ user.email }}
+                                <!-- {{ user.email }} -->
                             </span>
                         </span>
                     </div>
@@ -133,7 +136,7 @@ export default {
     },
     async mounted() {
         this.changeTab(this.$route.query.page)
-        await this.fetch_user(this.state.visited_user, this.$route.params.id)
+        // await this.fetch_user(this.$route.params.username)
     },
     methods: {
         ...mapActions({

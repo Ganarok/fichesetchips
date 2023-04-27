@@ -5,7 +5,7 @@ export default {
     state: {
         user: {},
         access_token: "",
-        visited_user: {},
+        visited_user: { "username": "loading"},
     },
     mutations: {
         set_user(state, user) {
