@@ -65,7 +65,7 @@ export default {
         isBorder: {
             type: Boolean,
             default: true,
-        },
+        }
     },
 }
 </script>

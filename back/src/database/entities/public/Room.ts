@@ -1,8 +1,9 @@
-import { Entity, OneToOne, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm"
+import { Entity, OneToOne, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, Unique } from "typeorm"
 import { Game } from "./Game"
 import { User } from "./User"
 
 @Entity()
+@Unique(["title", "gm"])
 export class Room {
     @PrimaryGeneratedColumn("uuid")
     id: string

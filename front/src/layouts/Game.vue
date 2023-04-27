@@ -1,19 +1,23 @@
 <template>
     <div class="flex w-screen">
         <div
-            v-if="loading"
-            class="flex items-center justify-center"
+            v-if="current_map_title"
+            class="absolute right-0 m-4 text-fc-yellow transition opacity-40 hover:opacity-100 delay-200 hover:delay-75"
         >
-            <Loader />
+            <div class="bg-fc-black-light p-4">
+                <p class="font-bold">
+                    {{ current_map_title }}
+                </p>
+            </div>
         </div>
 
         <div
-            v-else
+            v-if="!loading"
             class="absolute left-0"
         >
             <div 
                 class="flex flex-col relative items-center h-screen bg-fc-black transition-all duration-200"
-                :class="sidebarOpened ? 'w-72' : 'w-0'"
+                :class="sidebarOpened ? 'w-72' : 'w-0 animate-pulse'"
             >
                 <div 
                     class="absolute items-center h-8 w-6 -right-6 top-4 rounded-r-lg bg-fc-yellow border border-fc-black z-20 cursor-pointer"
@@ -53,7 +57,33 @@
                                 alt="Chat"
                             />
                         </div>
-        
+
+                        <div
+                            v-if="is_gm"
+                            class="relative h-10 w-10 p-1 hoverStyle"
+                            :class="selectedOption === 'gm' && 'border-2 bg-fc-yellow border-black'"
+                            @click="selectedOption = 'gm'"
+                        >
+                            <img
+                                src="@/assets/icons/gm.svg"
+                                class="object-contain"
+                                alt="GM"
+                            />
+                        </div>
+
+                        <div
+                            v-if="!is_gm"
+                            class="relative h-10 w-10 p-1 hoverStyle"
+                            :class="selectedOption === 'character' && 'border-2 bg-fc-yellow border-black'"
+                            @click="selectedOption = 'character'"
+                        >
+                            <img
+                                src="@/assets/icons/user.svg"
+                                class="object-contain"
+                                alt="User"
+                            />
+                        </div>
+                        
                         <div
                             class="relative h-10 w-10 p-1 hoverStyle"
                             :class="selectedOption === 'diary' && 'border-2 bg-fc-yellow border-black'"
@@ -62,7 +92,19 @@
                             <img
                                 src="@/assets/icons/diary.svg"
                                 class="object-contain"
-                                alt="Chat"
+                                alt="Diary"
+                            />
+                        </div>
+
+                        <div
+                            class="relative h-10 w-10 p-1 hoverStyle"
+                            :class="selectedOption === 'dices' && 'border-2 bg-fc-yellow border-black'"
+                            @click="selectedOption = 'dices'"
+                        >
+                            <img
+                                src="@/assets/icons/dice.svg"
+                                class="object-contain"
+                                alt="Dices"
                             />
                         </div>
         
@@ -74,7 +116,7 @@
                             <img
                                 src="@/assets/icons/option_black.svg"
                                 class="object-contain"
-                                alt="Chat"
+                                alt="Options"
                             />
                         </div>
                     </div>
@@ -83,8 +125,17 @@
                         v-if="selectedOption === 'chat'"
                         :socket="socket"
                     />
+                    <GM v-if="selectedOption === 'gm' && is_gm" />
+                    <Character v-if="selectedOption === 'character' && !is_gm" />
                     <Diary v-if="selectedOption === 'diary'" />
-                    <Options v-if="selectedOption === 'options'" />
+                    <Dices 
+                        v-if="selectedOption === 'dices'" 
+                        :socket="socket"
+                    />
+                    <Options 
+                        v-if="selectedOption === 'options'" 
+                        :socket="socket"
+                    />
                 </div>
             </div>
         </div>
@@ -94,18 +145,24 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import Chat from '@/components/game/Chat.vue'
 import Diary from '@/components/game/Diary.vue'
 import Options from '@/components/game/Options.vue'
-import Loader from '@/components/common/Loader.vue'
+import Character from '@/components/game/Character.vue'
+import Dices from '@/components/game/Dices.vue'
+import GM from '@/components/game/GM.vue'
 
 export default {
     name: "GameLayout",
     components: {
-        Loader,
         Chat,
         Options,
-        Diary
+        Diary,
+        Dices,
+        Character,
+        GM
     },
     props: {
         loading: {
@@ -114,15 +171,26 @@ export default {
         },
         socket: {
             type: Object,
-            required: true
+            default: null
         }
     },
     data() {
         return {
             selectedOption: 'chat',
-            sidebarOpened: true
+            sidebarOpened: false
         }
     },
-    methods: {}
+    computed: {
+        ...mapState('game', {
+            current_map_title: (state) => state.current_map_title,
+            is_gm: (state) => state.diary.is_gm
+        })
+    },
+    created() {
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab')
+                this.sidebarOpened = !this.sidebarOpened
+        })
+    }
 }
 </script>

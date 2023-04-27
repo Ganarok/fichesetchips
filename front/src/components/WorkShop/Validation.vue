@@ -55,18 +55,12 @@
                 <textarea
                     v-model="character_creation.character.bio"
                     :disabled="true"
-                    class="flex text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
-                    placeholder="Entrez une description"
+                    class="flex text-justify h-full w-full pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:m-3 placeholder:italic"
                 />
-    
-                <img
-                    src="@/assets/cornerPixels.svg"
-                    class="absolute bottom-0 right-0 w-12 -rotate-180 z-10 scale-x-[-1]"
-                >
             </div>
 
             <button
-                class="self-end text-5xl font-bold cursor-pointer"
+                class="z-10 self-end text-5xl font-bold cursor-pointer p-4 hoverStyle"
                 @click="validation()"
             >
                 Valider
@@ -76,7 +70,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { useToast } from 'vue-toastification'
 
 import BlackGreenDiv from '@/components/common/BlackGreenDiv.vue'
@@ -97,7 +91,10 @@ export default {
     },
     methods: {
         ...mapMutations({
-            push_character: "characters/push_character",
+            push_character: "characters/push_character"
+        }),
+        ...mapActions({
+            reset_creation: "characters/reset_creation"
         }),
         parseStats() {
             let keys = Object.keys(this.character_creation.stats)
@@ -128,10 +125,12 @@ export default {
                     body: this.character_creation
                 })
 
+                this.reset_creation()
+
                 await this.$router.push('/characters')
                     .then(() => toast.success('Personnage créé avec succès'))
             } catch (error) {
-                toast.error(error)
+                toast.error(error.message)
             }
         }
     }

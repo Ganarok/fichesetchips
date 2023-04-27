@@ -77,7 +77,10 @@ export default {
     props: {
         character: {type: Object, default: new Object()},
         border: {type: String, default: ""},
-        grayed: { type: Boolean, default: false }
+        grayed: { type: Boolean, default: false },
+        owner: { type: String, default: "" },
+        location: { type: String, default: "" },
+        image: { type: Boolean }
     },
     data() {
         return {
@@ -107,7 +110,7 @@ export default {
             if(id == "create") 
                 return "/characters/create"
             else
-                return "/user/character/" + id
+                return "/characters/" + id
         }
     }
 }

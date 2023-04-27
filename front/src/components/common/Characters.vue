@@ -42,6 +42,9 @@ export default {
             characters: (state) => state.characters,
         })
     },
+    async mounted() {
+        await this.fetch_characters() 
+    },
     methods: {
         ...mapActions({
             fetch_characters: "characters/fetch_characters"

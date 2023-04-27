@@ -12,15 +12,15 @@
                 class="flex flex-col space-y-4 overflow-y-auto scrollbar-hide w-full z-10"
             >
                 <p 
-                v-for="(message, index) in messages" :key="index"
+                    v-for="(message, index) in messages" :key="index"
                     class="flex flex-col space-y-1"
                 >
                     <span class="w-full font-bold text-fc-yellow">
-                        {{ message.senderName }} :
+                        {{ message?.senderName }} :
                     </span>
 
                     <span>
-                        {{ message.text }}
+                        {{ message?.text }}
                     </span>
                 </p>
             </div>
@@ -35,13 +35,13 @@
 
         <input
             type="text"
-            :model="message"
-            :value="message"
+            :value="messageText"
             placeholder="Type your message"
             class="p-2 mx-2 m-1 focus:outline-fc-green"
             autofocus
-            @input="message = $event.target.value"
-            @keyup.enter="sendMessage(message); message = ''"
+            @input="updateMessageText($event.target.value)"
+            @keyup.space="messageText += ' '"
+            @keyup.enter="sendMessage(messageText)"
         />
 
         <img 
@@ -60,28 +60,35 @@ export default {
     props: {
         socket: {
             type: Object,
-            required: true
+            default: null
         },
+    },
+    data() {
+        return {
+            messageText: "",
+        }
     },
     computed: {
         ...mapState("user", {
             user: (state) => state.user
         }),
         ...mapState("game", {
-            messages: (state) => state.messages
+            messages: (state) => state.messages,
+            roomId: (state) => state.roomId
         }),
-    },
-    mounted() {
-        this.socket.on("message", (message) => {
-            this.pushMessage(message)
-        })
     },
     methods: {
         ...mapMutations({
             pushMessage: "game/pushMessage",
             resetMessages: "game/resetMessages",
         }),
+        updateMessageText(text) {
+            console.log("Updating message text", text)
+            this.messageText = text
+        },
         sendMessage(text) {
+            console.log("Sending message", this.user)
+
             const newMessage = {
                 text,
                 senderName: this.user.username || this.socket.id,
@@ -90,6 +97,8 @@ export default {
 
             this.socket.emit("message", newMessage)
             this.pushMessage(newMessage)
+
+            this.messageText = ""
         },
     },
 }

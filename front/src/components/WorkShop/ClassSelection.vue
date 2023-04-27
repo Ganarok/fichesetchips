@@ -24,13 +24,13 @@
                         v-for="skill_nb, index in selectedClass.skill_nb"
                         :key="skill_nb"
                         selectorClass="flex flex-col relative text-white cursor-pointer select-none bg-fc-black-light"
-                        :on-select-item="(v) => skills[index] = v"
-                        :items="parseSkills(selectedClass.skills)"
+                        :on-select-item="(v) => updateParsedSkills(v, index)"
+                        :items="parsedSkills"
                     />
                 </div>
 
                 <button
-                    class="self-end text-5xl font-bold cursor-pointer"
+                    class="self-end text-5xl font-bold cursor-pointer hoverStyle"
                     @click="submitClass(selectedClass.id)"
                 >
                     Go
@@ -61,6 +61,7 @@ export default {
     data() {
         return {
             skills: [],
+            parsedSkills: [],
             selectedClass: {},
             showModal: false
         }
@@ -74,6 +75,7 @@ export default {
         ...mapMutations({
             set_character_creation: "characters/set_character_creation",
             set_currentStep: "characters/set_currentStep",
+            update_completed: "characters/update_completed"
         }),
         parseSkills(skills) {
             var parsedSkills = []
@@ -83,11 +85,22 @@ export default {
                 value: skill.id
             }))
 
-            return parsedSkills
+            this.parsedSkills = parsedSkills
+        },
+        updateParsedSkills(v, index) {
+            this.skills[index] = v
+
+            this.parsedSkills = this.parsedSkills.filter(skill => {
+                return !this.skills.includes(skill.value)
+            })
         },
         async chooseClass(selectedClass) {
             this.selectedClass = selectedClass
+            this.parseSkills(selectedClass.skills)
             this.showModal = true
+        },
+        hasDuplicates(array) {
+            return (new Set(array)).size !== array.length
         },
         async submitClass(id) {
             const toast = useToast()
@@ -98,10 +111,17 @@ export default {
                 return
             }
 
+            if (this.hasDuplicates(this.skills)) {
+                toast.error('Vous ne pouvez pas sélectionner deux fois la même compétence.')
+
+                return
+            }
+
             this.character_creation.skills = this.skills
             this.character_creation.character.class_id = id
             this.set_character_creation(this.character_creation)
             this.set_currentStep('Characteristics')
+            this.update_completed()
         }
     }
 }

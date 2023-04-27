@@ -59,7 +59,6 @@ describe('Users', () => {
             expect(res.status).to.equal(200);
             expect(res.body.user).to.have.property('email');
             expect(res.body.user).to.have.property('username');
-            expect(res.body.user).to.not.have.property('id');
             expect(res.body.user).to.not.have.property('role');
             expect(res.body.user).to.not.have.property('preference_id');
             expect(res.body.user).to.not.have.property('password');
@@ -107,7 +106,6 @@ describe('Users', () => {
             expect(res.status).to.equal(200);
             expect(res.body.user).to.have.property('email');
             expect(res.body.user).to.have.property('username');
-            expect(res.body.user).to.not.have.property('id');
             expect(res.body.user).to.not.have.property('role');
             expect(res.body.user).to.not.have.property('preference_id');
             expect(res.body.user).to.not.have.property('password');
