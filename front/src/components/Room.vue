@@ -230,14 +230,13 @@
 </template>
 
 <script>
+import { mapActions, mapMutations, mapState } from "vuex"
+import { useToast } from "vue-toastification"
+
 import Button from "@/components/common/Button.vue"
 import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
 import { apiCall } from '@/utils/apiCall'
-import { useToast } from "vue-toastification"
 import Selector from '@/components/common/Selector.vue'
-import { MAPS } from '@/utils/enums'
-import { mapActions, mapMutations, mapState } from "vuex"
-import { toRaw } from 'vue'
 import CustomInput from "@/components/common/CustomInput.vue"
 
 
@@ -256,11 +255,27 @@ export default {
             default: null
         },
     },
-    mounted() {
-        this.clear_room()
-        this.fetch_room(this.room_id)
-        this.fetch_maps()
-        this.fetch_stories()
+    data() {
+        return {
+            tmp_game_status: [
+                {
+                    name: "running",
+                    value: "running",
+                },
+                {
+                    name: "paused",
+                    value: "paused"
+                },
+                {
+                    name: "planned",
+                    value: "planned",
+                },
+                {
+                    name: "closed",
+                    value: "closed"
+                }
+            ],
+        }
     },
     computed: {
         ...mapState("room", {
@@ -294,27 +309,11 @@ export default {
                 return "Rejoindre"
         }
     },
-    data() {
-        return {
-            tmp_game_status: [
-                {
-                    name: "running",
-                    value: "running",
-                },
-                {
-                    name: "paused",
-                    value: "paused"
-                },
-                {
-                    name: "planned",
-                    value: "planned",
-                },
-                {
-                    name: "closed",
-                    value: "closed"
-                }
-            ],
-        }
+    mounted() {
+        this.clear_room()
+        this.fetch_room(this.room_id)
+        this.fetch_maps()
+        this.fetch_stories()
     },
     methods: {
         async postForm() {
@@ -365,7 +364,7 @@ export default {
                 }
             }
         },
-        async handlePublish(v) {
+        async handlePublish() {
             const toast = useToast()
             try {
                 await apiCall({

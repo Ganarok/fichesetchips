@@ -34,7 +34,7 @@
             </div>
 
             <Button
-                :button-text="$t('Pauser la partie')"
+                :button-text="$t('Vider les messages')"
                 class="bg-fc-green p-3 text-base self-center hoverStyle"
                 textColor="text-fc-black"
                 color="fc-yellow"
@@ -54,14 +54,18 @@
                 @click="pauseGame()"
             />
 
-            <router-link
-                to="/rooms"
-                class="flex items-center font-bold hoverStyle bg-fc-red text-center text-fc-black p-3"
+            <Button
+                :button-text="$t('Quitter la partie')"
+                class="bg-fc-red p-3 text-base hoverStyle"
+                textColor="text-fc-black"
+                color="fc-red"
+                :rounded="false"
+                @click="leaveGame()"
             >
                 <p class="text-base">
                     Quitter la partie 
                 </p>
-            </router-link>
+            </Button>
         </div>
     </div>
 </template>
@@ -70,17 +74,29 @@
 import { mapMutations, mapState } from 'vuex'
 
 import Button from '@/components/common/Button.vue'
+import { useToast } from 'vue-toastification'
 
 export default {
     name: "Options",
     components: {
         Button
     },
+    props: {
+        socket: {
+            type: Object,
+            default: null
+        }
+    },
     computed: {
         ...mapState('game', {
             vocal_url: state => state.vocal_url,
             gm: state => state.gm,
-            is_gm: state => state.diary.is_gm
+            is_gm: state => state.diary.is_gm,
+            roomId: state => state.roomId,
+            my_character: state => state.diary.my_character
+        }),
+        ...mapState('user', {
+            userId: state => state.user.id
         })
     },
     methods: {
@@ -90,6 +106,23 @@ export default {
         pauseGame() {
             console.log('pauseGame')
         },
+        leaveGame() {
+            const toast = useToast()
+
+            if (this.socket) {
+                this.socket.emit('leaving_room', {
+                    room_id: this.roomId,
+                    name: this.ig_gm ? 
+                        'Le GM'
+                        : `${this.my_character?.firstname} ${this.my_character?.lastname}` || 'Un joueur',
+                    userId: this.userId
+                })
+            }
+
+            this.$router.push('/rooms').then(() => {
+                toast.success('Vous avez quitté la partie')
+            })
+        }
     }
 }
 

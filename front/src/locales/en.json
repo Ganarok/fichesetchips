@@ -72,5 +72,7 @@
     "Reconnexion": "Reconnection",
     "Niveau": "Level",
     "PV": "HP",
-    "Pause la partie": "Pause the game"
+    "Pause la partie": "Pause the game",
+    "Quitter la partie": "Leave the game",
+    "Vider les messages": "Clean messages"
 }
