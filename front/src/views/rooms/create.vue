@@ -33,156 +33,131 @@
                     background-color="fc-black"
                     :onclick="handleSubmit"
                 />
-                <!-- <Button
-                    class="ml-4 sm:mx-12"
-                    button-text="Publier"
-                    textColor="text-fc-yellow"
-                    color="fc-black"
-                    :rounded="false"
-                    :disabled="loading"
-                    background-color="fc-black"
-                    :onclick="handleSubmit"
-                /> -->
             </div>
 
-            <div
-                class="flex flex-col h-full w-full pb-4 space-y-4 sm:space-y-0 sm:flex-row sm:overflow-y-auto sm:space-x-8"
-            >
-                <div
-                    class="flex flex-col relative h-full w-full pb-4 bg-gradient-to-b from-gray-50 to-gray-100 t sm:w-3/4"
-                >
+            <div class="flex flex-col h-full w-full sm:overflow-y-auto sm:space-x-8 sm:flex-row">
+                <div class="flex flex-col relative h-full w-full pb-4 sm:w-3/4">
                     <BlackGreenDiv
                         title="Description"
                         :right-green-div="false"
                         color="text-white"
                     />
-
-                    <textarea
-                        v-model="room.description"
-                        class="scrollbar-hide flex h-screen text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:h-full sm:m-3 placeholder:italic"
-                        placeholder="Entrez une description"
-                    />
-                    <BlackGreenDiv
-                        title="Requirements"
-                        :right-green-div="false"
-                        color="text-white"
-                    />
-
-                    <textarea
-                        v-model="room.requirements"
-                        class="scrollbar-hide flex h-screen text-justify pr-2 m-2 bg-transparent overflow-y-scroll outline-none resize-none sm:h-full sm:m-3 placeholder:italic"
-                        placeholder="Entrez une description"
-                    />
+                    <div class="flex h-full overflow-y-scroll scrollbar-hide">
+                        <textarea
+                            v-model="room.description"
+                            class="flex h-full overflow-y-scroll scrollbar-hide"
+                            placeholder="Entrez une description"
+                        />
+                    </div>
 
                     <img
                         src="@/assets/cornerPixels.svg"
-                        class="absolute bottom-0 right-0 w-12 -rotate-180 z-10 scale-x-[-1]"
+                        class="absolute bottom-4 right-0 w-12 -rotate-180 -z-10 scale-x-[-1]"
                     >
                 </div>
 
-                <div class="flex flex-col w-full h-full space-y-4">
+                <div class="flex flex-col w-full h-full">
                     <BlackGreenDiv
-                        title="Contenu de la partie"
+                        title="Paramétrage"
                         :right-green-div="false"
                         color="text-white"
                     />
+                
+                    <div class="flex w-full h-full p-4 justify-evenly  sm:h-1/2">
+                        <div class="flex flex-col space-y-4 sm:space-y-6">
+                            <h3 class="flex font-bold items-center">
+                                Prérequis:
+                                <CustomInput
+                                    :max-length="254"
+                                    place-holder="Prérequis"
+                                    type="text"
+                                    outline="fc-green"
+                                    :value="room.requirements"
+                                    @input="(v) => handleUpdateRequirements(v.target.value)"
+                                />
+                            </h3>
+                            <div class="flex">
 
-                    <div class="flex justify-evenly">
-                        <div class="flex flex-col px-4 items-center justify-between">
-                            <p class="font-bold">
-                                {{ $t("Cartes") }}
-                            </p>
+                            <h3 class="flex font-bold items-center mx-2">
+                                Map:
     
-                            <SelectorMultiple
-                                :items="maps"
-                                :isMultiple="false"
-                                :on-select-item="handleSelectedMaps.bind(this)"
-                                selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
-                            />
+                                <SelectorMultiple
+                                    :items="maps"
+                                    :isMultiple="false"
+                                    :on-select-item="handleSelectedMaps.bind(this)"
+                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                                />
+                            </h3>
+                            <h3 class="flex font-bold items-center">
+                                Story:
+                                <SelectorMultiple
+                                    :items="stories"
+                                    :isMultiple="false"
+                                    :on-select-item="handleSelectedStory.bind(this)"
+                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                                />
+                            </h3>
                         </div>
-                        <div class="flex flex-col px-4 items-center justify-between">
-                            <p class="font-bold">
-                                {{ $t("Story") }}
+                            <h3 class="flex font-bold items-center">
+                                Nombre de joueurs max:
+
+                                <input
+                                    :max="64"
+                                    :min="0"
+                                    :placeholder="5"
+                                    type="number"
+                                    class="flex w-12 h-12 mr-5 text-center bg-fc-black text-fc-green placeholder:text-fc-yellow-trans text-lg font-bold outline-none mx-2"
+                                    outline="fc-green"
+                                    :value="room.players_nb_max"
+                                    @input="(v) => (room.players_nb_max = parseInt(v.target.value || 0))"
+                                />
+                            </h3>
+
+                            <h3 class="flex font-bold">
+                                Privé:
+                                <input
+                                    class="mx-2"
+                                    :checked="room.is_private"
+                                    type="checkbox"
+                                    :onClick="(v) => set_is_private(v.target.checked)"
+                                >
+                            </h3>
+                            <h3 class="flex font-bold items-center">
+                                Mot de passe:
+                                <CustomInput
+                                    :max-length="64"
+                                    :place-holder="$t('Mot de passe')"
+                                    :typeinput="'password'"
+                                    outline="fc-green"
+                                    :value="room.password"
+                                    @input="(v) => (room.password = v.target.value)"
+                                />
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col h-full">
+                        <BlackGreenDiv
+                            title="Communication"
+                            :right-green-div="false"
+                            color="text-white"
+                        />
+
+                        <div class="flex flex-col items-center justify-between p-4 space-x-2 sm:flex-row">
+                            <p class="flex items-center space-x-4 font-bold">
+                                Vocal
                             </p>
-                            <SelectorMultiple
-                                :items="stories"
-                                :isMultiple="false"
-                                :on-select-item="handleSelectedStory.bind(this)"
-                                selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+
+                            <CustomInput
+                                :max-length="254"
+                                place-holder="URL du vocal"
+                                type="text"
+                                outline="fc-green"
+                                :value="room.vocal_url"
+                                @input="(v) => (room.vocal_url = v.target.value)"
                             />
                         </div>
                     </div>
-    
-                    <!-- <div class="flex flex-col px-4 items-center justify-between">
-                            <p class="font-bold">
-                                {{ $t("Stories") }}
-                            </p>
-    
-                            <SelectorMultiple
-                                :items="stories"
-                                :on-select-item="handleUpdateStyle"
-                                selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
-                            />
-                        </div> -->
-                </div>
-
-                <BlackGreenDiv
-                    title="Accessibilité du salon"
-                    :right-green-div="false"
-                    color="text-white"
-                />
-
-                <div class="flex w-full items-center justify-between px-4">
-                    <p class="font-bold">
-                        {{ $t("Mot de passe") }}
-                    </p>
-
-                    <CustomInput
-                        :max-length="64"
-                        :place-holder="$t('Mot de passe')"
-                        :typeinput="'password'"
-                        outline="fc-green"
-                        :value="room.password"
-                        @input="(v) => (room.password = v.target.value)"
-                    />
-                </div>
-
-                <div class="flex w-full items-center justify-between px-4">
-                    <p class="font-bold">
-                        Max. de joueurs
-                    </p>
-
-                    <input
-                        :max="64"
-                        :min="0"
-                        :placeholder="5"
-                        type="number"
-                        class="flex w-12 h-12 mr-5 text-center bg-fc-black text-fc-green placeholder:text-fc-yellow-trans text-lg font-bold outline-none"
-                        outline="fc-green"
-                        :value="room.players_nb_max"
-                        @input="(v) => (room.players_nb_max = parseInt(v.target.value || 0))"
-                    />
-                </div>
-
-                <BlackGreenDiv
-                    title="Communication"
-                    :right-green-div="false"
-                    color="text-white"
-                />
-
-                <div class="flex w-full items-center justify-between px-4">
-                    <p class="font-bold">
-                        Vocal
-                    </p>
-
-                    <CustomInput
-                        :max-length="254"
-                        place-holder="URL du vocal"
-                        type="text"
-                        outline="fc-green"
-                        :value="room.vocal_url"
-                        @input="(v) => (room.vocal_url = v.target.value)"
-                    />
                 </div>
             </div>
         </div>
@@ -308,6 +283,12 @@ export default {
         handleUpdateLang(v) {
             this.room.language = v
         },
+        set_is_private(v) {
+            this.room.is_private = v
+        },
+        handleUpdateRequirements(v) {
+            this.room.requirements = v
+        },
         handleUpdateMinLvl(v) {
             let maxLvl = this.room.levelGap.split("-")[1]
 
@@ -358,7 +339,7 @@ export default {
                 toast.error(this.errors.message)
                 this.update_error({ message: null })
             } else {
-                this.$router.push(`/rooms/${this.room.id}`).then(() => toast.success(this.$t('Création de la room réalisée avec succès')))
+                this.$router.push(`/rooms`).then(() => toast.success(this.$t('Création de la room réalisée avec succès')))
             }
             this.loading = false
 

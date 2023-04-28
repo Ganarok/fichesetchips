@@ -75,7 +75,7 @@
                     :right-green-div="false"
                     color="text-white"
                 />
-
+                
                 <div class="flex w-full h-full p-4 justify-evenly  sm:h-1/2">
                     <div class="flex flex-col space-y-4 sm:space-y-6">
                         <h3 class="flex font-bold">
