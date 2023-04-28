@@ -89,16 +89,20 @@ export default class MapMakerScene extends Scene {
 
     // Handle players init
     _initPlayers() {
-        const players = store.state.game.diary.players
+        // const players = store.state.game.diary.players
 
-        console.log(players)
+        // players.forEach((player, index) => this.addPlayer(player.id, player.character.firstname,  9 + index + index,  15 + index))
 
-        players.forEach((player, index) => {
-            this.addPlayer(player.name, player.name, 0 + index, 0 + index)
-        })
+        const players = store.state.game.game_state.players
 
-        this.addPlayer('player1', 'salut', 10, 10)
-        this.addPlayer('player1', 'EZ', 22, 2)
+        players.forEach((player, index) => this.addPlayer(
+            player.id,
+            player.character.firstname,
+            9 + index + index,
+            15 + index
+            // player.character.x,
+            // player.character.y
+        ))
     }
 
     _initListeners() {

@@ -31,16 +31,7 @@
         <Suspense 
             v-else
         >
-            <div
-                v-if="!loading && error"
-                class="flex flex-col text-center items-center space-y-4"
-            >
-                <p class="font-bold text-white text-2xl max-w-prose">
-                    {{ error }}
-                </p>
-            </div>
-
-            <GameContainer v-else />
+            <GameContainer />
 
             <template #fallback>
                 <div
@@ -153,11 +144,11 @@ export default {
                     if (update.type) {
                         switch (update.type) {
                         case 'gamestatus':
-                            this.error = `La session n'est plus en cours (${update?.state}).`
-                            toast.info('La session a été mise en pause par votre MJ')
+                            this.$router.go().then(() => toast.info('La session a été mise en pause par votre MJ'))
                             break
                         
                         default:
+                            console.log('Unknown update type')
                             break
                         }
                     }

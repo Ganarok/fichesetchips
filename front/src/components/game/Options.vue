@@ -112,18 +112,22 @@ export default {
             
             try {
                 await this.update_game_state({
-                    status: GAMESTATUS.PAUSED,
-                    state: {}
+                    status: GAMESTATUS.PAUSED
                 })
 
                 if (this.socket) {
+                    console.log('emit update: room status paused')
+
                     this.socket.emit('update', {
-                        room_id: this.roomId,
+                        roomId: this.roomId,
+                        type: 'gamestatus',
                         gamestatus: GAMESTATUS.PAUSED
                     })
                 }
                 
-                toast.success('La partie a été mise en pause')
+                this.socket.close()
+                this.$router.push(`/rooms/${this.roomId}`)
+                    .then(() => toast.success('La partie a été mise en pause'))
             } catch (error) {
                 toast.error('Une erreur est survenue')
                 console.log(error)

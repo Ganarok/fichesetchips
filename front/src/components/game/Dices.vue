@@ -112,7 +112,7 @@
         </div>
 
         <div 
-            v-if="lastDice"
+            v-if="lastDice.result"
             class="flex flex-col space-y-2"
         >
             <p class="text-lg font-bold text-fc-green">

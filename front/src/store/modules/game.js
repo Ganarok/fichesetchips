@@ -10,7 +10,7 @@ export default {
         messages: [],
         maps: [],
         gm: {},
-        gameState: {},
+        game_state: {},
         diary: {
             is_gm: false,
             my_character: {}, 
@@ -72,6 +72,54 @@ export default {
                 state.story = data.game.story
                 state.diary.places = data.game.tilemap
 
+                if (data.game.state) {
+                    console.log('Retreiving game state registered...')
+                    let gameState = data.game.state
+
+                    gameState.players.forEach((player, index) => {
+                        if (!player.character.x) {
+                            console.log('No x position for player', player.character.firstname, player.character.lastname, 'setting default position...')
+                            player.character.x = 9 + index + index
+                        }
+                        if (!player.character.y) {
+                            console.log('No y position for player', player.character.firstname, player.character.lastname, 'setting default position...')
+                            player.character.y = 15 + index
+                        }
+                    })
+
+                    state.game_state = gameState
+                } else {
+                    console.log('No game state registered, creating a new one...')
+
+                    state.game_state = {
+                        id: data.game.id,
+                        map: {
+                            id: data.game.tilemap.id,
+                            title: data.game.tilemap.title,
+                            // data: data.game.tilemap.data
+                        },
+                        players: data.game.players.reduce((players, player, index) => [
+                            ...players,
+                            {
+                                id: player.id,
+                                user: {
+                                    id: player.user.id,
+                                    username: player.user.username,
+                                },
+                                character: {
+                                    id: player.character.id,
+                                    firstname: player.character.firstname,
+                                    lastname: player.character.lastname,
+                                    hp: player.character.hp,
+                                    experience_points: player.character.experience_points,
+                                    x: 9 + index + index,
+                                    y: 15 + index
+                                }
+                            }
+                        ], [])
+                    }
+                }
+
                 return data
             } catch (error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
@@ -80,20 +128,32 @@ export default {
         },
         async update_game_state({ commit, state }, newState) {
             try {
-                console.log('newState', newState)
-
-                const resJson = await apiCall({
+                await apiCall({
                     method: "PUT",
                     route: `/games/${state.gameId}`,
                     body: newState,
                 })
 
-                console.log('resJson', resJson)
-
             } catch (error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 throw new Error(error.message)
 
+            }
+        },
+        async update_game_state_player({ commit, state }, update) {
+            try {
+                console.log('Updating game state player', update.playerId, update.character)
+
+                const playerIndex = state.game_state.players.findIndex(player => player.id === update.playerId)
+
+                if (playerIndex === -1) {
+                    throw new Error('Player not found')
+                }
+
+                state.game_state.players[playerIndex].character = update.character
+            } catch (error) {
+                commit("errors/set_error", { message: error.message }, { root: true })
+                throw new Error(error.message)
             }
         }
     },
