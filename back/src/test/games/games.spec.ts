@@ -148,7 +148,9 @@ describe('Games', () => {
                             experience_points: player.character.experience_points,
                             hp: player.character.hp,
                             firstname: player.character.firstname,
-                            lastname: player.character.lastname
+                            lastname: player.character.lastname,
+                            x: null,
+                            y: null
                         }
                     }
                 }),
@@ -180,7 +182,7 @@ describe('Games', () => {
                     return {
                         id: player.id,
                         user: player.user,
-                        character: { ...player.character, experience_points: 50 }
+                        character: { ...player.character, experience_points: 50, x: 35, y:40 }
                     }
                 })}
             const res = await request(app)
