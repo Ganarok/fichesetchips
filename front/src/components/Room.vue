@@ -30,13 +30,12 @@
             <div v-if="is_gm">
                 <img
                     src="@/assets/icons/option.svg"
-                    class="h-6 w-6 cursor-pointer transition ease-in-out hover:opacity-80 hover:rotate-90"
+                    class="relative h-6 w-6 cursor-pointer transition ease-in-out hover:opacity-80 hover:rotate-90"
                     alt="option"
-                    @click="() => optionsOpened = !optionsOpened"
-                >
+                    @click="toggleOption">
                 <div
                     v-if="optionsOpened"
-                    class="absolute left-10 items-center p-2 bg-fc-black-light text-fc-yellow whitespace-nowrap"
+                    class="absolute items-center p-2 bg-fc-black-light text-fc-yellow whitespace-nowrap"
                 >
                     <div class="flex flex-col space-y-4">
                         <div
@@ -337,8 +336,10 @@ export default {
                 }
             ],
             optionsOpened: false,
-            options: []
+        options: [],
         }
+    },
+    watch: {
     },
     computed: {
         ...mapState("room", {
@@ -362,8 +363,7 @@ export default {
         },
         game_is_full() {
             return this.room.game.players.length >= this.room.players_nb_max
-        },
-    
+        },   
 
         // "Rejoint": player already in game
         // "Complet": game is full
@@ -387,7 +387,11 @@ export default {
         this.fetch_stories()
     },
     methods: {
-        async set_options() {
+        toggleOption() {
+            this.optionsOpened = !this.optionsOpened
+        },
+        set_options() {
+            console.log("set")
             if (this.is_gm) {
                 this.options = [{
                     name: "Sauvegarder les modifications",
@@ -397,6 +401,7 @@ export default {
                     name: this.room.is_published ? 'Dépublier' : 'Publier',
                     action: () => {
                         this.handlePublish(this.room.is_published ? false : true)
+                        this.$router.push(`/rooms/${this.room.id}`)
                     },
                 }]
                 if (this.room.game.status != 'running' && this.room.is_published) {
@@ -418,6 +423,7 @@ export default {
 
                 this.options = []
             }
+            console.log(this.options)
         }
         ,
         async launchGame(hasToBeLauched) {

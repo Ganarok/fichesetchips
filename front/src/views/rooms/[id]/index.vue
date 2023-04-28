@@ -39,7 +39,7 @@ export default {
         ...mapState("room", {
             room: (state) => state.room,
         }),
-        ...mapState("users", {
+        ...mapState("user", {
             users: (state) => state.users,
         }),
     },
