@@ -11,14 +11,19 @@ export class SeedStories1666947914000 implements MigrationInterface {
         const StoryRepository = PublicDataSource.getRepository(Story)
         const file = fs.readFileSync("./src/database/fixtures/assets/Masque-utruz.pdf")
         const defaultStories = [{
-            id: "9c9bfccd-7023-4d72-bc14-45d07eb2b855",
+            id: "cfe1a32b-9535-4808-82df-4b00b5fdaf02",
             creatorId: users.test.id,
-            title: "A Good Story",
+            title: "Le Masque Utruz",
             file: file
         }, {
-            id: "bb6c9a66-8d75-4077-8994-9d60fe45c33a",
+            id: "7a407da3-e138-46c8-a2df-ea77a8a26498",
             creatorId: users.defaultUser.id,
-            title: "A Good Story",
+            title: "Le Masque Utruz",
+            file: file
+        }, {
+            id: "33a60a76-e0be-4895-838b-5fd78d3001c2",
+            creatorId: users.defaultUser1.id,
+            title: "Le Masque Utruz",
             file: file
         }]
         await StoryRepository.save(defaultStories)

@@ -2,6 +2,7 @@ import { User } from "../../database/entities/public/User";
 
 export class PublicProfile {
     constructor(user: User) {
+        this.id = user.id
         this.email = user.email
         this.username = user.username
         this.avatar = user.avatar
@@ -9,6 +10,7 @@ export class PublicProfile {
         this.created_at = user.created_at
         this.updated_at = user.updated_at
     }
+    id: string;
     email: string;
     username: string;
     avatar: string;

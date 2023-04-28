@@ -33,6 +33,9 @@ export default {
             user: (state) => state.user,
         })
     },
+    async mounted() {
+        await this.fetch_my_friends()
+    },
     methods: {  
         ...mapActions({
             fetch_my_friends: "friends/fetch_my_friends",

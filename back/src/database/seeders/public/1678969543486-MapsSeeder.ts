@@ -5,8 +5,8 @@ import { CMap } from "../../entities/public/workshop/CMap"
 import { Asset } from "../../entities/public/workshop/Asset"
 import defaultMaps from "../../fixtures/maps"
 
-export class MapsSeeder1679063830965 implements MigrationInterface {
-    name = 'MapsSeeder1679063830965'
+export class MapsSeeder1678969543486 implements MigrationInterface {
+    name = 'MapsSeeder1678969543486'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         const MapRepository = PublicDataSource.getRepository(CMap)

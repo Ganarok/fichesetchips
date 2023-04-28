@@ -9,7 +9,10 @@
             v-if="selectedItem.length"
             class="flex space-x-2 p-2"
         >
-            <div :class="selectedItem.length > 1 ? 'grid grid-cols-2 gap-4' : ''">
+            <div
+                v-if="isMultiple"
+                :class="selectedItem.length > 1 ? 'grid grid-cols-2 gap-4' : ''"
+            >
                 <div
                     v-for="item in selectedItem"
                     :key="item.value"
@@ -19,6 +22,16 @@
                     }"
                 >
                     {{ item }}
+                </div>
+            </div>
+            <div v-else>
+                <div
+                    class="text-xs bg-fc-black self-center text-center truncate text-fc-green p-1 px-2 font-bold"
+                    :style="{
+                        maxWidth: '80px'
+                    }"
+                >
+                    {{ selectedItem }}
                 </div>
             </div>
 
@@ -72,8 +85,13 @@
                 "
                 @click="
                     () => {
-                        selectedItem.push(item?.name ? item?.name : item.value)
-                        onSelectItem(item?.value);
+                        if (isMultiple) {
+                            selectedItem.push(item?.name ? item?.name : item.value)
+                            onSelectItem(item?.value);
+                        } else {
+                            selectedItem = item?.name
+                            onSelectItem(item?.value);
+                        }
                     }
                 "
             >
@@ -128,6 +146,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isMultiple: {
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {

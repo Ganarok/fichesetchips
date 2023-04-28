@@ -1,52 +1,12 @@
 <template>
     <div class="flex flex-col">
         <div
-            class="flex flex-row w-[90%] items-center justify-between self-center bg-fc-black"
-        >
-            <div class="absolute">
-                <div
-                    style="z-index: -10"
-                    class="relative -left-6 -top-6 bg-fc-green w-12 h-12"
-                />
-            </div>
-
-            <div class="flex flex-row py-3 items-center pl-6 space-x-6">
-                <Selector
-                    :items="FILTERUNIVERSES"
-                    :default-selected-item="{
-                        name: $t('Filtre'),
-                        value: ''
-                    }"
-                    :on-select-item="(v) => selectedFilter = v"
-                />
-            </div>
-
-            <CustomInput
-                :max-length="254"
-                place-holder="URL du vocal"
-                type="text"
-                outline="fc-green"
-                :value="search"
-                @input="(v) => (search = v.target.value)"
-            />
-
-            <!-- <input
-                class="flex grid1Col:w-[35%] w-[20%] px-2 h-full bg-fc-black-light font-bold outline-none"
-                :class="search.length > 0 ? 'text-fc-yellow' : ''"
-                :value="search"
-                placeholder="Rechercher..."
-                type="text"
-                @input="(v) => (search = v.target.value)"
-            > -->
-        </div>
-
-        <div
             class="px-20 py-10 grid grid-cols-3 gap-6 items-center tablet:grid-cols-2 tablet:px-10 tablet:py-5 grid1Col:grid-cols-1"
         >
             <div
                 v-for="universe in universes"
                 :key="universe.id"
-                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer"
+                class="max-h-[302px] max-w-[480px] mobile:max-h-[490px] cursor-pointer hoverStyle"
                 @click="chooseUnivers(universe.id)"
             >
                 <img
@@ -69,25 +29,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex"
 
-import Selector from "@/components/common/Selector.vue"
-import { FILTERUNIVERSES, TYPEUNIVERSES } from "@/utils/enums"
-import CustomInput from "@/components/common/CustomInput.vue"
-
 export default {
-    components: {
-        Selector,
-        CustomInput
-    },
-    data() {
-        return {
-            FILTERUNIVERSES,
-            TYPEUNIVERSES,
-            query: "?",
-            search: "",
-            selectedFilter: "",
-            selectedType: ""
-        }
-    },
     computed: {
         ...mapState("universes", {
             universes: (state) => state.universes,
@@ -102,13 +44,14 @@ export default {
         }),
         ...mapMutations({
             set_universe: "universes/set_universe",
-            set_completed: "characters/set_completed",
+            update_completed: "characters/update_completed",
             set_currentStep: "characters/set_currentStep",
+            set_loading: "characters/set_loading",
         }),
         async chooseUnivers(id) {
             this.set_universe(id)
-            this.set_completed()
             this.set_currentStep('Race')
+            this.update_completed()
         },
     }
 }
