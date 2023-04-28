@@ -22,7 +22,8 @@ export default {
         starter_map_id: '',
         current_map_title: '',
         vocal_url: '',
-        roomId: ''
+        roomId: '',
+        gameId: ''
     },
     mutations: {
         updateState(state, payload) {
@@ -53,12 +54,13 @@ export default {
                 const { data } = await apiCall({
                     method: "GET",
                     route: `/rooms/${roomId}`,
-                })                
+                })
 
                 state.gm = data.gm
                 state.vocal_url = data.vocal_url
                 state.starter_map_id = data.game.tilemap.id
                 state.diary.players = data.game.players
+                state.gameId = data.game.id
 
                 const characters = data.game.players.map(player => player.character)
                 const is_gm = store.state.user.user.id === data.gm.id
@@ -73,6 +75,24 @@ export default {
             } catch (error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 throw new Error(error.message)
+            }
+        },
+        async update_game_state({ commit, state }, newState) {
+            try {
+                console.log('newState', newState)
+
+                const resJson = await apiCall({
+                    method: "PATCH",
+                    route: `/game/${state.gameId}`,
+                    body: newState,
+                })
+
+                console.log('resJson', resJson)
+
+            } catch (error) {
+                commit("errors/set_error", { message: error.message }, { root: true })
+                throw new Error(error.message)
+
             }
         }
     },

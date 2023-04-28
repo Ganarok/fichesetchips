@@ -45,7 +45,7 @@
         >
             <router-link
                 target="_blank"
-                :to="'user/stories/' + story.id"
+                :to="'/user/stories/' + story.id"
                 class="flex font-bold hoverStyle bg-fc-yellow text-fc-black p-3"
             >
                 <p class="text-base">

@@ -51,7 +51,7 @@
                 textColor="text-fc-black"
                 color="fc-yellow"
                 :rounded="false"
-                @click="pauseGame()"
+                @click="handlePause()"
             />
 
             <Button
@@ -71,10 +71,11 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
+import { useToast } from 'vue-toastification'
 
 import Button from '@/components/common/Button.vue'
-import { useToast } from 'vue-toastification'
+import { GAMESTATUS } from '@/utils/enums'
 
 export default {
     name: "Options",
@@ -103,8 +104,29 @@ export default {
         ...mapMutations('game', [
             'resetMessages'
         ]),
-        pauseGame() {
-            console.log('pauseGame')
+        ...mapActions({
+            update_game_state: 'game/update_game_state'
+        }),
+        async handlePause() {
+            const toast = useToast()
+            
+            try {
+                console.log(GAMESTATUS.PAUSED);
+                await this.update_game_state(GAMESTATUS.PAUSED)
+
+                if (this.socket) {
+                    this.socket.emit('update', {
+                        room_id: this.roomId,
+                        gamestatus: GAMESTATUS.PAUSED,
+
+                    })
+                }
+                
+                toast.success('La partie a été mise en pause')
+            } catch (error) {
+                toast.error('Une erreur est survenue')
+                console.log(error)
+            }
         },
         leaveGame() {
             const toast = useToast()

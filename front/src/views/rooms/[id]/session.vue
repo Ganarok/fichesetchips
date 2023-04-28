@@ -31,7 +31,16 @@
         <Suspense 
             v-else
         >
-            <GameContainer />
+            <div
+                v-if="!loading && error"
+                class="flex flex-col text-center items-center space-y-4"
+            >
+                <p class="font-bold text-white text-2xl max-w-prose">
+                    {{ error }}
+                </p>
+            </div>
+
+            <GameContainer v-else />
 
             <template #fallback>
                 <div
@@ -135,6 +144,23 @@ export default {
                 socket.on("message", (message) => {
                     console.log("Received message", message)
                     this.pushMessage(message)
+                })
+
+                socket.on("update", (update) => {
+                    const toast = useToast()
+                    console.log("Received update", update)
+                    
+                    if (update.type) {
+                        switch (update.type) {
+                        case 'gamestatus':
+                            this.error = `La session n'est plus en cours (${update?.state}).`
+                            toast.info('La session a été mise en pause par votre MJ')
+                            break
+                        
+                        default:
+                            break
+                        }
+                    }
                 })
 
                 socket.on("connect_error", () => {
