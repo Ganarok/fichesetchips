@@ -161,20 +161,28 @@ describe('Games', () => {
             room = await findRoom(token, room.id)
         }
     )
+    it('Get room should have parsed players',
+        async () => {
+            const res = await request(app)
+                .get(`/rooms/${room.id}`)
+                .set({ "Authorization": `Bearer ${token}` })
+            expect(res.status).to.equal(200);
+            assert.deepEqual(res.body.data.game.state.players[0].id, res.body.data.game.state.players[0].id)
+        }
+    )
     it('A gm should be able to update the state of the game',
         async () => {
             const new_state = {
                 ...room.game.state,
                 map: { ...room.game.state.map, data: { height: 50 } },
                 players: room.game.state.players.map(data => {
-                    const player: PlayerGameView = JSON.parse(data)
+                    const player = data as unknown as Player
                     return {
                         id: player.id,
                         user: player.user,
                         character: { ...player.character, experience_points: 50 }
                     }
-                })
-            }
+                })}
             const res = await request(app)
                 .put(`/games/${room.game.id}`)
                 .set({ "Authorization": `Bearer ${token}` })
@@ -190,7 +198,7 @@ describe('Games', () => {
                 ...room.game.state,
                 map: { ...room.game.state.map, data: { height: 70 } },
                 players: room.game.state.players.map(data => {
-                    const player: PlayerGameView = JSON.parse(data)
+                    const player = data as unknown as Player
                     return {
                         id: player.id,
                         user: player.user,
@@ -214,7 +222,7 @@ describe('Games', () => {
                 ...room.game.state,
                 map: { ...room.game.state.map, data: { height: 90 } },
                 players: room.game.state.players.map(data => {
-                    const player: PlayerGameView = JSON.parse(data)
+                    const player = data as unknown as Player
                     const xp_points = 250 + i
                     i = 100
                     return {
