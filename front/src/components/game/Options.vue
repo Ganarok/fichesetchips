@@ -111,14 +111,15 @@ export default {
             const toast = useToast()
             
             try {
-                console.log(GAMESTATUS.PAUSED);
-                await this.update_game_state(GAMESTATUS.PAUSED)
+                await this.update_game_state({
+                    status: GAMESTATUS.PAUSED,
+                    state: {}
+                })
 
                 if (this.socket) {
                     this.socket.emit('update', {
                         room_id: this.roomId,
-                        gamestatus: GAMESTATUS.PAUSED,
-
+                        gamestatus: GAMESTATUS.PAUSED
                     })
                 }
                 

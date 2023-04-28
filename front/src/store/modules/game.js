@@ -10,6 +10,7 @@ export default {
         messages: [],
         maps: [],
         gm: {},
+        gameState: {},
         diary: {
             is_gm: false,
             my_character: {}, 
@@ -82,8 +83,8 @@ export default {
                 console.log('newState', newState)
 
                 const resJson = await apiCall({
-                    method: "PATCH",
-                    route: `/game/${state.gameId}`,
+                    method: "PUT",
+                    route: `/games/${state.gameId}`,
                     body: newState,
                 })
 
