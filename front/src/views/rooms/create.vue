@@ -77,27 +77,26 @@
                                 />
                             </h3>
                             <div class="flex">
-
-                            <h3 class="flex font-bold items-center mx-2">
-                                Map:
+                                <h3 class="flex font-bold items-center mx-2">
+                                    Map:
     
-                                <SelectorMultiple
-                                    :items="maps"
-                                    :isMultiple="false"
-                                    :on-select-item="handleSelectedMaps.bind(this)"
-                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
-                                />
-                            </h3>
-                            <h3 class="flex font-bold items-center">
-                                Story:
-                                <SelectorMultiple
-                                    :items="stories"
-                                    :isMultiple="false"
-                                    :on-select-item="handleSelectedStory.bind(this)"
-                                    selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
-                                />
-                            </h3>
-                        </div>
+                                    <SelectorMultiple
+                                        :items="maps"
+                                        :isMultiple="false"
+                                        :on-select-item="handleSelectedMaps.bind(this)"
+                                        selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                                    />
+                                </h3>
+                                <h3 class="flex font-bold items-center">
+                                    Story:
+                                    <SelectorMultiple
+                                        :items="stories"
+                                        :isMultiple="false"
+                                        :on-select-item="handleSelectedStory.bind(this)"
+                                        selector-class="flex flex-col relative text-fc-black cursor-pointer select-none"
+                                    />
+                                </h3>
+                            </div>
                             <h3 class="flex font-bold items-center">
                                 Nombre de joueurs max:
 

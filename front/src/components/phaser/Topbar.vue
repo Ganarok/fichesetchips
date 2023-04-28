@@ -9,7 +9,7 @@
                 alt="option"
                 @click="() => optionsOpened = !optionsOpened"
             >
-
+            
             <div
                 v-if="optionsOpened"
                 class="absolute left-10 items-center p-2 bg-fc-black-light text-fc-yellow whitespace-nowrap"

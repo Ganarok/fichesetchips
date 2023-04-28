@@ -27,18 +27,78 @@
                 height="h-16"
                 :canEdit="true"
             />
+            <div v-if="is_gm">
+                <img
+                    src="@/assets/icons/option.svg"
+                    class="h-6 w-6 cursor-pointer transition ease-in-out hover:opacity-80 hover:rotate-90"
+                    alt="option"
+                    @click="() => optionsOpened = !optionsOpened"
+                >
+                <div
+                    v-if="optionsOpened"
+                    class="absolute left-10 items-center p-2 bg-fc-black-light text-fc-yellow whitespace-nowrap"
+                >
+                    <div class="flex flex-col space-y-4">
+                        <div
+                            v-for="option in options"
+                            :key="option.name"
+                            class="flex flex-col"
+                        >
+                            <p
+                                :class="option.class"
+                                class="text-xs cursor-pointer hover:opacity-80"
+                                @click="option.action"
+                            >
+                                {{ option.name }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <Button
+                    class="ml-4 sm:mx-12"
+                    :button-text="'Sauvegarder les modifications'"
+                    color="fc-green"
+                    :rounded="false"
+                    background-color="fc-black"
+                    @click="postForm"
+                />
+                <Button
+                    class="ml-4 sm:mx-12"
+                    :button-text="room.is_published ? 'Dépublier' : 'Publier'"
+                    color="fc-green"
+                    :rounded="false"
+                    background-color="fc-black"
+                    @click="handlePublish(room.is_published ? false : true)"
+                />
+                <Button
+                    v-if="room.game.status != 'running' && room.is_published"
+                    class="ml-4 sm:mx-12"
+                    :button-text="'Démarrer la session'"
+                    color="fc-green"
+                    :rounded="false"
+                    background-color="fc-black"
+                    @click="launchGame(room.game.status != 'running' ? true : false)"
+                />
+                <Button
+                    v-else-if="room.is_published"
+                    class="ml-4 sm:mx-12"
+                    :button-text="'Session en cours'"
+                    color="fc-gray"
+                    :rounded="false"
+                    background-color="fc-black"
+                    @click="launchGame(room.game.status != 'running' ? true : false)"
+                />
+            </div>
+            <div v-else-if="is_player">
+            </div>
+            <div v-else-if="game_is_full">
+            </div>
+            <div v-else>
+            </div>
             <Button
-                v-if="is_gm"
+                v-if="!is_gm && canPlayerJoin"
                 class="ml-4 sm:mx-12"
-                :button-text="room.is_published ? 'Dépublier' : 'Publier'"
-                color="fc-green"
-                :rounded="false"
-                background-color="fc-black"
-                @click="handlePublish"
-            />
-            <Button
-                class="ml-4 sm:mx-12"
-                :button-text="is_gm ? 'Sauvegarder' : canPlayerJoin"
+                :button-text="'Rejoindre la Game'"
                 color="fc-green"
                 :rounded="false"
                 background-color="fc-black"
@@ -238,6 +298,7 @@ import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
 import { apiCall } from '@/utils/apiCall'
 import Selector from '@/components/common/Selector.vue'
 import CustomInput from "@/components/common/CustomInput.vue"
+import router from "@/router"
 
 
 
@@ -275,6 +336,8 @@ export default {
                     value: "closed"
                 }
             ],
+            optionsOpened: false,
+            options: []
         }
     },
     computed: {
@@ -290,8 +353,15 @@ export default {
         ...mapState("user", {
             user: (state) => state.user,
         }),
-        is_gm () {
+        is_gm() {
             return this.room?.gm?.id === this.user?.id || false
+        },
+        is_player() {
+            const array = this.room.game.players.filter(player => player.user.id == this.user.id)
+            return array.length > 0
+        },
+        game_is_full() {
+            return this.room.game.players.length >= this.room.players_nb_max
         },
     
 
@@ -300,22 +370,62 @@ export default {
         // "Rejoindre": can join
         canPlayerJoin() {
             if (this.room?.game?.players.some(player => player.user.id === this.user?.id)) {
-                return "Rejoint"         
+                return false         
             }
             else if (this.room?.game?.players?.length >= this.room?.players_nb_max) {
-                return "Complet"
+                return true
             }
             else
-                return "Rejoindre"
+                return false
         }
     },
     mounted() {
+        this.set_options()
         this.clear_room()
         this.fetch_room(this.room_id)
         this.fetch_maps()
         this.fetch_stories()
     },
     methods: {
+        async set_options() {
+            if (this.is_gm) {
+                this.options = [{
+                    name: "Sauvegarder les modifications",
+                    action: () => this.postForm(),
+                },
+                {
+                    name: this.room.is_published ? 'Dépublier' : 'Publier',
+                    action: () => {
+                        this.handlePublish(this.room.is_published ? false : true)
+                    },
+                }]
+                if (this.room.game.status != 'running' && this.room.is_published) {
+                    this.options.push({
+                        name: 'Démarrer la session',
+                        action: () => {
+                            this.launchGame(true)
+                        },
+                    })
+                } else if (this.room.game.status == 'running' && this.room.is_published) {
+                    this.options.push({
+                        name: 'Rejoindre la session',
+                        action: () => {
+                            this.launchGame(false)
+                        },
+                    })
+                }
+            } else if (this.is_player) {
+
+                this.options = []
+            }
+        }
+        ,
+        async launchGame(hasToBeLauched) {
+            if (hasToBeLauched) {
+                // TODO update game state to "running"
+            }
+            this.$router.push(`/rooms/${this.room.id}/session`)
+        },
         async postForm() {
             if (this.is_gm) {
                 const form = {
@@ -364,15 +474,15 @@ export default {
                 }
             }
         },
-        async handlePublish() {
+        async handlePublish(is_published) {
             const toast = useToast()
             try {
                 await apiCall({
                     route: `/rooms/${this.room_id}`,
                     method: 'PATCH',
-                    body: {is_published: this.room.is_published}
+                    body: {is_published: is_published}
                 }).then(() =>{ 
-                    this.set_is_published(!this.room.is_published)
+                    this.set_is_published(is_published)
                     toast.success('Room updated avec succes')
                 })
             } catch (error) {

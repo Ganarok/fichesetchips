@@ -46,6 +46,7 @@ export class State {
         } as State
     }
     public fromStateGameView(state: StateGameView): State {
+        console.log("fromgameview")
         return {
             id: state.id,
             map: state.map as MapState,
