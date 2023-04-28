@@ -102,6 +102,42 @@ router.post("/creation", async (req: Request, res) => {
   }
 })
 
+router.get("/public/:username", async (req: Request, res) => {
+  /**
+   * @swagger
+   * /cem/characters/public/{username}:
+   *   get:
+   *     description: Get characters of a user.
+   *     tags: 
+   *       - Workshop
+   *     parameters:
+   *     - in: "path"
+   *       name: "username"
+   *       schema: { type: "string" }
+   *       required: true
+   *       description: "username of the user"
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Characters found.
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/getCharacterResponse' }
+   *       401:
+   *         description: UnAuthorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   */
+  try {
+    const response = await charactersService.findAllPublic(req.params.username);
+    res.status(200).send({ data: response, message: 'Character successfully found' });
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
+})
+
 router.get("/:id", async (req: Request, res) => {
   /**
    * @swagger
@@ -131,7 +167,7 @@ router.get("/:id", async (req: Request, res) => {
    *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
    */
   try {
-    const response = await charactersService.findById(((req as CustomRequest).jwtPayload as JwtPayload).id, req.params.id);
+    const response = await charactersService.findById(req.params.id);
     res.status(200).send({ data: response, message: 'Character successfully found' });
   } catch (error) {
     return getErrorMessage(error, res);
