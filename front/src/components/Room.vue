@@ -27,8 +27,9 @@
                 height="h-16"
                 :canEdit="true"
             />
+            <div
+            v-if="is_gm">
             <Button
-                v-if="is_gm"
                 class="ml-4 sm:mx-12"
                 :button-text="room.is_published ? 'Dépublier' : 'Publier'"
                 color="fc-green"
@@ -38,12 +39,63 @@
             />
             <Button
                 class="ml-4 sm:mx-12"
-                :button-text="is_gm ? 'Sauvegarder' : canPlayerJoin"
+                :button-text="'Sauvegarder'"
                 color="fc-green"
                 :rounded="false"
                 background-color="fc-black"
-                @click="postForm"
+                @click="saveRoom"
             />
+            <Button
+                class="ml-4 sm:mx-12"
+                :button-text="room.game.status == 'running' ? 'Rejoindre la session en cours' : 'Démarrer la session'"
+                :color="room.game.status == 'running' ? 'fc-yellow' : 'fc-green'"
+                :rounded="false"
+                :background-color="room.game.status == 'running' ? 'fc-black' : 'fc-black'"
+                @click="goToSession(room.game.status == 'running' ? false : true, true)"
+            />
+            </div>
+            <div
+            v-else-if="is_player">
+            <Button
+                class="ml-4 sm:mx-12"
+                :button-text="room.game.status == 'running' ? 'Rejoindre la session en cours' : 'Session non démarrée par le MJ'"
+                :color="room.game.status == 'running' ? 'fc-green' : 'fc-gray'"
+                :rounded="false"
+                :background-color="room.game.status == 'running' ? 'fc-black' : 'fc-gray'"
+                @click="goToSession(room.game.status == 'running' ? false : true, false)"
+            />
+            </div>
+            <div
+            v-else-if="game_is_full">
+            <Button
+                class="ml-4 sm:mx-12"
+                :button-text="'La Game est complète désolé !'"
+                :color="'fc-gray'"
+                :rounded="false"
+                :background-color="'fc-gray'"
+            />
+            </div>
+            <div
+            v-else>
+            <Button
+                class="ml-4 sm:mx-12"
+                :button-text="'Rejoindre !'"
+                :color="'fc-green'"
+                :rounded="false"
+                :background-color="'fc-black'"
+                @click="join()"
+            />
+            </div>
+            <div v-if="openCharacterModale">
+                            <Selector
+                                :items="characters"
+                                :default-selected-item="{
+                                    name: characters[0].firstname, value: characters[0].id
+                                }"
+                                :on-select-item="(v) => set_character_id(v)"
+                                selector-class="font-normal ml-2 border-2 text-black"
+                            />
+            </div>
         </div>
 
         <div class="flex flex-col h-full w-full sm:overflow-y-auto sm:space-x-8 sm:flex-row">
@@ -275,9 +327,13 @@ export default {
                     value: "closed"
                 }
             ],
+            openCharacterModale: false
         }
     },
     computed: {
+        ...mapState("characters", {
+            characters: (state) => state.characters,
+        }),
         ...mapState("room", {
             room: (state) => state.room,
         }),
@@ -292,6 +348,13 @@ export default {
         }),
         is_gm () {
             return this.room?.gm?.id === this.user?.id || false
+        },
+        is_player () {
+            const players = this.room?.game.players.filter(player => player.user.id == this.user.id)
+            return players.length >= 1
+        },
+        game_is_full () {
+            return this.room?.game.players.length >= this.room?.players_nb_max
         },
     
 
@@ -309,15 +372,23 @@ export default {
                 return "Rejoindre"
         }
     },
-    mounted() {
-        this.clear_room()
-        this.fetch_room(this.room_id)
-        this.fetch_maps()
-        this.fetch_stories()
+    async mounted() {
+        await this.clear_room()
+        await this.fetch_room(this.room_id)
+        await this.fetch_maps()
+        await this.fetch_stories()
+        await this.fetch_characters() 
     },
     methods: {
-        async postForm() {
-            if (this.is_gm) {
+        async goToSession(hasToBeUpdated, isGM) {
+            if (isGM && hasToBeUpdated) {
+            // // TODO update game
+            this.$router.push(`/rooms/${this.room.id}/session`)
+            } else if (!isGM && !hasToBeUpdated ) {
+            this.$router.push(`/rooms/${this.room.id}/session`)
+            }
+        },
+        async saveRoom() {
                 const form = {
                     title: this.room.title,
                     description: this.room.description,
@@ -332,8 +403,6 @@ export default {
                         status: this.room.game.status
                     }
                 }
-                console.log(form)
-
                 const toast = useToast()
                 try {
                     await apiCall({
@@ -344,10 +413,8 @@ export default {
                 } catch (error) {
                     toast.error(error)
                 }
-
-
-            }
-            else {
+        },
+        async join() {
                 const toast = useToast()
                 if (this.canPlayerJoin == "Rejoindre") {
                     try {
@@ -355,14 +422,32 @@ export default {
                             route: `/rooms/${this.room_id}/join`,
                             method: 'PATCH',
                             body: {}
-                        }).then(() => toast.success('Room updated avec succes'))
+                        }).then(() => {
+                            toast.success('Room updated avec succes')
+                            this.openCharacterModale = true
+                        })
                     } catch (error) {
                         toast.error(error)
                     }
                 } else {
                     console.error("Impossible de rejoindre - room déja rejoint ou complète")
                 }
-            }
+        },
+        async set_character_id(character_id) {
+                const toast = useToast()
+                    try {
+                        const player = this.room.game.players.filter(player => player.user.id == this.user.id)
+                        await apiCall({
+                            route: `/players/${player[0].id}`,
+                            method: 'PATCH',
+                            body: {character_id: character_id}
+                        }).then(() => {
+                            toast.success('Room updated avec succes')
+                            this.openCharacterModale = false
+                        })
+                    } catch (error) {
+                        toast.error(error)
+                    }
         },
         async handlePublish() {
             const toast = useToast()
@@ -370,7 +455,7 @@ export default {
                 await apiCall({
                     route: `/rooms/${this.room_id}`,
                     method: 'PATCH',
-                    body: {is_published: this.room.is_published}
+                    body: {is_published: !this.room.is_published}
                 }).then(() =>{ 
                     this.set_is_published(!this.room.is_published)
                     toast.success('Room updated avec succes')
@@ -380,6 +465,7 @@ export default {
             }
         },
         ...mapActions({
+            fetch_characters: "characters/fetch_characters",
             fetch_room: "room/fetch_room",
             clear_room: "room/clear_room",
             fetch_maps: "maps/fetch_maps",
