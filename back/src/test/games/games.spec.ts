@@ -125,6 +125,16 @@ describe('Games', () => {
         }
     )
 
+    it('A non gm shouldnt be able to update a game',
+        async () => {
+            const res = await request(app)
+                .put(`/games/30208ae8-95b3-4d3e-aa0f-e0a6c15509b1`)
+                .set({ "Authorization": `Bearer ${token}` })
+                .send({ status: "paused" })
+            expect(res.status).to.equal(500);
+        }
+    )
+
     it('A gm should be able to begin a game',
         async () => {
             const res = await request(app)
