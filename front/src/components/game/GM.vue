@@ -149,6 +149,12 @@ import Button from '@/components/common/Button.vue'
 export default {
     name: 'GM',
     components: { Modal, Button },
+    props: {
+        socket: {
+            type: Object,
+            default: null
+        }
+    },
     data() {
         return {
             showModal: false,
@@ -165,8 +171,12 @@ export default {
         ...mapState('game', {
             story: state => state.story,
             players: state => state.diary.players,
-            game_state: state => state.game_state
-        })
+            game_state: state => state.game_state,
+            roomId: state => state.roomId
+        }),
+        ...mapState('user', {
+            user: state => state.user
+        }),
     },
     mounted() {
         console.log('state', this.game_state)
@@ -187,21 +197,7 @@ export default {
         updateSelectedPlayerXp(value) {
             this.selectedPlayerXp = value < 0 ? 0 : value
         },
-        async updateSelectedPlayer() {
-            // TODO: Update local player
-            // const player = this.game_state.players.find(p => p.id === this.selectedPlayer.id)
-
-            // if (!player) {
-            //     console.log('Player not found')
-            //     return
-            // }
-
-            console.log('before', this.selectedPlayer.id, {
-                ...this.selectedPlayer.character,
-                hp: this.selectedPlayerHp,
-                experience_points: this.selectedPlayerXp
-            })
-            
+        async updateSelectedPlayer() {            
             await this.update_game_state_player({
                 playerId: this.selectedPlayer.id,
                 character: {
@@ -211,16 +207,44 @@ export default {
                 }
             })
 
-            console.log('player', this.selectedPlayer, this.selectedPlayerHp, this.selectedPlayerXp)
+            if (this.socket) {
+                this.socket.emit('update', {
+                    roomId: this.roomId,
+                    type: 'character',
+                    playerId: this.selectedPlayer.id,
+                    character: {
+                        ...this.selectedPlayer.character,
+                        hp: this.selectedPlayerHp,
+                        experience_points: this.selectedPlayerXp
+                    }
+                })
 
+                if (this.selectedPlayer.character.hp !== this.selectedPlayerHp) {
+                    this.socket.emit('update_character_life', {
+                        roomId: this.roomId,
+                        senderName: this.user.username,
+                        firstname: this.selectedPlayer.character.firstname,
+                        lastname: this.selectedPlayer.character.lastname,
+                        update: this.selectedPlayerHp
+                    })
+                }
+    
+                if (this.selectedPlayer.character.experience_points !== this.selectedPlayerXp) {
+                    this.socket.emit('update_character_xp', {
+                        roomId: this.roomId,
+                        senderName: this.user.username,
+                        firstname: this.selectedPlayer.character.firstname,
+                        lastname: this.selectedPlayer.character.lastname,
+                        update: this.selectedPlayerXp
+                    })
+                }
+            }
+
+            // Reset values & close modal
             this.showModal = false
             this.selectedPlayer = {}
             this.selectedPlayerHp = 0
             this.selectedPlayerXp = 0
-
-            // TODO: Emit character life if changed
-            // TODO: Emit character xp if changed
-            // TODO: Emit Update
         }
     }
 }

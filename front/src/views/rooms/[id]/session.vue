@@ -83,7 +83,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            init_session: "game/init_session"
+            init_session: "game/init_session",
+            update_game_state_player: "game/update_game_state_player",
         }),
         ...mapMutations({
             updateState: "game/updateState",
@@ -146,7 +147,18 @@ export default {
                         case 'gamestatus':
                             this.$router.go().then(() => toast.info('La session a été mise en pause par votre MJ'))
                             break
-                        
+
+                        case 'character':
+                            if (update.playerId && update.character) {
+                                this.update_game_state_player({
+                                    playerId: update.playerId,
+                                    character: update.character
+                                })
+                            } else {
+                                console.log("Missing data for updating player's character")
+                            }
+                            break
+
                         default:
                             console.log('Unknown update type')
                             break

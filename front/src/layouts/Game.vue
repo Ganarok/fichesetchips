@@ -125,7 +125,10 @@
                         v-if="selectedOption === 'chat'"
                         :socket="socket"
                     />
-                    <GM v-if="selectedOption === 'gm' && is_gm" />
+                    <GM 
+                        v-if="selectedOption === 'gm' && is_gm" 
+                        :socket="socket"
+                    />
                     <Character v-if="selectedOption === 'character' && !is_gm" />
                     <Diary v-if="selectedOption === 'diary'" />
                     <Dices 
