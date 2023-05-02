@@ -108,11 +108,12 @@
 </template>
 
 <script>
-import CustomInput from "@/components/common/CustomInput.vue"
+import { useToast } from "vue-toastification"
 import { mapState, mapActions } from "vuex"
+
+import CustomInput from "@/components/common/CustomInput.vue"
 import Loader from "@/components/common/Loader.vue"
 import { isEmailValid, isPasswordValid } from "@/utils/validations"
-import { useToast } from "vue-toastification"
 const CryptoJS = require("crypto-js")
 
 export default {
@@ -232,7 +233,7 @@ export default {
                     } else {
                         toast.success(this.$t("Inscription réalisée avec succès"))
 
-                        this.$router.push("/user/dashboard")
+                        this.$router.push("/user/profile")
                     }
                 }
             }

@@ -139,7 +139,7 @@
                                     {{ skills?.name || 'Skill title' }}
                                 </h1>
                                 <p class="pl-2">
-                                    Ajoute un bonus au jet de dé {{ skills.characteristic.name.toLowerCase() || '???' }}
+                                    Ajoute un bonus au jet de dé {{ skills?.characteristic.name.toLowerCase() || '???' }}
                                 </p>
                             </div>
                         </div>

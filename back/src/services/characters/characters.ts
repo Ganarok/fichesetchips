@@ -8,8 +8,10 @@ import { CharacteristicModificator } from "../../database/entities/public/charac
 import { Level } from "../../database/entities/public/characters/Level";
 import { Profile } from "../../database/entities/public/characters/Profile";
 import { Item } from "../../database/entities/public/characters/Item";
+import { User } from "../../database/entities/public/User";
 
 
+const UserRepository = PublicDataSource.getRepository(User)
 const CharacterRepository = PublicDataSource.getRepository(Character)
 const RaceRepository = PublicDataSource.getRepository(Race)
 const LanguageRepository = PublicDataSource.getRepository(Language)
@@ -43,7 +45,8 @@ export async function findAll(user_id: string) {
     return characters
 }
 
-export async function findById(user_id: string, character_id: string) {
+export async function findAllPublic(username: string) {
+    const user = await UserRepository.findOneByOrFail({username: username})
     const characters = await CharacterRepository
         .createQueryBuilder("character")
         .leftJoinAndSelect('character.race', 'race')
@@ -60,8 +63,30 @@ export async function findById(user_id: string, character_id: string) {
         .leftJoinAndSelect('equipment.item', 'item')
         .leftJoinAndSelect('character.money', 'money')
         .select(['character', 'race', 'class', 'level', 'class_characteristics', 'skills', 'skill_characteristic', 'profile', 'languages', 'character_characteristic', 'characteristic', 'equipment', 'item', 'money'])
-        .where({ user_id: user_id })
-        .andWhere({ id: character_id })
+        .where({ user_id: user.id })
+        .getMany()
+
+    return characters
+}
+
+export async function findById(character_id: string) {
+    const characters = await CharacterRepository
+        .createQueryBuilder("character")
+        .leftJoinAndSelect('character.race', 'race')
+        .leftJoinAndSelect('character.class', 'class')
+        .leftJoinAndSelect('character.level', 'level')
+        .leftJoinAndSelect('character.skills', 'skills')
+        .leftJoinAndSelect('skills.characteristic', 'skill_characteristic')
+        .leftJoinAndSelect('class.profile', 'profile')
+        .leftJoinAndSelect('class.saving_throws', 'class_characteristics')
+        .leftJoinAndSelect('character.languages', 'languages')
+        .leftJoinAndSelect('character.character_characteristic', 'character_characteristic')
+        .leftJoinAndSelect('character_characteristic.characteristic', 'characteristic')
+        .leftJoinAndSelect('character.equipment', 'equipment')
+        .leftJoinAndSelect('equipment.item', 'item')
+        .leftJoinAndSelect('character.money', 'money')
+        .select(['character', 'race', 'class', 'level', 'class_characteristics', 'skills', 'skill_characteristic', 'profile', 'languages', 'character_characteristic', 'characteristic', 'equipment', 'item', 'money'])
+        .where({ id: character_id })
         .getOneOrFail()
 
     return characters
@@ -217,7 +242,7 @@ export async function create(user_id: string, data: any) {
             character_id: character_id, ...data.money
         })
         .execute()
-    const character = await findById(user_id, character_id)
+    const character = await findById(character_id)
     return character
 }
 

@@ -76,14 +76,35 @@ export default {
     computed: {
         ...mapState('user', {
             user: (state) => state.user
+        }),
+        ...mapState('game', {
+            haveToEmit: (state) => state.haveToEmit,
+            notificationToEmit: (state) => state.notificationToEmit,
+            contentToEmit: (state) => state.contentToEmit,
         })
+    },
+    watch: {
+        haveToEmit: function(val) {
+            if (!val) return
+
+            this.socket.emit(this.notificationToEmit, {
+                ...this.contentToEmit,
+                senderName: this.user.username
+            })
+
+            this.updateState({
+                property: 'haveToEmit',
+                newState: false
+            })
+        }
     },
     mounted() {
         this.initGame()
     },
     methods: {
         ...mapActions({
-            init_session: "game/init_session"
+            init_session: "game/init_session",
+            update_game_state_player: "game/update_game_state_player",
         }),
         ...mapMutations({
             updateState: "game/updateState",
@@ -135,6 +156,57 @@ export default {
                 socket.on("message", (message) => {
                     console.log("Received message", message)
                     this.pushMessage(message)
+                })
+
+                socket.on('update_character_position', (notification) => {
+                    console.log('Received update_character_position', notification)
+                    this.update_game_state_player({
+                        playerId: notification.playerId,
+                        character: {
+                            ...notification.character,
+                            x: notification.character.x,
+                            y: notification.character.y
+                        }
+                    })
+
+                    this.pushMessage({
+                        text: notification.text,
+                        senderName: notification.senderName,
+                        roomId: this.roomId,
+                    })
+
+                    this.updateState({
+                        property: 'hasToUpdatePlayers',
+                        newState: true
+                    })
+                })
+
+                socket.on("update", (update) => {
+                    const toast = useToast()
+                    console.log("Received update", update)
+                    
+                    if (update.type) {
+                        switch (update.type) {
+                        case 'gamestatus':
+                            this.$router.go().then(() => toast.info('La session a été mise en pause par votre MJ'))
+                            break
+
+                        case 'character':
+                            if (update.playerId && update.character) {
+                                this.update_game_state_player({
+                                    playerId: update.playerId,
+                                    character: update.character
+                                })
+                            } else {
+                                console.log("Missing data for updating player's character")
+                            }
+                            break
+
+                        default:
+                            console.log('Unknown update type')
+                            break
+                        }
+                    }
                 })
 
                 socket.on("connect_error", () => {

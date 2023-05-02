@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne,
 import { Story } from "./workshop/Story"
 import { Player } from "./Players"
 import { CMap } from "./workshop/CMap"
-import { MapGameView, PlayerGameView, StateGameView, UpdateGame } from "../../../utils/types/game"
+import { CharacterGameView, MapGameView, PlayerGameView, StateGameView, UpdateGame } from "../../../utils/types/game"
 import { Game, GameStatus } from "./Game"
 import { randomUUID } from "crypto"
 
@@ -17,9 +17,9 @@ export class State {
     @Column('text', { array: true })
     players: string[]
 
-    private buildPlayers(players: Player[] | PlayerGameView[]): string[] {
+    private buildPlayersFromGame(players: Player[]): string[] {
         return players.map(
-            player => {
+            (player: Player) => {
                 return JSON.stringify({
                     id: player.id,
                     user: {
@@ -31,7 +31,32 @@ export class State {
                         experience_points: player.character.experience_points,
                         hp: player.character.hp,
                         firstname: player.character.firstname,
-                        lastname: player.character.lastname
+                        lastname: player.character.lastname,
+                        x: null,
+                        y: null
+                    }
+                } as PlayerState)
+            }
+        )
+    }
+
+    private buildPlayersFromStateGameView(players: PlayerGameView[]): string[] {
+        return players.map(
+            (player: PlayerGameView) => {
+                return JSON.stringify({
+                    id: player.id,
+                    user: {
+                        id: player.user.id,
+                        username: player.user.username
+                    },
+                    character: {
+                        id: player.character.id,
+                        experience_points: player.character.experience_points,
+                        hp: player.character.hp,
+                        firstname: player.character.firstname,
+                        lastname: player.character.lastname,
+                        x: player.character.x ? player.character.x : null,
+                        y: player.character.y ? player.character.y : null
                     }
                 } as PlayerState)
             }
@@ -42,14 +67,14 @@ export class State {
         return {
             id: game.state ? game.state.id ? game.state.id : randomUUID() : randomUUID(),
             map: { id: game.tilemap.id, title: game.tilemap.title, data: game.tilemap.data } as MapState,
-            players: this.buildPlayers(game.players)
+            players: this.buildPlayersFromGame(game.players)
         } as State
     }
     public fromStateGameView(state: StateGameView): State {
         return {
             id: state.id,
             map: state.map as MapState,
-            players: this.buildPlayers(state.players)
+            players: this.buildPlayersFromStateGameView(state.players)
         } as State
     }
 }
@@ -72,5 +97,7 @@ export type PlayerState = {
         hp: number
         firstname: string
         lastname: string
+        x: number | null
+        y: number | null
     }
 }

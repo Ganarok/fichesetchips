@@ -8,7 +8,7 @@
                 <div class="flex justify-between items-end rounded-full space-x-4 lg:space-x-32">
                     <h1
                         v-if="title"
-                        class="font-bold text-xl"
+                        class="font-bold text-xl text-fc-black"
                     >
                         {{ title }}
                     </h1>
@@ -16,7 +16,7 @@
                     <div class="flex">
                         <img
                             src="@/assets/icons/plus.svg"
-                            class="transform rotate-45 object-contain h-8 w-8 p-2 bg-fc-green rounded-full cursor-pointer transition hover:opacity-80 hover:-rotate-45"
+                            class="transform rotate-45 object-contain h-8 w-8 p-2 bg-fc-green rounded-full cursor-pointer hover:opacity-80 hover:-rotate-45"
                             alt="Fermer"
                             @click="$emit('close-modal')"
                         />

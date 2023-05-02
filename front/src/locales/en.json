@@ -75,5 +75,12 @@
     "Pause la partie": "Pause the game",
     "Quitter la partie": "Leave the game",
     "Vider les messages": "Clean messages",
-    "Réinitialiser": "Reset"
+    "Réinitialiser": "Reset",
+    "Cette room n'existe pas ou n'a pas pu être récupérée": "This room does not exist or could not be retrieved",
+    "Inscrivez-vous": "Sign up",
+    "Connectez-vous": "Log in",
+    "Amis": "Friends",
+    "Personnages": "Characters",
+    "Mettre à jour": "Update",
+    "Déplacer": "Move"
 }
