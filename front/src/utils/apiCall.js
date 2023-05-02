@@ -10,7 +10,7 @@ export async function apiCall({
     body,
     isBuffer = false
 }) {
-    let baseUrl = "http://localhost:3000"
+    let baseUrl = "https://localhost:3000"
     if (process.env.NODE_ENV === "production") {
         baseUrl = `https://${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`
     }

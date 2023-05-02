@@ -30,10 +30,9 @@ app.use(bodyParser.raw({ type: 'application/octet-stream', limit: '10mb' }));
 
 configSwagger(app)
 routing(app);
-
 const httpServer = https.createServer({
-        key: fs.readFileSync("key.pem"),
-        cert: fs.readFileSync("cert.pem")
+        key: fs.readFileSync("key.pem").toString(),
+        cert: fs.readFileSync("cert.pem").toString()
     },app)
 const io = new Server(httpServer, {
     cors: {
