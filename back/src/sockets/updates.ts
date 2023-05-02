@@ -9,20 +9,23 @@ export default function updatesSockets(socket: Socket) {
     });
 
     socket.on('update_character_position', (n) => {
-        socket.broadcast.to(n.roomId).emit('update_character_position', n)
+        socket.broadcast.to(n.roomId).emit('update_character_position', {
+            ...n,
+            text: `Character ${n.character.firstname} ${n.character.lastname} has moved to ${n.x}, ${n.y}.`
+        })
     });
 
     socket.on("update_character_life", (n) => { 
         socket.broadcast.to(n.roomId).emit('message', {
             ...n,
-            text: "Character " + n.firstname + " " + n.lastname + " has " + n.update + " life points left."
+            text: `Character ${n.firstname} ${n.lastname} has ${n.update} life points left.`
         })
     });
 
     socket.on("update_character_xp", (n) => {
         socket.broadcast.to(n.roomId).emit('message', {
             ...n,
-            text: "Character " + n.firstname + " " + n.lastname + " has gain " + n.update + " xp points."
+            text: `Character ${n.firstname} ${n.lastname} has gain ${n.update} xp points.`
         })
     });
 

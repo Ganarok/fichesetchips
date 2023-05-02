@@ -76,7 +76,27 @@ export default {
     computed: {
         ...mapState('user', {
             user: (state) => state.user
+        }),
+        ...mapState('game', {
+            haveToEmit: (state) => state.haveToEmit,
+            notificationToEmit: (state) => state.notificationToEmit,
+            contentToEmit: (state) => state.contentToEmit,
         })
+    },
+    watch: {
+        haveToEmit: function(val) {
+            if (!val) return
+
+            this.socket.emit(this.notificationToEmit, {
+                ...this.contentToEmit,
+                senderName: this.user.username
+            })
+
+            this.updateState({
+                property: 'haveToEmit',
+                newState: false
+            })
+        }
     },
     mounted() {
         this.initGame()
@@ -136,6 +156,29 @@ export default {
                 socket.on("message", (message) => {
                     console.log("Received message", message)
                     this.pushMessage(message)
+                })
+
+                socket.on('update_character_position', (notification) => {
+                    console.log('Received update_character_position', notification)
+                    this.update_game_state_player({
+                        playerId: notification.playerId,
+                        character: {
+                            ...notification.character,
+                            x: notification.character.x,
+                            y: notification.character.y
+                        }
+                    })
+
+                    this.pushMessage({
+                        text: notification.text,
+                        senderName: notification.senderName,
+                        roomId: this.roomId,
+                    })
+
+                    this.updateState({
+                        property: 'hasToUpdatePlayers',
+                        newState: true
+                    })
                 })
 
                 socket.on("update", (update) => {

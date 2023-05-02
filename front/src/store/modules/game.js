@@ -1,8 +1,7 @@
-// import { apiCall } from "@/utils/apiCall"
+import { useToast } from "vue-toastification"
 
 import { apiCall } from "@/utils/apiCall"
 import store from '@/store'
-import { useToast } from "vue-toastification"
 
 export default {
     namespaced: true,
@@ -20,15 +19,23 @@ export default {
             notes: '',
             lastDice: {},
         },
+        selectedPlayerFromPhaser: {},
         starter_map_id: '',
         current_map_title: '',
         vocal_url: '',
         roomId: '',
-        gameId: ''
+        gameId: '',
+        isMovingPlayer: false,
+        haveToEmit: false,
+        notificationToEmit: '',
+        contentToEmit: {},
+        hasToUpdatePlayers: false
     },
     mutations: {
         updateState(state, payload) {
             const { property, newState } = payload
+
+            console.log('Updating state', property, 'with', newState)
 
             state[property] = newState
         },
@@ -43,7 +50,7 @@ export default {
         },
         updateDiceResult(state, result) {
             state.diary.lastDice = result
-        }
+        },
     },
     actions: {
         async init_session({ commit, state }, roomId) {
@@ -71,10 +78,15 @@ export default {
                 state.diary.my_character = is_gm ? null : characters.find(character => character.user_id === store.state.user.user.id)
                 state.story = data.game.story
                 state.diary.places = data.game.tilemap
+                state.selectedPlayerFromPhaser = {}
+                state.isMovingPlayer = false
+                state.haveToEmit = false
+                state.notificationToEmit = ''
+                state.contentToEmit = {}
 
-                if (data.game.state) {
+                if (data.game_state) {
                     console.log('Retreiving game state registered...')
-                    let gameState = data.game.state
+                    let gameState = data.game_state
 
                     gameState.players.forEach((player, index) => {
                         if (!player.character.x) {
@@ -137,7 +149,6 @@ export default {
             } catch (error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 throw new Error(error.message)
-
             }
         },
         async update_game_state_player({ commit, state }, update) {
