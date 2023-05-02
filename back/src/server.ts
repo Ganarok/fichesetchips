@@ -8,6 +8,8 @@ import { Server } from 'socket.io'
 import { createServer } from 'http'
 import initSockets from "./sockets/index"
 import { databaseConnection } from "./database/init/connection";
+import fs from "fs";
+const https = require("https");
 const morgan = require('morgan')
 
 dotenv.config();
@@ -28,8 +30,10 @@ app.use(bodyParser.raw({ type: 'application/octet-stream', limit: '10mb' }));
 
 configSwagger(app)
 routing(app);
-
-const httpServer = createServer(app)
+const httpServer = https.createServer({
+        key: fs.readFileSync("privkey.pem").toString(),
+        cert: fs.readFileSync("fullchain.pem").toString()
+    },app)
 const io = new Server(httpServer, {
     cors: {
         origin: '*',
