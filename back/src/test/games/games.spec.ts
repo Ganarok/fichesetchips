@@ -122,10 +122,10 @@ describe('Games', () => {
                 .send({ characters: [characterIdUser1, characterIdUser2] })
             expect(res.status).to.equal(200);
             const result = res.body.data
-            const expected = [
-                { '982d302c-8631-47f3-9245-78772cf7383b': false },
-                { '7098e370-41d1-471a-a592-9d1b18a6b139': false }
-              ]
+            const expected = {
+                '982d302c-8631-47f3-9245-78772cf7383b': false,
+                '7098e370-41d1-471a-a592-9d1b18a6b139': false
+            }
             assert.deepEqual(result, expected)
         }
     )

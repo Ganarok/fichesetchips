@@ -9,16 +9,17 @@
             :key="character.id"
             :character="character"
             :with_router_link="false"
+            :grayed="characters_in_game[character.id]"
         />
         
         <Button
-                    :customClass="''"
-                    :button-text="'Choisir'"
+                    :customClass="characters_in_game[character.id] ? 'cursor:auto' : ''"
+                    :button-text="characters_in_game[character.id] ? 'En jeu' : 'Choisir'"
                     :textColor="'text-fc-black'"
-                    color="fc-yellow"
+                    :color="characters_in_game[character.id] ? 'fc-gray' : 'fc-yellow'"
                     :rounded="false"
-                    background-color="fc-yellow"
-                    @click="chooseCharacter(character.id)"
+                    :background-color="characters_in_game[character.id] ? 'fc-gray' : 'fc-yellow'"
+                    @click="characters_in_game[character.id] ? '' : chooseCharacter(character.id)"
                 />
         </div>
     </div>
@@ -46,7 +47,9 @@ export default {
         },
     },
     data() {
-        return {}
+        return {
+            characters_in_game: []
+        }
     },
     computed: {
         ...mapState("characters", {
@@ -62,12 +65,23 @@ export default {
     async mounted() {
         await this.fetch_room(this.room_id)
         await this.fetch_characters() 
+        await this.checkIfCharactersAreInGame()
     },
     methods: {
         ...mapActions({
             fetch_characters: "characters/fetch_characters",
             fetch_room: "room/fetch_room",
         }),
+        async checkIfCharactersAreInGame() {
+        const {data} = await apiCall({
+                    route: `/cem/characters/are_in_game`,
+                    method: 'POST',
+                    body: {characters: this.characters.map(character => character.id)}
+                })
+        this.characters_in_game = data
+        console.log(this.characters_in_game)
+        console.log(this.characters_in_game["21e2e286-2ec6-442c-b7d9-b47163696653"])
+        },
         async chooseCharacter(character_id) {
             console.log(this.player_id)
             const toast = useToast()
@@ -78,7 +92,7 @@ export default {
                     method: 'PATCH',
                     body: {character_id: character_id}
                 })
-                await this.$router.push(`rooms/${this.room_id}`)
+                await this.$router.push(`/rooms/${this.room_id}`)
                 toast.success('Room joined avec succes')
             } catch (error) {
                 toast.error(error)

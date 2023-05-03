@@ -260,12 +260,13 @@ export async function checkIfInGame(characters: []) {
             })
         }
     })
-    const res = characters.map(character_id => {
+    let res: {[test: string]: boolean} = {}
+    characters.map(character_id => {
         const character_id_in_game = characters_in_game.filter(character_id_ingame => character_id_ingame == character_id)
         if (character_id_in_game.length >= 1) {
-            return {[character_id]: true}
+            res[`${character_id}`] = true
         } else {
-            return {[character_id]: false}
+            res[`${character_id}`] = false
         }
     })
     return res
