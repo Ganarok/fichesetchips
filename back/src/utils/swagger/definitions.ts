@@ -583,5 +583,13 @@ export const definitions = {
                 default: "2b0f6de8-d488-11ed-afa1-0242ac120002"
             }
         }
-    }
+    },
+    checkCharactersRequest: {
+        properties: {
+            characters: {
+                type: Array,
+                default: []
+            }
+        }
+    },
 }

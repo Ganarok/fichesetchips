@@ -15,6 +15,21 @@
         </div>
     </div>
     <div
+        v-else-if="!is_gm"
+        class="flex flex-col h-full items-center justify-center font-bold text-xl"
+    >
+        {{ $t("Vous n'êtes pas GM de cette room et ne pouvez l'éditer") }}
+
+        <div class="my-4">
+            <Button
+                :button-text="$t('Retour')"
+                class="px-6 py-2"
+                color="fc-green"
+                @click="() => $router.push('/rooms')"
+            />
+        </div>
+    </div>
+    <div
         v-else
         class="flex flex-col h-full space-y-4 sm:space-y-8"
     >
@@ -27,7 +42,7 @@
                 height="h-16"
                 :canEdit="true"
             />
-            <Button
+            <!-- <Button
                 v-if="is_gm"
                 class="ml-4 sm:mx-12"
                 :button-text="room.is_published ? 'Dépublier' : 'Publier'"
@@ -35,7 +50,7 @@
                 :rounded="false"
                 background-color="fc-black"
                 @click="handlePublish"
-            />
+            /> -->
             <Button
                 class="ml-4 sm:mx-12"
                 :button-text="is_gm ? 'Sauvegarder' : canPlayerJoin"
@@ -79,10 +94,10 @@
                 <div class="flex w-full h-full p-4 justify-evenly  sm:h-1/2">
                     <div class="flex flex-col space-y-4 sm:space-y-6">
                         <h3 class="flex font-bold">
-                            prerequis:
+                            Prérequis:
                             <CustomInput
                                 :max-length="254"
-                                place-holder="prereuis"
+                                place-holder="Prérequis"
                                 type="text"
                                 outline="fc-green"
                                 :value="room.requirements"
@@ -114,7 +129,7 @@
                             />
                         </h3>
                         <h3 class="flex font-bold">
-                            nombre de joueurs:
+                            Nombre de joueurs max:
                             <CustomInput
                                 :max-length="254"
                                 place-holder="url vocal"
@@ -182,7 +197,7 @@
                     <div class="flex flex-col items-center justify-between p-4 space-x-2 sm:flex-row">
                         <div class="flex items-center space-x-4">
                             <div class="bg-gray-400 border-2 border-fc-black-light rounded-full w-24 h-24">
-                                <img src="../assets/avatar/avatar_default.svg">
+                                <img src="@/assets/avatar/avatar_default.svg">
                             </div>
                             <p class="text-xl font-bold">
                                 {{ room?.gm?.username || "MJ" }}
@@ -203,7 +218,7 @@
                             class="flex text-xl font-bold items-center p-2"
                         >
                             <div class="bg-gray-400 border-2 border-fc-black-light rounded-full mr-4 w-20 h-20">
-                                <img src="../assets/avatar/avatar_default.svg">
+                                <img src="@/assets/avatar/avatar_default.svg">
                             </div>
                             <div class="flex flex-col justify-evenly">
                                 <p>
@@ -340,7 +355,10 @@ export default {
                         route: `/rooms/${this.room_id}`,
                         method: 'PUT',
                         body: form
-                    }).then(() => toast.success('Room updated avec succes'))
+                    }).then(() => {
+                        toast.success('Room updated avec succes')
+                        this.$router.push(`/rooms/${this.room_id}`)
+                    })
                 } catch (error) {
                     toast.error(error)
                 }

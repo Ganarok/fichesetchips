@@ -13,6 +13,7 @@ import Dashboard from "@/views/user/dashboard.vue"
 import Admin from "@/views/user/admin.vue"
 import Rooms from "@/views/rooms/index.vue"
 import RoomID from "@/views/rooms/[id]/index.vue"
+import RoomEdit from "@/views/rooms/[id]/edit.vue"
 import Session from "@/views/rooms/[id]/session.vue"
 import Profile from "@/views/user/profile.vue"
 import ProfileID from "@/views/user/profileID.vue"
@@ -103,6 +104,12 @@ const routes = [{
     path: "/rooms/create",
     name: "Create_Room",
     component: Create_Room,
+    meta: { requiresAuth: true }
+},
+{
+    path: "/rooms/:id/edit",
+    name: "RoomEdit",
+    component: RoomEdit,
     meta: { requiresAuth: true }
 },
 {
