@@ -1,8 +1,8 @@
 <template>
     <div class="border-2 border-fc-green p-2 hover:cursor-pointer">
-        <router-link
+        <div
             class="h-full w-full flex flex-col items-center"
-            :to="urlSelection(character.id)"
+            @click="with_router_link ? $router.push(urlSelection(character.id)) : ''"
         >
             <div
                 v-if="level || firstname"
@@ -68,7 +68,7 @@
                     Nouveau personnage
                 </p>
             </div>
-        </router-link>
+        </div>
     </div>
 </template>
 
@@ -80,7 +80,8 @@ export default {
         grayed: { type: Boolean, default: false },
         owner: { type: String, default: "" },
         location: { type: String, default: "" },
-        image: { type: Boolean }
+        image: { type: Boolean },
+        with_router_link: { type: Boolean, default: true }
     },
     data() {
         return {

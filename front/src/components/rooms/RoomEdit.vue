@@ -94,10 +94,10 @@
                 <div class="flex w-full h-full p-4 justify-evenly  sm:h-1/2">
                     <div class="flex flex-col space-y-4 sm:space-y-6">
                         <h3 class="flex font-bold">
-                            prerequis:
+                            Prérequis:
                             <CustomInput
                                 :max-length="254"
-                                place-holder="prereuis"
+                                place-holder="Prérequis"
                                 type="text"
                                 outline="fc-green"
                                 :value="room.requirements"
@@ -129,7 +129,7 @@
                             />
                         </h3>
                         <h3 class="flex font-bold">
-                            nombre de joueurs:
+                            Nombre de joueurs max:
                             <CustomInput
                                 :max-length="254"
                                 place-holder="url vocal"
