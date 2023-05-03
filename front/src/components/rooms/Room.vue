@@ -89,7 +89,7 @@
                     :color="'fc-green'"
                     :rounded="false"
                     :background-color="'fc-black'"
-                    @click="$router.push(`rooms/${room.id}/session`)"
+                    @click="$router.push(`/rooms/${room.id}/session`)"
                 />
                 <Button
                     v-else-if="game_is_planned || game_is_paused"
