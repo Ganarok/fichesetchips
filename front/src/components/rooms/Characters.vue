@@ -80,11 +80,8 @@ export default {
                 body: {characters: this.characters.map(character => character.id)}
             })
             this.characters_in_game = data
-            console.log(this.characters_in_game)
-            console.log(this.characters_in_game["21e2e286-2ec6-442c-b7d9-b47163696653"])
         },
         async chooseCharacter(character_id) {
-            console.log(this.player_id)
             const toast = useToast()
             try {
                 const players = this.room.game.players.filter(player => player.user.id == this.user.id)
@@ -93,7 +90,7 @@ export default {
                     method: 'PATCH',
                     body: {character_id: character_id}
                 })
-                await this.$router.push(`/rooms/${this.room_id}`)
+                this.$router.push(`/rooms`)
                 toast.success('Room joined avec succes')
             } catch (error) {
                 toast.error(error)

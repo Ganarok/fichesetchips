@@ -304,7 +304,7 @@ export default {
             return this.room?.gm?.id === this.user?.id
         },
         game_is_full () {
-            return this.room?.game.players.length >= this.room?.players_nb_max
+            return this.room?.game?.players?.length >= this.room?.players_nb_max
         },
         game_is_running () {
             return this.room?.game.status == "running"
