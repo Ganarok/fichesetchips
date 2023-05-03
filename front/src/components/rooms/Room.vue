@@ -18,7 +18,7 @@
         v-else
         class="flex flex-col h-full space-y-4 sm:space-y-8"
     >
-        <div class="flex justify-between">
+        <div class="flex items-center">
             <BlackGreenDiv
                 :title="room.title"
                 :right-green-div="false"
@@ -29,9 +29,38 @@
             <!-- todo here : if is gm -->
             <div
                 v-if="is_gm"
-                class="flex"
+                class="flex relative h-full h-12 px-4 justify-between items-center text-white font-bold select-none"
             >
-                <Button
+                <div class="ml-4 relative z-50">
+                    <img
+                        src="@/assets/icons/option.svg"
+                        class="p-2 h-10 w-10 cursor-pointer transition ease-in-out hover:opacity-80 hover:rotate-90 bg-fc-black rounded-full"
+                        alt="option"
+                        @click="() => optionsOpened = !optionsOpened"
+                    >
+
+                    <div
+                        v-if="optionsOpened"
+                        class="absolute right-10 items-center p-2 bg-fc-black-light text-fc-yellow whitespace-nowrap"
+                    >
+                        <div class="flex flex-col space-y-4">
+                            <div
+                                v-for="option in options"
+                                :key="option.name"
+                                class="flex flex-col"
+                            >
+                                <p
+                                    :class="option.class"
+                                    class="text-xs cursor-pointer hover:opacity-80"
+                                    @click="option.action"
+                                >
+                                    {{ option.name }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <Button
                     v-if="is_gm"
                     class="ml-4 sm:mx-12"
                     :button-text="room.is_published ? 'Dépublier' : 'Publier'"
@@ -47,7 +76,7 @@
                     :rounded="false"
                     background-color="fc-black"
                     @click="postForm"
-                />
+                /> -->
             </div>
             <div
                 v-else-if="is_player"
@@ -104,13 +133,18 @@
         </div>
 
         <div class="flex flex-col h-full w-full sm:overflow-y-auto sm:space-x-8 sm:flex-row relative">
-            <div v-if="characters_modal" 
-            class="absolute z-10 bg-white"
-            :style="{'width':'100%', 'height':'100%'}">
-            <h2 class='font-bold text-xl text-center mb-5'>
-                Choisi ton personnage !
-            </h2>
-                <CharactersList :player_id="player.id" :room_id="room_id"/>
+            <div
+                v-if="characters_modal" 
+                class="absolute z-10 bg-white"
+                :style="{'width':'100%', 'height':'100%'}"
+            >
+                <h2 class="font-bold text-xl text-center mb-5">
+                    Choisi ton personnage !
+                </h2>
+                <CharactersList
+                    :player_id="player.id"
+                    :room_id="room_id"
+                />
             </div>
             <div class="flex flex-col relative h-full w-full pb-4 sm:w-3/4">
                 <BlackGreenDiv
@@ -215,7 +249,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -255,7 +288,9 @@ export default {
             right_contents: [],
             characters_modal: false,
             player: [],
-            is_player: false
+            is_player: false,
+            optionsOpened: false,
+            options: []
         }
     },
     computed: {
@@ -288,6 +323,7 @@ export default {
         await this.clear_room()
         await this.fetch_room(this.room_id)
         this.checkPlayer()
+        this.reloadOptions()
         this.left_contents = [{name: 'Prérequis:', value: this.room.requirements},
             {name: 'Story:', value: this.room?.game?.story?.title},
             {name: 'Map:', value: this.room?.game?.tilemap?.title},
@@ -298,12 +334,47 @@ export default {
     methods: {
         checkPlayer() {
             const player_exist = this.room?.game.players.filter(player => player.user.id == this.user.id)
-        if (player_exist.length > 0) {
-            this.is_player = true
-        this.player = player_exist[0]
-        } else {
-            this.is_payer = false
-        }
+            if (player_exist.length > 0) {
+                this.is_player = true
+                this.player = player_exist[0]
+            } else {
+                this.is_payer = false
+            }
+        },
+        reloadOptions() {
+            this.optionsOpened = false
+            this.options = [
+                {
+                    name: "Editer la room",
+                    action: () => this.$router.push(`/rooms/${this.room_id}/edit`),
+                },
+                {
+                    name: this.room.is_published ? "Dépublier" : "Publier",
+                    action: async () => { await this.handlePublish()} ,
+                },
+            ]
+            if (this.game_is_running) {
+                this.options.push({
+                    name: "Rejoindre la game en cours",
+                    action: () => this.$router.push(`/rooms/${this.room_id}/session`),
+                }, {
+                    name: "Mettre en pause la game",
+                    action: async () => {await this.updateGameStatus("paused")},
+                })
+            } else if (this.game_is_paused || this.game_is_planned) {
+                this.options.push({
+                    name: "Démarrer la game",
+                    action: async () => {
+                        await this.updateGameStatus("running")
+                        this.$router.push(`/rooms/${this.room_id}/session`)
+                    },
+                }, {
+                    name: "Cloturer la game",
+                    action: async () => {
+                        await this.updateGameStatus("closed")
+                    },
+                })
+            }
         },
         async handlePublish() {
             const toast = useToast()
@@ -312,10 +383,10 @@ export default {
                     route: `/rooms/${this.room_id}`,
                     method: 'PATCH',
                     body: {is_published: !this.room.is_published}
-                }).then(() =>{ 
-                    this.set_is_published(!this.room.is_published)
-                    toast.success('Room updated avec succes')
                 })
+                await this.fetch_room(this.room_id)
+                this.reloadOptions()
+                toast.success('Room updated avec succes')
             } catch (error) {
                 toast.error(error)
             }
@@ -330,6 +401,22 @@ export default {
                 this.fetch_room
                 this.checkPlayer()
                 this.characters_modal = true
+            } catch (error) {
+                toast.error(error)
+            }
+        },
+        async updateGameStatus(status) {
+            const toast = useToast()
+            try {
+                await apiCall({
+                    route: `/games/${this.room.game.id}`,
+                    method: 'PUT',
+                    body: {status : status, state: this.room.game.state}
+                })
+                toast.success('Room updated avec succes')
+                await this.fetch_room(this.room_id)
+                this.reloadOptions()
+                    
             } catch (error) {
                 toast.error(error)
             }
