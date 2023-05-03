@@ -286,28 +286,26 @@ describe("WebSocket", () => {
     });
     
     it("should update position of the player 1", (done) => {
-        socket.emit("update_character_position", { roomId: 0, player: 2, position: { x: 0, y: 0 } });
+        socket.emit("update_character_position", { roomId: 0, player: 2, character: character, x: 0, y: 0});
         socket2.on("update_character_position", (data: any) => {
-            assert.equal(data.position.x, 0);
-            assert.equal(data.position.y, 0);
+            assert.equal(data.text, `Character ${data.character.firstname} ${data.character.lastname} has moved to ${data.x}, ${data.y}.`);
             done();
         });
     });
 
     it("should update position of the player 2", (done) => {
-        socket2.emit("update_character_position", { roomId: 0, player: 1, position: { x: 5, y: 1 } });
-        socket.on("update_character_position", (data: any) => {
-            assert.equal(data.position.x, 5);
-            assert.equal(data.position.y, 1);
-            done();
-        });
+      socket2.emit("update_character_position", { roomId: 0, player: 1, character: character, x: 1, y: 1});
+      socket.on("update_character_position", (data: any) => {
+          assert.equal(data.text, `Character ${data.character.firstname} ${data.character.lastname} has moved to ${data.x}, ${data.y}.`);
+          done();
+      });
     });
 
     it ("should update the character life", (done) => {
         character["hp"] = 15;
         socket.emit("update_character_life", { roomId: 0, firstname: character["firstname"], lastname: character["lastname"], update: character["hp"] });
         socket2.on("message", (data: any) => {
-            assert.equal(data, "Character Gabriel LeDragon has 15 life points left.");
+            assert.equal(data.text, "Character Gabriel LeDragon has 15 life points left.");
             socket2.off("message");
             done();
         });
@@ -317,7 +315,7 @@ describe("WebSocket", () => {
         character["experience_points"] = 20;
         socket.emit("update_character_xp", { roomId: 0, firstname: character["firstname"], lastname: character["lastname"], update: character["experience_points"] });
         socket2.on("message", (data: any) => {
-            assert.equal(data, "Character Gabriel LeDragon has gain 20 xp points.");
+            assert.equal(data.text, "Character Gabriel LeDragon has gain 20 xp points.");
             socket2.off("message");
             done();
         });
