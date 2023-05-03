@@ -408,6 +408,7 @@ export default {
         async updateGameStatus(status) {
             const toast = useToast()
             try {
+                console.log(this.room.game.state)
                 await apiCall({
                     route: `/games/${this.room.game.id}`,
                     method: 'PUT',
