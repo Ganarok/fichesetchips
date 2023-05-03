@@ -31,7 +31,7 @@ export async function update(username: string, view_instance: UpdateGame, game_i
     }
     await GameRepository.save(game)
     const updated_game = await GameRepository.findOneOrFail({ where: { id: game_id }, relations: { players: { user: true, character: true }, story: true, tilemap: true } })
-    if (updated_game.status != GameStatus.CLOSED) {
+    if (updated_game.state && updated_game.state.players.length >= 0) {
         updated_game.state.players = updated_game.state.players.map(player => JSON.parse(player))
     }
     return updated_game

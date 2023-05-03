@@ -17,7 +17,6 @@ export async function apiCall({
 
     if (store.state.user.access_token != "") {
         headers["Authorization"] = `Bearer ${store.state.user.access_token}`
-        // headers['Content-Length'] = 152616
     }
     let res
     if(isBuffer) {

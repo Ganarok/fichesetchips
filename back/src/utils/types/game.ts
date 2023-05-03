@@ -35,6 +35,10 @@ export class CharacterGameView {
     firstname: string
     @IsDefined()
     lastname: string
+    @IsNumber()
+    x: number
+    @IsNumber()
+    y: number
 }
 
 export class PlayerGameView {

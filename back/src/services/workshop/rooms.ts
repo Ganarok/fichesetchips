@@ -230,8 +230,23 @@ export function is_user_gm_of_room(user_id: string, room: Room): boolean {
     return room.gm.id === user_id
 }
 
+function parseRoomsPlayers(rooms: Room[]): Room[] {
+    return rooms.map((room: Room) => {
+        if (room.game && room.game.state && room.game.state.players.length >= 1) {
+            room.game.state.players = room.game.state.players.map((player) => { return JSON.parse(player) })
+        }
+        return room
+    })
+}
+function parseRoomPlayers(room: Room): Room {
+    if (room.game && room.game.state && room.game.state.players.length >= 1) {
+        room.game.state.players = room.game.state.players.map(player => JSON.parse(player))
+    }
+    return room
+}
+
 async function findRooms(filters: any[]) {
-    return await RoomRepository.find({
+    const rooms = await RoomRepository.find({
         relations: {
             game: { tilemap: true, story: true, players: { user: true, character: true } }
         },
@@ -244,10 +259,12 @@ async function findRooms(filters: any[]) {
         },
         where: filters
     })
+    return parseRoomsPlayers(rooms)
+    return rooms
 }
 
 async function findOneRoom(filters: any[]) {
-    return await RoomRepository.findOneOrFail({
+    const room = await RoomRepository.findOneOrFail({
         relations: {
             game: { tilemap: true, story: true, players: { user: true, character: true } }
         },
@@ -260,4 +277,6 @@ async function findOneRoom(filters: any[]) {
         },
         where: filters
     })
+    return parseRoomPlayers(room)
+    return room
 }

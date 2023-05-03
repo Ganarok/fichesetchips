@@ -125,7 +125,10 @@
                         v-if="selectedOption === 'chat'"
                         :socket="socket"
                     />
-                    <GM v-if="selectedOption === 'gm' && is_gm" />
+                    <GM 
+                        v-if="selectedOption === 'gm' && is_gm" 
+                        :socket="socket"
+                    />
                     <Character v-if="selectedOption === 'character' && !is_gm" />
                     <Diary v-if="selectedOption === 'diary'" />
                     <Dices 
@@ -140,6 +143,8 @@
             </div>
         </div>
 
+        <SelectedPlayer :socket="socket" />
+
         <slot />
     </div>
 </template>
@@ -153,6 +158,7 @@ import Options from '@/components/game/Options.vue'
 import Character from '@/components/game/Character.vue'
 import Dices from '@/components/game/Dices.vue'
 import GM from '@/components/game/GM.vue'
+import SelectedPlayer from '@/components/game/SelectedPlayer.vue'
 
 export default {
     name: "GameLayout",
@@ -162,6 +168,7 @@ export default {
         Diary,
         Dices,
         Character,
+        SelectedPlayer,
         GM
     },
     props: {
@@ -183,7 +190,7 @@ export default {
     computed: {
         ...mapState('game', {
             current_map_title: (state) => state.current_map_title,
-            is_gm: (state) => state.diary.is_gm
+            is_gm: (state) => state.diary.is_gm,
         })
     },
     created() {
