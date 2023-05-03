@@ -260,8 +260,6 @@ import Button from "@/components/common/Button.vue"
 import ParamétrageDiv from "@/components/rooms/ParamétrageDiv.vue"
 import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
 import { apiCall } from '@/utils/apiCall'
-import Selector from '@/components/common/Selector.vue'
-import CustomInput from "@/components/common/CustomInput.vue"
 import CharactersList from '@/components/rooms/Characters.vue'
 
 
@@ -271,8 +269,6 @@ export default {
     components: {
         Button,
         BlackGreenDiv,
-        Selector,
-        CustomInput,
         ParamétrageDiv,
         CharactersList
     },
