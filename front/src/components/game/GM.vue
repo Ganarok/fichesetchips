@@ -40,7 +40,7 @@
                     <p>
                         {{ player.character.hp <= 0 ? 'Mort' : `${game_state.players?.find(p => p.id === player.id)?.character.hp}
                             /
-                            ${player.character.hp} HP` 
+                            ${player.character.max_hp} HP` 
                         }} 
                         - 
                         {{ `${game_state.players?.find(p => p.id === player.id)?.character.experience_points}/${player.character.next_level_experience_points}` }} EXP.

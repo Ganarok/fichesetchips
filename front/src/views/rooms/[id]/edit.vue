@@ -7,14 +7,14 @@
             <Loader />
         </div>
 
-        <Room :room_id="id" />
+        <RoomEdit :room_id="id" />
     </SidebarLayout>
 </template>
 
 <script>
 import SidebarLayout from "@/layouts/Sidebar.vue"
 import Loader from "@/components/common/Loader.vue"
-import Room from "@/components/rooms/Room.vue"
+import RoomEdit from "@/components/rooms/RoomEdit.vue"
 import { useToast } from "vue-toastification"
 import { mapState, mapActions } from "vuex"
 
@@ -22,7 +22,7 @@ export default {
     components: {
         SidebarLayout,
         Loader,
-        Room,
+        RoomEdit,
     },
     data() {
         const { id } = this.$route.params

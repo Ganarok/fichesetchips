@@ -12,7 +12,7 @@ export default {
         game_state: {},
         diary: {
             is_gm: false,
-            my_character: {}, 
+            my_character: {},
             characters: [],
             places: {},
             players: [],
@@ -55,7 +55,7 @@ export default {
     actions: {
         async init_session({ commit, state }, roomId) {
             try {
-                if (!roomId) {
+                if(!roomId) {
                     throw new Error("Pas de room id")
                 }
 
@@ -70,9 +70,21 @@ export default {
                 state.diary.players = data.game.players
                 state.gameId = data.game.id
 
+                data.game.players.map(player => {
+                    if(data.game.state) {
+                        const player_state = data.game.state.players.filter(playerstate =>
+                            playerstate.id == player.id
+                        )
+                        player.character.max_hp = player.character.hp
+                        player.character.hp = player_state[0].character.hp
+                        player.character.experience_points = player_state[0].character.experience_points
+                        player.character.x = player_state[0].character.x
+                        player.character.y = player_state[0].character.y
+                    }
+                    player.character
+                })
                 const characters = data.game.players.map(player => player.character)
                 const is_gm = store.state.user.user.id === data.gm.id
-
                 state.diary.is_gm = is_gm
                 state.diary.characters = characters
                 state.diary.my_character = is_gm ? null : characters.find(character => character.user_id === store.state.user.user.id)
@@ -84,16 +96,16 @@ export default {
                 state.notificationToEmit = ''
                 state.contentToEmit = {}
 
-                if (data.game_state) {
+                if(data.game_state) {
                     console.log('Retreiving game state registered...')
                     let gameState = data.game_state
 
                     gameState.players.forEach((player, index) => {
-                        if (!player.character.x) {
+                        if(!player.character.x) {
                             console.log('No x position for player', player.character.firstname, player.character.lastname, 'setting default position...')
                             player.character.x = 9 + index + index
                         }
-                        if (!player.character.y) {
+                        if(!player.character.y) {
                             console.log('No y position for player', player.character.firstname, player.character.lastname, 'setting default position...')
                             player.character.y = 15 + index
                         }
@@ -133,7 +145,7 @@ export default {
                 }
 
                 return data
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 throw new Error(error.message)
             }
@@ -146,7 +158,7 @@ export default {
                     body: newState,
                 })
 
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 throw new Error(error.message)
             }
@@ -157,12 +169,12 @@ export default {
 
                 const playerIndex = state.game_state.players.findIndex(player => player.id === update.playerId)
 
-                if (playerIndex === -1) {
+                if(playerIndex === -1) {
                     throw new Error('Player not found')
                 }
 
                 state.game_state.players[playerIndex].character = update.character
-            } catch (error) {
+            } catch(error) {
                 commit("errors/set_error", { message: error.message }, { root: true })
                 throw new Error(error.message)
             }

@@ -94,7 +94,8 @@ export default {
             gm: state => state.gm,
             is_gm: state => state.diary.is_gm,
             roomId: state => state.roomId,
-            my_character: state => state.diary.my_character
+            my_character: state => state.diary.my_character,
+            game_state: state => state.game_state
         }),
         ...mapState('user', {
             userId: state => state.user.id
@@ -112,7 +113,8 @@ export default {
             
             try {
                 await this.update_game_state({
-                    status: GAMESTATUS.PAUSED
+                    status: GAMESTATUS.PAUSED,
+                    state: this.game_state
                 })
 
                 if (this.socket) {

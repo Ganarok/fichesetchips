@@ -114,6 +114,22 @@ describe('Games', () => {
     const user1Token = jwt.sign(user1Payload, jwtSecret)
     const user2Token = jwt.sign(user2Payload, jwtSecret)
 
+    it('Anybody should be able to see if a character is in game',
+        async () => {
+            const res = await request(app)
+                .post(`/cem/characters/are_in_game`)
+                .set({ "Authorization": `Bearer ${token}` })
+                .send({ characters: [characterIdUser1, characterIdUser2] })
+            expect(res.status).to.equal(200);
+            const result = res.body.data
+            const expected = {
+                '982d302c-8631-47f3-9245-78772cf7383b': false,
+                '7098e370-41d1-471a-a592-9d1b18a6b139': false
+            }
+            assert.deepEqual(result, expected)
+        }
+    )
+
     it('A gm should be able to create a room with a game, map and story inside',
         async () => {
             map_id = await createMap(token)
@@ -182,9 +198,10 @@ describe('Games', () => {
                     return {
                         id: player.id,
                         user: player.user,
-                        character: { ...player.character, experience_points: 50, x: 35, y:40 }
+                        character: { ...player.character, experience_points: 50, x: 35, y: 40 }
                     }
-                })}
+                })
+            }
             const res = await request(app)
                 .put(`/games/${room.game.id}`)
                 .set({ "Authorization": `Bearer ${token}` })
