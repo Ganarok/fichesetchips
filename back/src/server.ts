@@ -30,10 +30,14 @@ app.use(bodyParser.raw({ type: 'application/octet-stream', limit: '10mb' }));
 
 configSwagger(app)
 routing(app);
-const httpServer = https.createServer({
-        key: fs.readFileSync("privkey.pem").toString(),
-        cert: fs.readFileSync("fullchain.pem").toString()
-    },app)
+
+let httpServer = createServer(app)
+if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
+    httpServer = https.createServer({
+            key: fs.readFileSync("privkey.pem").toString(),
+            cert: fs.readFileSync("fullchain.pem").toString()
+        },app)
+}
 const io = new Server(httpServer, {
     cors: {
         origin: '*',
