@@ -9,6 +9,7 @@ import { Level } from "../../database/entities/public/characters/Level";
 import { Profile } from "../../database/entities/public/characters/Profile";
 import { Item } from "../../database/entities/public/characters/Item";
 import { User } from "../../database/entities/public/User";
+import { Game } from "../../database/entities/public/Game";
 
 
 const UserRepository = PublicDataSource.getRepository(User)
@@ -21,6 +22,7 @@ const CharacModRepository = PublicDataSource.getRepository(CharacteristicModific
 const LevelRepository = PublicDataSource.getRepository(Level)
 const ProfileRepository = PublicDataSource.getRepository(Profile)
 const ItemRepository = PublicDataSource.getRepository(Item)
+const GameRepository = PublicDataSource.getRepository(Game)
 
 export async function findAll(user_id: string) {
     const characters = await CharacterRepository
@@ -46,7 +48,7 @@ export async function findAll(user_id: string) {
 }
 
 export async function findAllPublic(username: string) {
-    const user = await UserRepository.findOneByOrFail({username: username})
+    const user = await UserRepository.findOneByOrFail({ username: username })
     const characters = await CharacterRepository
         .createQueryBuilder("character")
         .leftJoinAndSelect('character.race', 'race')
@@ -244,5 +246,28 @@ export async function create(user_id: string, data: any) {
         .execute()
     const character = await findById(character_id)
     return character
+}
+
+export async function checkIfInGame(characters: []) {
+    let characters_in_game: string[] = []
+    const games = await GameRepository.find({ relations: { players: { character: true } } })
+    games.map(game => {
+        if (game.players) {
+            game.players.map(player => {
+                if (player.character) {
+                    characters_in_game.push(player.character.id)
+                }
+            })
+        }
+    })
+    const res = characters.map(character_id => {
+        const character_id_in_game = characters_in_game.filter(character_id_ingame => character_id_ingame == character_id)
+        if (character_id_in_game.length >= 1) {
+            return {[character_id]: true}
+        } else {
+            return {[character_id]: false}
+        }
+    })
+    return res
 }
 

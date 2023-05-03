@@ -173,5 +173,40 @@ router.get("/:id", async (req: Request, res) => {
     return getErrorMessage(error, res);
   }
 })
+router.post("/are_in_game", async (req: Request, res) => {
+  /**
+   * @swagger
+   * /cem/characters/are_in_game:
+   *   post:
+   *     description: Check if characters are in game.
+   *     tags: 
+   *       - Workshop
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       description: The characters to check
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema: { $ref: '#/definitions/checkCharactersRequest' }
+   *     responses:
+   *       200:
+   *         description: Found.
+   *         content:
+   *           application/json:
+   *             schema: {}
+   *       401:
+   *         description: UnAuthorized
+   *         content:
+   *           application/json:
+   *             schema: { $ref: '#/definitions/unAuthorizedResponse' }
+   */
+  try {
+    const response = await charactersService.checkIfInGame(req.body.characters);
+    res.status(200).send({ data: response, message: 'Character successfully checked' });
+  } catch (error) {
+    return getErrorMessage(error, res);
+  }
+})
 
 export default router;
