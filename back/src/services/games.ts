@@ -25,7 +25,7 @@ export async function update(username: string, view_instance: UpdateGame, game_i
         throw new Error("You must have at least one player to start a game")
     }
     game.status = view_instance.status ? view_instance.status : game.status
-    game.state = view_instance.state ? new State().fromStateGameView(view_instance.state) : game.state
+    game.state = view_instance.state && view_instance.state != null ? new State().fromStateGameView(view_instance.state) : game.state
     if (view_instance.state) {
         await StateRepository.save(game.state)
     }
