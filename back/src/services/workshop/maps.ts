@@ -36,7 +36,7 @@ export async function find(username: string) {
 
 export async function findOne(username: string, map_id: string) {
     const user = await UserRepository.findOneByOrFail({ username: username })
-    const cmap = await CMapRepository.findOneByOrFail({ creatorId: user.id, id: map_id })
+    const cmap = await CMapRepository.findOneByOrFail({ id: map_id })
     return cmap
 }
 
