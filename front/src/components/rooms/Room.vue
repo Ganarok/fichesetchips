@@ -221,7 +221,7 @@
 
                     <div class="flex flex-wrap items-center justify-start p-4">
                         <div
-                            v-for="(player, index) of room.game?.players"
+                            v-for="(p, index) of room.game?.players"
                             :key="index"
                             class="flex text-xl font-bold items-center p-2"
                         >
@@ -230,14 +230,14 @@
                             </div>
                             <div class="flex flex-col justify-evenly">
                                 <p>
-                                    {{ player.user.username || "Utilisateur" }}
+                                    {{ p.user.username || "Utilisateur" }}
                                 </p>
-                                <div v-if="player.character">
+                                <div v-if="p.character">
                                     <p>
-                                        {{ `${player.character.firstname}${player.character.lastname}` }}
+                                        {{ `${p.character.firstname}${p.character.lastname}` }}
                                     </p>
                                     <p>
-                                        {{ player.character.level_id }}
+                                        {{ p.character.level_id }}
                                     </p>
                                 </div>
                                 <div v-else>
@@ -259,10 +259,8 @@ import { useToast } from "vue-toastification"
 import Button from "@/components/common/Button.vue"
 import ParamétrageDiv from "@/components/rooms/ParamétrageDiv.vue"
 import BlackGreenDiv from "@/components/common/BlackGreenDiv.vue"
-import { apiCall } from '@/utils/apiCall'
 import CharactersList from '@/components/rooms/Characters.vue'
-
-
+import { apiCall } from '@/utils/apiCall'
 
 export default {
     name: "Room",

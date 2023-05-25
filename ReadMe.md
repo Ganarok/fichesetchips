@@ -16,13 +16,28 @@ Table des matières
 
 Contexte
 ===
-Fiche & Chips est une plateforme de jeu de rôle en ligne permettant de créer/générer des scénarios de jeu de rôle via un moteur de création. Des rooms peuvent ensuite être créées pour y tenir une partie en vocal/textuel, sous la gouverne d'un MJ diabolique qui peut être aidé d'une AI MJ copilot.
+Fiches&Chips est une plateforme de jeu de rôle en ligne permettant de créer/générer des scénarios de jeu de rôle via un moteur de création. Des rooms peuvent ensuite être créées pour y tenir une partie à plusieurs, sous la gouverne d'un MJ diabolique qui peut être aidé d'une AI MJ copilot.
 
 L'équipe
 ===
 [Organigramme](https://github.com/Ganarok/fichesetchips/wiki/Organigramme)
 
+Démarrer le projet
+===
 
+Un Docker-compose est disponible pour lancer le projet en local. Il suffit de lancer la commande suivante à la racine du projet :
 
+```bash
+docker-compose up --build
+```
 
+Vous pouvez installer Docker [ici](https://docs.docker.com/engine/install/). Le docker-compose va lancer 3 containers : `front`, `back` et `db` (Postgres). Le front est accessible sur le port 8080 à l'adresse http://localhost:8080.
 
+Lors du lancement du Docker-compose, la base de données est initialisée avec des données de test. Vous pouvez vous connecter avec les identifiants suivants :
+
+```bash
+# Utilisateur admin, mot de passe admin.
+# LogIn accessible à l'adresse http://localhost:8080/login
+test
+password
+```

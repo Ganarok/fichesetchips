@@ -1,15 +1,14 @@
-FROM node:14.19.1-alpine
+FROM node:18-alpine
 
-WORKDIR /server
+COPY package*.json .
 
+#MacOS python issue
+RUN apk add g++ make py3-pip
+RUN npm install 
+
+COPY .env.example .env
 COPY . .
 
-RUN npm install
+EXPOSE 3000:3000
 
-EXPOSE 3000
-
-ENV WAIT_VERSION 2.7.2
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
-RUN chmod +x /wait
-
-CMD ["sh", "-c", "npm run db:refresh && npm run start"]
+CMD [ "sh", "-c", "npm run db:refresh && npm run dev" ]

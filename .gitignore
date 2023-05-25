@@ -6,3 +6,5 @@ copilot/poc/image_moderation/test.jpg
 
 init.sql
 .vscode
+tmp
+db
